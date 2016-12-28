@@ -1,0 +1,102 @@
+
+
+.container #landing_links {
+  margin: 0 auto 44px auto;
+  position: absolute;
+  height: 300px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  display: block
+}
+#row_1 {
+  padding: 0 0 0 8px;
+  position: absolute;
+  bottom: 151px;
+  left: 0;
+  right: 0;
+  height: 142px;
+}
+#row_2 {
+  padding: 0 0 0 8px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 142px;
+}
+
+
+.icon_landing {
+  /*position: relative;*/
+  font-size: 44px;
+  /*font-size: 4vh;*/
+  width: 142px;
+  height: 142px;
+  float: left;
+  margin-right: 10px;
+  text-shadow: 3px 3px 5px #444444;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  box-shadow: 3px 3px 15px #222;
+  -webkit-box-shadow: 3px 3px 15px #222;
+  -moz-box-shadow: 3px 3px 15px #222;
+}
+.center_text {
+  padding: 10px 10px;
+  text-decoration: none;
+}
+.center_text_2lines {
+  padding: 10px;
+  text-decoration: none;
+}
+/* epa blue: #0050B8 */
+/* epa sky blue: #3399FF */
+/* epa green: #00CC33 */
+/* white: #ffffff */
+
+#icon_cts {
+  background-color: #00CC33;
+  color: #ffffff;
+}
+#icon_cyan {
+  background-color: #3399FF;
+  color: #0050B8;
+}
+#icon_hem {
+  background-color: #0050B8;
+  color: #3399FF;
+}
+#icon_hms {
+  background-color: #ffffff;
+  color: #00CC33;
+}
+#icon_hwbi {
+  background-color: #0050B8;
+  color: #00CC33;
+}
+#icon_pisces {
+  background-color: #ffffff;
+  color: #3399FF;
+}
+#icon_pop {
+  background-color: #00CC33;
+  color: #0050B8;
+}
+#icon_uber {
+  background-color: #3399FF;
+  color: #ffffff;
+}
+
+#landing_links ul {
+  list-style: none;
+  text-align: center;
+  padding-top: 16px;
+}
+#landing_links ul li {
+  display: inline;
+  /*position: relative;*/
+}
