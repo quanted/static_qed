@@ -2,7 +2,7 @@
 var dragVal = {};
 
 //import data from a json file and run drawSliders function onPageLoad
-d3.json("/static/json/baseline.json", function (data) {
+d3.json("/static_qed/hwbi/json/baseline.json", function (data) {
     dragVal = data.outputs;
     data.outputs.services.forEach(drawSliders);  // Call drawSliders() after parsing JSON, passing in "each" element
 });
