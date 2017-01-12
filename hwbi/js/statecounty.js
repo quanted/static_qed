@@ -1,6 +1,6 @@
 $(document).ready(function(){
     var stateObject = {};
-    $.getJSON('/static/json/statecounty.json', function(data) {
+    $.getJSON('/static_qed/hwbi/json/statecounty.json', function (data) {
         $.each(data, function(index, val) {
             stateObject[index] = val;
         });
