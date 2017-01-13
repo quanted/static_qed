@@ -6,7 +6,7 @@ var width = 300,
 
 
 //import data from a json file and run drawPieChart function onPageLoad
-d3.json('/static/json/baseline.json', function (error, data) {
+d3.json('/static_qed/hwbi/json/baseline.json', function (error, data) {
     drawPieChart("", data.outputs.domains);
 });
 
