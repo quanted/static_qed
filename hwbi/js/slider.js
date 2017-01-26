@@ -150,7 +150,6 @@ function drawSliders(data, index) {
 //POST request to calc endpoint
 function useServiceValues() {
 
-
     var postData = {
         "scores" : {
             "capitalInvestment": dragVal.services[0].Score,
@@ -188,14 +187,16 @@ function useServiceValues() {
         }
     };
 
+    console.log(postData);
+
     $.post(
-        '/rest/hwbi/calc/run',                      // url
-        JSON.stringify(postData),                               // data (as JS object)
-        function(data) {                        // success (callback) function
+        '/hwbi/rest/hwbi/calc/run',                      // url
+        JSON.stringify(postData),                   // data (as JS object)
+        function(data) {                            // success (callback) function
             updateDomainScores(data.outputs.domains);
             updateRIVWeights(dragVal.domains);
     },
-    "json");                                    // data type returned from server
+    "json");                                        // data type returned from server
 }
 
 
