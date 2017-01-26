@@ -5,8 +5,17 @@ $(document).ready(function handleDocumentReady (e) {
   // if (MarvinJSUtil) {
 
   try {
+
+    // MarvinJSUtil.Sketch.license("/static_qed/cts/stylesheets/efs/marvin4js/license/marvin4js-license.cxl");
+
     MarvinJSUtil.getEditor("#sketch").then(function (sketcherInstance) {
       marvinSketcherInstance = sketcherInstance;
+
+      // Point to marvin license file????
+      // marvin.Sketch.license("/static/marvin4js-license.cxl");  // from marvin4js/editor.html
+      // marvin.Sketch.license("/static_qed/cts/stylesheets/efs/marvin4js/license/marvin4js-license.cxl");
+      // marvinSketcherInstance.license();
+
       loadCachedChemical();
       // initControl(); //binds action to initControl() function
     }, function (error) {
