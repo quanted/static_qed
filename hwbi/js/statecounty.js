@@ -31,13 +31,7 @@ $(document).ready(function(){
           fadeIn:  500
         });
 
-        //old visual studio call-> http://localhost:64399/api/Baseline?State=Georgia&County=Appling
-        //NEW call-> http://134.67.114.8/hwbi/api/Baseline?State=Georgia&County=Appling
-        //super new call-> http://134.67.114.8/hwbi/rest/hwbi/locations/georgia/clarke
-        // var state = $('#stateSel').val();
-        // var county = $('#countySel').val();
-        //old call $.getJSON('/ubertool/hwbi/api/Baseline?State=' + state + '&County=' + county, function(data) {
-
+        //old GET request
         // $.getJSON('/hwbi/rest/hwbi/locations/' + state + '/' + county, function(data) {
         //     $.unblockUI();
         //     updateRIVWeights(data.outputs.domains);
@@ -46,30 +40,27 @@ $(document).ready(function(){
         //     updateServiceScores(data.outputs.services);
         // });
 
-    var stateVal = $('#stateSel').val();
-    var countyVal = $('#countySel').val();
+        var stateVal = $('#stateSel').val();
+        var countyVal = $('#countySel').val();
 
-    var poststateData = {
-        "state":stateVal,"county":countyVal
-        }
+        var poststateData = {
+            "state":stateVal,"county":countyVal
+            }
 
         console.log(poststateData);
 
+        $.post('http://134.67.114.8/hwbi/rest/hwbi/locations/run',             // url
+            JSON.stringify(poststateData),                  // data (as JS object)
+            function(data) {                                // success (callback) function
+                updateRIVWeights(data.outputs.domains);
+                updateDomainScores(data.outputs.domains);
+                updateDomainScores2(data.outputs.domains);
+                updateServiceScores(data.outputs.services);
+            },
+        "json");                                            // data type returned from server
 
-    $.post(
-        '/hwbi/rest/hwbi/locations/run',                     // url
-        JSON.stringify(poststateData),                  // data (as JS object)
-        function(data) {                                // success (callback) function
-            updateRIVWeights(data.outputs.domains);
-            updateDomainScores(data.outputs.domains);
-            updateDomainScores2(data.outputs.domains);
-            updateServiceScores(data.outputs.services);
-    },
-    "json");                                            // data type returned from server
-
-        });
+    });
 });
-
 
 
     //function to update RIV domain weight values
