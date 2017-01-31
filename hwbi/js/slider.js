@@ -189,8 +189,8 @@ function useServiceValues() {
 
     console.log(postData);
 
-    $.post(
-        '/hwbi/rest/hwbi/calc/run',                      // url
+    $.post('https://134.67.114.8/hwbi/rest/hwbi/calc/run',
+        // '/hwbi/rest/hwbi/calc/run',                      // old REST API url
         JSON.stringify(postData),                   // data (as JS object)
         function(data) {                            // success (callback) function
             updateDomainScores(data.outputs.domains);
