@@ -3,7 +3,10 @@
     "function" == typeof define && define.amd ? define(["jquery"], function(c) {
         return b(c, a, a.document, a.Math)
     }) : "undefined" != typeof exports ? module.exports = b(require("jquery"), a, a.document, a.Math) : b(jQuery, a, a.document, a.Math)
-}("undefined" != typeof window ? window : this, function(a, b, c, d, e) {
+}
+
+
+("undefined" != typeof window ? window : this, function(a, b, c, d, e) {
     "use strict";
     var f, g = "fullpage-wrapper",
         h = "." + g,
@@ -1026,6 +1029,8 @@
     };
     f = ga
 }),
+
+
 function(a) {
     a.easing.jswing = a.easing.swing, a.extend(a.easing, {
         def: "easeOutQuad",
@@ -1150,9 +1155,15 @@ function(a) {
             return c < f / 2 ? .5 * a.easing.easeInBounce(b, 2 * c, 0, e, f) + d : .5 * a.easing.easeOutBounce(b, 2 * c - f, 0, e, f) + .5 * e + d
         }
     })
-}(jQuery), $(window).scroll(function() {
+}
+
+
+
+(jQuery), $(window).scroll(function() {
         $(".navbar").offset().top > 50 ? $(".navbar-fixed-top").addClass("top-nav-collapse") : $(".navbar-fixed-top").removeClass("top-nav-collapse")
-    }), $(function() {
+    }),
+
+     $(function() {
         $("a.page-scroll").bind("click", function(a) {
             var b = $(this);
             $("html, body").stop().animate({
@@ -1162,6 +1173,7 @@ function(a) {
     }), $(".navbar-collapse ul li a").click(function() {
         $(".navbar-toggle:visible").click()
     }),
+    
     function() {
         var a, b, c, d, e, f = function(a, b) {
                 return function() {
@@ -1351,7 +1363,9 @@ function(a) {
                 return !this.config.mobile && this.util().isMobile(navigator.userAgent)
             }, e
         }()
-    }.call(this),
+    }
+
+    .call(this),
     function a(b, c, d) {
         function e(g, h) {
             if (!c[g]) {
@@ -1374,7 +1388,9 @@ function(a) {
         }
         for (var f = "function" == typeof require && require, g = 0; g < d.length; g++) e(d[g]);
         return e
-    }({
+    }
+
+    ({
         1: [function(a, b, c) {
             var d = a("./svg-pan-zoom.js");
             ! function(a, c) {
@@ -2136,6 +2152,7 @@ function(a) {
             }
         }, {}]
     }, {}, [1]),
+
     function(a, b, c, d) {
         "use strict";
 
@@ -3078,10 +3095,19 @@ function(a) {
         pb.Hammer = da, "function" == typeof define && define.amd ? define(function() {
             return da
         }) : "undefined" != typeof module && module.exports ? module.exports = da : a[c] = da
-    }(window, document, "Hammer"),
+    }
+
+
+
+
+    (window, document, "Hammer"),
+    
+
     function(a, b) {
         "object" == typeof module && module.exports ? module.exports = a.document ? b(a) : b : a.Highcharts = b(a)
-    }("undefined" != typeof window ? window : this, function(a) {
+    }
+
+    ("undefined" != typeof window ? window : this, function(a) {
         function b(b, c) {
             var d = "Highcharts error #" + b + ": www.highcharts.com/errors/" + b;
             if (c) throw Error(d);
@@ -3740,7 +3766,7 @@ function(a) {
                 },
                 footerFormat: "",
                 headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                pointFormat: '<span style="color:{point.color}">?</span> {series.name}: <b>{point.y}</b><br/>',
+                pointFormat: '<span style="color:{point.color}">‚óè</span> {series.name}: <b>{point.y}</b><br/>',
                 shadow: !0,
                 snap: za ? 25 : 10,
                 style: {
@@ -4201,7 +4227,7 @@ function(a) {
                                         display: "block"
                                     }), k(t, "dy", v(t))), p) {
                                     for (var u, x, r = e.replace(/([^\^])-/g, "$1- ").split(" "), y = j.length > 1 || i || r.length > 1 && "nowrap" !== o.whiteSpace, z = [], A = v(t), B = 1, C = a.rotation, D = e, E = D.length;
-                                        (y || s) && (r.length || z.length);) a.rotation = 0, u = a.getBBox(!0), x = u.width, !Ba && g.forExport && (x = g.measureSpanWidth(t.firstChild.data, a.styles)), u = x > p, void 0 === d && (d = u), s && d ? (E /= 2, "" === D || !u && E < .5 ? r = [] : (D = e.substring(0, D.length + (u ? -1 : 1) * la(E)), r = [D + (p > 3 ? "Ö" : "")], t.removeChild(t.firstChild))) : u && 1 !== r.length ? (t.removeChild(t.firstChild), z.unshift(r.pop())) : (r = z, z = [], r.length && (B++, t = ha.createElementNS(Aa, "tspan"), k(t, {
+                                        (y || s) && (r.length || z.length);) a.rotation = 0, u = a.getBBox(!0), x = u.width, !Ba && g.forExport && (x = g.measureSpanWidth(t.firstChild.data, a.styles)), u = x > p, void 0 === d && (d = u), s && d ? (E /= 2, "" === D || !u && E < .5 ? r = [] : (D = e.substring(0, D.length + (u ? -1 : 1) * la(E)), r = [D + (p > 3 ? "‚Ä¶" : "")], t.removeChild(t.firstChild))) : u && 1 !== r.length ? (t.removeChild(t.firstChild), z.unshift(r.pop())) : (r = z, z = [], r.length && (B++, t = ha.createElementNS(Aa, "tspan"), k(t, {
                                         dy: A,
                                         x: m
                                     }), q && k(t, "style", q), f.appendChild(t)), x > p && (p = x)), r.length && t.appendChild(ha.createTextNode(r.join(" ").replace(/- /g, "-")));
@@ -8210,7 +8236,7 @@ function(a) {
                     enabled: !0
                 },
                 tooltip: {
-                    headerFormat: '<span style="color:{point.color}">?</span> <span style="font-size: 10px;"> {series.name}</span><br/>',
+                    headerFormat: '<span style="color:{point.color}">‚óè</span> <span style="font-size: 10px;"> {series.name}</span><br/>',
                     pointFormat: "x: <b>{point.x}</b><br/>y: <b>{point.y}</b><br/>"
                 }
             }), vb = p(tb, {
@@ -9381,7 +9407,7 @@ function(a) {
         }, bb.ohlc = d(bb.column, {
             lineWidth: 1,
             tooltip: {
-                pointFormat: '<span style="color:{point.color}">?</span> <b> {series.name}</b><br/>Open: {point.open}<br/>High: {point.high}<br/>Low: {point.low}<br/>Close: {point.close}<br/>'
+                pointFormat: '<span style="color:{point.color}">‚óè</span> <b> {series.name}</b><br/>Open: {point.open}<br/>High: {point.high}<br/>Low: {point.low}<br/>Close: {point.close}<br/>'
             },
             states: {
                 hover: {
@@ -10591,9 +10617,14 @@ function(a) {
             version: "4.2.5"
         }), ga
     }),
+
+
+
     function(a) {
         "object" == typeof module && module.exports ? module.exports = a : a(Highcharts)
-    }(function(a) {
+    }
+
+    (function(a) {
         var b, c = a.win.document,
             d = a.each,
             e = a.pick,
@@ -10859,9 +10890,14 @@ function(a) {
                 if (c = this.readers[b], c.configName === a) return !0
         }
     }),
+
+
+
     function(a) {
         "object" == typeof module && module.exports ? module.exports = a : a(Highcharts)
-    }(function(a) {
+    }
+
+    (function(a) {
         var b, c = a.win,
             d = c.document,
             e = a.Chart,
@@ -10980,7 +11016,7 @@ function(a) {
             a.submit(), j(a)
         }, n(e.prototype, {
             sanitizeSVG: function(a) {
-                return a.replace(/zIndex="[^"]+"/g, "").replace(/isShadow="[^"]+"/g, "").replace(/symbolName="[^"]+"/g, "").replace(/jQuery[0-9]+="[^"]+"/g, "").replace(/url\([^#]+#/g, "url(#").replace(/<svg /, '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ').replace(/ (NS[0-9]+\:)?href=/g, " xlink:href=").replace(/\n/, " ").replace(/<\/svg>.*?$/, "</svg>").replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g, '$1="rgb($2)" $1-opacity="$3"').replace(/&nbsp;/g, "†").replace(/&shy;/g, "≠").replace(/<IMG /g, "<image ").replace(/<(\/?)TITLE>/g, "<$1title>").replace(/height=([^" ]+)/g, 'height="$1"').replace(/width=([^" ]+)/g, 'width="$1"').replace(/hc-svg-href="([^"]+)">/g, 'xlink:href="$1"/>').replace(/ id=([^" >]+)/g, ' id="$1"').replace(/class=([^" >]+)/g, 'class="$1"').replace(/ transform /g, " ").replace(/:(path|rect)/g, "$1").replace(/style="([^"]+)"/g, function(a) {
+                return a.replace(/zIndex="[^"]+"/g, "").replace(/isShadow="[^"]+"/g, "").replace(/symbolName="[^"]+"/g, "").replace(/jQuery[0-9]+="[^"]+"/g, "").replace(/url\([^#]+#/g, "url(#").replace(/<svg /, '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ').replace(/ (NS[0-9]+\:)?href=/g, " xlink:href=").replace(/\n/, " ").replace(/<\/svg>.*?$/, "</svg>").replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g, '$1="rgb($2)" $1-opacity="$3"').replace(/&nbsp;/g, "¬†").replace(/&shy;/g, "¬≠").replace(/<IMG /g, "<image ").replace(/<(\/?)TITLE>/g, "<$1title>").replace(/height=([^" ]+)/g, 'height="$1"').replace(/width=([^" ]+)/g, 'width="$1"').replace(/hc-svg-href="([^"]+)">/g, 'xlink:href="$1"/>').replace(/ id=([^" >]+)/g, ' id="$1"').replace(/class=([^" >]+)/g, 'class="$1"').replace(/ transform /g, " ").replace(/:(path|rect)/g, "$1").replace(/style="([^"]+)"/g, function(a) {
                     return a.toLowerCase()
                 })
             },
@@ -11174,9 +11210,14 @@ function(a) {
             }
         })
     }),
+
+
+
     function(a) {
         "object" == typeof module && module.exports ? module.exports = a : a(Highcharts)
-    }(function(a) {
+    }
+
+    (function(a) {
         "use strict";
 
         function b(b, c, d, e, g) {
@@ -11285,102 +11326,111 @@ function(a) {
             }
         }), e.map && (e.map.prototype.exportKey = "name"), e.mapbubble && (e.mapbubble.prototype.exportKey = "name")
     });
+
+
+
+
+
+
 /*! etrends 18-08-2016 */
 function jsDropDown(a, b, c) {
     document.getElementById(a).src = b + "/" + c + ".html"
 }
 
 
+var seasonalSVGpm25map = {};
+seasonalSVGpm25map.svgID = "svgSeasonalPm25map", seasonalSVGpm25map.panZoom, seasonalSVGpm25map.isLoaded = !1, seasonalSVGpm25map.onDropChange = function(a, b) {
+    seasonalSVGpm25map.panZoom && seasonalSVGpm25map.panZoom.destroy(), seasonalSVGpm25map.panZoom = null, document.getElementById(seasonalSVGpm25map.svgID).data = a + "/" + b + ".svg"
+}, seasonalSVGpm25map.eventsHandler = {
+    haltEventListeners: ["touchstart", "touchend", "touchmove", "touchleave", "touchcancel"],
+    init: function(a) {
+        var b = a.instance,
+            c = 1,
+            d = 0,
+            e = 0;
+        this.hammer = Hammer(a.svgElement, {
+            inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
+        }), this.hammer.get("pinch").set({
+            enable: !0
+        }), this.hammer.on("doubletap", function(a) {
+            b.zoomIn()
+        }), this.hammer.on("panstart panmove", function(a) {
+            "panstart" === a.type && (d = 0, e = 0), b.panBy({
+                x: a.deltaX - d,
+                y: a.deltaY - e
+            }), d = a.deltaX, e = a.deltaY
+        }), this.hammer.on("pinchstart pinchmove", function(a) {
+            "pinchstart" === a.type && (c = b.getZoom(), b.zoom(c * a.scale)), b.zoom(c * a.scale)
+        }), a.svgElement.addEventListener("touchmove", function(a) {
+            a.preventDefault()
+        })
+    },
+    destroy: function() {
+        this.hammer.destroy()
+    }
+}, 
 
 
 
 
+seasonalSVGpm25map.beforePan = function(a, b) {
+    var c = 100,
+        d = 100,
+        e = this.getSizes(),
+        f = -((e.viewBox.x + e.viewBox.width) * e.realZoom) + c,
+        g = e.width - c - e.viewBox.x * e.realZoom,
+        h = -((e.viewBox.y + e.viewBox.height) * e.realZoom) + d,
+        i = e.height - d - e.viewBox.y * e.realZoom;
+    return customPan = {}, customPan.x = Math.max(f, Math.min(g, b.x)), customPan.y = Math.max(h, Math.min(i, b.y)), customPan
+}, 
+
+
+
+seasonalSVGpm25map.createSVGpanZoom = function() {
+    seasonalSVGpm25map.panZoom && seasonalSVGpm25map.destroy(), seasonalSVGpm25map.panZoom = svgPanZoom("#" + seasonalSVGpm25map.svgID, {
+        zoomEnabled: !0,
+        controlIconsEnabled: !0,
+        maxZoom: 3,
+        fit: 1,
+        center: 1,
+        customEventsHandler: seasonalSVGpm25map.eventsHandler,
+        beforePan: seasonalSVGpm25map.beforePan
+    })
+},
 
 
 
 
+seasonalSVGpm25map.windowResizeHandler = function() {
+    $(window).resize(function() {
+        seasonalSVGpm25map.panZoom.resize(), seasonalSVGpm25map.panZoom.fit(), seasonalSVGpm25map.panZoom.center()
+    })
+},
 
 
 
 
-
-
-
-
-
-
-
-// var seasonalSVGpm25map = {};
-// seasonalSVGpm25map.svgID = "svgSeasonalPm25map", seasonalSVGpm25map.panZoom, seasonalSVGpm25map.isLoaded = !1, seasonalSVGpm25map.onDropChange = function(a, b) {
-//     seasonalSVGpm25map.panZoom && seasonalSVGpm25map.panZoom.destroy(), seasonalSVGpm25map.panZoom = null, document.getElementById(seasonalSVGpm25map.svgID).data = a + "/" + b + ".svg"
-// }, seasonalSVGpm25map.eventsHandler = {
-//     haltEventListeners: ["touchstart", "touchend", "touchmove", "touchleave", "touchcancel"],
-//     init: function(a) {
-//         var b = a.instance,
-//             c = 1,
-//             d = 0,
-//             e = 0;
-//         this.hammer = Hammer(a.svgElement, {
-//             inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
-//         }), this.hammer.get("pinch").set({
-//             enable: !0
-//         }), this.hammer.on("doubletap", function(a) {
-//             b.zoomIn()
-//         }), this.hammer.on("panstart panmove", function(a) {
-//             "panstart" === a.type && (d = 0, e = 0), b.panBy({
-//                 x: a.deltaX - d,
-//                 y: a.deltaY - e
-//             }), d = a.deltaX, e = a.deltaY
-//         }), this.hammer.on("pinchstart pinchmove", function(a) {
-//             "pinchstart" === a.type && (c = b.getZoom(), b.zoom(c * a.scale)), b.zoom(c * a.scale)
-//         }), a.svgElement.addEventListener("touchmove", function(a) {
-//             a.preventDefault()
-//         })
-//     },
-//     destroy: function() {
-//         this.hammer.destroy()
-//     }
-// }, seasonalSVGpm25map.beforePan = function(a, b) {
-//     var c = 100,
-//         d = 100,
-//         e = this.getSizes(),
-//         f = -((e.viewBox.x + e.viewBox.width) * e.realZoom) + c,
-//         g = e.width - c - e.viewBox.x * e.realZoom,
-//         h = -((e.viewBox.y + e.viewBox.height) * e.realZoom) + d,
-//         i = e.height - d - e.viewBox.y * e.realZoom;
-//     return customPan = {}, customPan.x = Math.max(f, Math.min(g, b.x)), customPan.y = Math.max(h, Math.min(i, b.y)), customPan
-// }, seasonalSVGpm25map.createSVGpanZoom = function() {
-//     seasonalSVGpm25map.panZoom && seasonalSVGpm25map.destroy(), seasonalSVGpm25map.panZoom = svgPanZoom("#" + seasonalSVGpm25map.svgID, {
-//         zoomEnabled: !0,
-//         controlIconsEnabled: !0,
-//         maxZoom: 3,
-//         fit: 1,
-//         center: 1,
-//         customEventsHandler: seasonalSVGpm25map.eventsHandler,
-//         beforePan: seasonalSVGpm25map.beforePan
-//     })
-// }, seasonalSVGpm25map.windowResizeHandler = function() {
-//     $(window).resize(function() {
-//         seasonalSVGpm25map.panZoom.resize(), seasonalSVGpm25map.panZoom.fit(), seasonalSVGpm25map.panZoom.center()
-//     })
-// }, $("#" + seasonalSVGpm25map.svgID).on("load", function() {
-//     seasonalSVGpm25map.createSVGpanZoom(), seasonalSVGpm25map.isLoaded === !1 && seasonalSVGpm25map.windowResizeHandler(), seasonalSVGpm25map.isLoaded = !0
-// }),
-
-
-
-
-
+ $("#" + seasonalSVGpm25map.svgID).on("load", function() {
+    seasonalSVGpm25map.createSVGpanZoom(), seasonalSVGpm25map.isLoaded === !1 && seasonalSVGpm25map.windowResizeHandler(), seasonalSVGpm25map.isLoaded = !0
+}),
 
 
 
  window.onload = function() {}, $(function() {
     $('[data-toggle="tooltip"]').tooltip()
-}), $(".collapse").on("shown.bs.collapse", function() {
+}),
+
+
+
+ $(".collapse").on("shown.bs.collapse", function() {
     $(this).parent().find(".icon-hand-o-right").removeClass("icon-hand-o-right").addClass("icon-hand-o-down")
-}).on("hidden.bs.collapse", function() {
+})
+ .on("hidden.bs.collapse", function() {
     $(this).parent().find(".icon-hand-o-down").removeClass("icon-hand-o-down").addClass("icon-hand-o-right")
-}), $(function() {
+}),
+
+
+ $(function() {
     $("#fullpage").fullpage({
         autoScrolling: !1,
         fitToSection: !0,
@@ -11396,914 +11446,54 @@ function jsDropDown(a, b, c) {
         responsiveHeight: 900,
         sectionSelector: ".secFP"
     })
+}),
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ $("a").keypress(function() {
+    this.blur(), this.hideFocus = !1, this.style.outline = null
+}),
+
+
+
+ $("a").mousedown(function() {
+    this.blur(), this.hideFocus = !0, this.style.outline = "none"
+}),
+
+
+
+ $(".hvr-sweep-to-right").mousedown(function() {
+    this.blur(), this.hideFocus = !0, this.style.border = "1px solid #42dca3"
+}),
+
+
+ $(".btnPly, .btnFS").mousedown(function() {
+    this.blur(), this.hideFocus = !0, this.style.border = "1px solid rgba(0,0,0,0.7)"
+}),
+
+
+ $(window).load(function() {
+    $(".se-pre-con").fadeOut("slow")
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $(document).ready(function() {
-//     var a = $("#nasa-video");
-//     a[0].removeAttribute("controls"), $(".vid-control").fadeIn(500), $(".caption").fadeIn(500), a.on("loadedmetadata", function() {
-//         $(".current").text(i(0)), $(".duration").text(i(a[0].duration)), h(0, .7), setTimeout(b, 150), $(".video-viewport").hover(function() {
-//             $(".vid-control").stop().fadeIn(), $(".caption").stop().fadeIn()
-//         }, function() {
-//             g || e || ($(".vid-control").stop().fadeOut(), $(".caption").stop().fadeOut())
-//         }).on("click", function() {
-//             $(".btnPly").find(".icon-play").addClass("icon-pause").removeClass("icon-play"), $(this).unbind("click"), a[0].play()
-//         })
-//     });
-//     var b = function() {
-//         var c = a[0].buffered.end(0),
-//             d = a[0].duration,
-//             e = 100 * c / d;
-//         $(".bufferBar").css("width", e + "%"), c < d && setTimeout(b, 500)
-//     };
-//     a.on("timeupdate", function() {
-//         var b = a[0].currentTime,
-//             c = a[0].duration,
-//             d = 100 * b / c;
-//         $(".timeBar").css("width", d + "%"), $(".current").text(i(b))
-//     }), a.on("click", function() {
-//         c()
-//     }), $(".btnPly").on("click", function() {
-//         c()
-//     });
-//     var c = function() {
-//         a[0].paused || a[0].ended ? ($(".btnPly").addClass("paused"), $(".btnPly").find(".icon-play").addClass("icon-pause").removeClass("icon-play"), a[0].play()) : ($(".btnPly").removeClass("paused"), $(".btnPly").find(".icon-pause").removeClass("icon-pause").addClass("icon-play"), a[0].pause())
-//     };
-//     $(".btnFS").on("click", function() {
-//         $.isFunction(a[0].msRequestFullscreen) ? a[0].msRequestFullscreen() : $.isFunction(a[0].webkitRequestFullScreen) ? a[0].webkitRequestFullScreen() : $.isFunction(a[0].mozRequestFullScreen) ? a[0].mozRequestFullScreen() : alert("Fullscreen not available")
-//     }), $(".sound").click(function() {
-//         a[0].muted = !a[0].muted, $(this).toggleClass("muted"), a[0].muted ? $(".volumeBar").css("width", 0) : $(".volumeBar").css("width", 100 * a[0].volume + "%")
-//     }), a.on("canplay", function() {
-//         $(".loading").fadeOut(100)
-//     });
-//     var d = !1;
-//     a.on("canplaythrough", function() {
-//         d = !0
-//     }), a.on("ended", function() {
-//         $(".btnPly").removeClass("paused"), a[0].pause()
-//     }), a.on("seeking", function() {
-//         d || $(".loading").fadeIn(200)
-//     }), a.on("seeked", function() {}), a.on("waiting", function() {
-//         $(".loading").fadeIn(200)
-//     });
-//     var e = !1;
-//     $(".progress").on("mousedown", function(a) {
-//         e = !0, f(a.pageX)
-//     }), $(document).on("mouseup", function(a) {
-//         e && (e = !1, f(a.pageX))
-//     }), $(document).on("mousemove", function(a) {
-//         e && f(a.pageX)
-//     });
-//     var f = function(b) {
-//             var c = $(".progress"),
-//                 d = a[0].duration,
-//                 e = b - c.offset().left,
-//                 f = 100 * e / c.width();
-//             f > 100 && (f = 100), f < 0 && (f = 0), $(".timeBar").css("width", f + "%"), a[0].currentTime = d * f / 100
-//         },
-//         g = !1;
-//     $(".volume").on("mousedown", function(b) {
-//         g = !0, a[0].muted = !1, $(".sound").removeClass("muted"), h(b.pageX)
-//     }), $(document).on("mouseup", function(a) {
-//         g && (g = !1, h(a.pageX))
-//     }), $(document).on("mousemove", function(a) {
-//         g && h(a.pageX)
-//     });
-//     var h = function(b, c) {
-//             var d, e = $(".volume");
-//             if (c) d = 100 * c;
-//             else {
-//                 var f = b - e.offset().left;
-//                 d = 100 * f / e.width()
-//             }
-//             d > 100 && (d = 100), d < 0 && (d = 0), $(".volumeBar").css("width", d + "%"), a[0].volume = d / 100, 0 == a[0].volume ? $(".sound").removeClass("sound2").addClass("muted") : a[0].volume > .5 ? $(".sound").removeClass("muted").addClass("sound2") : $(".sound").removeClass("muted").removeClass("sound2")
-//         },
-//         i = function(a) {
-//             var b = Math.floor(a / 60) < 10 ? "0" + Math.floor(a / 60) : Math.floor(a / 60),
-//                 c = Math.floor(a - 60 * b) < 10 ? "0" + Math.floor(a - 60 * b) : Math.floor(a - 60 * b);
-//             return b + ":" + c
-//         }
-// }), $("a").keypress(function() {
-//     this.blur(), this.hideFocus = !1, this.style.outline = null
-// }), $("a").mousedown(function() {
-//     this.blur(), this.hideFocus = !0, this.style.outline = "none"
-// }), $(".hvr-sweep-to-right").mousedown(function() {
-//     this.blur(), this.hideFocus = !0, this.style.border = "1px solid #42dca3"
-// }), $(".btnPly, .btnFS").mousedown(function() {
-//     this.blur(), this.hideFocus = !0, this.style.border = "1px solid rgba(0,0,0,0.7)"
-// }), $(window).load(function() {
-//     $(".se-pre-con").fadeOut("slow")
-// });
-// var ClassifiedPointsMap = function(a, b) {
-//     this.domID = a, this.containerID = a + "-container", this.containerID = a, this.useRelativeTooltip = !1, this.toolTipClass = null, this.defaultWidth = 870, this.defaultHeight = 550, b ? this.percentSize = b : this.percentSize = parseInt(d3.select("#" + this.containerID).style("width")) / this.defaultWidth, this.width = this.defaultWidth * this.percentSize, this.height = this.defaultHeight * this.percentSize, d3.select("#" + this.domID).style("height", this.height + "px"), this.pointSize = 6, this.scaledPointSize = this.pointSize, this.activeState = d3.select(null), this.topojson = null, this.symbology = null, this.activeAttribute = null, this.hideEmptyActiveAttributes = !0, this.symbologyScale = null, this.tooltip = {}, this.externalMouseOver = null, this.externalMouseOut = null, this.useViewBox = !1, navigator.platform.indexOf("Mac") > -1 && (this.useViewBox = !1)
-// };
-// ClassifiedPointsMap.prototype.init = function() {
-//     var a = this,
-//         b = 20 * this.width / 745;
-//     this.projection = albersUsaPr().scale(1070 * a.percentSize).translate([this.width / 2 + b, this.height / 2 - 0]), this.path = d3.geo.path().projection(this.projection), this.svg = d3.select("#" + this.domID).append("svg"), 0 == this.useViewBox ? this.svg.attr("width", this.width).attr("height", this.height) : this.svg.attr("viewBox", "0 0 " + this.width + " " + this.height), this.tooltip = new MapChartTooltip(a, a.toolTipClass), this.tooltip.offset = {
-//         x: this.pointSize,
-//         y: this.pointSize
-//     }, this.pointSymbology = function(b) {
-//         var c = parseFloat(b[a.activeAttribute]),
-//             d = a.symbology.breaks.indexOf(c);
-//         return d >= 0 ? a.symbology.colors[d] : a.symbologyScale(c)
-//     }, this.g = this.svg.append("g"), this.g.append("rect").attr("class", "background").attr("width", this.width).attr("height", this.height), this.zoomPanBehavior = d3.behavior.zoom().on("zoom", function() {
-//         return a.zoomPanHandler(a)
-//     }), this.svg.call(this.zoomPanBehavior).on("dblclick.zoom", null), this.debouncer = new MapChartResize(this, function() {
-//         a.resize()
-//     }, 200)
-// }, ClassifiedPointsMap.prototype.zoomPanHandler = function(a) {
-//     a.genericZoomPan(a, d3.event.translate, d3.event.scale)
-// }, ClassifiedPointsMap.prototype.genericZoomPan = function(a, b, c, d) {
-//     a.g.style("stroke-width", c + "px");
-//     var e = 1;
-//     0 == this.useViewBox && (e = c * this.percentSize), d ? a.g.transition().duration(750).attr("transform", "translate(" + b + ")scale(" + e + ")") : a.g.attr("transform", "translate(" + b + ")scale(" + e + ")"), a.g.selectAll("circle").attr("r", a.scaledPointSize / c).style("stroke-width", a.scaledPointStroke / c), a.tooltip.showing && a.tooltip.relocate()
-// }, ClassifiedPointsMap.prototype.zoomOnDoubleClick = function(a, b) {
-//     if (b.activeState.node() === this) {
-//         var c = 2 * b.zoomPanBehavior.scale(),
-//             d = [d3.event.offsetX - c * d3.mouse(this)[0], d3.event.offsetY - c * d3.mouse(this)[1]];
-//         b.zoomPanBehavior.translate(d).scale(c).event(b.svg.transition().duration(750))
-//     } else b.zoomToState(this, a, b)
-// }, ClassifiedPointsMap.prototype.zoomToState = function(a, b, c) {
-//     c.activeState.classed("active", !1), c.activeState = d3.select(a).classed("active", !0);
-//     var d = c.path.bounds(b),
-//         e = d[1][0] - d[0][0],
-//         f = d[1][1] - d[0][1],
-//         g = (d[0][0] + d[1][0]) / 2,
-//         h = (d[0][1] + d[1][1]) / 2,
-//         i = .9 / Math.max(e / c.width, f / c.height),
-//         j = [c.width / 2 - i * g, c.height / 2 - i * h];
-//     0 == this.useViewBox && (j = j.map(function(a) {
-//         return c.percentSize * a
-//     })), c.zoomPanBehavior.translate(j).scale(i).event(c.svg.transition().duration(750))
-// }, ClassifiedPointsMap.prototype.resetZoom = function() {
-//     var a = this;
-//     this.activeState.classed("active", !1), this.activeState = d3.select(null), this.zoomPanBehavior.translate([0, 0]).scale(1).event(a.svg.transition().duration(750))
-// }, ClassifiedPointsMap.prototype.mapStates = function(a) {
-//     var b = this;
-//     this.g.append("g").selectAll("path").data(this.topojson.feature(a, a.objects.counties).features).enter().append("path").attr("d", this.path).attr("class", "county-boundary"), this.g.append("g").selectAll("path").data(this.topojson.feature(a, a.objects.states).features).enter().append("path").attr("d", this.path).attr("class", "feature").on("dblclick", function(a) {
-//         return b.zoomOnDoubleClick.call(this, a, b)
-//     }), this.g.append("path").datum(this.topojson.mesh(a, a.objects.states, function(a, b) {
-//         return a !== b
-//     })).attr("id", "state-borders").attr("class", "mesh").attr("d", this.path)
-// }, ClassifiedPointsMap.prototype.plotPointsAndLoad = function(a, b) {
-//     var c = this;
-//     d3.csv(a, function(a) {
-//         c.plotPoints(a, b)
-//     })
-// }, ClassifiedPointsMap.prototype.plotPoints = function(a, b) {
-//     var c = this;
-//     c.setSymbology(b), c.g.selectAll("circle").remove(), c.points = c.g.append("g").selectAll("circle").data(a).enter().append("circle").attr("transform", function(a, b) {
-//         var d = c.projection([a.Longitude, a.Latitude]);
-//         return "translate(" + d + ")"
-//     }).attr("r", this.pointSize).attr("class", "naaq-map-points").style("fill", c.pointSymbology).style("opacity", 1).on("mouseenter", function(a) {
-//         c.tooltip.hovering = !0, c.tooltip.showing || c.showToolTip(a, this)
-//     }).on("mouseleave", function() {
-//         c.tooltip.hovering = !1, c.tooltip.showing || c.hideToolTip()
-//     }).on("click", function(a) {
-//         return c.tooltip.hovering && !c.tooltip.showing ? c.tooltip.showing = !0 : (c.hideToolTip(), void c.showToolTip(a, this))
-//     }), this.pointStroke || (this.pointStroke = parseFloat(c.points.style("stroke-width"))), this.resize()
-// }, ClassifiedPointsMap.prototype.showToolTip = function(a, b) {
-//     var c = this;
-//     c.tooltip.showToolTip(a, b), c.externalMouseOver && c.externalMouseOver(a)
-// }, ClassifiedPointsMap.prototype.hideToolTip = function() {
-//     var a = this;
-//     a.tooltip.hideToolTip(), a.externalMouseOut && a.externalMouseOut()
-// }, ClassifiedPointsMap.prototype.closeToolTip = function() {
-//     var a = this;
-//     a.tooltip.showing = !1, a.hideToolTip()
-// }, ClassifiedPointsMap.prototype.changeActiveAttribute = function(a) {
-//     this.activeAttribute = a, this.g.selectAll("circle").style("fill", this.pointSymbology), this.hideEmptyActiveAttributes === !0 && this.g.selectAll("circle").style("display", function(b) {
-//         return b[a] || "" !== b[a] && 0 == b[a] ? "" : "none"
-//     }), this.tooltip.renderToolTip(this.tooltip.currentHoverPoint)
-// }, ClassifiedPointsMap.prototype.setSymbology = function(a) {
-//     this.symbology = a, this.symbologyScale = d3.scale.threshold().domain(a.breaks).range(a.colors);
-//     var b;
-//     this.rangeLabels = a.breaks.map(function(a, c) {
-//         var d;
-//         return d = 0 == c ? "<= " + a : b + " - " + a, b = a, d
-//     }), this.rangeLabels.push("> " + b), this.drawLegend()
-// }, ClassifiedPointsMap.prototype.drawLegend = function(a) {
-//     a || (a = this.width);
-//     var b = Math.min(100, .9 * a / this.symbology.colors.length);
-//     this.legendLinear = d3.legend.color().shapeWidth(b).shapeHeight(15).orient("horizontal").scale(this.symbologyScale).labels(this.rangeLabels), d3.select("#naaqs-map-mapLegend").selectAll("*").remove(), this.legendElement = d3.select("#naaqs-map-mapLegend").append("svg").attr("class", "naaqs-map-legendLinear").call(this.legendLinear), this.legendElement.attr("width", this.legendElement.select(".legendCells").node().getBBox().width).attr("height", this.legendElement.select(".legendCells").node().getBBox().height).style("padding", 0), this.legendElement.selectAll(".legendCells .cell .label").style("font-size", "");
-//     var c = parseInt(this.legendElement.selectAll(".legendCells .cell .label").style("font-size")),
-//         d = 0;
-//     this.legendElement.selectAll(".legendCells .cell .label").each(function() {
-//         a = this.getBBox().width, a > d && (d = a)
-//     });
-//     var e = c * Math.min(1, .8 * b / d);
-//     this.legendElement.selectAll(".legendCells .cell .label").style("font-size", e + "px")
-// }, ClassifiedPointsMap.prototype.resize = function(a) {
-//     var b = this;
-//     if (a || (a = d3.select("#" + this.containerID).style("width")), a) {
-//         var c = this.percentSize;
-//         if (this.percentSize = parseInt(a) / this.width, 0 == this.useViewBox) {
-//             this.svg.attr("width", this.width * this.percentSize).attr("height", this.height * this.percentSize);
-//             var d = this.percentSize * this.zoomPanBehavior.scale(),
-//                 e = this.zoomPanBehavior.translate().map(function(a) {
-//                     return b.percentSize / c * a
-//                 });
-//             this.zoomPanBehavior.translate(e), this.g.attr("transform", "translate(" + e + ")scale(" + d + ")")
-//         }
-//         d3.select("#" + this.domID).style("height", this.defaultHeight * parseInt(a) / this.defaultWidth + "px"), this.scaledPointSize = this.pointSize / this.percentSize, this.scaledPointStroke = this.pointStroke / this.percentSize;
-//         var f = .25;
-//         f = 1;
-//         var g = Math.min(1, (1 - f) * parseInt(a) / this.defaultWidth + f);
-//         this.scaledPointSize *= g, this.scaledPointStroke *= g;
-//         var h = 1;
-//         this.zoomPanBehavior && (h = this.zoomPanBehavior.scale()), this.points.attr("r", this.scaledPointSize / h).style("stroke-width", this.scaledPointStroke / h), this.drawLegend(parseInt(a)), this.tooltip.currentPointElement && this.tooltip.moveToolTip(this.tooltip.currentPointElement), this.externalResize && this.externalResize()
-//     }
-// };
-// var LineAreaChart = function(a, b, c, d, e) {
-//     var f = this;
-//     this.domID = a, this.data = null, this.standard = null, this.defaultWidth = 960, this.defaultHeight = 420, this.autoSize = !0, d && (this.percentSize = d, this.autoSize = !1), this.margin = {
-//         top: 40,
-//         right: 20,
-//         bottom: 60,
-//         left: 80
-//     }, this.chartWidth = this.getChartWidth(this.defaultWidth), this.chartHeight = this.getChartHeight(this.defaultHeight), this.heightOverwidth = c || this.chartHeight / this.chartWidth, this.minimumHeight = b || 0, this.getAutoSize(), this.legendWidth = 200, this.legendHeight = 90, this.title = {}, this.ytitle = {}, this.xField = null, this.yField = null, this.getXdomain = null, this.getYdomain = null, this.xTickSize = null, this.yTickSize = null, this.drawPaths = null, this.addLegend = null, this.currentX = null, this.tooltipData = {}, this.slider = null, this.useTransitions = !1, this.externalMouseOver = null, this.externalMouseOut = null, this.pointSize = 6, this.tooltip = new MapChartTooltip(f, e), this.debouncer = new MapChartResize(this, function() {
-//         f.makeChart()
-//     }, 200)
-// };
-// LineAreaChart.prototype.getChartWidth = function(a) {
-//     return a || (a = this.width), a - this.margin.left - this.margin.right
-// }, LineAreaChart.prototype.getChartHeight = function(a) {
-//     return a || (a = this.height), a - this.margin.top - this.margin.bottom
-// }, LineAreaChart.prototype.getAutoSize = function() {
-//     this.autoSize === !0 && (this.percentSize = parseInt(d3.select("#" + this.domID).style("width")) / this.defaultWidth), this.width = this.defaultWidth * this.percentSize;
-//     var a = Math.max(this.minimumHeight, this.getChartWidth(this.width) * this.heightOverwidth);
-//     this.height = a + this.margin.top + this.margin.bottom
-// }, LineAreaChart.prototype.showToolTip = function() {
-//     var a = this;
-//     a.tooltip.showToolTip && a.tooltip.showToolTip(null, a.dragArea.node()), a.externalMouseOver && a.externalMouseOver()
-// }, LineAreaChart.prototype.hideToolTip = function() {
-//     var a = this;
-//     a.tooltip.hideToolTip && a.tooltip.hideToolTip(), a.externalMouseOut && a.externalMouseOut()
-// }, LineAreaChart.prototype.setTooltipHover = function(a) {
-//     var b = this;
-//     a.on("mouseenter", function(a) {
-//         b.tooltip.disable !== !0 && b.showToolTip()
-//     }).on("mouseleave", function() {
-//         b.hideToolTip()
-//     })
-// }, LineAreaChart.prototype.makeChart = function() {
-//     this.getAutoSize(), this.title.text || (this.margin.top = 10), this.chartWidth = this.getChartWidth(), this.chartHeight = this.getChartHeight(), this.getXdomainDefault = function(a) {
-//         return d3.extent(a.data, function(b) {
-//             return 1 * b[a.xField]
-//         })
-//     }, this.getXdomain || (this.getXdomain = this.getXdomainDefault);
-//     var a = this.getXdomain(this);
-//     this.xScale = d3.scale.linear().range([0, this.chartWidth]).domain(a);
-//     var b = this.getYdomain(this);
-//     this.yScale = d3.scale.linear().range([this.chartHeight, 0]).domain(b);
-//     var c = this.chartWidth / 90 + 1,
-//         d = this.chartHeight / 50 + 1;
-//     this.xTickSize && (c = (a[1] - a[0]) / this.xTickSize + 1), this.yTickSize && (d = (b[1] - b[0]) / this.yTickSize + 1), this.xAxis = d3.svg.axis().scale(this.xScale).orient("bottom").ticks([c]).tickFormat(d3.format("d")).innerTickSize(-this.chartHeight).outerTickSize(0).tickPadding(10), this.yAxis = d3.svg.axis().scale(this.yScale).orient("left").ticks([d]).innerTickSize(-this.chartWidth).outerTickSize(0).tickPadding(10), d3.select("#" + this.domID + " .naaqs-chart-svg").selectAll("*").remove(), this.svgBottom = d3.select("#" + this.domID + " .naaqs-chart-svg").append("svg").attr("width", this.width).attr("height", this.height), this.svg = this.svgBottom.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")"), this.verticalLineGroup = this.svgBottom.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")"), this.addTitle(), this.addAxes(), this.addLegend(), this.drawPaths(), this.addVerticalLine(), this.tooltip.offset = {
-//         x: this.pointSize,
-//         y: this.pointSize
-//     }
-// }, LineAreaChart.prototype.addVerticalLine = function() {
-//     var a = this;
-//     this.bisect = d3.bisector(function(b) {
-//         return b[a.xField]
-//     }).left, this.verticalLine = this.verticalLineGroup.append("line").attr({
-//         x1: 0,
-//         y1: 0,
-//         x2: 0,
-//         y2: this.chartHeight
-//     }).attr("stroke", "black").attr("class", "naaqs-chart-crosshair-vertical"), this.setTooltipHover(this.verticalLine), this.horizontalLine = this.svg.append("line").attr({
-//         x1: 0,
-//         y1: 0,
-//         x2: this.chartWidth,
-//         y2: 0
-//     }).attr("stroke", "black").attr("class", "naaqs-chart-crosshair-horizontal"), this.movingPoint = this.verticalLineGroup.append("circle").attr("opacity", 0).attr("class", "naaqs-chart-movingPoint"), this.movingPoint.style("r", null);
-//     var b = parseInt(this.movingPoint.style("r"));
-//     b && (this.pointSize = b), this.movingPoint.style("r", this.pointSize + "px"), this.movingPoint.style("r") || this.movingPoint.attr("r", this.pointSize + "px"), this.dragArea = this.verticalLineGroup.append("circle").attr("opacity", 0).attr({
-//         r: 50
-//     }), this.setTooltipHover(this.dragArea), this.dragBehavior = d3.behavior.drag().on("drag", function(b, c) {
-//         var d = d3.event.x,
-//             e = a.xScale.invert(d);
-//         a.slider ? (e = Math.min(Math.max(e, a.slider.min), a.slider.max), a.slider.moveSlider(e)) : a.moveLine(e)
-//     }), this.dragArea.call(this.dragBehavior), this.currentX || (this.currentX = this.data[0][a.xField]), this.moveLine(this.currentX)
-// }, LineAreaChart.prototype.getInterpolatedYvalue = function(a, b, c) {
-//     return 1 * b + (1 * c - 1 * b) * (a - 1 * parseInt(a))
-// }, LineAreaChart.prototype.moveLine = function(a) {
-//     function b() {
-//         var b = {};
-//         Object.keys(c.data[0]).forEach(function(d) {
-//             b[d] = c.getInterpolatedYvalue(a, h[d], g[d])
-//         }), c.tooltip.renderToolTip(b), c.tooltip.moveToolTip(c.dragArea.node(), this.useTransitions)
-//     }
-//     var c = this,
-//         d = this.getXdomainDefault(this)[1];
-//     if (!(a > d)) {
-//         this.currentX = a;
-//         var e = this.bisect(this.data, a),
-//             f = 0;
-//         e > 0 && (f = e - 1), a == parseInt(a) && (f = e);
-//         var g = this.data[e],
-//             h = this.data[f],
-//             i = this.xScale(a),
-//             j = this.getInterpolatedYvalue(a, h[c.yField], g[c.yField]),
-//             k = this.yScale(j);
-//         a <= this.data[0][c.xField] || this.useTransitions !== !0 ? (d3.select("#" + this.domID + " .naaqs-chart-crosshair-vertical").attr("transform", function() {
-//             return "translate(" + i + ",0)"
-//         }), d3.select("#" + this.domID + " .naaqs-chart-crosshair-horizontal").attr("transform", function() {
-//             return "translate(0," + k + ")"
-//         }), this.movingPoint.attr("opacity", 1).attr("cx", i).attr("cy", k), this.dragArea.attr("cx", i).attr("cy", k).call(b)) : (d3.select("#" + this.domID + " .naaqs-chart-crosshair-vertical").transition().attr("transform", function() {
-//             return "translate(" + i + ",0)"
-//         }), d3.select("#" + this.domID + " .naaqs-chart-crosshair-horizontal").transition().attr("transform", function() {
-//             return "translate(0," + k + ")"
-//         }), this.movingPoint.transition().attr("opacity", 1).attr("cx", i).attr("cy", k), this.dragArea.attr("cx", i).attr("cy", k).call(b))
-//     }
-// }, LineAreaChart.prototype.addTitle = function() {
-//     this.htmlTitle = d3.select("#" + this.domID + "-container .naaqs-chart-title span"), this.svgTitle = null;
-//     var a = 20,
-//         b = 20,
-//         c = 1;
-//     if (this.htmlTitle.empty()) this.svgTitle = this.svg.append("text").attr("y", 0 - this.margin.top / 2).attr("text-anchor", "middle").text(this.title.text), a = parseInt(this.svgTitle.style("font-size")), c = this.svgTitle.node().getBBox().width / this.chartWidth, c > 1 && (c = Math.min(1, this.svgTitle.node().getBBox().width / this.width)), b = Math.min(a, a / c), this.svgTitle.style("font-size", b + "px"), this.svgTitle.attr("x", this.width / 2 - this.margin.left);
-//     else {
-//         this.htmlTitle.style("font-size", ""), a = parseInt(this.htmlTitle.style("font-size")), this.htmlTitle.html(this.title.text);
-//         var d = .9 * $("#" + this.domID + "-container").width();
-//         c = $(this.htmlTitle.node()).width() / d, b = Math.min(a, a / c), this.htmlTitle.style("font-size", b + "px")
-//     }
-// }, LineAreaChart.prototype.addAxes = function() {
-//     this.axes = this.svg.append("g").attr("clip-path", "url(#axes-clip)"), this.xAxisElement = this.svg.append("g").attr("id", "naaqs-chart-axis-x").attr("class", "x naaqs-chart-axis").attr("transform", "translate(0," + this.chartHeight + ")").call(this.xAxis), this.yAxisElement = this.axes.append("g").attr("class", "y naaqs-chart-axis").call(this.yAxis), this.yAxisTitle = this.yAxisElement.append("text").attr("transform", "rotate(-90)").attr("dy", ".71em").attr("class", "naaqs-chart-yaxis-title").style("text-anchor", "middle").text(this.ytitle.text);
-//     var a = parseInt(this.yAxisTitle.style("font-size")),
-//         b = this.yAxisTitle.node().getBBox().width / this.chartHeight;
-//     b > 1 && this.yAxisTitle.style("font-size", a / b + "px");
-//     var c = this.yAxisTitle.node().getBBox().height,
-//         d = this.yAxisElement.node().getBBox().width - this.chartWidth;
-//     this.yAxisTitle.attr("y", 0 - 1.5 * c - d).attr("x", -this.chartHeight / 2)
-// };
-// var MapChartSlider = function(a, b, c, d, e, f, g, h) {
-//     var i = this;
-//     this.domID = a, this.min = b, this.max = c, this.step = d, this.tickSize = g, this.stepIncrements = e || 1, this.stepTime = f || 1, this.onSlide = h, this.autoPlayInterval = null, this.resetSliderTimeout = null, this.restartSliderTimeout = null, this.currentValue = b, this.currentIncrement = 0, this.slider = null, this.refresh(b, c, d, e, f, g), this.btnPlay = d3.select("#" + this.domID + " .btnPlay"), this.btnStop = d3.select("#" + this.domID + " .btnStop"), this.setStartStopClickHandlers(), this.debouncer = new MapChartResize(this, function() {
-//         i.refresh()
-//     }, 200)
-// };
-// MapChartSlider.prototype.refresh = function(a, b, c, d, e, f) {
-//     var g = this;
-//     this.min = a || this.min, this.max = b || this.max, this.step = c || this.step, this.tickSize = f || this.tickSize, this.stepIncrements = d || this.stepIncrements || 1, this.stepTime = e || this.stepTime || 1,
-//         this.resize(), d3.select("#" + g.domID + " .slider").selectAll("*").remove();
-//     var h = d3.svg.axis().orient("bottom").tickFormat(d3.format("d"));
-//     if (g.tickSize) {
-//         var i = (g.max - g.min) / g.tickSize + 1;
-//         h.ticks(i)
-//     }
-//     g.slider = d3.slider().axis(h).min(g.min).max(g.max).step(g.step).on("slide", g.onSlide), d3.select("#" + g.domID + " .slider").call(g.slider), g.totalIncrements = g.stepIncrements * Math.round((b - a) / c), g.incrementSize = g.step / g.stepIncrements
-// }, MapChartSlider.prototype.moveSlider = function(a) {
-//     this.slider.value(a), this.slider.on("slide")(null, a)
-// }, MapChartSlider.prototype.autoIncrement = function(a) {
-//     var b = this;
-//     b.currentValue += b.incrementSize, b.currentValue = 1 * b.currentValue.toFixed(10), b.currentValue > b.max ? (b.moveSlider(b.max), b.currentValue = b.min, clearInterval(b.autoPlayInterval), b.resetSliderTimeout = setTimeout(function() {
-//         b.moveSlider(b.currentValue)
-//     }, 1e3 * b.stepTime), b.restartSliderTimeout = setTimeout(function() {
-//         b.autoPlayInterval = setInterval(function() {
-//             b.autoIncrement()
-//         }, 1e3 * b.stepTime / b.stepIncrements)
-//     }, 1e3 * b.stepTime + 300)) : b.moveSlider(b.currentValue)
-// }, MapChartSlider.prototype.setStartStopClickHandlers = function() {
-//     var a = this;
-//     a.btnStop.on("click", function() {
-//         a.stop()
-//     }), a.btnPlay.on("click", function() {
-//         a.play()
-//     })
-// }, MapChartSlider.prototype.stop = function() {
-//     var a = this;
-//     clearInterval(a.autoPlayInterval), clearTimeout(a.resetSliderTimeout), clearTimeout(a.restartSliderTimeout), a.autoPlayInterval = null, a.resetSliderTimeout = null, a.restartSliderTimeout = null, a.btnPlay.style("display", null), a.btnStop.style("display", "none")
-// }, MapChartSlider.prototype.play = function() {
-//     var a = this;
-//     a.moveSlider(a.currentValue), a.autoPlayInterval = setInterval(function() {
-//         a.autoIncrement()
-//     }, 1e3 * a.stepTime / a.stepIncrements), a.btnPlay.style("display", "none"), a.btnStop.style("display", null)
-// }, MapChartSlider.prototype.resize = function(a) {
-//     a || (a = d3.select("#" + this.domID).style("width")), a && d3.select("#" + this.domID + " .slider").style("width", parseInt(a) - 50 + "px")
-// }, MapChartSlider.prototype.debounce = function(a, b) {
-//     var c = -1;
-//     return function() {
-//         c > -1 && window.clearTimeout(c), c = window.setTimeout(a, b)
-//     }
-// };
-// var MapChartTooltip = function(a, b) {
-//     this.host = a, this.tooltipClass = b || "naaqs-tooltip", this.offset = null, this.data = {}, this.currentHoverPoint = null, this.currentPointElement = null, this.div = d3.select("#" + this.host.domID).select("." + this.tooltipClass), this.content = this.div.select(".content"), this.templateElement = this.div.select(".template"), this.templateElement.empty() || (this.template = this.templateElement.text()), this.ghostDiv = $(this.div.node()).clone(), $("body").append(this.ghostDiv), this.disable = !1, this.showing = !1, this.hovering = !1
-// };
-// MapChartTooltip.prototype.renderToolTip = function(a) {
-//     var b = this;
-//     if (a && this.template) {
-//         a.activeAttribute = a[b.host.activeAttribute];
-//         var c = this.template,
-//             d = c.match(/<<[^>]*>>/g);
-//         d.forEach(function(d) {
-//             var e = d.replace(/[<>]/g, "").split(":"),
-//                 f = e[0],
-//                 g = "",
-//                 h = !1;
-//             if (/^d\./.test(f)) g = a[f.replace(/^d\./, "")];
-//             else if (b.data && /^f\./.test(f)) {
-//                 h = !0;
-//                 var i = null;
-//                 e.length > 1 && (i = a[e[1]]), b.data[f] && (g = b.data[f](i))
-//             } else g = b.data[f];
-//             var j = null;
-//             if (h ? e.length > 2 && (j = e[2]) : e.length > 1 && (j = e[1]), null !== j && isFinite(parseFloat(g))) try {
-//                 "string" == typeof g && (g = g.replace(",", "")), parseInt(j) == j && isFinite(j) || (j = b.data[j]), parseInt(j) == j && isFinite(j) && (j <= 10 && (g = parseFloat(g).toFixed(10)), g = b.round10(parseFloat(g), j))
-//             } catch (k) {}
-//             c = c.replace(d, g)
-//         }, this), this.content.html(c), this.ghostDiv.html(c)
-//     }
-// }, MapChartTooltip.prototype.round10 = function(a, b) {
-//     return Number(Math.round(a + "e" + b) + "e-" + b)
-// }, MapChartTooltip.prototype.showToolTip = function(a, b) {
-//     this.div.style("display", null), a && (this.currentHoverPoint = a, this.renderToolTip(a)), b && (this.currentPointElement = b, this.moveToolTip(b))
-// }, MapChartTooltip.prototype.hideToolTip = function() {
-//     this.div.style("display", "none"), this.currentHoverPoint = null, this.currentPointElement = null
-// }, MapChartTooltip.prototype.refresh = function() {
-//     this.renderToolTip(this.currentHoverPoint)
-// }, MapChartTooltip.prototype.relocate = function() {
-//     this.moveToolTip(this.currentPointElement)
-// }, MapChartTooltip.prototype.moveToolTip = function(a, b) {
-//     var c = {
-//         x: 0,
-//         y: 0
-//     };
-//     this.offset && (c = {
-//         x: this.offset.x,
-//         y: this.offset.y
-//     });
-//     var d = {},
-//         e = $(this.div.node()),
-//         f = $(a).offset(),
-//         g = a.getBoundingClientRect().width,
-//         h = a.getBoundingClientRect().height;
-//     f.left += g / 2, f.top += h / 2;
-//     var i = $(window).scrollTop(),
-//         j = $(window).scrollLeft(),
-//         k = $(window).height(),
-//         l = $(window).width();
-//     d.top = f.top - i, d.left = f.left - j, d.bottom = k - d.top, d.right = l - d.left, e.css({
-//         width: "auto",
-//         height: "auto"
-//     }), this.ghostDiv.css({
-//         left: j + "px",
-//         top: i + "px"
-//     });
-//     var m = this.ghostDiv.outerWidth(),
-//         n = this.ghostDiv.outerHeight();
-//     m > l ? (e.outerWidth(l - 20), n = e.outerHeight()) : e.outerWidth(m), m > d.right && (d.left > d.right ? c.x = -1 * Math.min(m + c.x, d.left - 10) : c.x = -1 * (m - d.right)), n > d.bottom && (d.top > d.bottom ? c.y = -1 * Math.min(n + c.y, d.top - 5) : c.y = -1 * (n - d.bottom));
-//     var o = f.top + c.y,
-//         p = f.left + c.x;
-//     if (this.host.useRelativeTooltip === !0) {
-//         var q = $("#" + this.host.domID).offset();
-//         o -= q.top, p -= q.left
-//     }
-//     b ? this.div.transition().style("left", p + "px").style("top", o + "px") : this.div.style("left", p + "px").style("top", o + "px")
-// };
-// var MapChartResize = function(a, b, c) {
-//     this.host = a, this.fn = b, this.dealy = c, d3.select(window).on("resize." + a.constructor.name + "_" + a.domID, this.debounce(b, c))
-// };
-// MapChartResize.prototype.debounce = function(a, b) {
-//     var c = -1;
-//     return function() {
-//         c > -1 && window.clearTimeout(c), c = window.setTimeout(a, b)
-//     }
-// };
-// var naaqsMapChart = {};
-// ! function() {
-//     function a(a, b) {
-//         b == parseInt(b) && (I.currentValue = b, d3.select("#sliderText").text(b), F.tooltip.data.year = b, F.changeActiveAttribute("val" + b), G.moveLine(parseInt(b), !0), H.moveLine(parseInt(b), !0))
-//     }
-
-//     function b(a) {
-//         var b = d3.select("#naaqs-emissionMenu ul");
-//         b.selectAll("*").remove(), E[a].emissions.forEach(function(c, d) {
-//             var e = !1;
-//             0 === d && (e = !0), b.append("li").html(c.title).classed("active", e).on("click", function() {
-//                 l(a, d, y[0]), d3.select(this.parentNode).selectAll("li").classed("active", !1), d3.select(this).classed("active", !0)
-//             })
-//         })
-//     }
-
-//     function c(a, b) {
-//         d3.json("data/d3/us.json", function(c, d) {
-//             return c ? void(b && b(c)) : (F.mapStates(d), void(a ? e(a, b) : b && b(null)))
-//         })
-//     }
-
-//     function d(a, b) {
-//         d3.csv(a.csv, function(c, d) {
-//             return c ? void(b && b(c)) : (a.actions(d), void(b && b(null)))
-//         })
-//     }
-
-//     function e(a, b) {
-//         var c = {};
-//         c.csv = "data/d3/concentrations/" + E[a].file, c.actions = function(b) {
-//             F.tooltip.data.pollutant = E[a].pollutantLabel, F.tooltip.data.units = E[a].units, F.tooltip.data.pollutantDigits = E[a].digits, E.symbology.breaks = E[a].breaks, F.plotPoints(b, E.symbology);
-//             var c = f(b);
-//             D[a] || (D[a] = h(c)), k(B)
-//         }, d(c, b)
-//     }
-
-//     function f(a) {
-//         new Date;
-//         if (!a) return null;
-//         var b, c = [],
-//             d = y[1] - y[0] + 1,
-//             e = new Array(d),
-//             f = 0;
-//         return a.forEach(function(a) {
-//             for (var h, i = !1, j = 0; j < d; j++) {
-//                 h = y[0] + j;
-//                 var k = parseFloat(a["val" + h]);
-//                 k || 0 === k ? e[j] = k : (e[j] = null, i = !0)
-//             }
-//             i && (f += 1), i && (e = g(e)), b = {};
-//             for (var j = 0; j < d; j++) h = y[0] + j, b["val" + h] = e[j];
-//             c.push(b)
-//         }), c
-//     }
-
-//     function g(a) {
-//         if (!a) return null;
-//         var b = a[0],
-//             c = null,
-//             d = 0,
-//             e = new Array(a.length);
-//         return a.forEach(function(f, g) {
-//             e[g] = f, null === f && (d += 1), g > 0 && null !== f ? (c = f, null === b ? d3.range(d).forEach(function(a) {
-//                 e[a] = c
-//             }) : d3.range(d).forEach(function(a) {
-//                 e[g + a - d] = (a + 1) / (d + 1) * (c - b) + b
-//             }), b = c, d = 0) : g === a.length - 1 && d3.range(d).forEach(function(a) {
-//                 e[g + a - d + 1] = b
-//             })
-//         }), e
-//     }
-
-//     function h(a) {
-//         for (var b, c, d = [], e = y[0]; e <= y[1]; e++) b = a.map(function(a) {
-//             return parseFloat(a["val" + e])
-//         }).filter(function(a) {
-//             return a || 0 === a
-//         }), c = {
-//             year: e
-//         }, c.avg = d3.mean(b), c.min = d3.min(b), c.max = d3.max(b), b.sort(function(a, b) {
-//             return a - b
-//         }), c.p10 = i(b, .1), c.p50 = i(b, .5), c.p90 = i(b, .9), d.push(c);
-//         return d
-//     }
-
-//     function i(a, b) {
-//         var c = a.length,
-//             d = c * b;
-//         if (d < 1) return a[0];
-//         if (d >= c) return a[c - 1];
-//         var e;
-//         return j(d) ? (a[d - 1] + a[d]) / 2 : (e = Math.ceil(d), a[e - 1])
-//     }
-
-//     function j(a) {
-//         var b;
-//         return !isNaN(a) && (b = parseFloat(a), (0 | b) === b)
-//     }
-
-//     function k(a) {
-//         G.data = D[a], G.standard = E[a].standard, G.title.text = E[a].title, G.ytitle.text = "Concentration (" + E[a].units + ")", G.tooltip.data.pollutantDigits = E[a].digits, G.tooltip.data.units = E[B].units, G.makeChart()
-//     }
-
-//     function l(a, b, c, e) {
-//         var f = E[a].emissions.length > 0;
-//         if (d3.select("#naaqs-emissionGraph").style("display", f ? "" : "none"), d3.select("#naaqs-emissionGraph-container #naaqs-chart-legend").style("display", f ? "" : "none"), d3.select("#naaqs-emissionGraph-container .naaqs-chart-title").style("display", f ? "" : "none"), d3.select("#naaqs-emissionGraph-container #naaqs-emission-alternateText").style("display", "none"), !f) return E[a].emissionsAlternateText && (d3.select("#naaqs-emission-alternateText").style("display", ""), d3.select("#naaqs-emission-alternateText").html(E[a].emissionsAlternateText)), void(e && e(null));
-//         var g = {};
-//         g.csv = "data/d3/emissions/" + E[a].emissions[b].file, g.actions = function(d) {
-//             c && (d = d.filter(function(a) {
-//                 return a.year >= c
-//             })), d = d.map(function(a) {
-//                 return a.total = 0, ["stationary", "industrial", "highway", "nonroad"].forEach(function(b) {
-//                     a[b] = a[b] / 1e3, a.total += a[b]
-//                 }), a
-//             }), H.data = d, H.title.text = E[a].emissions[b].title, H.makeChart(d)
-//         }, d(g, e)
-//     }
-
-//     function m(a) {
-//         return a ? (console.error("Error loading charts: "), void console.error(a)) : (G.externalMouseOver = function() {
-//             H.tooltip.showToolTip(null, H.dragArea.node())
-//         }, G.externalMouseOut = function() {
-//             H.tooltip.hideToolTip()
-//         }, H.externalMouseOver = function() {
-//             G.tooltip.showToolTip(null, G.dragArea.node())
-//         }, H.externalMouseOut = function() {
-//             G.tooltip.hideToolTip()
-//         }, I.moveSlider(I.currentValue), void(C === !0 && I.play()))
-//     }
-
-//     function n(a) {
-//         B = a, o(a), b(a);
-//         var c = E[a].minYear || x;
-//         y[0] !== c && (y[0] = c, I.refresh(y[0], y[1], 1, 1, 1), I.currentValue < c && (I.currentValue = c)), naaqsMapChart.naaqsMap.closeToolTip(), d3_queue.queue().defer(e, a).defer(l, B, 0, y[0]).await(function() {
-//             I.moveSlider(parseInt(I.currentValue))
-//         })
-//     }
-
-//     function o() {
-//         var a = d3.select("#mapPollutant");
-//         a.html(E[B].title), a.style("font-size", "");
-//         var b = parseInt(a.style("font-size")),
-//             c = $("#naaqs-map-title").width() - 3.5 * $("#naaqs-map-home").width(),
-//             d = Math.max(1, $("#mapPollutant").width() / c);
-//         a.style("font-size", b / d + "px")
-//     }
-
-//     function p(a) {
-//         var b = G;
-//         b.data.forEach(function(c, d) {
-//             b.data[d].location = a["val" + c.year]
-//         }), b.locationLine = d3.svg.line().defined(function(a) {
-//             return !!(a.location || "" !== a.location && 0 == a.location)
-//         }).x(function(a) {
-//             return b.xScale(a.year)
-//         }).y(function(a) {
-//             return b.yScale(a.location)
-//         }), b.makeChart(b.data), q(a), b.moveLine(b.currentX)
-//     }
-
-//     function q() {
-//         var a = G;
-//         a.svg.datum(a.data), a.locationLineElement = a.svg.append("path").attr("class", "naaqs-chart-line-location").attr("d", a.locationLine).attr("clip-path", "url(#rect-clip)");
-//         var b = .25,
-//             c = Math.min(1, (1 - b) * a.percentSize + b);
-//         a.locationLinePoints = a.svg.append("g").attr("class", "naaqs-chart-point-location").selectAll(".dot").data(a.data.filter(function(a) {
-//             return !!(a.location || "" !== a.location && 0 == a.location)
-//         })).enter().append("circle").attr("class", "dot").attr("yval", function(a) {
-//             return a.location
-//         }).attr("cx", function(b) {
-//             return a.xScale(b.year)
-//         }).attr("cy", function(b) {
-//             return a.yScale(b.location)
-//         }), a.locationLinePoints.style("r", null);
-//         var d = a.locationLinePoints.style("r");
-//         d || (d = a.pointSize);
-//         var e = parseInt(d) * c + "px";
-//         a.locationLinePoints.style("r", e), a.locationLinePoints.style("r") || a.locationLinePoints.attr("r", e)
-//     }
-
-//     function r(a) {
-//         var b = G;
-//         b.locationLine = null, b.locationLineElement && b.locationLineElement.remove(), b.locationLinePoints && b.locationLinePoints.remove(), b.data.forEach(function(a, c) {
-//             delete b.data[c].location
-//         }), b.svg.datum(b.data), b.makeChart(b.data), b.moveLine(b.currentX)
-//     }
-
-//     function s() {
-//         var a = this;
-//         a.percentileArea = d3.svg.area().x(function(b) {
-//             return a.xScale(b.year)
-//         }).y0(function(b) {
-//             return a.yScale(b.p90)
-//         }).y1(function(b) {
-//             return a.yScale(b.p10)
-//         }), a.averageline = d3.svg.line().x(function(b) {
-//             return a.xScale(b.year)
-//         }).y(function(b) {
-//             return a.yScale(b.avg)
-//         }), a.standardLine = d3.svg.line().x(function(b) {
-//             return a.xScale(b.year)
-//         }).y(function(b) {
-//             return a.yScale(a.standard)
-//         }), a.svg.datum(a.data), a.svg.append("path").attr("class", "naaqs-chart-area naaqs-chart-percentile").attr("d", a.percentileArea).attr("clip-path", "url(#rect-clip)"), a.svg.append("path").attr("class", "naaqs-chart-line-average").attr("d", a.averageline).attr("clip-path", "url(#rect-clip)"), a.svg.append("path").attr("class", "naaqs-chart-line-standard").attr("d", a.standardLine).attr("clip-path", "url(#rect-clip)"), a.svg.append("text").attr("x", a.chartWidth - 20 * a.percentSize).attr("y", a.yScale(a.standard) - 10 * a.percentSize).attr("text-anchor", "end").style("font-size", ".75em").text("Most Recent National Standard"), a.locationLine && q()
-//     }
-
-//     function t() {
-//         this.legend = this.svg.append("g").attr("class", "naaqs-chart-legend");
-//         var a = this.legend.append("rect").attr("class", "naaqs-chart-percentile").attr("width", 20).attr("height", 20).attr("x", 0).attr("y", 0),
-//             b = new MapChartTooltip(this, "naaqs-tooltip-legend");
-//         b.offset = {
-//             x: 15,
-//             y: -10
-//         }, a.on("mouseenter", function() {
-//             G.tooltip.disable = !0, b.showToolTip(null, this), G.hideToolTip()
-//         }).on("mouseleave", function() {
-//             G.tooltip.disable = !1, b.hideToolTip()
-//         }), this.legend.append("text").attr("x", 25).attr("y", 15).text("90%ile - 10%ile"), this.legend.append("path").attr("class", "naaqs-chart-line-average").attr("d", "M125,10L145,10"), this.legend.append("text").attr("x", 150).attr("y", 15).text("National Average"), this.legend.append("path").attr("class", "naaqs-chart-line-location").attr("d", "M270,10L290,10"), this.legend.append("text").attr("x", 295).attr("y", 15).text("Selected Site");
-//         var c = this.chartWidth / this.legend.node().getBBox().width;
-//         c < 1 ? (c = Math.min(1, this.width / this.legend.node().getBBox().width), c = .9 * c, this.legend.attr("transform", "translate(" + [-this.margin.left + (this.width - c * this.legend.node().getBBox().width) / 2, this.chartHeight + 2 * this.legend.node().getBBox().height] + ")scale(" + c + ")")) : this.legend.attr("transform", "translate(" + (this.chartWidth - this.legend.node().getBBox().width) / 2 + ", " + (this.chartHeight + 2 * this.legend.node().getBBox().height) + ")")
-//     }
-
-//     function w(a, b, c, d) {
-//         c || (c = b.length);
-//         var e = 25,
-//             f = 15,
-//             g = [];
-//         a.legendContainer.empty() ? (a.legend && a.legend.selectAll("*").remove(), d = a.chartHeight + 35) : (a.legendContainer.selectAll("*").remove(), a.legendSvg = a.legendContainer.append("svg").attr("width", a.width).attr("height", 200), a.legendSvgGroup = a.legendSvg.append("g").attr("transform", "translate(" + a.margin.left + ",0)"), a.legend = a.legendSvgGroup.append("g"), d = 0);
-//         var h = 0,
-//             i = 0,
-//             j = 0,
-//             k = 0,
-//             l = 0;
-//         if (b.forEach(function(b) {
-//                 0 === h || (h % c === 0 ? (j += e + 10, i = 0, k += 1, l = 0) : (0 === k && (g[l] = a.legend.node().getBBox().width + f), i = g[l], l += 1)), this.rect = a.legend.append("rect").attr("class", b["class"]).attr("width", e).attr("height", e).attr("x", i).attr("y", j), this.text1 = a.legend.append("text").attr("x", i + e + f).attr("y", j + 10).text(b.text1), this.text2 = a.legend.append("text").attr("x", i + e + f).attr("y", j + 25).text(b.text2), h += 1
-//             }), a.legend.node().getBBox().width > a.width && c === b.length) return w(a, b, 2, d);
-//         var m = a.chartWidth / a.legend.node().getBBox().width;
-//         m < 1 ? (m = Math.min(1, a.width / a.legend.node().getBBox().width), a.legend.attr("transform", "translate(" + [-a.margin.left + (a.width - m * a.legend.node().getBBox().width) / 2, d] + ")scale(" + m + ")")) : a.legend.attr("transform", "translate(" + (a.chartWidth - a.legend.node().getBBox().width) / 2 + ", " + d + ")"), a.legendSvg && a.legendSvg.attr("height", a.legend.node().getBBox().height)
-//     }
-//     var x = 1990,
-//         y = [x, 2015],
-//         z = 5,
-//         A = d3.select("#naaqs-pollutant-dropdown").node(),
-//         C = !1,
-//         D = {},
-//         E = {};
-//     E.symbology = {
-//         colors: [d3.rgb(13, 47, 140), d3.rgb(39, 107, 191), d3.rgb(196, 232, 176), d3.rgb(255, 255, 204)]
-//     }, E.co = {
-//         file: "1990-2015/co.csv",
-//         title: "CO 8-hour Concentration",
-//         standard: 9,
-//         units: "ppm",
-//         digits: 1,
-//         pollutantLabel: "CO"
-//     }, E.co.breaks = [4.4, 9.4, 12.4], E.co.emissions = [{
-//         file: "co.csv",
-//         title: "CO Emissions"
-//     }], E.pb = {
-//         file: "1990-2015/pb.csv",
-//         title: "Lead 3-month Concentration",
-//         standard: .15,
-//         units: "µg/m≥",
-//         digits: 2,
-//         pollutantLabel: "Lead"
-//     }, E.pb.breaks = [.07, .15, 1], E.pb.emissions = [], E.pb.emissionsAlternateText = "As a result of the permanent phase-out of leaded gasoline, controls on emissions of lead compounds through EPAís air toxics program, and other national and state regulations, airborne lead concentrations in the U.S. decreased 94 percent between 1980 and 2007. Since 1996, national Pb emissions have not changed significantly. In EPAís most recent national inventory, the 2011 NEI, the highest amounts of Pb emissions are from Piston Engine Aircrafts, and Ferrous and Non-ferrous Metals industrial sources.", E.no2_mean = {
-//         file: "1990-2015/no2_mean.csv",
-//         title: "NO<sub>2</sub> Annual Concentration",
-//         standard: 53,
-//         units: "ppb",
-//         digits: 0,
-//         pollutantLabel: "NO<sub>2</sub> Annual"
-//     }, E.no2_mean.breaks = [26, 53, 100], E.no2_mean.emissions = [{
-//         file: "nox.csv",
-//         title: "NO<sub>x</sub> Emissions"
-//     }], E.no2_98 = {
-//         file: "1990-2015/no2_98.csv",
-//         title: "NO<sub>2</sub> 1-hour Concentration",
-//         standard: 100,
-//         units: "ppb",
-//         digits: 0,
-//         pollutantLabel: "NO<sub>2</sub> 1-hour"
-//     }, E.no2_98.breaks = [53, 100, 360], E.no2_98.emissions = [{
-//         file: "nox.csv",
-//         title: "NO<sub>x</sub> Emissions"
-//     }], E.ozone = {
-//         file: "1990-2015/ozone.csv",
-//         title: "Ozone 8-hour Concentration",
-//         standard: .07,
-//         units: "ppm",
-//         digits: 3,
-//         pollutantLabel: "Ozone"
-//     }, E.ozone.breaks = [.055, .07, .085], E.ozone.emissions = [{
-//         file: "nox.csv",
-//         title: "NO<sub>x</sub> Emissions"
-//     }, {
-//         file: "voc.csv",
-//         title: "VOC Emissions"
-//     }], E.pm10 = {
-//         file: "1990-2015/pm10.csv",
-//         title: "PM<sub>10</sub> 24-hour Concentration",
-//         standard: 150,
-//         units: "µg/m≥",
-//         digits: 0,
-//         pollutantLabel: "PM<sub>10</sub>"
-//     }, E.pm10.breaks = [54, 154, 254], E.pm10.emissions = [{
-//         file: "pm10.csv",
-//         title: "Direct PM<sub>10</sub> Emissions"
-//     }], E.pm25_mean = {
-//         file: "2000-2015/pm25_mean.csv",
-//         title: "PM<sub>2.5</sub> Annual Concentration",
-//         standard: 12,
-//         units: "µg/m≥",
-//         digits: 1,
-//         pollutantLabel: "PM<sub>2.5</sub> Annual",
-//         minYear: 2e3
-//     }, E.pm25_mean.breaks = [6, 12, 35.5], E.pm25_mean.emissions = [{
-//         file: "pm2_5.csv",
-//         title: "Direct PM<sub>2.5</sub> Emissions"
-//     }, {
-//         file: "so2.csv",
-//         title: "SO<sub>2</sub> Emissions"
-//     }, {
-//         file: "nox.csv",
-//         title: "NO<sub>x</sub> Emissions"
-//     }, {
-//         file: "voc.csv",
-//         title: "VOC Emissions"
-//     }], E.pm25_98 = {
-//         file: "2000-2015/pm25_98.csv",
-//         title: "PM<sub>2.5</sub> 24-hour Concentration",
-//         standard: 35,
-//         units: "µg/m≥",
-//         digits: 1,
-//         pollutantLabel: "PM<sub>2.5</sub> 24-hour",
-//         minYear: 2e3
-//     }, E.pm25_98.breaks = [12, 35.4, 55.4], E.pm25_98.emissions = [{
-//         file: "pm2_5.csv",
-//         title: "Direct PM<sub>2.5</sub> Emissions"
-//     }, {
-//         file: "so2.csv",
-//         title: "SO<sub>2</sub> Emissions"
-//     }, {
-//         file: "nox.csv",
-//         title: "NO<sub>x</sub> Emissions"
-//     }, {
-//         file: "voc.csv",
-//         title: "VOC Emissions"
-//     }], E.so2 = {
-//         file: "1990-2015/so2.csv",
-//         title: "SO<sub>2</sub> 1-hour Concentration",
-//         standard: 75,
-//         units: "ppb",
-//         digits: 0,
-//         pollutantLabel: "SO<sub>2</sub>"
-//     }, E.so2.breaks = [35, 75, 185], E.so2.emissions = [{
-//         file: "so2.csv",
-//         title: "SO<sub>2</sub> Emissions"
-//     }];
-
-
-
-//     var F = new ClassifiedPointsMap("naaqsMap");
-//     F.topojson = topojson, F.useRelativeTooltip = !0, F.init(), y[0] = E[B].minYear || x, F.activeAttribute = "val" + y[0], F.tooltip.data = {
-//         year: y[0],
-//         pollutant: E[B].pollutantLabel,
-//         units: E[B].units,
-//         pollutantDigits: E[B].digits
-//     }, F.tooltip.data["f.isHidden"] = function(a) {
-//         return a ? "" : "hidden"
-//     }, F.tooltip.data["f.isMissing"] = function(a) {
-//         return a || "" !== a && 0 == a ? a : "No Data / Incomplete"
-//     }, F.externalResize = function() {
-//         o()
-//     }, F.externalMouseOver = p, F.externalMouseOut = r, o(), b(B);
-//     var G = new LineAreaChart("naaqs-concentrationGraph", 125, .25, null, "naaqs-tooltip-concentration");
-//     G.margin.top = 10, G.useTransitions = !1, G.useRelativeTooltip = !0, G.tooltip.data = {
-//         units: E[B].units
-//     }, G.tooltip.data["f.isHidden"] = function(a) {
-//         return a ? "" : "hidden"
-//     }, G.tooltip.data["f.isMissing"] = function(a) {
-//         return a || "" !== a && 0 == a ? a : "No Data / Incomplete"
-//     }, G.ytitle.text = "Concentration (" + E[B].units + ")", G.xField = "year", G.yField = "avg", G.getXdomain = null, G.xTickSize = z, G.getYdomain = function(a) {
-//         var b = a.standard,
-//             c = a.standard;
-//         return a.data.length > 0 && "location" in a.data[0] && (b = Math.min(b, d3.min(a.data, function(a) {
-//             return a.location || 0 === a.location ? 1 * a.location : null
-//         })), c = Math.max(c, d3.max(a.data, function(a) {
-//             return a.location || 0 === a.location ? 1 * a.location : null
-//         }))), b = Math.min(b, d3.min(a.data, function(a) {
-//             return 1 * a.p10
-//         })), c = Math.max(c, d3.max(a.data, function(a) {
-//             return 1 * a.p90
-//         })), [Math.max(0, b - .1 * (c - b)), c + .1 * (c - b)]
-//     }, G.drawPaths = s, G.addLegend = t;
-//     var H = new LineAreaChart("naaqs-emissionGraph", 125, .25);
-//     H.margin.bottom = 35, H.margin.top = 10, H.useTransitions = !1, H.useRelativeTooltip = !0, H.ytitle.text = "Million Tons", H.xField = "year", H.yField = "total", H.getXdomain = function() {
-//         return y
-//     }, H.getYdomain = function(a) {
-//         return [0, 1.1 * d3.max(this.data, function(a) {
-//             return 1 * a.total
-//         })]
-//     }, H.xTickSize = z, H.drawPaths = u, H.addLegend = v;
-//     var I = new MapChartSlider("naaqsSlider", y[0], y[1], 1, 1, 1, z, a);
-//     G.slider = I, H.slider = I, d3_queue.queue().defer(c, B).defer(l, B, 0, y[0]).await(m), naaqsMapChart.switchPollutant = n, naaqsMapChart.naaqsMap = F, naaqsMapChart.concentrationChart = G, naaqsMapChart.emissionChart = H
-// }
-// ();
