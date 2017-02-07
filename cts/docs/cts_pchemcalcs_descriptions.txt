@@ -1,0 +1,9 @@
+<h3>External links:</h3>
+
+<a href="http://www2.epa.gov/tsca-screening-tools/epi-suitetm-estimation-program-interface" target="_blank" class="fadeMenu">EPI Suite</a><br><br>
+
+<a href="http://www.archemcalc.com/sparc.html" target="_blank" class="fadeMenu">SPARC</a><br><br>
+
+<a href="http://www.chemaxon.com/" target="_blank" class="fadeMenu">ChemAxon</a><br><br>
+
+<a href="http://www2.epa.gov/chemical-research/toxicity-estimation-software-tool-test" target="_blank" class="fadeMenu">TEST</a><br><br>
