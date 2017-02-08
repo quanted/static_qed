@@ -67,23 +67,27 @@
   color: #0050B8;
 }
 #icon_hem {
-  background-color: #0050B8;
-  color: #3399FF;
+  background-color: #ffffff;
+  color: #00CC33;
 }
 #icon_hms {
-  background-color: #ffffff;
-  color: #00CC33;
+  background-color: #0050B8;
+  color: #3399FF;
 }
 #icon_hwbi {
-  background-color: #0050B8;
-  color: #00CC33;
-}
-#icon_pisces {
   background-color: #ffffff;
   color: #3399FF;
+}
+#icon_pisces {
+  background-color: #0050B8;
+  color: #00CC33;
 }
 #icon_pop {
   background-color: #00CC33;
+  color: #0050B8;
+}
+#icon_sam {
+  background-color: #ffffff;
   color: #0050B8;
 }
 #icon_uber {
