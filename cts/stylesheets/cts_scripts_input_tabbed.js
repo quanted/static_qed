@@ -32,16 +32,16 @@ $( document ).ready(function() {
 		$('input').not('checkbox').removeAttr('data-parsley-group'); // remove from all fields
 		$(input_fields).attr('data-parsley-group', 'validate'); // add group name to inputs
 
-		$('form').parsley().validate("validate"); // todo: figure out why it's still validating the whole form
-		var valid = $('form').parsley().isValid();
+		$('#form').parsley().validate("validate"); // todo: figure out why it's still validating the whole form
+		var valid = $('#form').parsley().isValid();
 
         if (valid) {
         	$.blockUI({
-			  css:{ "top":""+wintop+"", "left":""+winleft+"", "padding": "30px 20px", "width": "400px", "height": "60px", "border": "0 none", "border-radius": "4px", "-webkit-border-radius": "4px", "-moz-border-radius": "4px", "box-shadow": "3px 3px 15px #333", "-webkit-box-shadow": "3px 3px 15px #333", "-moz-box-shadow": "3px 3px 15px #333" },
-			  message: '<h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static_qed/cts/images/loader.gif" style="margin-top:-16px">',
+			  css:{ "top":""+wintop+"", "left":""+winleft+"", "padding": "30px 20px", "width": "400px", "height": "200px", "border": "0 none", "border-radius": "4px", "-webkit-border-radius": "4px", "-moz-border-radius": "4px", "box-shadow": "3px 3px 15px #333", "-webkit-box-shadow": "3px 3px 15px #333", "-moz-box-shadow": "3px 3px 15px #333" },
+			  message: '<div id="pchem_wait"><h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static_qed/cts/images/loader.gif" style="margin-top:-16px"></div>',
 			  fadeIn:  500
 			});
-			setTimeout(function() {$('form').submit();}, 500);
+			setTimeout(function() {$('#form').submit();}, 500);
         }
         else {
         	return;
@@ -141,7 +141,7 @@ function uberNavTabs( modelTabs, subTabs ) {
 		// don't validate fields if hitting "clear" button
 		// var test = $(this);
 
-		var form = $('form');
+		var form = $('#form');
     	form.parsley().validate(); // validate form
 
 		// validate fields before tabbing
@@ -274,7 +274,7 @@ function uberNavTabs( modelTabs, subTabs ) {
 
 function validFields() {
 	// validate fields w/ parsely
-    var form = $('form');
+    var form = $('#form');
     form.parsley().validate(); // validate form
     return form.parsley().isValid(); // check if form is valid
 }

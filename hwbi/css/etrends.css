@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.d3-slider-horizontal,
+/*.d3-slider-horizontal,
 .d3-slider-range {
     height: .8em
 }
@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     position: absolute
-}
+}*/
 
 .hovereffect p,
 a,
@@ -41,14 +41,14 @@ select {
     -moz-appearance: none
 }
 
-#naaqs-emissionMenu li,
+/*#naaqs-emissionMenu li,
 .hovereffect a.info,
 .nav-tabs>li>a,
 a,
 a:focus,
 a:hover {
     text-decoration: none
-}
+}*/
 
 .btn,
 .hovereffect a.info,
@@ -65,7 +65,7 @@ h6 {
     text-transform: uppercase
 }
 
-.d3-slider {
+/*.d3-slider {
     fill: #aaa;
     position: relative;
     font-family: Montserrat, "Open Sans", sans-serif;
@@ -92,14 +92,14 @@ h6 {
     background: #eee;
     background: linear-gradient(to bottom, #eee 0, #ddd 100%);
     z-index: 3
-}
+}*/
 
 .navbar-custom,
 body {
     background-color: #000
 }
 
-.d3-slider-handle:hover {
+/*.d3-slider-handle:hover {
     border: 1px solid #999
 }
 
@@ -141,7 +141,7 @@ body {
     margin-left: 0;
     margin-bottom: -.6em
 }
-
+*/
 @font-face {
     font-family: 'Josefin Sans';
     font-weight: 400;
@@ -1085,7 +1085,7 @@ h6 {
     background-size: cover;
     -o-background-size: cover
 }
-
+/*
 #growth {
     background: url(../../img/TomWickham.jpg) center center no-repeat #000;
     -webkit-background-size: cover;
@@ -1138,7 +1138,7 @@ h6 {
         font-size: 1.857em
     }
 }
-
+*/
 .navbar-header {
     white-space: nowrap;
     margin-left: -25px
@@ -1381,7 +1381,7 @@ h6 {
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5)
 }
 
-#debug,
+/*#debug,
 #video-container,
 #video-viewport,
 .vid-control {
@@ -1419,7 +1419,7 @@ h6 {
 .close:active,
 .close:hover {
     color: #1d9b6c
-}
+}*/
 
 select::-ms-expand {
     display: none
@@ -1469,7 +1469,7 @@ select {
     appearance: none
 }
 
-.vid-control .btnFS,
+/*.vid-control .btnFS,
 .vid-control .btnPly {
     padding: 5px;
     box-shadow: inset 0 0 1px rgba(255, 255, 255, .5);
@@ -1518,13 +1518,13 @@ select {
     position: relative;
     content: "";
     vertical-align: middle
-}
+}*/
 
 .btmControl {
     clear: both
 }
 
-.vid-control .btnPly {
+/*.vid-control .btnPly {
     width: 34px;
     height: 30px;
     background: rgba(0, 0, 0, .5);
@@ -1717,7 +1717,7 @@ select {
 #toxics-map-container {
     border: 1px solid #707073;
     border-radius: 4px
-}
+}*/
 
 .hovereffect {
     float: left;
@@ -2596,7 +2596,7 @@ img.epa_seal {
     }
 }
 
-.naaqs-chart-svg {
+/*.naaqs-chart-svg {
     font: 14px;
     font-family: "Varela Round", Montserrat, "Open Sans", sans-serif
 }
@@ -2642,9 +2642,9 @@ img.epa_seal {
 .naaqs-chart-percentile {
     fill: rgba(51, 173, 255, .8);
     stroke: rgba(0, 91, 153, .8)
-}
+}*/
 
-.naaqs-chart-legend .naaqs-chart-stationary,
+/*.naaqs-chart-legend .naaqs-chart-stationary,
 .naaqs-chart-stationary {
     fill: rgba(144, 238, 126, .8)
 }
@@ -2765,8 +2765,8 @@ div.naaqs-tooltip {
     padding: 0;
     margin-bottom: -1px
 }
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+*/
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
     #naaqs-emissionMenu ul {
         padding: 0;
         text-align: center;
@@ -2978,7 +2978,7 @@ a.d3-slider-handle {
     -moz-transition: none;
     transition: none
 }
-
+*/
 @media print {
     body {
         color: #000;
