@@ -44,6 +44,7 @@ table,td
   border-color: white;
   border-collapse: separate;
   background-color: #E7EADC;
+  font-size: 1.2em;
 }
 table
 {
@@ -348,10 +349,12 @@ body.wait *, body.wait
 
 #pchemprop_table table {
   width: 100%;
+  /*font-size: 1.0em;*/
 }
 
 #pchemprop_table td, #pchemprop_table th {
   text-align: left;
+  font-size: 1.0em;
 }
 
 #pchemprop_table th:not(.chemprop) {
