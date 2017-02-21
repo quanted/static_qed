@@ -44,7 +44,7 @@ table,td
   border-color: white;
   border-collapse: separate;
   background-color: #E7EADC;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 table
 {
@@ -59,6 +59,7 @@ th {
   border: none;
   text-align: center;
   padding: 1px 4px;
+  font-size: 1.5em;
 }
 
 /* CTS Inputs */
