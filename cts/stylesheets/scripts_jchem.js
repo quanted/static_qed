@@ -74,7 +74,8 @@ function importMol(chemical) {
     return;
   }
 
-  var chemical_obj = {'chemical': chemical}; 
+  // var chemical_obj = {'chemical': chemical};
+  var chemical_obj = {'chemical': chemical, 'get_structure_data': true};  // script for chmical editor tab needs structureData <cml> image for marvin sketch 
   
   getChemDetails(chemical_obj, function (molecule_info) {
     sessionStorage.setItem('molecule', JSON.stringify(molecule_info.data)); // set current chemical in session cache
