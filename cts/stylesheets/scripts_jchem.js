@@ -95,7 +95,7 @@ function importMolFromCanvas() {
       return;
     }
 
-    var chemical_obj = {'chemical': mrv_chemical};
+    var chemical_obj = {'chemical': mrv_chemical, 'get_structure_data': true};
 
     getChemDetails(chemical_obj, function (molecule_info) {
 
