@@ -186,6 +186,19 @@ $(document).ready(function() {
 
     // Enable submit only if a reaction library is selected
     $('#cts_reaction_libs input:checkbox').on("change", function() {
+
+        // Mammalian metabolism should not run with any other reaction library..
+        // if (this.
+        var mamm_meta_checked = $('#id_mamm_metabolism:checked').length > 0;
+        var areduct_checked = $('#id_abiotic_reduction:checked').length > 0;
+        var ahydro_checked = $('#id_abiotic_hydrolysis:checked').length > 0;
+        if (mamm_meta_checked && (areduct_checked || ahydro_checked)) {
+            $('#id_mamm_metabolism').prop({'checked': false});  // uncheck, disable if mamm meta checked
+            // if (areduct_checked || areduct_checked) {
+                alert("Mammalian metabolism should not run with additional reaction libraries");
+            // }
+        }
+
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
             $('input.submit').prop('disabled', false).addClass('brightBorders');
         }
