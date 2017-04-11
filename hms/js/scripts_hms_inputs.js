@@ -1,54 +1,29 @@
-$(document).ready(function () {
-    // $('#id_boom_height').closest('tr').hide();
-    // $('#id_orchard_type').closest('tr').hide();
-    // $('#id_drop_size').closest('tr').hide();
+$(document).ready(function() {
 
-    //$("#id_ecosystem_type option[value='Terrestrial Assessment']").prop('disabled',true);
-    //$("#id_calculation_input option[value='Fraction']").prop('disabled',true);
-    //$("#id_calculation_input option[value*='Initial Average']").prop('disabled',true);
-    //$("#id_orchard_type option[value='Normal']").prop('disabled',true);
-    //$("#id_orchard_type option[value='Dense']").prop('disabled',true);
-    //$("#id_orchard_type option[value='Sparse']").prop('disabled',true);
 
-        $('#id_source').change(function () {
+    $('#id_source').change(function(){
+        if(document.input_table.layers) {
+            var element = document.getElementById("id_source");
+            if(element.options[element.selectedIndex].value === 'NLDAS'){
+                 document.input_table.layers.options.length = 0;
+                 document.input_table.layers.options[0] = new Option("0-10cm", 0);
+                 document.input_table.layers.options[1] = new Option("10-40cm", 1);
+                 document.input_table.layers.options[2] = new Option("40-100cm", 2);
+                 document.input_table.layers.options[3] = new Option("100-200cm", 3);
+                 document.input_table.layers.options[4] = new Option("0-100cm", 4);
+                 document.input_table.layers.options[5] = new Option("0-200cm", 5);
+             }
+             else if (element.options[element.selectedIndex].value === 'GLDAS') {
+                document.input_table.layers.options.length = 0;
+                document.input_table.layers.options[0] = new Option("0-10cm", 0);
+                document.input_table.layers.options[1] = new Option("10-40cm", 1);
+                document.input_table.layers.options[2] = new Option("40-100cm", 2);
+                document.input_table.layers.options[3] = new Option("0-100cm", 3);
+             }
+        }
+    });
 
-            if ($(this).val() == "NLDAS" && $('#submodel') == "soilmoisture") {
-                $('#id_layers').clean();
-                $('#id_layers').append($("<option>").val(0).html("0-10cm"));
-                $('#id_layers').append($("<option>").val(1).html("10-40cm"));
-                $('#id_layers').append($("<option>").val(2).html("40-100cm"));
-                $('#id_layers').append($("<option>").val(3).html("100-200cm"));
-                $('#id_layers').append($("<option>").val(4).html("0-100cm"));
-                $('#id_layers').append($("<option>").val(5).html("0-200cm"));
-            }
-            else if($(this).val() == "GLDAS" && $('#submodel') == "soilmoisture"){
-                $('#id_layers').clean();
-                $('#id_layers').append($("<option>").val(0).html("0-10cm"));
-                $('#id_layers').append($("<option>").val(1).html("10-40cm"));
-                $('#id_layers').append($("<option>").val(2).html("40-100cm"));
-                $('#id_layers').append($("<option>").val(3).html("0-100cm"));
-            }
-        });
-    //        $('#id_boom_height').closest('tr').show();
-    //        $('#id_orchard_type').closest('tr').hide();
-            //$('#id_drop_size').closest('tr').show();
-            //$('#id_drop_size').find('option:eq(3)').detach();
-            // $('#id_drop_size').find('option:eq(4)').hide();
-    //    }
-    //      else if ($(this).val() == "Tier I Aerial") {
-    //        $('#id_boom_height').closest('tr').hide();
-    //        $('#id_orchard_type').closest('tr').hide();
-            // $('#id_drop_size').closest('tr').show();
-    //    }
-    //    else if ($(this).val() == "Tier I Orchard/Airblast") {
-    //        $('#id_boom_height').closest('tr').hide();
-            // $('#id_drop_size').closest('tr').hide();
-    //        $('#id_orchard_type').closest('tr').show();
-    //        }
-    
-    //});
-
-    //$(window).bind('beforeunload', function () {
-    //    $(":reset").click();
-    //});
+    $(window).bind('beforeunload', function () {
+        $(":reset").click();
+    });
 });
