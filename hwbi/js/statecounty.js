@@ -49,7 +49,9 @@ $(document).ready(function(){
 
         console.log(poststateData);
 
-        $.post('https://134.67.114.8/hwbi/rest/hwbi/locations/run',             // url
+
+        $.post('https://qedinternal.epa.gov/hwbi/rest/locations/run',             // url
+        // $.post('https://134.67.114.8/hwbi/rest/hwbi/locations/run',             // old url
             JSON.stringify(poststateData),                  // data (as JS object)
             function(data) {                                // success (callback) function
                 updateRIVWeights(data.outputs.domains);
