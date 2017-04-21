@@ -189,8 +189,9 @@ function useServiceValues() {
 
     console.log(postData);
 
-    $.post('https://134.67.114.8/hwbi/rest/hwbi/calc/run',
-        // '/hwbi/rest/hwbi/calc/run',                      // old REST API url
+    $.post('https://qedinternal.epa.gov/hwbi/rest/calc/run',
+        // 'https://134.67.114.8/hwbi/rest/hwbi/calc/run',   // old REST API url
+        // '/hwbi/rest/hwbi/calc/run',                      // another old REST API url
         JSON.stringify(postData),                   // data (as JS object)
         function(data) {                            // success (callback) function
             updateDomainScores(data.outputs.domains);
