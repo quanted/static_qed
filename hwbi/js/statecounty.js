@@ -54,6 +54,7 @@ $(document).ready(function(){
         // $.post('https://134.67.114.8/hwbi/rest/hwbi/locations/run',             // old url
             JSON.stringify(poststateData),                  // data (as JS object)
             function(data) {                                // success (callback) function
+                $.unblockUI();
                 updateRIVWeights(data.outputs.domains);
                 updateDomainScores(data.outputs.domains);
                 updateDomainScores2(data.outputs.domains);
