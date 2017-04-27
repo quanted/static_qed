@@ -194,6 +194,7 @@ function useServiceValues() {
         // '/hwbi/rest/hwbi/calc/run',                      // another old REST API url
         JSON.stringify(postData),                   // data (as JS object)
         function(data) {                            // success (callback) function
+            $.unblockUI();
             updateDomainScores(data.outputs.domains);
             updateRIVWeights(dragVal.domains);
     },
