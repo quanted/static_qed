@@ -51,11 +51,11 @@ $(document).ready(function() {
             $('#id_bw_rat').closest('tr').show();
             $('#id_bwm_other').closest('tr').hide();
         }
-        else{
-           $('#id_bw_rat').closest('tr').hide();
-           $('#id_bwm_other').closest('tr').show();
-       }
-   });
+        else {
+            $('#id_bw_rat').closest('tr').hide();
+            $('#id_bwm_other').closest('tr').show();
+        }
+    });
     $('#id_b_species').change(function() { 
        
         if ($(this).val() == "178"){
@@ -73,7 +73,7 @@ $(document).ready(function() {
            $('#id_bw_duck').closest('tr').hide();
            $('#id_bw_quail').closest('tr').hide();
        }
-   });
+    });
     $('#id_rate_c').change(function() { 
        $('tr[class^="method_options"]').hide();  
        if ($(this).val() == "b"){
