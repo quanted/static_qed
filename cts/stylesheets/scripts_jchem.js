@@ -126,6 +126,7 @@ function populateChemEditDOM(data) {
   $('#origsmiles').val(data['orig_smiles']);
   $('#iupac').val(data["iupac"]); //IUPAC txtbox - results table
   $('#formula').val(data["formula"]); //Formula txtbox - results table
+  $('#cas').val(data['cas']);
   $('#mass').val(data["mass"]); //Mass txtbox - results table
   $('#exactmass').val(data['exactMass']);
 
@@ -144,6 +145,7 @@ function displayErrorInTextbox(errorMessage) {
   $('#molecule').val(""); //SMILES string txtbox - results table
   $('#IUPAC').val(""); //IUPAC txtbox - results table
   $('#formula').val(""); //Formula txtbox - results table
+  $('#cas').val("");
   $('#weight').val(""); //Mass txtbox - results table
   $('#orig-molecule').val("");
   try {
