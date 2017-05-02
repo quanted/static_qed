@@ -51,7 +51,7 @@ $(document).ready(function () {
             $('#id_airblast_type').closest('tr').show();
         }
     });
-    $('#id_assessment_type').change(function () {
+    $('#id_ecosystem_type').change(function () {
 
         if ($(this).val() == "Aquatic Assessment") {
             $('#id_aquatic_body_type').closest('tr').show();
@@ -139,7 +139,6 @@ $(document).ready(function () {
             $('#id_user_pond_depth').closest('tr').hide();
             $('#id_user_wetland_width').closest('tr').hide();
             $('#id_user_wetland_depth').closest('tr').hide();
-            $('#id_user_terrestrial_width').closest('tr').hide();
         }
         else if ($(this).val() == "User Defined Terrestrial Area") {
             $('#id_user_terrestrial_width').closest('tr').show();
