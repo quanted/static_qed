@@ -35,9 +35,6 @@ function CategoryId(care_id) {
     });
 }
 
-function populationsync(value)  {
-    document.getElementById("textPopupation").innerHTML = 'Products:' +value;
-}
 
 function productsync(value)  {
     document.getElementById("textProduct").innerHTML = 'Products: ' + value;
