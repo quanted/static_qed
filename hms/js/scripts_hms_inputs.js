@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    $('#id_geojson').closest('tr').hide();
 
     $('#id_source').change(function(){
         if(document.input_table.layers) {
@@ -21,6 +21,22 @@ $(document).ready(function() {
                 document.input_table.layers.options[3] = new Option("0-100cm", 3);
              }
         }
+    });
+
+    $('#id_spatial_input').change(function(){
+       if ($(this).val() === "coordinates"){
+           $('#id_geojson').closest('tr').hide();
+           document.input_table.geojson.value = "";
+           $('#id_latitude').closest('tr').show();
+           $('#id_longitude').closest('tr').show();
+       }
+       else if ($(this).val() === "geojson"){
+           $('#id_geojson').closest('tr').show();
+           $('#id_latitude').closest('tr').hide();
+           document.input_table.latitude.value = "";
+           $('#id_longitude').closest('tr').hide();
+           document.input_table.longitude.value = "";
+       }
     });
 
     $(window).bind('beforeunload', function () {
