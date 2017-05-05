@@ -1,168 +1,308 @@
 {
   "inputs": [
     {
-      "name": "state",
-      "value": "Arizona",
-      "description": "US State"
+      "name": "capitalInvestment",
+      "value": 58.58767309,
+      "description": "Capital Investment"
     },
     {
-      "name": "county",
-      "value": "GRAHAM",
-      "description": "County"
+      "name": "consumption",
+      "value": 51.30107144,
+      "description": "Consumption"
+    },
+    {
+      "name": "employment",
+      "value": 61.42698061,
+      "description": "Employment"
+    },
+    {
+      "name": "finance",
+      "value": 48.04367489,
+      "description": "Finance"
+    },
+    {
+      "name": "innovation",
+      "value": 40.78933818,
+      "description": "Innovation"
+    },
+    {
+      "name": "production",
+      "value": 51.37376206,
+      "description": "Production"
+    },
+    {
+      "name": "redistribution",
+      "value": 44.91955411,
+      "description": "Re-Distribution"
+    },
+    {
+      "name": "airQuality",
+      "value": 39.74227925,
+      "description": "Air Quality"
+    },
+    {
+      "name": "foodFiberAndFuel",
+      "value": 38.67637493,
+      "description": "Food, Fiber And Fuel Provisioning"
+    },
+    {
+      "name": "greenspace",
+      "value": 43.49136823,
+      "description": "Greenspace"
+    },
+    {
+      "name": "waterQuality",
+      "value": 47.98169343,
+      "description": "Water Quality"
+    },
+    {
+      "name": "waterQuantity",
+      "value": 50.1499327,
+      "description": "Water Quantity"
+    },
+    {
+      "name": "activism",
+      "value": 58.94920977,
+      "description": "Activism"
+    },
+    {
+      "name": "communication",
+      "value": 45.05882805,
+      "description": "Communication"
+    },
+    {
+      "name": "communityAndFaith",
+      "value": 21.70335728,
+      "description": "Community And Faith-Based Initiatives"
+    },
+    {
+      "name": "education",
+      "value": 43.91138195,
+      "description": "Education"
+    },
+    {
+      "name": "emergencyPreparedness",
+      "value": 31.60009102,
+      "description": "Emergency Preparedness"
+    },
+    {
+      "name": "familyServices",
+      "value": 48.56670661,
+      "description": "Family Services"
+    },
+    {
+      "name": "healthcare",
+      "value": 47.59926392,
+      "description": "Healthcare"
+    },
+    {
+      "name": "justice",
+      "value": 39.76702077,
+      "description": "Justice"
+    },
+    {
+      "name": "labor",
+      "value": 53.29715035,
+      "description": "Labor"
+    },
+    {
+      "name": "publicWorks",
+      "value": 46.79912673,
+      "description": "Public Works"
+    },
+    {
+      "name": "connectionToNature",
+      "value": 1,
+      "description": "Connection To Nature"
+    },
+    {
+      "name": "culturalFulfillment",
+      "value": 1,
+      "description": "Cultural Fulfillment"
+    },
+    {
+      "name": "education",
+      "value": 1,
+      "description": "Education"
+    },
+    {
+      "name": "health",
+      "value": 1,
+      "description": "Health"
+    },
+    {
+      "name": "leisureTime",
+      "value": 1,
+      "description": "Leisure Time"
+    },
+    {
+      "name": "livingStandards",
+      "value": 1,
+      "description": "Living Standards"
+    },
+    {
+      "name": "safetyAndSecurity",
+      "value": 1,
+      "description": "Safety And Security"
+    },
+    {
+      "name": "socialCohesion",
+      "value": 1,
+      "description": "Social Cohesion"
     }
   ],
   "outputs": {
-    "hwbi": 47.041264366298456,
+    "hwbi": 52.336662478575946,
     "services": [
       {
-        "score": 58.37602782,
+        "score": 58.58767309,
         "description": "Capital Investment",
         "serviceID": "S01",
         "name": "capitalInvestment",
         "serviceTypeName": "economic"
       },
       {
-        "score": 51.33721239,
+        "score": 51.30107144,
         "description": "Consumption",
         "serviceID": "S02",
         "name": "consumption",
         "serviceTypeName": "economic"
       },
       {
-        "score": 55.78985705,
+        "score": 61.42698061,
         "description": "Employment",
         "serviceID": "S03",
         "name": "employment",
         "serviceTypeName": "economic"
       },
       {
-        "score": 42.66988159,
+        "score": 48.04367489,
         "description": "Finance",
         "serviceID": "S04",
         "name": "finance",
         "serviceTypeName": "economic"
       },
       {
-        "score": 32.48399756,
+        "score": 40.78933818,
         "description": "Innovation",
         "serviceID": "S05",
         "name": "innovation",
         "serviceTypeName": "economic"
       },
       {
-        "score": 50.98282661,
+        "score": 51.37376206,
         "description": "Production",
         "serviceID": "S06",
         "name": "production",
         "serviceTypeName": "economic"
       },
       {
-        "score": 27.71968785,
+        "score": 44.91955411,
         "description": "Re-Distribution",
         "serviceID": "S07",
         "name": "redistribution",
         "serviceTypeName": "economic"
       },
       {
-        "score": 90,
+        "score": 39.74227925,
         "description": "Air Quality",
         "serviceID": "S08",
         "name": "airQuality",
         "serviceTypeName": "ecosystem"
       },
       {
-        "score": 35.47151297,
+        "score": 38.67637493,
         "description": "Food, Fiber And Fuel Provisioning",
         "serviceID": "S09",
         "name": "foodFiberAndFuel",
         "serviceTypeName": "ecosystem"
       },
       {
-        "score": 39.93364495,
+        "score": 43.49136823,
         "description": "Greenspace",
         "serviceID": "S10",
         "name": "greenspace",
         "serviceTypeName": "ecosystem"
       },
       {
-        "score": 50.14824517,
+        "score": 47.98169343,
         "description": "Water Quality",
         "serviceID": "S11",
         "name": "waterQuality",
         "serviceTypeName": "ecosystem"
       },
       {
-        "score": 37.66628495,
+        "score": 50.1499327,
         "description": "Water Quantity",
         "serviceID": "S12",
         "name": "waterQuantity",
         "serviceTypeName": "ecosystem"
       },
       {
-        "score": 26.7509106,
+        "score": 58.94920977,
         "description": "Activism",
         "serviceID": "S13",
         "name": "activism",
         "serviceTypeName": "social"
       },
       {
-        "score": 41.81823117,
+        "score": 45.05882805,
         "description": "Communication",
         "serviceID": "S14",
         "name": "communication",
         "serviceTypeName": "social"
       },
       {
-        "score": 16.63599431,
+        "score": 21.70335728,
         "description": "Community And Faith-Based Initiatives",
         "serviceID": "S15",
         "name": "communityAndFaith",
         "serviceTypeName": "social"
       },
       {
-        "score": 44.09027728,
+        "score": 43.91138195,
         "description": "Education",
         "serviceID": "S16",
         "name": "education",
         "serviceTypeName": "social"
       },
       {
-        "score": 36.81494583,
+        "score": 31.60009102,
         "description": "Emergency Preparedness",
         "serviceID": "S17",
         "name": "emergencyPreparedness",
         "serviceTypeName": "social"
       },
       {
-        "score": 44.74668711,
+        "score": 48.56670661,
         "description": "Family Services",
         "serviceID": "S18",
         "name": "familyServices",
         "serviceTypeName": "social"
       },
       {
-        "score": 40.20493464,
+        "score": 47.59926392,
         "description": "Healthcare",
         "serviceID": "S19",
         "name": "healthcare",
         "serviceTypeName": "social"
       },
       {
-        "score": 44.73665814,
+        "score": 39.76702077,
         "description": "Justice",
         "serviceID": "S20",
         "name": "justice",
         "serviceTypeName": "social"
       },
       {
-        "score": 37.14855222,
+        "score": 53.29715035,
         "description": "Labor",
         "serviceID": "S21",
         "name": "labor",
         "serviceTypeName": "social"
       },
       {
-        "score": 41.62240513,
+        "score": 46.79912673,
         "description": "Public Works",
         "serviceID": "S22",
         "name": "publicWorks",
@@ -175,7 +315,7 @@
         "name": "connectionToNature",
         "weight": 1,
         "domainName": "",
-        "score": 98.59656573856029,
+        "score": 44.183059145983385,
         "description": "Connection To Nature"
       },
       {
@@ -183,7 +323,7 @@
         "name": "culturalFulfillment",
         "weight": 1,
         "domainName": "",
-        "score": 45.84572410132305,
+        "score": 46.570720575767176,
         "description": "Cultural Fulfillment"
       },
       {
@@ -191,7 +331,7 @@
         "name": "education",
         "weight": 1,
         "domainName": "",
-        "score": 21.79857639558585,
+        "score": 49.7233935602848,
         "description": "Education"
       },
       {
@@ -199,7 +339,7 @@
         "name": "health",
         "weight": 1,
         "domainName": "",
-        "score": 53.390820936205486,
+        "score": 58.27184120703526,
         "description": "Health"
       },
       {
@@ -207,7 +347,7 @@
         "name": "leisureTime",
         "weight": 1,
         "domainName": "",
-        "score": 46.13544944404421,
+        "score": 57.64802574724669,
         "description": "Leisure Time"
       },
       {
@@ -215,7 +355,7 @@
         "name": "livingStandards",
         "weight": 1,
         "domainName": "",
-        "score": 37.931956206048326,
+        "score": 56.02392671047589,
         "description": "Living Standards"
       },
       {
@@ -223,7 +363,7 @@
         "name": "safetyAndSecurity",
         "weight": 1,
         "domainName": "",
-        "score": 47.74726364400368,
+        "score": 63.044446896648246,
         "description": "Safety And Security"
       },
       {
@@ -231,7 +371,7 @@
         "name": "socialCohesion",
         "weight": 1,
         "domainName": "",
-        "score": 24.88375846461681,
+        "score": 43.22788598516612,
         "description": "Social Cohesion"
       }
     ]
@@ -240,12 +380,12 @@
     "status": "",
     "description": "The Human Well-Being Index (HWBI) model calculator (calc) uses 22 economic, ecosystem, and social services values to calculate eight 'domains of well-being': Connection to Nature, Cultural Fulfillment, Education, Health, Leisure Time, Living Standards, Safety & Security, and Social Cohesion. These domains of well-being are then weighed based on user-supplied 'relative importance values' and are used to determine the overall HWBI score.",
     "url": {
-      "href": "/hwbi/rest/locations/run",
+      "href": "/hwbi/rest/calc/run",
       "type": "application/json"
     },
     "modelVersion": "hwbi",
     "collection": "qed",
     "version": 1,
-    "timestamp": "2017-05-04 14:27:17.420699"
+    "timestamp": "2017-05-04 15:25:53.041047"
   }
 }
