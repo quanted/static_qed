@@ -129,7 +129,7 @@ $(document).ready(function () {
     });
     $('#id_terrestrial_field_type').change(function () {
 
-        if ($(this).val() == "Point Deposition") {
+        if ($(this).val() == "EPA Defined Terrestrial") {
             $('#id_user_terrestrial_width').closest('tr').hide();
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
@@ -140,7 +140,7 @@ $(document).ready(function () {
             $('#id_user_wetland_width').closest('tr').hide();
             $('#id_user_wetland_depth').closest('tr').hide();
         }
-        else if ($(this).val() == "User Defined Terrestrial Area") {
+        else if ($(this).val() == "User Defined Terrestrial") {
             $('#id_user_terrestrial_width').closest('tr').show();
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
