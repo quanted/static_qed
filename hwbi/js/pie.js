@@ -74,7 +74,7 @@ function drawPieChart(error, data) {
         .attr('class', 'd3-tip')
         .offset([50, 0])
         .html(function (d) {
-            return d.data.domainName + ": <span style='color:orangered'>" + Math.round(d.data.score) + "</span>"
+            return d.data.description + ": <span style='color:orangered'>" + Math.round(d.data.score) + "</span>"
         })
         ;
 
@@ -100,14 +100,14 @@ function drawPieChart(error, data) {
         .enter().append("path")
         //assign colors to solidArc slice based on domain name
         .attr("fill", (function (d) {
-            if (d.data.domainName == "Connection To Nature") { return "#569c83"; }
-            if (d.data.domainName == "Cultural Fulfillment") { return "#325481"; }
-            if (d.data.domainName == "Education") { return "#5E4EA1"; }
-            if (d.data.domainName == "Health") { return "#9E0041"; }
-            if (d.data.domainName == "Leisure Time") { return "#E1514B"; }
-            if (d.data.domainName == "Living Standards") { return "#FB9F59"; }
-            if (d.data.domainName == "Safety And Security") { return "#FAE38C"; }
-            if (d.data.domainName == "Social Cohesion") { return "#EAF195"; }
+            if (d.data.description == "Connection To Nature") { return "#569c83"; }
+            if (d.data.description == "Cultural Fulfillment") { return "#325481"; }
+            if (d.data.description == "Education") { return "#5E4EA1"; }
+            if (d.data.description == "Health") { return "#9E0041"; }
+            if (d.data.description == "Leisure Time") { return "#E1514B"; }
+            if (d.data.description == "Living Standards") { return "#FB9F59"; }
+            if (d.data.description == "Safety And Security") { return "#FAE38C"; }
+            if (d.data.description == "Social Cohesion") { return "#EAF195"; }
         }))
 
         .attr("class", "solidArc")
@@ -186,14 +186,14 @@ function updatePieChart(error, data) {
          .duration(1500)
         //assign colors to solidArc slice based on domain name
         .attr("fill", (function (d) {
-            if (d.data.domainName == "Connection To Nature") { return "#569c83"; }
-            if (d.data.domainName == "Cultural Fulfillment") { return "#325481"; }
-            if (d.data.domainName == "Education") { return "#5E4EA1"; }
-            if (d.data.domainName == "Health") { return "#9E0041"; }
-            if (d.data.domainName == "Leisure Time") { return "#E1514B"; }
-            if (d.data.domainName == "Living Standards") { return "#FB9F59"; }
-            if (d.data.domainName == "Safety And Security") { return "#FAE38C"; }
-            if (d.data.domainName == "Social Cohesion") { return "#EAF195"; }
+            if (d.data.description == "Connection To Nature") { return "#569c83"; }
+            if (d.data.description == "Cultural Fulfillment") { return "#325481"; }
+            if (d.data.description == "Education") { return "#5E4EA1"; }
+            if (d.data.description == "Health") { return "#9E0041"; }
+            if (d.data.description == "Leisure Time") { return "#E1514B"; }
+            if (d.data.description == "Living Standards") { return "#FB9F59"; }
+            if (d.data.description == "Safety And Security") { return "#FAE38C"; }
+            if (d.data.description == "Social Cohesion") { return "#EAF195"; }
         }))
         .attr("class", "solidArc")
         .attr("stroke", "gray")
@@ -209,7 +209,7 @@ function updatePieChart(error, data) {
         .attr("d", outlineArc);
 
     // calculate the weighted mean HWBI score
-    var Score =
+    var score =
         data.reduce(function (a, b) {
             return a + ((b.score) * b.weight);
         }, 0) /
@@ -219,13 +219,13 @@ function updatePieChart(error, data) {
     ;
 
 
-    console.log(Score);
+    console.log(score);
 
     //display HWBI score
     d3.select("text.scoreTex")
         .transition()
         .duration(3000)
-        .text(Math.round(Score));
+        .text(Math.round(score));
 }
 
 
@@ -260,14 +260,14 @@ function updatePieRivs(error, data) {
          .duration(1500)
         //assign colors to solidArc slice based on domain name
         .attr("fill", (function (d) {
-            if (d.data.domainName == "Connection To Nature") { return "#569c83"; }
-            if (d.data.domainName == "Cultural Fulfillment") { return "#325481"; }
-            if (d.data.domainName == "Education") { return "#5E4EA1"; }
-            if (d.data.domainName == "Health") { return "#9E0041"; }
-            if (d.data.domainName == "Leisure Time") { return "#E1514B"; }
-            if (d.data.domainName == "Living Standards") { return "#FB9F59"; }
-            if (d.data.domainName == "Safety And Security") { return "#FAE38C"; }
-            if (d.data.domainName == "Social Cohesion") { return "#EAF195"; }
+            if (d.data.description == "Connection To Nature") { return "#569c83"; }
+            if (d.data.description == "Cultural Fulfillment") { return "#325481"; }
+            if (d.data.description == "Education") { return "#5E4EA1"; }
+            if (d.data.description == "Health") { return "#9E0041"; }
+            if (d.data.description == "Leisure Time") { return "#E1514B"; }
+            if (d.data.description == "Living Standards") { return "#FB9F59"; }
+            if (d.data.description == "Safety And Security") { return "#FAE38C"; }
+            if (d.data.description == "Social Cohesion") { return "#EAF195"; }
         }))
         .attr("class", "solidArc")
         .attr("stroke", "gray")
@@ -284,7 +284,7 @@ function updatePieRivs(error, data) {
         .attr("d", outlineArc);
 
     // calculate the weighted mean HWBI score
-    var Score1 =
+    var score1 =
         data.reduce(function (a, b) {
             return a + ((b.score) * b.weight);
         }, 0) /
@@ -292,11 +292,11 @@ function updatePieRivs(error, data) {
             return a + b.weight;
         }, 0)
     ;
-        console.log(Score1);
+        console.log(score1);
 
     //display HWBI score
     d3.select("text.scoreTex")
         .transition()
         .duration(3000)
-        .text(Math.round(Score1));
+        .text(Math.round(score1));
 }
