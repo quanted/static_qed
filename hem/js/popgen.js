@@ -61,6 +61,15 @@ function agesync(val)  {
     document.getElementById("textAge").innerHTML = text;
 }
 
+function displayh(e){
+    if (e.checked)
+        document.getElementById('chem_form').style.display = 'block';
+        document.getElementById('prod_form').style.display = 'none';
+    else
+        document.getElementById('chem_form').style.display = 'none';
+        document.getElementById('prod_form').style.display = 'block';
+}
+
 $(document).ready(function(){
   var endpoint = 'hem_jdata/';
     $.ajax({
