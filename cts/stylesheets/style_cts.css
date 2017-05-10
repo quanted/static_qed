@@ -17,6 +17,22 @@ a:hover {
   text-decoration: none;
 }
 
+a.microsite-link:link {
+  color: #212121;
+  text-decoration: none;
+}
+
+a.microsite-link:visited {
+  color: #212121;
+  text-decoration: none;
+}
+
+a.microsite-link:hover {
+  color: #4289AA;
+  text-decoration: none;
+}
+
+
 input[type="checkbox"], input[type="radio"] {
   /*position: relative;*/
   position: inherit;

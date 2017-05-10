@@ -1,6 +1,14 @@
 $(document).ready(function () {
-// $(document).onload(function () {
-   
+    initialize_agdrift_aerial();
+    listen_agdrift_events();
+});
+
+$(document).on(function () {
+    //initialize_agdrift_aerial();
+});
+
+function initialize_agdrift_aerial(){
+    //setup aerial tier 1 - aquatic
     $('#id_boom_height').closest('tr').hide();
     $('#id_airblast_type').closest('tr').hide();
     $('#id_drop_size_ground').closest('tr').hide();
@@ -29,6 +37,9 @@ $(document).ready(function () {
     // $("#id_airblast_type option[value='Normal']").prop('disabled',true);
     // $("#id_airblast_type option[value='Dense']").prop('disabled',true);
     // $("#id_airblast_type option[value='Sparse']").prop('disabled',true);
+};
+
+function listen_agdrift_events(){
 
     $('#id_application_method').change(function () {
 
@@ -62,7 +73,7 @@ $(document).ready(function () {
             $('#id_user_pond_width').closest('tr').hide();
             $('#id_user_pond_depth').closest('tr').hide();
             $('#id_user_wetland_width').closest('tr').hide();
-            $('#id_user_wetland_depth').closest('tr').hide();
+            $('#id_user_wetland_dept h').closest('tr').hide();
             $('#id_terrestrial_field_type').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
         }
@@ -206,5 +217,4 @@ $(document).ready(function () {
     $(window).bind('beforeunload', function () {
         $(":reset").click();
     });
-
-});
+};
