@@ -64,7 +64,7 @@ function drawPieChart(error, data) {
         rivData = data; ////give rivData updated data
 
 
-    //use d3 to create the pie chart layout 	
+    //use d3 to create the pie chart layout     
     var pie = d3.layout.pie()
         .sort(null)
         .value(function (d) { return d.weight; });
@@ -116,7 +116,7 @@ function drawPieChart(error, data) {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
         
-    //create variable outerPath that appends an outlineArc to svg	  
+    //create variable outerPath that appends an outlineArc to svg     
     svg1.selectAll(".outlineArc")
         .data(pie(data))
         .enter().append("path")
@@ -159,7 +159,7 @@ function drawPieChart(error, data) {
 function updatePieChart(error, data) {
     rivData = data; //give rivData updated data
 
-    //use d3 to create the pie chart layout 	
+    //use d3 to create the pie chart layout     
     var pie = d3.layout.pie()
         .sort(null)
         .value(function (d) { return d.weight; });
@@ -199,7 +199,7 @@ function updatePieChart(error, data) {
         .attr("stroke", "gray")
         .attr("d", arc);
 
-    //create variable outerPath that appends an outlineArc to svg	  
+    //create variable outerPath that appends an outlineArc to svg     
     svg1.selectAll(".outlineArc")
         .data(pie(data))
         .transition()
@@ -233,7 +233,7 @@ function updatePieChart(error, data) {
 //update pie chart function
 function updatePieRivs(error, data) {
     console.log(data);
-    //use d3 to create the pie chart layout 	
+    //use d3 to create the pie chart layout     
     var pie = d3.layout.pie()
         .sort(null)
         .value(function (d) { return d.weight; });
@@ -274,7 +274,7 @@ function updatePieRivs(error, data) {
         .attr("d", arc);
 
 
-    //create variable outerPath that appends an outlineArc to svg	  
+    //create variable outerPath that appends an outlineArc to svg     
     svg1.selectAll(".outlineArc")
         .data(pie(data))
         .transition()
