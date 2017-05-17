@@ -1,35 +1,45 @@
 $(document).ready(function () {
-    initialize_agdrift_aerial();
     listen_agdrift_events();
+    initialize_agdrift_aerial();
+
 });
 
-$(document).on(function () {
-    //initialize_agdrift_aerial();
-});
+// $(document).on(function () {
+//     //initialize_agdrift_aerial();
+// });
 
 function initialize_agdrift_aerial(){
-    //setup aerial tier 1 - aquatic
-    $('#id_boom_height').closest('tr').hide();
-    $('#id_airblast_type').closest('tr').hide();
-    $('#id_drop_size_ground').closest('tr').hide();
+    //setup user interface page; initially 'aerial tier 1 - aquatic' but user selections in
+    //subsequent page invocations (e.g., when returning after viewing modeling results page
+
+    $('#id_application_method').trigger("change");
+    $('#id_ecosystem_type').trigger("change");
+    $('#id_aquatic_body_type').trigger("change");
+    $('#id_terrestrial_field_type').trigger("change");
+    $('#id_calculation_input').trigger("change");
+
+
+    // $('#id_boom_height').closest('tr').hide();
+    // $('#id_airblast_type').closest('tr').hide();
+    // $('#id_drop_size_ground').closest('tr').hide();
 //    $('#id_drop_size_aerial').closest('tr').hide();
 //    $('#id_aquatic_body_type').closest('tr').hide();
-    $('#id_terrestrial_field_type').closest('tr').hide();
+//     $('#id_terrestrial_field_type').closest('tr').hide();
 //    $('#id_epa_pond_width').closest('tr').hide();
 //    $('#id_epa_pond_depth').closest('tr').hide();
-    $('#id_epa_wetland_width').closest('tr').hide();
-    $('#id_epa_wetland_depth').closest('tr').hide();
-    $('#id_user_pond_width').closest('tr').hide();
-    $('#id_user_pond_depth').closest('tr').hide();
-    $('#id_user_wetland_width').closest('tr').hide();
-    $('#id_user_wetland_depth').closest('tr').hide();
-    $('#id_user_terrestrial_width').closest('tr').hide();
+//     $('#id_epa_wetland_width').closest('tr').hide();
+//     $('#id_epa_wetland_depth').closest('tr').hide();
+//     $('#id_user_pond_width').closest('tr').hide();
+//     $('#id_user_pond_depth').closest('tr').hide();
+//     $('#id_user_wetland_width').closest('tr').hide();
+//     $('#id_user_wetland_depth').closest('tr').hide();
+//     $('#id_user_terrestrial_width').closest('tr').hide();
 //    $('#id_downwind_distance').closest('tr').hide();
-    $('#id_user_frac_applied').closest('tr').hide();
-    $('#id_user_avg_dep_gha').closest('tr').hide();
-    $('#id_user_avg_dep_mgcm2').closest('tr').hide();
-    $('#id_user_avg_dep_lbac').closest('tr').hide();
-    $('#id_user_avg_conc_ngl').closest('tr').hide();
+//     $('#id_user_frac_applied').closest('tr').hide();
+//     $('#id_user_avg_dep_gha').closest('tr').hide();
+//     $('#id_user_avg_dep_mgcm2').closest('tr').hide();
+//     $('#id_user_avg_dep_lbac').closest('tr').hide();
+//     $('#id_user_avg_conc_ngl').closest('tr').hide();
 
     // $("#id_assessment_type option[value='Terrestrial Assessment']").prop('disabled',true);
     // $("#id_calculation_input option[value='Fraction']").prop('disabled',true);
@@ -39,23 +49,23 @@ function initialize_agdrift_aerial(){
     // $("#id_airblast_type option[value='Sparse']").prop('disabled',true);
 };
 
-function listen_agdrift_events(){
+function listen_agdrift_events() {
 
     $('#id_application_method').change(function () {
 
-        if ($(this).val() == "Tier I Ground") {
+        if ($(this).val() == "tier_1_ground") {
             $('#id_drop_size_aerial').closest('tr').hide();
             $('#id_drop_size_ground').closest('tr').show();
             $('#id_boom_height').closest('tr').show();
             $('#id_airblast_type').closest('tr').hide(); //orchard_type
         }
-        else if ($(this).val() == "Tier I Aerial") {
+        else if ($(this).val() == "tier_1_aerial") {
             $('#id_boom_height').closest('tr').hide();
             $('#id_drop_size_ground').closest('tr').hide();
             $('#id_airblast_type').closest('tr').hide();
             $('#id_drop_size_aerial').closest('tr').show();
         }
-        else if ($(this).val() == "Tier I Orchard/Airblast") {
+        else if ($(this).val() == "tier_1_airblast") {
             $('#id_drop_size_aerial').closest('tr').hide();
             $('#id_drop_size_ground').closest('tr').hide();
             $('#id_boom_height').closest('tr').hide();
@@ -64,7 +74,7 @@ function listen_agdrift_events(){
     });
     $('#id_ecosystem_type').change(function () {
 
-        if ($(this).val() == "Aquatic Assessment") {
+        if ($(this).val() == "aquatic_assessment") {
             $('#id_aquatic_body_type').closest('tr').show();
             $('#id_epa_pond_width').closest('tr').show();
             $('#id_epa_pond_depth').closest('tr').show();
@@ -76,8 +86,10 @@ function listen_agdrift_events(){
             $('#id_user_wetland_dept h').closest('tr').hide();
             $('#id_terrestrial_field_type').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
+            // update calculation input combo box choices
+            $("#id_calculation_input").children("option[value^=" + "'Initial Average Concentration (ng/L)'" + "]").show();
         }
-        else if ($(this).val() == "Terrestrial Assessment") {
+        else if ($(this).val() == "terrestrial_assessment") {
             $('#id_aquatic_body_type').closest('tr').hide();
             $('#id_terrestrial_field_type').closest('tr').show();
             $('#id_epa_pond_width').closest('tr').hide();
@@ -89,11 +101,15 @@ function listen_agdrift_events(){
             $('#id_user_wetland_width').closest('tr').hide();
             $('#id_user_wetland_depth').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
+            // update calculation input combo box choices
+            $("#id_calculation_input").children("option[value^=" + "'Initial Average Concentration (ng/L)'" + "]").hide();
+            //$("#id_calculation_input").children("option[value^=InitialAverageConcentrationnng_L]").hide();
+
         }
     });
     $('#id_aquatic_body_type').change(function () {
 
-        if ($(this).val() == "EPA Defined Pond") {
+        if ($(this).val() == "epa_defined_pond") {
             $('#id_epa_pond_width').closest('tr').show();
             $('#id_epa_pond_depth').closest('tr').show();
             $('#id_epa_wetland_width').closest('tr').hide();
@@ -104,7 +120,7 @@ function listen_agdrift_events(){
             $('#id_user_wetland_depth').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
         }
-        else if ($(this).val() == "EPA Defined Wetland") {
+        else if ($(this).val() == "epa_defined_wetland") {
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
             $('#id_epa_wetland_width').closest('tr').show();
@@ -115,7 +131,7 @@ function listen_agdrift_events(){
             $('#id_user_wetland_depth').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
         }
-        else if ($(this).val() == "User Defined Pond") {
+        else if ($(this).val() == "user_defined_pond") {
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
             $('#id_epa_wetland_width').closest('tr').hide();
@@ -126,7 +142,7 @@ function listen_agdrift_events(){
             $('#id_user_wetland_depth').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
         }
-        else if ($(this).val() == "User Defined Wetland") {
+        else if ($(this).val() == "user_defined_wetland") {
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
             $('#id_epa_wetland_width').closest('tr').hide();
@@ -140,7 +156,7 @@ function listen_agdrift_events(){
     });
     $('#id_terrestrial_field_type').change(function () {
 
-        if ($(this).val() == "EPA Defined Terrestrial") {
+        if ($(this).val() == "epa_defined_terrestrial") {
             $('#id_user_terrestrial_width').closest('tr').hide();
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
@@ -151,7 +167,7 @@ function listen_agdrift_events(){
             $('#id_user_wetland_width').closest('tr').hide();
             $('#id_user_wetland_depth').closest('tr').hide();
         }
-        else if ($(this).val() == "User Defined Terrestrial") {
+        else if ($(this).val() == "user_defined_terrestrial") {
             $('#id_user_terrestrial_width').closest('tr').show();
             $('#id_epa_pond_width').closest('tr').hide();
             $('#id_epa_pond_depth').closest('tr').hide();
@@ -164,16 +180,15 @@ function listen_agdrift_events(){
         }
     });
     $('#id_calculation_input').change(function () {
-
-        if ($(this).val() == "Distance") {
+        if ($(this).val() == "distance_to_point_or_area_ft") {
             $('#id_downwind_distance').closest('tr').show();
             $('#id_user_frac_applied').closest('tr').hide();
             $('#id_user_avg_dep_gha').closest('tr').hide();
-            $('#id_user_avg_dep_mgcm2').closest('tr').hide();
             $('#id_user_avg_dep_lbac').closest('tr').hide();
             $('#id_user_avg_conc_ngl').closest('tr').hide();
-        }
-        else if ($(this).val() == "Fraction") {
+            $('#id_user_avg_dep_mgcm2').closest('tr').hide();
+           }
+        else if ($(this).val() == "fraction_of_applied") {
             $('#id_downwind_distance').closest('tr').hide();
             $('#id_user_frac_applied').closest('tr').show();
             $('#id_user_avg_dep_gha').closest('tr').hide();
@@ -181,7 +196,7 @@ function listen_agdrift_events(){
             $('#id_user_avg_dep_lbac').closest('tr').hide();
             $('#id_user_avg_conc_ngl').closest('tr').hide();
         }
-        else if ($(this).val() == "Initial Average Deposition (g/ha)") {
+        else if ($(this).val() == "initial_deposition_gha") {
             $('#id_downwind_distance').closest('tr').hide();
             $('#id_user_frac_applied').closest('tr').hide();
             $('#id_user_avg_dep_gha').closest('tr').show();
@@ -189,7 +204,7 @@ function listen_agdrift_events(){
             $('#id_user_avg_dep_lbac').closest('tr').hide();
             $('#id_user_avg_conc_ngl').closest('tr').hide();
         }
-        else if ($(this).val() == "Initial Average Deposition (lb/ac)") {
+        else if ($(this).val() == "initial_deposition_lbac") {
             $('#id_downwind_distance').closest('tr').hide();
             $('#id_user_frac_applied').closest('tr').hide();
             $('#id_user_avg_dep_gha').closest('tr').hide();
@@ -197,7 +212,7 @@ function listen_agdrift_events(){
             $('#id_user_avg_dep_lbac').closest('tr').show();
             $('#id_user_avg_conc_ngl').closest('tr').hide();
         }
-        else if ($(this).val() == "Initial Average Concentration (ng/L)") {
+        else if ($(this).val() == "initial_concentration_ngL") {
             $('#id_downwind_distance').closest('tr').hide();
             $('#id_user_frac_applied').closest('tr').hide();
             $('#id_user_avg_dep_gha').closest('tr').hide();
@@ -205,7 +220,7 @@ function listen_agdrift_events(){
             $('#id_user_avg_dep_lbac').closest('tr').hide();
             $('#id_user_avg_conc_ngl').closest('tr').show();
         }
-        else if ($(this).val() == "Initial Average Deposition (mg/cm2)") {
+        else if ($(this).val() == "initial_deposition_mgcm2") {
             $('#id_downwind_distance').closest('tr').hide();
             $('#id_user_frac_applied').closest('tr').hide();
             $('#id_user_avg_dep_gha').closest('tr').hide();
@@ -217,4 +232,4 @@ function listen_agdrift_events(){
     $(window).bind('beforeunload', function () {
         $(":reset").click();
     });
-};
+}
