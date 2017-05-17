@@ -1,6 +1,8 @@
 $(document).ready(function() {
     $('#id_geojson').closest('tr').hide();
     $('#id_geojson_file').closest('tr').hide();
+    $('#id_spatial_input').trigger("change");
+
 
     $('#id_source').change(function(){
         if(document.input_table.layers) {
