@@ -1,7 +1,6 @@
 $(document).ready(function () {
     listen_agdrift_events();
     initialize_agdrift_aerial();
-
 });
 
 // $(document).on(function () {
@@ -14,8 +13,8 @@ function initialize_agdrift_aerial(){
 
     $('#id_application_method').trigger("change");
     $('#id_ecosystem_type').trigger("change");
-    $('#id_aquatic_body_type').trigger("change");
-    $('#id_terrestrial_field_type').trigger("change");
+    //ecosystem type conditionally triggers aquatic_body or
+    // terrestrial_field type in listen_agdrift_events()
     $('#id_calculation_input').trigger("change");
 
 
@@ -83,28 +82,31 @@ function listen_agdrift_events() {
             $('#id_user_pond_width').closest('tr').hide();
             $('#id_user_pond_depth').closest('tr').hide();
             $('#id_user_wetland_width').closest('tr').hide();
-            $('#id_user_wetland_dept h').closest('tr').hide();
+            $('#id_user_wetland_depth').closest('tr').hide();
             $('#id_terrestrial_field_type').closest('tr').hide();
             $('#id_user_terrestrial_width').closest('tr').hide();
             // update calculation input combo box choices
-            $("#id_calculation_input").children("option[value^=" + "'Initial Average Concentration (ng/L)'" + "]").show();
+            $("#id_calculation_input").children("option[value^=" + "'initial_concentration_ngL'" + "]").show();
+            $('#id_aquatic_body_type').trigger("change");
         }
-        else if ($(this).val() == "terrestrial_assessment") {
-            $('#id_aquatic_body_type').closest('tr').hide();
-            $('#id_terrestrial_field_type').closest('tr').show();
-            $('#id_epa_pond_width').closest('tr').hide();
-            $('#id_epa_pond_depth').closest('tr').hide();
-            $('#id_epa_wetland_width').closest('tr').hide();
-            $('#id_epa_wetland_depth').closest('tr').hide();
-            $('#id_user_pond_width').closest('tr').hide();
-            $('#id_user_pond_depth').closest('tr').hide();
-            $('#id_user_wetland_width').closest('tr').hide();
-            $('#id_user_wetland_depth').closest('tr').hide();
-            $('#id_user_terrestrial_width').closest('tr').hide();
-            // update calculation input combo box choices
-            $("#id_calculation_input").children("option[value^=" + "'Initial Average Concentration (ng/L)'" + "]").hide();
-            //$("#id_calculation_input").children("option[value^=InitialAverageConcentrationnng_L]").hide();
-
+        else {
+            if ($(this).val() == "terrestrial_assessment") {
+                $('#id_aquatic_body_type').closest('tr').hide();
+                $('#id_terrestrial_field_type').closest('tr').show();
+                $('#id_epa_pond_width').closest('tr').hide();
+                $('#id_epa_pond_depth').closest('tr').hide();
+                $('#id_epa_wetland_width').closest('tr').hide();
+                $('#id_epa_wetland_depth').closest('tr').hide();
+                $('#id_user_pond_width').closest('tr').hide();
+                $('#id_user_pond_depth').closest('tr').hide();
+                $('#id_user_wetland_width').closest('tr').hide();
+                $('#id_user_wetland_depth').closest('tr').hide();
+                $('#id_user_terrestrial_width').closest('tr').hide();
+                // update calculation input combo box choices
+                $("#id_calculation_input").children("option[value^=" + "'initial_concentration_ngL'" + "]").hide();
+                //$("#id_calculation_input").children("option[value^=InitialAverageConcentrationnng_L]").hide();
+                $('#id_terrestrial_field_type').trigger("change");
+            }
         }
     });
     $('#id_aquatic_body_type').change(function () {
