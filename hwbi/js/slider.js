@@ -27,7 +27,7 @@ function drawSliders(data, index) {
             if (data.name == "greenspace") { return [36.11207908, 62.03906984]; }
             if (data.name == "waterQuality") { return [15.95637509, 88.22033237]; }
             if (data.name == "waterQuantity") { return [21.70976841, 72.83447998]; }
-            if (data.name == "activisim") { return [25.85945275, 73.66346154]; }
+            if (data.name == "activism") { return [25.85945275, 73.66346154]; }
             if (data.name == "communication") { return [33.10020486, 68.98955269]; }
             if (data.name == "communityAndFaith") { return [12.21375305,	90]; }
             if (data.name == "education") { return [33.24429069,	56.47803694]; }
@@ -77,8 +77,8 @@ function drawSliders(data, index) {
     var brush = d3.svg.brush()
         //set scale of brush to match d3 calculated scale
         .x(x)
-        //set the input value using imported data Score value
-        .extent([data.Score, data.Score])
+        //set the input value using imported data score value
+        .extent([data.score, data.score])
         //set listener where on mousemove = function brushed
         .on("brush", brushed);
 
@@ -105,16 +105,16 @@ function drawSliders(data, index) {
     .attr("transform", "translate(0," + 25 + ")")
     .attr("r", 10)
     .attr("fill", (function () {
-        if (data.serviceType == "economic") { return "#b86361"; }
-        if (data.serviceType == "ecosystem") { return "#61b88e"; }
-        if (data.serviceType == "social") { return "#618bb8"; }
+        if (data.serviceTypeName == "economic") { return "#b86361"; }
+        if (data.serviceTypeName == "ecosystem") { return "#61b88e"; }
+        if (data.serviceTypeName == "social") { return "#618bb8"; }
     }));
 
     //append text to the handle
     handle.append('text')
         .attr("class", "cirTex"+index)
         //assign text using data score and convert to whole number
-        .text(data.Score)
+        .text(data.score)
         .attr("transform", "translate(" + (-8) + " ," + 29 + ")");
 
     //for slider variable, call brush variable's "brushed" event property (mousemove)
@@ -142,7 +142,7 @@ function drawSliders(data, index) {
         //round text value down
         handle.select("text").text(Math.floor(value));
         
-        dragVal.services[index].Score = value;
+        dragVal.services[index].score = value;
     }
 }
 
@@ -152,28 +152,28 @@ function useServiceValues() {
 
     var postData = {
         "scores" : {
-            "capitalInvestment": dragVal.services[0].Score,
-            "consumption": dragVal.services[1].Score,
-            "employment": dragVal.services[2].Score,
-            "finance": dragVal.services[3].Score,
-            "innovation": dragVal.services[4].Score,
-            "production": dragVal.services[5].Score,
-            "redistribution": dragVal.services[6].Score,
-            "airQuality": dragVal.services[7].Score,
-            "foodFiberAndFuel": dragVal.services[8].Score,
-            "greenspace": dragVal.services[9].Score,
-            "waterQuality": dragVal.services[10].Score,
-            "waterQuantity": dragVal.services[11].Score,
-            "activism": dragVal.services[12].Score,
-            "communication": dragVal.services[13].Score,
-            "communityAndFaith": dragVal.services[14].Score,
-            "education": dragVal.services[15].Score,
-            "emergencyPreparedness": dragVal.services[16].Score,
-            "familyServices": dragVal.services[17].Score,
-            "healthcare": dragVal.services[18].Score,
-            "justice": dragVal.services[19].Score,
-            "labor": dragVal.services[20].Score,
-            "publicWorks": dragVal.services[21].Score
+            "capitalInvestment": dragVal.services[0].score,
+            "consumption": dragVal.services[1].score,
+            "employment": dragVal.services[2].score,
+            "finance": dragVal.services[3].score,
+            "innovation": dragVal.services[4].score,
+            "production": dragVal.services[5].score,
+            "redistribution": dragVal.services[6].score,
+            "airQuality": dragVal.services[7].score,
+            "foodFiberAndFuel": dragVal.services[8].score,
+            "greenspace": dragVal.services[9].score,
+            "waterQuality": dragVal.services[10].score,
+            "waterQuantity": dragVal.services[11].score,
+            "activism": dragVal.services[12].score,
+            "communication": dragVal.services[13].score,
+            "communityAndFaith": dragVal.services[14].score,
+            "education": dragVal.services[15].score,
+            "emergencyPreparedness": dragVal.services[16].score,
+            "familyServices": dragVal.services[17].score,
+            "healthcare": dragVal.services[18].score,
+            "justice": dragVal.services[19].score,
+            "labor": dragVal.services[20].score,
+            "publicWorks": dragVal.services[21].score
         },
         "domainWeights" : {
             "connectionToNature": dragVal.domains[0].weight,
@@ -243,7 +243,7 @@ function updateSliders(data, index) {
             if (data.name == "greenspace") { return [36.11207908, 62.03906984]; }
             if (data.name == "waterQuality") { return [15.95637509, 88.22033237]; }
             if (data.name == "waterQuantity") { return [21.70976841, 72.83447998]; }
-            if (data.name == "activisim") { return [25.85945275, 73.66346154]; }
+            if (data.name == "activism") { return [25.85945275, 73.66346154]; }
             if (data.name == "communication") { return [33.10020486, 68.98955269]; }
             if (data.name == "communityAndFaith") { return [12.21375305,	90]; }
             if (data.name == "education") { return [33.24429069,	56.47803694]; }
@@ -264,7 +264,7 @@ function updateSliders(data, index) {
         //set scale of brush to match d3 calculated scale
         .x(x)
         //set the input value using imported data Score value
-        .extent([data.Score, data.Score])
+        .extent([data.score, data.score])
         //set listener where on mousemove = function brushed
         .on("brush", brushed);
 
@@ -280,15 +280,15 @@ function updateSliders(data, index) {
         .attr("transform", "translate(0," + 25 + ")")
         .attr("r", 10)
         .attr("fill", (function () {
-            if (data.serviceType == "economic") { return "#b86361"; }
-            if (data.serviceType == "ecosystem") { return "#61b88e"; }
-            if (data.serviceType == "social") { return "#618bb8"; }
+            if (data.serviceTypeName == "economic") { return "#b86361"; }
+            if (data.serviceTypeName == "ecosystem") { return "#61b88e"; }
+            if (data.serviceTypeName == "social") { return "#618bb8"; }
         }));
 
     //select text to the handle
     d3.select("text.cirTex" + [index])
         //assign text using data score and convert to whole number
-        .text(data.Score)
+        .text(data.score)
         .attr("transform", "translate(" + (-8) + " ," + 29 + ")");
 
     //for slider variable, call brush variable's "brushed" event property (mousemove)
