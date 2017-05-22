@@ -1,8 +1,8 @@
 <h3>Abiotic Hydrolysis Reaction Library</h3>
-<p>Version 1.6 of the Abiotic Hydrolysis Reaction Library contains 25 reaction schemes.  Left click a reaction scheme to view the generalized reaction scheme, supporting reaction rules for reactivity, selectivity and exclusion, as well as example transformation pathways based on the execution of the reaction scheme.  References to process science on which the reaction scheme was developed are also provided.</p>
+<p>Version 1.7 of the Abiotic Hydrolysis Reaction Library contains 25 reaction schemes.  Left click a reaction scheme to view the generalized reaction scheme, supporting reaction rules for reactivity, selectivity and exclusion, as well as example transformation pathways based on the execution of the reaction scheme.  References to process science on which the reaction scheme was developed are also provided.</p>
 
-<h4> Click <a href="/static_qed/cts/docs/HydrolysisRxnLib_ver1-6.pdf" download="HydrolysisRxnLib_ver1-6.pdf">here</a> to download hydrolysis reaction library.</h4>
-<!--<embed src="/static_qed/cts/docs/HydrolysisRxnLib_ver1-6.pdf" class="libPDF">-->
+<h4> Click <a href="/static_qed/cts/docs/HydrolysisRxnLib_ver1-7.pdf" download="HydrolysisRxnLib_ver1-7.pdf">here</a> to download hydrolysis reaction library.</h4>
+<!--<embed src="/static_qed/cts/docs/HydrolysisRxnLib_ver1-7.pdf" class="libPDF">-->
 
 <br><br>
 
