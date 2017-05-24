@@ -154,3 +154,19 @@ div#reactionpathways {
     padding: 2px;
     padding-left: 36px;
 }
+
+/*.node_spinners {*/
+    /*float: left;*/
+    /*position: relative;*/
+    /*position: absolute;*/
+    /*left: 40px;*/
+    /*top: 0px;*/
+    /*z-index: -1;*/
+/*}*/
+
+/*.blank_node {*/
+    /*position: absolute;*/
+    /*left: 0px;*/
+    /*top: 0px;*/
+    /*z-index: -1;*/
+/*}*/
