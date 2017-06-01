@@ -34,6 +34,9 @@ $(document).ready(function() {
            document.input_table.geojson_file.value = "";
            $('#id_latitude').closest('tr').show();
            $('#id_longitude').closest('tr').show();
+
+           $('#id_temporalresolution').closest('tr').show();
+
        }
        else if ($(this).val() === "geojson"){
            $('#id_geojson').closest('tr').show();
@@ -43,6 +46,9 @@ $(document).ready(function() {
            document.input_table.longitude.value = "";
            $('#id_geojson_file').closest('tr').hide();
            document.input_table.geojson_file.value = "";
+
+           $('#id_temporalresolution').closest('tr').hide();
+           $('#id_temporalresolution').val("default");
        }
        else if ($(this).val() === "geojson_file"){
            $('#id_geojson').closest('tr').hide();
@@ -52,6 +58,9 @@ $(document).ready(function() {
            $('#id_longitude').closest('tr').hide();
            document.input_table.longitude.value = "";
            $('#id_geojson_file').closest('tr').show();
+
+           $('#id_temporalresolution').closest('tr').hide();
+           $('#id_temporalresolution').val("default");
        }
     });
 
