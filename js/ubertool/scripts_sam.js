@@ -14,6 +14,7 @@ $(document).ready(function() {
         "members of the ecological risk assessment community."
     )}, 500);
 
+
 	// Default inputs
 	$('#id_sim_type_0, #id_output_format_0, #id_output_format_1, #id_output_format_2').prop('checked', true);
 	$('#id_region').val('Ohio Valley');
