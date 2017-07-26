@@ -47,7 +47,7 @@ var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov",
 var sliderMargin = 65;
 
 function circleSize(d){
-  return Math.sqrt( .02 * Math.abs(d) );
+  return Math.sqrt( .0001 * Math.abs(d) );
 };
 
 
@@ -75,7 +75,7 @@ d3.json("/static_qed/cyan/data/states.json", function(error, us) {
     .style("top",d3.select("#play").node().offsetTop + "px")
     .style("height",d3.select("#date").node().offsetHeight + d3.select("#map-container").node().offsetHeight + "px")
 
-  d3.csv("/static_qed/cyan/data/lakes.csv",function(data){
+  d3.csv("/static_qed/cyan/data/lakes_1431.csv",function(data){
     var first = data[0];
     // get columns
     for ( var mug in first ){
@@ -267,24 +267,25 @@ function createSlider(){
 function createLegend(){
   var legend = g.append("g").attr("id","legend").attr("transform","translate(560,10)");
 
-  legend.append("circle").attr("class","gain").attr("r",5).attr("cx",-47).attr("cy",9)
-  // legend.append("circle").attr("class","loss").attr("r",5).attr("cx",5).attr("cy",30)
+  // legend.append("circle").attr("class","gain").attr("r",5).attr("cx",-167).attr("cy",9)
 
-  legend.append("text").text("Lake area in HAB").attr("x",-40).attr("y",13);
-  // legend.append("text").text("jobs lost").attr("x",5).attr("y",33);
+  // legend.append("text").text("Monthly max cyanobacteria concentration").attr("x",-160).attr("y",13);
 
-  var sizes = [ 10000, 100000  ]; //pulled out the 250000
+format = d3.format("0,000")
+
+  var sizes = [ 100000, 1000000  ]; //pulled out the 250000
   for ( var i in sizes ){
     legend.append("circle")
+      .attr("class","gain")
       .attr( "r", circleSize( sizes[i] ) )
       .attr( "cx", 80 + circleSize( sizes[sizes.length-1] ) )
-      .attr( "cy", 2 * circleSize( sizes[sizes.length-1] ) - circleSize( sizes[i] ) )
+      .attr( "cy", 2.5 * circleSize( sizes[sizes.length-1] ) - 2.5 * (circleSize( sizes[i] )) )
       .attr("vector-effect","non-scaling-stroke");
     legend.append("text")
-      .text( (sizes[i] / 10000) + "km²" + (i == sizes.length-1 ? "" : "") )
+      .text( (format(sizes[i] / 1)) + " cells/ml" + (i == sizes.length-1 ? "" : "") )
       .attr( "text-anchor", "middle" )
-      .attr( "x", 80 + circleSize( sizes[sizes.length-1] ) )
-      .attr( "y", 2 * ( circleSize( sizes[sizes.length-1] ) - circleSize( sizes[i] ) ) + 5 )
+      .attr( "x", 142 + circleSize( sizes[sizes.length-1] ) )
+      .attr( "y", 2 * ( circleSize( sizes[sizes.length-1] ) - circleSize( sizes[i] ) ) - 7.5 )
       .attr( "dy", 13)
   }
 }

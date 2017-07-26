@@ -26,7 +26,7 @@ circle.gain{
   stroke: #fff;
 }
 circle.loss{
-  fill: #ef8a62;
+  fill: #67a9cf;
   stroke: #fff;
 }
 #map circle{
@@ -96,7 +96,7 @@ circle.loss{
 
 #slider-probe{
   position: absolute;
-  top: -20px;
+  top: -200px;
   font-size: 12px;
   width: 70px;
   margin-left: -35px;
