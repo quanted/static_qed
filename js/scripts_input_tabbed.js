@@ -9,7 +9,7 @@ $( document ).ready(function() {
 		if (typeof form_valid == 'undefined'){
 			$.blockUI({
 			  css:{ "top":""+wintop+"", "left":""+winleft+"", "padding": "30px 20px", "width": "400px", "height": "60px", "border": "0 none", "border-radius": "4px", "-webkit-border-radius": "4px", "-moz-border-radius": "4px", "box-shadow": "3px 3px 15px #333", "-webkit-box-shadow": "3px 3px 15px #333", "-moz-box-shadow": "3px 3px 15px #333" },
-			  message: '<h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static/images/loader.gif" style="margin-top:-16px">',
+			  message: '<h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static_qed/images/loader.gif" style="margin-top:-16px">',
 			  fadeIn:  500
 			});
 			setTimeout(function() {$('form').submit();}, 500);
@@ -30,7 +30,7 @@ $( document ).ready(function() {
 			}
 			$.blockUI({
 			  css:{ "top":""+wintop+"", "left":""+winleft+"", "padding": "30px 20px", "width": "400px", "height": "60px", "border": "0 none", "border-radius": "4px", "-webkit-border-radius": "4px", "-moz-border-radius": "4px", "box-shadow": "3px 3px 15px #333", "-webkit-box-shadow": "3px 3px 15px #333", "-moz-box-shadow": "3px 3px 15px #333" },
-			  message: '<h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static/images/loader.gif" style="margin-top:-16px">',
+			  message: '<h2 class="popup_header">Processing Model Submission...</h2><br/><img src="/static_qed/images/loader.gif" style="margin-top:-16px">',
 			  fadeIn:  500
 			});
 			setTimeout(function() {$('form').submit();}, 500);
