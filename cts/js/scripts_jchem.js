@@ -162,6 +162,24 @@ function jsonRepack(jsonobj) {
 }
 
 
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = jQuery.trim(cookies[i]);
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}     
+
+var csrftoken = getCookie('csrftoken');
+
+
 function ajaxCall(data_obj, callback) {
   $.ajax({
     url: '/cts/rest/molecule',
@@ -173,6 +191,9 @@ function ajaxCall(data_obj, callback) {
     // timeout: 5000,
     tryCount: 0,
     retryLimit: 3,
+    beforeSend: function(xhr, settings) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    },
     success: function(data) {
       var data = jsonRepack(data);
       if (data.status == false) {
