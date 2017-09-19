@@ -763,3 +763,8 @@ dd.dom-taut {
   margin-left: 4px;
   margin-right: 4px;
 }
+
+/* output div width to fit content within */
+.articles_output {
+  display: inline-block;
+}
