@@ -6,13 +6,13 @@ $(document).ready(function() {
 	);
 
     // BETA disclaimer
-    setTimeout(function() {alert("Disclaimer: " +
-        "Ecological risk calculations contained here should be used for no purpose other than quality " +
-        "assurance and peer review of the presented web applications. This web site is under " +
-        "development. It is available for the purposes of receiving feedback and quality assurance from " +
-        "personnel in the EPA Office of Chemical Safety and Pollution Prevention and from interested " +
-        "members of the ecological risk assessment community."
-    )}, 500);
+    //setTimeout(function() {alert("Disclaimer: " +
+    //    "Ecological risk calculations contained here should be used for no purpose other than quality " +
+    //    "assurance and peer review of the presented web applications. This web site is under " +
+    //    "development. It is available for the purposes of receiving feedback and quality assurance from " +
+    //    "personnel in the EPA Office of Chemical Safety and Pollution Prevention and from interested " +
+    //    "members of the ecological risk assessment community."
+    //)}, 500);
 
 
 	// Default inputs
