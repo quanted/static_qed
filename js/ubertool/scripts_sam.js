@@ -6,18 +6,18 @@ $(document).ready(function() {
 	);
 
     // BETA disclaimer
-    setTimeout(function() {alert("Disclaimer: " +
-        "Ecological risk calculations contained here should be used for no purpose other than quality " +
-        "assurance and peer review of the presented web applications. This web site is under " +
-        "development. It is available for the purposes of receiving feedback and quality assurance from " +
-        "personnel in the EPA Office of Chemical Safety and Pollution Prevention and from interested " +
-        "members of the ecological risk assessment community."
-    )}, 500);
+    //setTimeout(function() {alert("Disclaimer: " +
+    //    "Ecological risk calculations contained here should be used for no purpose other than quality " +
+    //    "assurance and peer review of the presented web applications. This web site is under " +
+    //    "development. It is available for the purposes of receiving feedback and quality assurance from " +
+    //    "personnel in the EPA Office of Chemical Safety and Pollution Prevention and from interested " +
+    //    "members of the ecological risk assessment community."
+    //)}, 500);
 
 
 	// Default inputs
 	$('#id_sim_type_0, #id_output_format_0, #id_output_format_1, #id_output_format_2').prop('checked', true);
-	$('#id_region').val('Ohio Valley');
+	// $('#id_region').val('NHD Region 07');
 	//$('#id_crop_number').css('color', 'grey');
 	//$('#id_crop').closest('tr').after('<tr><th>Chosen Crop(s):</th><td id="crop1"></td></tr>');
 	// $('#id_output_tox_value').closest('tr').after(
@@ -388,5 +388,7 @@ $(document).ready(function() {
         alert("Only 'Uniform Step Application over Window' is currently allowed.  Upon model submission," +
         "the 'Refinement' will automatically switch to that option.");
     }
+
+	$(".Chemical").trigger("click");
 
 });
