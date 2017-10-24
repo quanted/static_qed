@@ -1,20 +1,11 @@
 var marvinSketcherInstance;
 
 $(document).ready(function handleDocumentReady (e) {
-  // var MarvinJSUtil;
-  // if (MarvinJSUtil) {
 
   try {
 
-    // MarvinJSUtil.Sketch.license("/static_qed/cts/stylesheets/efs/marvin4js/license/marvin4js-license.cxl");
-
     MarvinJSUtil.getEditor("#sketch").then(function (sketcherInstance) {
       marvinSketcherInstance = sketcherInstance;
-
-      // Point to marvin license file????
-      // marvin.Sketch.license("/static/marvin4js-license.cxl");  // from marvin4js/editor.html
-      // marvin.Sketch.license("/static_qed/cts/stylesheets/efs/marvin4js/license/marvin4js-license.cxl");
-      // marvinSketcherInstance.license();
 
       loadCachedChemical();
       // initControl(); //binds action to initControl() function
@@ -124,9 +115,11 @@ function populateChemEditDOM(data) {
   $('#chemical').val(data['chemical']);
   $('#smiles').val(data["smiles"]); //SMILES string txtbox - results table
   $('#origsmiles').val(data['orig_smiles']);
+  $('#preferredName').val(data['preferredName']);
   $('#iupac').val(data["iupac"]); //IUPAC txtbox - results table
   $('#formula').val(data["formula"]); //Formula txtbox - results table
   $('#cas').val(data['cas']);
+  $('#dtxsid').val(data['dsstoxSubstanceId']);
   $('#mass').val(data["mass"]); //Mass txtbox - results table
   $('#exactmass').val(data['exactMass']);
 
@@ -143,9 +136,11 @@ function displayErrorInTextbox(errorMessage) {
   $('#id_chem_struct').addClass("formError");
   $('#id_chem_struct').val(errorMessage); //Enter SMILES txtbox
   $('#molecule').val(""); //SMILES string txtbox - results table
+  $('#preferredName').val("");
   $('#IUPAC').val(""); //IUPAC txtbox - results table
   $('#formula').val(""); //Formula txtbox - results table
   $('#cas').val("");
+  $('#dtxsid').val("");
   $('#weight').val(""); //Mass txtbox - results table
   $('#orig-molecule').val("");
   try {
