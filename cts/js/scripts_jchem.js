@@ -119,6 +119,7 @@ function populateChemEditDOM(data) {
   $('#iupac').val(data["iupac"]); //IUPAC txtbox - results table
   $('#formula').val(data["formula"]); //Formula txtbox - results table
   $('#cas').val(data['cas']);
+  $('#casrn').val(data['casrn']);
   $('#dtxsid').val(data['dsstoxSubstanceId']);
   $('#mass').val(data["mass"]); //Mass txtbox - results table
   $('#exactmass').val(data['exactMass']);
@@ -133,16 +134,19 @@ function displayErrorInTextbox(errorMessage) {
   if (typeof errorMessage === 'undefined' || errorMessage == "") {
     errorMessage = "error retrieving chemical information...please try again...";
   }
-  $('#id_chem_struct').addClass("formError");
-  $('#id_chem_struct').val(errorMessage); //Enter SMILES txtbox
-  $('#molecule').val(""); //SMILES string txtbox - results table
+  $('#id_chem_struct').addClass("formError").val(errorMessage); //Enter SMILES txtbox
+  // $('#id_chem_struct').val(errorMessage); //Enter SMILES txtbox
+  $('#chemical').val("");
+  $('#smiles').val("");
+  $('#origsmiles').val("");
   $('#preferredName').val("");
-  $('#IUPAC').val(""); //IUPAC txtbox - results table
-  $('#formula').val(""); //Formula txtbox - results table
+  $('#iupac').val("");
+  $('#formula').val("");
   $('#cas').val("");
+  $('#casrn').val("");
   $('#dtxsid').val("");
-  $('#weight').val(""); //Mass txtbox - results table
-  $('#orig-molecule').val("");
+  $('#mass').val("");
+  $('#exactmass').val("");
   try {
     marvinSketcherInstance.clear(); //clear marvin sketch
   }
