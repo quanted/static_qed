@@ -1,0 +1,51 @@
+
+.hidden {
+    display: none;
+}
+
+.deg_min_sec {
+    width: 30%;
+}
+
+.input_type {
+    text-align: center;
+}
+
+div.input_type button {
+    background-color: darkgray;
+}
+div.input_type button:hover {
+    background-color: dimgray;
+}
+
+th.form_titles {
+    width: 30%;
+}
+
+div.model_inputs {
+    padding-top: 0;
+}
+
+.json_input_data {
+    width: 25em;
+    height: 25em;
+}
+
+#error_p {
+    font-size: 14px;
+    display: initial;
+    margin-left: 30px;
+    color: red;
+}
+
+td.wlTableHeader {
+    font-size: 10px;
+    width: 33%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.wavelengthTable > tbody > tr > td {
+    text-align: center;
+    font-size: 10px;
+}
