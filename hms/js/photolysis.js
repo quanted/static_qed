@@ -113,11 +113,13 @@ function hideEphemerideOptions(hide) {
 function toggleContainmentType() {
     var type = $('#id_contaminant_type').val();
     if (type === "biological") {
-        $('.wlCol3')[0].innerHTML = "Biological Weighting Function (hr**(-1)Watts**(-1)cm**2 nm)";
+        // $('.wlCol3')[0].innerHTML = "Biological Weighting Function (hr**(-1)Watts**(-1)cm**2 nm)";
+        $('.wlCol3')[0].innerHTML = "Biological Absorption Coefficients (L/(mole cm))";
     }
     else {
         $('.wlCol3')[0].innerHTML = "Chemical Absorption Coefficients (L/(mole cm))";
     }
+    $('#id_wavelength_table').val(tableToDict($('#wlTable tr')));
 }
 
 function setInitialWavelengthTable() {
