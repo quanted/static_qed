@@ -31,7 +31,8 @@ h4 {
 }
 
 #collapsing-div div {
-    height: 100% !important;
+    /*height: 100% !important;*/
+    display: inherit;
 }
 
 #dayTable {
