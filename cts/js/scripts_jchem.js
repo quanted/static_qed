@@ -211,11 +211,11 @@ function ajaxCall(data_obj, callback) {
           $.ajax(this);
           return;
         }
-        displayErrorInTextbox("Error getting data for chemical..please try again..");
+        displayErrorInTextbox("Name not recognized..");
         return;
       }
       else {
-        displayErrorInTextbox("Error getting data for chemical..please try again..");
+        displayErrorInTextbox("Name not recognized..");
         return;
       }
     }
