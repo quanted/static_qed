@@ -132,7 +132,7 @@ function populateChemEditDOM(data) {
 function displayErrorInTextbox(errorMessage) {
   //Displays error message in Lookup Chemical textbox
   if (typeof errorMessage === 'undefined' || errorMessage == "") {
-    errorMessage = "error retrieving chemical information...please try again...";
+    errorMessage = "Name not recognized..";
   }
   $('#id_chem_struct').addClass("formError").val(errorMessage); //Enter SMILES txtbox
   // $('#id_chem_struct').val(errorMessage); //Enter SMILES txtbox
@@ -211,11 +211,11 @@ function ajaxCall(data_obj, callback) {
           $.ajax(this);
           return;
         }
-        displayErrorInTextbox("Error getting data for chemical..please try again..");
+        displayErrorInTextbox("Name not recognized..");
         return;
       }
       else {
-        displayErrorInTextbox("Error getting data for chemical..please try again..");
+        displayErrorInTextbox("Name not recognized..");
         return;
       }
     }
