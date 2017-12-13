@@ -768,3 +768,8 @@ dd.dom-taut {
 .articles_output {
   display: inline-block;
 }
+
+ul.bullet_indent {
+  /*padding-left: 15px;*/
+  margin-left: 15px;
+}
