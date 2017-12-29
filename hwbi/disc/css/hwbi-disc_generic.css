@@ -1,0 +1,228 @@
+/*Contact Us*/
+
+#block-pane-epa-web-area-connect {
+    float: right;
+}
+
+/*HWBI Intro*/
+.hwbi_intro {
+    border-top: 3px #183E62 solid;
+    font-size: 26px;
+    padding: 25px 20px 50px;
+}
+
+/*Quick Menu*/
+#hwbi_quick_menu {
+    display: table;
+    width: 101%;
+    table-layout: fixed;
+    /*height: max-content;*/
+    /*margin: 0 2px;*/
+    padding: 0 4px 0 0;
+}
+
+#hwbi_quick_menu ul {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+}
+
+#hwbi_quick_menu ul li {
+    list-style: none;
+    display: table-cell;
+    text-align: center;
+    background-color: #235A8E;
+}
+
+#hwbi_quick_menu ul li:hover {
+    background-color: #183E62;
+}
+
+.menu_tab_link:visited {
+    color: white;
+}
+
+.menu_tab_link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 25px 40px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.menu_border_focus {
+    border: 3px;
+    border-color: white;
+    border-style: solid;
+    border-radius: 15px 15px 0 0;
+    background-clip: content-box;
+}
+
+.menu_border_right {
+    border: 3px;
+    border-color: white;
+    border-style: solid;
+    border-radius: 0 15px 0 0;
+    background-clip: content-box;
+}
+
+.menu_border_left {
+    border: 3px;
+    border-color: white;
+    border-style: solid;
+    border-radius: 15px 0 0 0;
+    background-clip: content-box;
+}
+
+/*Search Box*/
+#community_search {
+    /*border: 1px;*/
+    /*border-color: black;*/
+    /*border-style: solid;*/
+    margin: 0 3px;
+    padding: 10px;
+    display: table;
+    /*text-align: center;*/
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    background-color: #7F7F7F;
+}
+
+#community_search_form {
+    position: absolute;
+    width: 100%;
+    padding-left: 5px;
+}
+
+#community_search_field {
+    width: 80%;
+    line-height: 2;
+    padding-left: 5px;
+    border: 4px;
+    border-color: #44546A;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+#community_search_field:focus {
+    outline-width: 0;
+}
+
+#community_search_label {
+    float: left;
+    /*padding-left: 10%;*/
+    font-size: 18px;
+}
+
+#community_search_button {
+    position: initial;
+    width: 5%;
+    padding: 13px 0 0 0;
+    margin: 0 0 0 -58px;
+    height: 36px;
+    border-radius: 0 6px 6px 0;
+}
+
+#community_pdf {
+    float: right;
+    border-color: #44546A;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    margin: 28px 5px 0 0;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    font-weight: normal;
+    position: relative;
+    z-index: 1;
+}
+
+#community_pdf:hover {
+    background-color: #235A8E;
+    color: white;
+}
+
+/*Score Graph*/
+#score_graph_div {
+    background: url('/static_qed/hwbi/disc/img/rainbow_need_to_replace.png') no-repeat;
+    height: 83px;
+    position: relative;
+    width: 145px;
+    z-index: 1;
+    text-align: center;
+    left: 20%;
+    margin-bottom: 75px;
+}
+
+#wellbeing-score {
+    color: #36bc28;
+    font-size: 3.75rem;
+    line-height: 3.125rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 33px 0 0;
+    text-align: center;
+}
+
+.score_indicator {
+    display: block;
+    height: 80px;
+    left: 33px;
+    position: absolute;
+    top: 32px;
+    -ms-transform: rotate(0deg) skew(45deg, -45deg);
+    -webkit-transform: rotate(0deg) skew(45deg, -45deg);
+    transform: rotate(0deg) skew(45deg, -45deg);
+    width: 79px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    z-index: 9;
+}
+
+.score_indicator:before {
+    background: #ffffff;
+    content: " ";
+    display: block;
+    height: 10px;
+    margin: 3px;
+    position: absolute;
+    width: 10px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*Results*/
+#snapshot_results {
+    height: 500px;
+}
+
+#hwbi-score {
+    float: left;
+    width: 250px;
+    height: 100%;
+}
+
+#location {
+    padding: 15px 10px;
+    text-align: center;
+}
+
+#wellbeing-score-scale, #wellbeing-score-location {
+    padding-bottom: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+#hwbi-info p {
+    font-size: 14px;
+    text-align: center;
+}
