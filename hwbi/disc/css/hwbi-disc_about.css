@@ -95,16 +95,23 @@
     padding-top: 50px;
     position: absolute;
     width: 100%;
+    display: table;
 }
 
 #community_search_field {
     width: 80%;
     line-height: 2;
-    padding-left: 10px;
-    border: 4px;
-    border-color: #44546A;
-    border-style: solid;
+    /*padding-left: 10px;*/
+    border: 4px #44546A solid;
     border-radius: 10px;
+    /*height: 45.5px;*/
+    height: 0;
+    padding: 18px 0 18px 10px;
+    vertical-align: middle;
+    font-size: 18px;
+    font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+    display: table-cell;
+    position: relative;
 }
 
 #community_search_field:focus {
@@ -118,12 +125,20 @@
 }
 
 #community_search_button {
-    position: initial;
-    width: 5%;
-    padding: 12px 0 0 0;
-    margin: 0 0 0 -58px;
-    height: 34px;
+    /*position: initial;*/
+    /*width: 5%;*/
+    width: 0;
+    /*padding: 12px 0 0 0;*/
+    /*padding: 2.4% 0 1.2% 0;*/
+    margin: 0 0 0 -39.5px;
+    /*height: 36.5px;*/
+    height: 0;
     border-radius: 0 6px 6px 0;
+    position: relative;
+    line-height: 2;
+    vertical-align: middle;
+    padding: 18px 26px 17px;
+    /*display: inline-block;*/
 }
 
 /*Quote Body*/

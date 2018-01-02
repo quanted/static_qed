@@ -34,6 +34,8 @@ function setLocationValue(){
     var place = searchBox.getPlace();
     var county = place.address_components[1]['long_name'].replace(" County", "");
     var state = place.address_components[2]['long_name'];
-    var json_value = "{'county':'" + county + "', 'state':'" + state + "'}";
-    $('#location_value').val(json_value);
+    var json_value = {};
+    json_value["county"] = county;
+    json_value["state"] = state;
+    $('#location_value').val(JSON.stringify(json_value));
 }
