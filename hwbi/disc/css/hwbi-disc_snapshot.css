@@ -266,6 +266,10 @@
     font-size: 16px;
 }
 
+#rank_btn:hover {
+    background-color: #949494;
+}
+
 #domain-scores {
     margin-top: 25px;
 }
@@ -403,4 +407,95 @@
     border-top: 1px black solid;
     border-bottom: 1px black solid;
     margin-bottom: 20px;
+}
+
+/*      Rank Window     */
+#rank-window {
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    background: #FFF2CC;
+    width: 60%;
+    float: right;
+    height: 500px;
+    margin-left: 40%;
+    margin-top: 85px;
+    border-top: 10px #A6A6A6 solid;
+    border-right: 15px #A6A6A6 solid;
+    border-bottom: 10px #A6A6A6 solid;
+}
+
+#rank-window-intro {
+    width: 90%;
+    padding: 15px;
+}
+
+#rank-exit {
+    position: absolute;
+    margin-left: 95%;
+    font-size: 29px;
+}
+
+#rank-exit:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.slider-block {
+    width: 100%;
+    position: relative;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.slider-title {
+    width: 50%;
+    float: left;
+    display: inline-block;
+    position: relative;
+    padding-right: 25px;
+    text-align: right;
+    font-size: 20px;
+}
+
+.slider-container {
+    width: 50%;
+    float: right;
+    display: inline-block;
+    position: relative;
+    padding-right: 50px;
+    margin-top: 10px;
+}
+
+.rank-slider span {
+    border: none !important;
+    box-shadow: 1px 1px grey;
+}
+
+#nature-slider-bar {
+    background-color: #82AC45;
+}
+
+#nature-slider-bar span {
+    background-color: #82AC45;
+    width: 15px;
+}
+
+#nature-slider-bar span:active {
+    background-color: #779E3F;
+    box-shadow: 1px 1px grey;
+}
+
+#cultural-slider-bar {
+    background-color: #998FE4;
+}
+
+#cultural-slider-bar span {
+    background-color: #998FE4;
+    width: 15px;
+}
+
+#cultural-slider-bar span:active {
+    background-color: #877EC9;
+    box-shadow: 1px 1px grey;
 }

@@ -6,9 +6,15 @@ var hwbi_disc_data;
 $(document).ready(function () {
 
     google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
-
     setAccordion();
+    setRankSliders();
     setTimeout(getScoreData, 600);
+
+    // Events
+    $('#rank_btn').on("click", toggleRank);
+    $('#rank-exit').on("click", function(){
+        $('#rank-window').hide();
+    })
 });
 
 function getScoreData(){
@@ -130,4 +136,31 @@ function loadSkillbar(){
 			width:jQuery(this).attr('data-percent')
 		},2000);
 	});
+}
+
+function setRankSliders(){
+    $('#nature-slider-bar').slider({
+        animate: "fast",
+        max: 5,
+        min: 1,
+        orientation: "horizontal",
+        step: .1
+    });
+    $('#cultural-slider-bar').slider({
+        animate: "fast",
+        max: 5,
+        min: 1,
+        orientation: "horizontal",
+        step: .1
+    });
+}
+
+function toggleRank(){
+    var rWindow = $('#rank-window');
+    if(rWindow.is(':visible')){
+        rWindow.hide();
+    }
+    else{
+        rWindow.show();
+    }
 }
