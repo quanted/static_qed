@@ -441,11 +441,37 @@
     cursor: pointer;
 }
 
+#rank-slider-legend {
+    width: 100%;
+    display: grid;
+    margin-bottom: -10px;
+}
+
+#legend-top {
+    width: 50%;
+    margin-left: 51%;
+}
+
+#legend-bottom {
+    width: 50%;
+    margin-left: 50%;
+}
+
+#legend-left {
+    float: left;
+    margin-left: -25px;
+}
+
+#legend-right {
+    float: right;
+    margin-right: 45px;
+}
+
 .slider-block {
     width: 100%;
     position: relative;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .slider-title {
@@ -456,6 +482,7 @@
     padding-right: 25px;
     text-align: right;
     font-size: 20px;
+    margin-top: 10px;
 }
 
 .slider-container {
@@ -464,7 +491,7 @@
     display: inline-block;
     position: relative;
     padding-right: 50px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .rank-slider span {
@@ -497,5 +524,75 @@
 
 #cultural-slider-bar span:active {
     background-color: #877EC9;
+    box-shadow: 1px 1px grey;
+}
+
+#education-slider-bar {
+    background-color: #5598C3;
+}
+
+#education-slider-bar span {
+    background-color: #5598C3;
+    width: 15px;
+}
+
+#education-slider-bar span:active {
+    background-color: #4983A8;
+    box-shadow: 1px 1px grey;
+}
+
+#leisure-slider-bar {
+    background-color: #DC4B60;
+}
+
+#leisure-slider-bar span {
+    background-color: #DC4B60;
+    width: 15px;
+}
+
+#leisure-slider-bar span:active {
+    background-color: #C74457;
+    box-shadow: 1px 1px grey;
+}
+
+#living-std-slider-bar {
+    background-color: #269683;
+}
+
+#living-std-slider-bar span {
+    background-color: #269683;
+    width: 15px;
+}
+
+#living-std-slider-bar span:active {
+    background-color: #228574;
+    box-shadow: 1px 1px grey;
+}
+
+#safety-slider-bar {
+    background-color: #606060;
+}
+
+#safety-slider-bar span {
+    background-color: #606060;
+    width: 15px;
+}
+
+#safety-slider-bar span:active {
+    background-color: #545454;
+    box-shadow: 1px 1px grey;
+}
+
+#cohesion-slider-bar {
+    background-color: #E5632E;
+}
+
+#cohesion-slider-bar span {
+    background-color: #E5632E;
+    width: 15px;
+}
+
+#cohesion-slider-bar span:active {
+    background-color: #C75628;
     box-shadow: 1px 1px grey;
 }

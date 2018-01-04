@@ -39,3 +39,7 @@ function setLocationValue(){
     json_value["state"] = state;
     $('#location_value').val(JSON.stringify(json_value));
 }
+
+function submitSearchForm(){
+    document.forms["community_search_form"].submit();
+}

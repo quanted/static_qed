@@ -70,3 +70,7 @@ function loadSkillbar(){
 		},2000);
 	});
 }
+
+function submitSearchForm(){
+    document.forms["community_search_form"].submit();
+}

@@ -11,15 +11,17 @@ $(document).ready(function () {
     setTimeout(getScoreData, 600);
 
     // Events
+    $('#community_pdf').on("click", notImplementedAlert);
     $('#rank_btn').on("click", toggleRank);
-    $('#rank-exit').on("click", function(){
+    $('#rank-exit').on("click", function () {
         $('#rank-window').hide();
-    })
+    });
+    $('.rank-slider').on("slidestop", calculateScore);
 });
 
-function getScoreData(){
+function getScoreData() {
     var location_data = $('#location_value').val().toString();
-    if(location_data === "{}"){
+    if (location_data === "{}") {
         // Check for existence of hwbi-disc cookie containing data
         return null;
     }
@@ -28,23 +30,23 @@ function getScoreData(){
     $.ajax({
         url: data_url,
         type: "GET",
-        success: function (data, status, xhr){
+        success: function (data, status, xhr) {
             console.log("getScoreData success: " + status);
-            hwbi_disc_data = data;
             setScoreData(data);
+            hwbi_disc_data = JSON.parse(data);
             // Create or overwrite hwbi-disc cookie data
         },
-        error: function(jqXHR, textStatus, errorThrown){
+        error: function (jqXHR, textStatus, errorThrown) {
             console.log("getScoreData error: " + errorThrown);
         },
-        complete: function(jqXHR, textStatus){
+        complete: function (jqXHR, textStatus) {
             console.log("getScoreData complete: " + textStatus);
             return false;
         }
     });
 }
 
-function setScoreData(data){
+function setScoreData(data) {
     data = JSON.parse(data);
     document.getElementById('score_indicator_span').style.transform = "rotate(0deg) skew(45deg, -45deg)";
     // Set location info
@@ -54,7 +56,7 @@ function setScoreData(data){
     // Set location score
     var score = Math.round(data["outputs"]["hwbi"]);
     $('#wellbeing-score').html(score);
-    document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(score * 90/50) + "deg) skew(45deg, -45deg)";
+    document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(score * 90 / 50) + "deg) skew(45deg, -45deg)";
 
     var location = "[Nation: US, State: " + data["inputs"][0]["value"] + "]";
 
@@ -130,37 +132,81 @@ function setAccordion() {
     }
 }
 
-function loadSkillbar(){
-	$('.domain-score-bar').each(function(){
-		$(this).find('.score-bar').animate({
-			width:jQuery(this).attr('data-percent')
-		},2000);
-	});
+function loadSkillbar() {
+    $('.domain-score-bar').each(function () {
+        $(this).find('.score-bar').animate({
+            width: jQuery(this).attr('data-percent')
+        }, 2000);
+    });
 }
 
-function setRankSliders(){
-    $('#nature-slider-bar').slider({
+function setRankSliders() {
+    var sliderOptions = {
         animate: "fast",
         max: 5,
         min: 1,
         orientation: "horizontal",
         step: .1
-    });
-    $('#cultural-slider-bar').slider({
-        animate: "fast",
-        max: 5,
-        min: 1,
-        orientation: "horizontal",
-        step: .1
-    });
+    };
+    $('#nature-slider-bar').slider(sliderOptions);
+    $('#cultural-slider-bar').slider(sliderOptions);
+    $('#education-slider-bar').slider(sliderOptions);
+    $('#leisure-slider-bar').slider(sliderOptions);
+    $('#living-std-slider-bar').slider(sliderOptions);
+    $('#safety-slider-bar').slider(sliderOptions);
+    $('#cohesion-slider-bar').slider(sliderOptions);
+
 }
 
-function toggleRank(){
+function toggleRank() {
     var rWindow = $('#rank-window');
-    if(rWindow.is(':visible')){
+    if (rWindow.is(':visible')) {
         rWindow.hide();
     }
-    else{
+    else {
         rWindow.show();
     }
+}
+
+function calculateScore() {
+    var weights = document.getElementsByClassName('rank-slider');
+    var totalWeightArray = $(weights).map(function () {
+        return $(this).slider("value");
+    });
+    var totalWeight = totalWeightArray.toArray().reduce(sumArray);
+
+    var natureScore = hwbi_disc_data["outputs"]["domains"][0]["score"];
+    var natureWeight = $('#nature-slider-bar').slider("value");
+    var adjustedNatureScore = natureScore * natureWeight;
+    var culturalScore = hwbi_disc_data["outputs"]["domains"][1]["score"];
+    var culturalWeight =  $('#cultural-slider-bar').slider("value");
+    var adjustedCulturalScore = culturalScore * culturalWeight;
+    var educationScore = hwbi_disc_data["outputs"]["domains"][2]["score"];
+    var educationWeight = $('#education-slider-bar').slider("value");
+    var adjustedEducationScore = educationScore * educationWeight;
+    var leisureScore = hwbi_disc_data["outputs"]["domains"][3]["score"];
+    var leisureWeight = $('#leisure-slider-bar').slider("value");
+    var adjustedLeisureScore = leisureScore * leisureWeight;
+    var livingStdScore = hwbi_disc_data["outputs"]["domains"][4]["score"];
+    var livingStdWeight = $('#living-std-slider-bar').slider("value");
+    var adjustedLivingStdScore = livingStdScore * livingStdWeight;
+    var safetyScore = hwbi_disc_data["outputs"]["domains"][5]["score"];
+    var safetyWeight = $('#safety-slider-bar').slider("value");
+    var adjustedSafetyScore = safetyScore * safetyWeight;
+    var cohesionScore = hwbi_disc_data["outputs"]["domains"][6]["score"];
+    var cohesionWeight = $('#cohesion-slider-bar').slider("value");
+    var adjustedCohesionScore = cohesionScore * cohesionWeight;
+    var totalScore = adjustedNatureScore + adjustedCulturalScore + adjustedEducationScore + adjustedLeisureScore + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
+
+    var newScore = totalScore / totalWeight;
+    $('#wellbeing-score').html(Math.round(newScore));
+    document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(newScore * 90 / 50) + "deg) skew(45deg, -45deg)";
+}
+
+function sumArray(total, num){
+    return total + num;
+}
+
+function notImplementedAlert(){
+    alert("This feature has not yet been implemented.");
 }
