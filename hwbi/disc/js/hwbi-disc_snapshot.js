@@ -22,8 +22,13 @@ $(document).ready(function () {
 function getScoreData() {
     var location_data = $('#location_value').val().toString();
     if (location_data === "{}") {
-        // Check for existence of hwbi-disc cookie containing data
-        return null;
+        var locationCookie = getCookie("EPAHWBIDISC");
+        if(locationCookie !== ""){
+            location_data = locationCookie;
+        }
+        else{
+            return "";
+        }
     }
     var location = JSON.parse(location_data);
     var data_url = "/hwbi/disc/rest/scores?state=" + location['state'] + "&county=" + location['county'];
@@ -34,7 +39,7 @@ function getScoreData() {
             console.log("getScoreData success: " + status);
             setScoreData(data);
             hwbi_disc_data = JSON.parse(data);
-            // Create or overwrite hwbi-disc cookie data
+            setCookie('EPAHWBIDISC', location_data, 1);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("getScoreData error: " + errorThrown);
@@ -219,4 +224,26 @@ function sumArray(total, num){
 
 function notImplementedAlert(){
     alert("This feature has not yet been implemented.");
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
