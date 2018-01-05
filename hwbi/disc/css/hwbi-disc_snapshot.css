@@ -380,6 +380,10 @@
 }
 
 .education-bar {
+    background-color: #D59B2D;
+}
+
+.health-bar {
     background-color: #5598C3;
 }
 
@@ -417,7 +421,7 @@
     background: #FFF2CC;
     width: 60%;
     float: right;
-    height: 500px;
+    height: 575px;
     margin-left: 40%;
     margin-top: 85px;
     border-top: 10px #A6A6A6 solid;
@@ -528,15 +532,29 @@
 }
 
 #education-slider-bar {
-    background-color: #5598C3;
+    background-color: #D59B2D;
 }
 
 #education-slider-bar span {
-    background-color: #5598C3;
+    background-color: #D59B2D;
     width: 15px;
 }
 
 #education-slider-bar span:active {
+    background-color: #B28226;
+    box-shadow: 1px 1px grey;
+}
+
+#health-slider-bar {
+    background-color: #5598C3;
+}
+
+#health-slider-bar span {
+    background-color: #5598C3;
+    width: 15px;
+}
+
+#health-slider-bar span:active {
     background-color: #4983A8;
     box-shadow: 1px 1px grey;
 }

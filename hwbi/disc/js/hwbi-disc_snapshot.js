@@ -76,23 +76,28 @@ function setScoreData(data) {
     $('#education_score').html(education_score);
     $('#education_score_bar').attr('data-percent', education_score + "%");
     $('#education_location').html(location);
+    // Education
+    var health_score = data["outputs"]["domains"][3]["score"].toFixed(1);
+    $('#health_score').html(health_score);
+    $('#health_score_bar').attr('data-percent', health_score + "%");
+    $('#health_location').html(location);
     // Leisure Time
-    var leisure_score = data["outputs"]["domains"][3]["score"].toFixed(1);
+    var leisure_score = data["outputs"]["domains"][4]["score"].toFixed(1);
     $('#leisure_score').html(leisure_score);
     $('#leisure_score_bar').attr('data-percent', leisure_score + "%");
     $('#leisure_location').html(location);
     // Living Standards
-    var living_score = data["outputs"]["domains"][4]["score"].toFixed(1);
+    var living_score = data["outputs"]["domains"][5]["score"].toFixed(1);
     $('#living-std_score').html(living_score);
     $('#living-std_score_bar').attr('data-percent', living_score + "%");
     $('#living-std_location').html(location);
     // Safety and Security
-    var safety_score = data["outputs"]["domains"][5]["score"].toFixed(1);
+    var safety_score = data["outputs"]["domains"][6]["score"].toFixed(1);
     $('#safety_score').html(safety_score);
     $('#safety_score_bar').attr('data-percent', safety_score + "%");
     $('#safety_location').html(location);
     // Social Cohesion
-    var cohesion_score = data["outputs"]["domains"][6]["score"].toFixed(1);
+    var cohesion_score = data["outputs"]["domains"][7]["score"].toFixed(1);
     $('#cohesion_score').html(cohesion_score);
     $('#cohesion_score_bar').attr('data-percent', cohesion_score + "%");
     $('#cohesion_location').html(location);
@@ -151,6 +156,7 @@ function setRankSliders() {
     $('#nature-slider-bar').slider(sliderOptions);
     $('#cultural-slider-bar').slider(sliderOptions);
     $('#education-slider-bar').slider(sliderOptions);
+    $('#health-slider-bar').slider(sliderOptions);
     $('#leisure-slider-bar').slider(sliderOptions);
     $('#living-std-slider-bar').slider(sliderOptions);
     $('#safety-slider-bar').slider(sliderOptions);
@@ -184,19 +190,23 @@ function calculateScore() {
     var educationScore = hwbi_disc_data["outputs"]["domains"][2]["score"];
     var educationWeight = $('#education-slider-bar').slider("value");
     var adjustedEducationScore = educationScore * educationWeight;
-    var leisureScore = hwbi_disc_data["outputs"]["domains"][3]["score"];
+    var healthScore = hwbi_disc_data["outputs"]["domains"][3]["score"];
+    var healthWeight = $('#health-slider-bar').slider("value");
+    var adjustedHealthScore = healthScore * healthWeight;
+    var leisureScore = hwbi_disc_data["outputs"]["domains"][4]["score"];
     var leisureWeight = $('#leisure-slider-bar').slider("value");
     var adjustedLeisureScore = leisureScore * leisureWeight;
-    var livingStdScore = hwbi_disc_data["outputs"]["domains"][4]["score"];
+    var livingStdScore = hwbi_disc_data["outputs"]["domains"][5]["score"];
     var livingStdWeight = $('#living-std-slider-bar').slider("value");
     var adjustedLivingStdScore = livingStdScore * livingStdWeight;
-    var safetyScore = hwbi_disc_data["outputs"]["domains"][5]["score"];
+    var safetyScore = hwbi_disc_data["outputs"]["domains"][6]["score"];
     var safetyWeight = $('#safety-slider-bar').slider("value");
     var adjustedSafetyScore = safetyScore * safetyWeight;
-    var cohesionScore = hwbi_disc_data["outputs"]["domains"][6]["score"];
+    var cohesionScore = hwbi_disc_data["outputs"]["domains"][7]["score"];
     var cohesionWeight = $('#cohesion-slider-bar').slider("value");
     var adjustedCohesionScore = cohesionScore * cohesionWeight;
-    var totalScore = adjustedNatureScore + adjustedCulturalScore + adjustedEducationScore + adjustedLeisureScore + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
+    var totalScore = adjustedNatureScore + adjustedCulturalScore + adjustedEducationScore + adjustedHealthScore +
+        adjustedLeisureScore  + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
 
     var newScore = totalScore / totalWeight;
     $('#wellbeing-score').html(Math.round(newScore));
