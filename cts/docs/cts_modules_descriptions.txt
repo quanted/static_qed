@@ -5,7 +5,7 @@
 <li>Structures for all possible isomers.</li>
 </ul>
 
-<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates p-chem properties for the parent chemical and predicted transformation products based on the findings of multiple p-chem calculators.  The PPC is based on a consensus approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
+<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PPC is based on a consensus approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
 
 The calculators PPC is currently accessing include:
 <br>
@@ -16,9 +16,9 @@ The calculators PPC is currently accessing include:
 	<li>&nbsp;ChemAxon plug-in calculators, which use an atom-based fragment approach. </li>
 </ol>
 
-<p>Users also have the option to request measured data that is available in the EPI Suite p-chem database.   </p>
+<p>Users also have the option to request measured data that is available in the EPI Suite physicochemical database.   </p>
 
 <p><b>Reaction Pathway Simulator (RPS)</b>: CTS&apos;s Reaction Pathway Simulator (RPS) generates potential transformation products based on user-specified reaction conditions.  The output of the RPS is based on the selection and execution of reaction libraries that represent reaction schemes for the transformation of reactive functional groups, like reduction and hydrolysis.  These reaction schemes denote viable transformation pathways based on the identification and transformation of the reactive functional groups.</p>
 
 <p>A reaction library for human metabolism for phase one transformations developed by ChemAxon is also available through the RPS.  Developing reaction libraries allows scientists to "encode" the known process science published – current and future – in the peer-reviewed literature. Encoding process science is accomplished by using Chemical Terms Language and cheminformatics applications. </p>
-<p>Executing these reaction libraries provides dominant transformation pathways and products for the chemical of interest as a function of environmental conditions.  Users also have the option to execute the PPC for the calculation of p-chem properties for the parent chemical and transformation products.</p>
+<p>Executing these reaction libraries provides dominant transformation pathways and products for the chemical of interest as a function of environmental conditions.  Users also have the option to execute the PPC for the calculation of physicochemical properties for the parent chemical and transformation products.</p>

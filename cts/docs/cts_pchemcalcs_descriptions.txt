@@ -1,4 +1,4 @@
-External links to each of the p-chem calculators are given below to provide additional information for the individual calculators.<br><br>
+External links to each of the physicochemical calculators are given below to provide additional information for the individual calculators.<br><br>
 
 <a href="http://www2.epa.gov/tsca-screening-tools/epi-suitetm-estimation-program-interface" target="_blank" class="fadeMenu">EPI (Estimation Programs Interface) Suite</a> -- EPI Suite is a Windows-based suite of physical/chemical property and environmental fate estimation programs developed by EPA&apos;s and Syracuse Research Corp. (SRC).<br><br>
 
