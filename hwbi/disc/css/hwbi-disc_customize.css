@@ -396,7 +396,7 @@
 #customize_domains {
     border-top: 3px #44546A solid;
     border-bottom: 3px #44546A solid;
-    width: 100%;
+    /*width: 100%;*/
     display: table;
     table-layout: fixed;
     padding-left: 20px;
@@ -427,4 +427,76 @@
 .domain-selected {
     opacity: 1.0 !important;
     border: 1px black solid;
+}
+
+#customize_domain_score {
+    display: none;
+}
+
+/*      Selected Domain     */
+#customize_domain_arrow {
+    position: relative;
+    display: none;
+}
+
+#customize_domain_bar {
+    background: url('/static_qed/hwbi/disc/img/domain_bar.png') no-repeat center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    background-size: contain;
+    display: none;
+}
+
+#arrow_initial {
+    background: url('/static_qed/hwbi/disc/img/domain_arrow.png') no-repeat center;
+    opacity: 0.6;
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    margin-top: -22px;
+}
+
+#arrow_adjusted {
+    background: url('/static_qed/hwbi/disc/img/domain_arrow.png') no-repeat center;
+    z-index: 6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    margin-top: -22px;
+}
+
+#score_initial {
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    margin-top: 15px;
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+#score_adjusted {
+    z-index: 6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+/*  Indicators  */
+.indicator {
+    display: none;
 }
