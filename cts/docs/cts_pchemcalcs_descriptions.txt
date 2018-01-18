@@ -7,5 +7,3 @@ External links to each of the physicochemical calculators are given below to pro
 <a href="https://www.chemaxon.com/products/calculator-plugins/property-predictors/" target="_blank" class="fadeMenu">ChemAxon</a> -- ChemAxon provides cheminformatics software platforms, applications and services to optimize the value of chemistry information in life science and other research and development.<br><br>
 
 <a href="http://www2.epa.gov/chemical-research/toxicity-estimation-software-tool-test" target="_blank" class="fadeMenu">Toxicity Estimation Software Tool (TEST)</a> -- EPA&apos;s TEST was developed to allow users to easily estimate the toxicity of chemicals using Quantitative Structure Activity Relationships (QSARs) methodologies.<br><br>
-
-<a href="https://comptox.epa.gov/dashboard/" target="_blank" class="fadeMenu">CompTox Chemistry Dashboard</a></br><br>
