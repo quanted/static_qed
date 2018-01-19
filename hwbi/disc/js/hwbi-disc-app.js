@@ -7,17 +7,22 @@ var searchBox;
 var locationValue = '{}';
 var active_domain;
 var hwbi_disc_data;
+// var d3Data;
 
 $(document).ready(function () {
 
     initializeTabs();
+
+    // fix for Firefox UI
+    $('#community-snapshot-tab-link').trigger("click");
+    $('#about-tab-link').trigger("click");
 
     // Run cycleQuote after 500ms delay on page load.
     setTimeout(cycleQuote, 500);
     google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
     setTimeout(loadPage, 600);
 
-     // Snapshot body
+    // Snapshot body
     setAccordion();
     setRankSliders();
     setTimeout(getScoreData, 600);
@@ -33,20 +38,22 @@ $(document).ready(function () {
 
 });
 
-function setSearchBlock(selectedTab){
-    if(selectedTab.hash === "#about-tab"){
+function setSearchBlock(selectedTab) {
+    $(".selected-tab").map(function(){ $(this).removeClass('selected-tab');});
+    $(selectedTab).closest("li").addClass('selected-tab');
+    if (selectedTab.hash === "#about-tab") {
         $('#search_block').removeClass('search_block');
         $('#search_block').addClass('about_search');
         $('#report_pdf').hide();
     }
-    else{
+    else {
         $('#search_block').addClass('search_block');
         $('#search_block').removeClass('about_search');
         $('#report_pdf').show();
     }
 }
 
-function loadPage(){
+function loadPage() {
     $('#disc-tabs').css("opacity", 100);
     $(window.location.hash + "-link").trigger("click");
 }
@@ -54,7 +61,7 @@ function loadPage(){
 function initializeTabs() {
     $('#disc-tabs').tabs({
         active: 0,
-        beforeActivate: function(event, ui){
+        beforeActivate: function (event, ui) {
             setSearchBlock(event.currentTarget);
         }
     });
@@ -64,10 +71,10 @@ function getScoreData() {
     var location_data = locationValue.toString();
     if (location_data === "{}") {
         var locationCookie = getCookie("EPAHWBIDISC");
-        if(locationCookie !== ""){
+        if (locationCookie !== "") {
             location_data = locationCookie;
         }
-        else{
+        else {
             return "";
         }
     }
@@ -82,6 +89,8 @@ function getScoreData() {
             setScoreData(data);
             $('#customize_location').html(location['county'] + " County, " + location['state']);
             hwbi_disc_data = JSON.parse(data);
+            // setD3Data();
+            // setAsterPlot();
             setCookie('EPAHWBIDISC', location_data, 1);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -105,14 +114,14 @@ function cycleQuote() {
 }
 
 // initializeAutocomplete: Initializes google maps search places function with a restriction to only us locations.
-function initializeAutocomplete(){
+function initializeAutocomplete() {
     var input = document.getElementById('search_field');
     searchBox = new google.maps.places.Autocomplete(input);
     searchBox.setComponentRestrictions({'country': ['us']});
     searchBox.addListener('place_changed', setLocationValue);
 }
 
-function setLocationValue(){
+function setLocationValue() {
     var place = searchBox.getPlace();
     var county = place.address_components[1]['long_name'].replace(" County", "");
     var state = place.address_components[2]['long_name'];
@@ -125,14 +134,14 @@ function setLocationValue(){
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) === ' ') {
             c = c.substring(1);
@@ -272,7 +281,7 @@ function calculateScore() {
     var natureWeight = $('#nature-slider-bar').slider("value");
     var adjustedNatureScore = natureScore * natureWeight;
     var culturalScore = hwbi_disc_data["outputs"]["domains"][1]["score"];
-    var culturalWeight =  $('#cultural-slider-bar').slider("value");
+    var culturalWeight = $('#cultural-slider-bar').slider("value");
     var adjustedCulturalScore = culturalScore * culturalWeight;
     var educationScore = hwbi_disc_data["outputs"]["domains"][2]["score"];
     var educationWeight = $('#education-slider-bar').slider("value");
@@ -293,18 +302,18 @@ function calculateScore() {
     var cohesionWeight = $('#cohesion-slider-bar').slider("value");
     var adjustedCohesionScore = cohesionScore * cohesionWeight;
     var totalScore = adjustedNatureScore + adjustedCulturalScore + adjustedEducationScore + adjustedHealthScore +
-        adjustedLeisureScore  + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
+        adjustedLeisureScore + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
 
     var newScore = totalScore / totalWeight;
     $('#wellbeing-score').html(Math.round(newScore));
     document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(newScore * 90 / 50) + "deg) skew(45deg, -45deg)";
 }
 
-function sumArray(total, num){
+function sumArray(total, num) {
     return total + num;
 }
 
-function notImplementedAlert(){
+function notImplementedAlert() {
     alert("This feature has not yet been implemented.");
 }
 
@@ -382,3 +391,87 @@ function showDomainIndicators(domainID) {
         this.show();
     });
 }
+
+// //Aster Plot functions
+// function setD3Data() {
+//     var domainData = hwbi_disc_data.outputs.domains;
+//     var domainColors = ["#82AC45", "#998FE4", "#D59B2D", "#5598C3", "#DC4B60", "#269683", "#606060", "#E5632E"];
+//     var domainHighlight = ["#779E3F", "#877EC9", "#B28226", "#4983A8", "#C74457", "#228574", "#545454", "#C75628"];
+//     var index = 0;
+//     d3Data = domainData.map(function (value) {
+//         index += 1;
+//         return {
+//             "id": value.domainID,
+//             "order": index,
+//             "score": value.score.toFixed(1),
+//             "weight": value.weight,
+//             "color": domainColors[index - 1],
+//             "label": value.description,
+//             "hcolor": domainHighlight[index - 1]
+//         }
+//     });
+// }
+
+// function setAsterPlot() {
+//     var width = 250,
+//         height = 250,
+//         radius = Math.min(width, height) / 2,
+//         innerRadius = 0.3 * radius;
+//
+//     var pie = d3.layout.pie().sort(null).value(function (d) {
+//         return d.weight;
+//     });
+//     var tip = d3.tip().attr('class', 'd3-tip').offset([50, 0]).html(function (d) {
+//             // return d.data.label + ": <span style='color:orangered'>" + Math.round(d.data.score) + "</span>";
+//         return d.data.label + ": <span style='color:" + d.data.hcolor + "'>" + d.data.score + "</span>";
+//     });
+//     var arc = d3.svg.arc()
+//         .innerRadius(innerRadius)
+//         .outerRadius(function (d) {
+//           return (radius - innerRadius) * (d.data.score/100) + innerRadius;
+//         });
+//     var outlineArc = d3.svg.arc().innerRadius(innerRadius).outerRadius(radius);
+//     var svg = d3.select("#disc-aster").append("svg").attr("width", width).attr("height", height).append("g")
+//         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+//     svg.call(tip);
+//
+//     // var data = $(d3Data).map(function (d) {
+//     //     d.id = d.id;
+//     //     d.order = +d.order;
+//     //     d.color = d.color;
+//     //     d.weight = +d.weight;
+//     //     d.score = +d.score;
+//     //     d.width = +d.weight;
+//     //     d.label = d.label;
+//     //     d.hcolor = d.hcolor;
+//     // });
+//     var data = d3Data;
+//
+//     var path = svg.selectAll(".solidArc").data(pie(data)).enter().append("path")
+//         .attr("fill", function (d) {
+//             return d.data.color;
+//         })
+//         .attr("class", "solidArc")
+//         .attr("stroke", "gray")
+//         .attr("d", arc)
+//         .on('mouseover', tip.show).on('mouseout', tip.hide);
+//
+//     var outerPath = svg.selectAll(".outlineArc").data(pie(data))
+//         .enter().append("path")
+//         .attr("fill", "none")
+//         .attr("stroke", "gray")
+//         .attr("class", "outlineArc")
+//         .attr("d", outlineArc);
+//       // calculate the weighted mean score
+//   var score = data.reduce(function(a, b) {
+//       return a + (b.score * b.weight);
+//     }, 0) / data.reduce(function(a, b) {
+//       return a + b.weight;
+//     }, 0);
+//
+//   svg.append("svg:text")
+//     .attr("class", "aster-score")
+//     .attr("dy", ".35em")
+//     .attr("text-anchor", "middle") // text-align: right
+//     .text(Math.round(score));
+// }
