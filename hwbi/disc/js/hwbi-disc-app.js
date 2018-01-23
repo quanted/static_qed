@@ -7,7 +7,8 @@ var searchBox;
 var locationValue = '{}';
 var active_domain;
 var hwbi_disc_data;
-// var d3Data;
+var hwbi_indicator_data;
+var hwbi_indicator_value_adjusted = {};
 
 $(document).ready(function () {
 
@@ -19,7 +20,6 @@ $(document).ready(function () {
 
     // Run cycleQuote after 500ms delay on page load.
     setTimeout(cycleQuote, 500);
-    google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
     setTimeout(loadPage, 600);
 
     // Snapshot body
@@ -36,10 +36,14 @@ $(document).ready(function () {
     // Customize body
     $('.domain-icon').on('click', selectDomain);
 
+    google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
+
 });
 
 function setSearchBlock(selectedTab) {
-    $(".selected-tab").map(function(){ $(this).removeClass('selected-tab');});
+    $(".selected-tab").map(function () {
+        $(this).removeClass('selected-tab');
+    });
     $(selectedTab).closest("li").addClass('selected-tab');
     if (selectedTab.hash === "#about-tab") {
         $('#search_block').removeClass('search_block');
@@ -89,8 +93,7 @@ function getScoreData() {
             setScoreData(data);
             $('#customize_location').html(location['county'] + " County, " + location['state']);
             hwbi_disc_data = JSON.parse(data);
-            // setD3Data();
-            // setAsterPlot();
+            getIndicatorData();
             setCookie('EPAHWBIDISC', location_data, 1);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -261,13 +264,15 @@ function setRankSliders() {
 }
 
 function toggleRank() {
-    var rWindow = $('#rank-window');
-    if (rWindow.is(':visible')) {
-        rWindow.hide();
-    }
-    else {
-        rWindow.show();
-    }
+    var rWindow = $('.slider-block');
+    rWindow.map(function () {
+        if ($(this).is(':visible')) {
+            $(this).hide();
+        }
+        else {
+            $(this).show();
+        }
+    });
 }
 
 function calculateScore() {
@@ -321,8 +326,10 @@ function selectDomain() {
     if (hwbi_disc_data === undefined) {
         return false;
     }
+    $('#customize_domain_score').show();
     $('#customize_domain_arrow').show();
     $('#customize_domain_bar').show();
+    $('#customize_domain_indicators').show();
     var domains = $('.domain-icon');
     $(domains).map(function () {
         $(this).removeClass("domain-selected");
@@ -335,22 +342,21 @@ function selectDomain() {
             return this['score'];
         }
     });
+    if (!(hwbi_indicator_value_adjusted.hasOwnProperty(domainID))) {
+        hwbi_indicator_value_adjusted[domainID] = domainScore[0];
+    }
     var domainScoreRounded = Math.round(domainScore[0]);
+    var adjustedScoreRounded = Math.round(hwbi_indicator_value_adjusted[domainID]);
     $('#arrow_initial').css("left", domainScoreRounded + "%");
     $('#score_initial').html(domainScore[0].toFixed(1));
     $('#score_initial').css("left", domainScoreRounded + "%");
-    $('#arrow_adjusted').css("left", domainScoreRounded + "%");
-    $('#score_adjusted').html(domainScore[0].toFixed(1));
-    $('#score_adjusted').css("left", domainScoreRounded + "%");
+    $('#arrow_adjusted').css("left", adjustedScoreRounded + "%");
+    $('#score_adjusted').html(hwbi_indicator_value_adjusted[domainID].toFixed(1));
+    $('#score_adjusted').css("left", adjustedScoreRounded + "%");
 
     $('#customize_domain_details').html(getDomainDescription(domainID) +
         "Move slider left or right to change the indicator score to describe your community better.");
     showDomainIndicators(domainID);
-    // Load domain details
-    // Load domain services
-    // TODO: Create json of domain:indicator service combinations with associated default weights
-    // Load indicators and weights into sliders for updated calculations
-
 }
 
 function getDomainDescription(domainID) {
@@ -384,94 +390,358 @@ function getDomainDescription(domainID) {
 }
 
 function showDomainIndicators(domainID) {
-    $('.indicators').map(function () {
-        this.hide();
+    $('.domain_indicator').map(function () {
+        $(this).hide();
     });
-    $('.' + domainID).map(function () {
-        this.show();
+    if (domainID === "Connection") {
+        $('#connection_indicators').show();
+    }
+    else if (domainID === "Culture") {
+        $('#culture_indicators').show();
+    }
+    else if (domainID === "Education") {
+        $('#education_indicators').show();
+    }
+    else if (domainID === "Health") {
+        $('#health_indicators').show();
+    }
+    else if (domainID === "Leisure") {
+        $('#leisure_indicators').show();
+    }
+    else if (domainID === "Living") {
+        $('#living_indicators').show();
+    }
+    else if (domainID === "Safety") {
+        $('#safety_indicators').show();
+    }
+    else if (domainID === "Social") {
+        $('#social_indicators').show();
+    }
+}
+
+function getIndicatorData() {
+    // TODO: hit api endpoint to get indicator data for selected county
+    setIndicatorSliders();
+}
+
+function setIndicatorSliders() {
+    // TODO: Set min/max/value as -/+ x of the value
+    $('#nature_biophilia_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#nature_biophilia_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#nature_biophilia_value').html(ui.value);
+            calculateNewScore("Connection", "#connection_indicators");
+
+        }
+    });
+    $('#culture_activity_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#culture_activity_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#culture_activity_value').html(ui.value);
+            calculateNewScore("Culture", "#culture_indicators");
+        }
+    });
+    $('#education_knowledge_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#education_knowledge_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#education_knowledge_value').html(ui.value);
+            calculateNewScore("Education", "#education_indicators");
+        }
+    });
+    $('#education_participation_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#education_participation_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#education_participation_value').html(ui.value);
+            calculateNewScore("Education", "#education_indicators");
+        }
+    });
+    $('#education_social_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#education_social_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#education_social_value').html(ui.value);
+            calculateNewScore("Education", "#education_indicators");
+        }
+    });
+    $('#health_healthcare_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#health_healthcare_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#health_healthcare_value').html(ui.value);
+            calculateNewScore("Health", "#health_indicators");
+        }
+    });
+    $('#health_life_expectancy_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#health_life_expectancy_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#health_life_expectancy_value').html(ui.value);
+            calculateNewScore("Health", "#health_indicators");
+        }
+    });
+    $('#health_lifestyle_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#health_lifestyle_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#health_lifestyle_value').html(ui.value);
+            calculateNewScore("Health", "#health_indicators");
+        }
+    });
+    $('#health_personal_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#health_personal_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#health_personal_value').html(ui.value);
+            calculateNewScore("Health", "#health_indicators");
+        }
+    });
+    $('#health_conditions_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#health_conditions_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#health_conditions_value').html(ui.value);
+            calculateNewScore("Health", "#health_indicators");
+        }
+    });
+    $('#leisure_activity_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#leisure_activity_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#leisure_activity_value').html(ui.value);
+            calculateNewScore("Leisure", "#leisure_indicators");
+        }
+    });
+    $('#leisure_time_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#leisure_time_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#leisure_time_value').html(ui.value);
+            calculateNewScore("Leisure", "#leisure_indicators");
+        }
+    });
+    $('#leisure_working_age_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#leisure_working_age_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#leisure_working_age_value').html(ui.value);
+            calculateNewScore("Leisure", "#leisure_indicators");
+        }
+    });
+    $('#living_basic_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#living_basic_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#living_basic_value').html(ui.value);
+            calculateNewScore("Living", "#living_indicators");
+        }
+    });
+    $('#living_income_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#living_income_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#living_income_value').html(ui.value);
+            calculateNewScore("Living", "#living_indicators");
+        }
+    });
+    $('#living_wealth_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#living_wealth_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#living_wealth_value').html(ui.value);
+            calculateNewScore("Living", "#living_indicators");
+        }
+    });
+    $('#living_work_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#living_work_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#living_work_value').html(ui.value);
+            calculateNewScore("Living", "#living_indicators");
+        }
+    });
+    $('#safety_actual_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#safety_actual_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#safety_actual_value').html(ui.value);
+            calculateNewScore("Safety", "#safety_indicators");
+
+        }
+    });
+    $('#safety_perceived_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#safety_perceived_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#safety_perceived_value').html(ui.value);
+            calculateNewScore("Safety", "#safety_indicators");
+        }
+    });
+    $('#safety_risk_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#safety_risk_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#safety_risk_value').html(ui.value);
+            calculateNewScore("Safety", "#safety_indicators");
+        }
+    });
+    $('#social_attitude_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#social_attitude_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#social_attitude_value').html(ui.value);
+            calculateNewScore("Social", "#social_indicators");
+        }
+    });
+    $('#social_democratic_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#social_democratic_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#social_democratic_value').html(ui.value);
+            calculateNewScore("Social", "#social_indicators");
+        }
+    });
+    $('#social_family_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#social_family_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#social_family_value').html(ui.value);
+            calculateNewScore("Social", "#social_indicators");
+        }
+    });
+    $('#social_engagement_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#social_engagement_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#social_engagement_value').html(ui.value);
+            calculateNewScore("Social", "#social_indicators");
+        }
+    });
+    $('#social_support_slider').slider({
+        min: 0,
+        max: 100,
+        value: 50,
+        create: function (event, ui) {
+            $('#social_support_value').html(50);
+        },
+        slide: function (event, ui) {
+            $('#social_support_value').html(ui.value);
+            calculateNewScore("Social", "#social_indicators");
+        }
     });
 }
 
-// //Aster Plot functions
-// function setD3Data() {
-//     var domainData = hwbi_disc_data.outputs.domains;
-//     var domainColors = ["#82AC45", "#998FE4", "#D59B2D", "#5598C3", "#DC4B60", "#269683", "#606060", "#E5632E"];
-//     var domainHighlight = ["#779E3F", "#877EC9", "#B28226", "#4983A8", "#C74457", "#228574", "#545454", "#C75628"];
-//     var index = 0;
-//     d3Data = domainData.map(function (value) {
-//         index += 1;
-//         return {
-//             "id": value.domainID,
-//             "order": index,
-//             "score": value.score.toFixed(1),
-//             "weight": value.weight,
-//             "color": domainColors[index - 1],
-//             "label": value.description,
-//             "hcolor": domainHighlight[index - 1]
-//         }
-//     });
-// }
+function calculateNewScore(domainID, domainBlock) {
+    var domain = $(domainBlock + " .indicator_value");
+    var scores = $(domain).map(function () {
+        return Number($(this).html());
+    });
+    var total = scores.toArray().reduce(sumArray);
+    var scoreCount = scores.toArray().length;
+    var newScore = total / scoreCount;
+    hwbi_indicator_value_adjusted[domainID] = newScore;
+    var adjustedScoreRounded = Math.round(newScore);
+    $('#arrow_adjusted').css("left", adjustedScoreRounded + "%");
+    $('#score_adjusted').html(hwbi_indicator_value_adjusted[domainID].toFixed(1));
+    $('#score_adjusted').css("left", adjustedScoreRounded + "%");
 
-// function setAsterPlot() {
-//     var width = 250,
-//         height = 250,
-//         radius = Math.min(width, height) / 2,
-//         innerRadius = 0.3 * radius;
-//
-//     var pie = d3.layout.pie().sort(null).value(function (d) {
-//         return d.weight;
-//     });
-//     var tip = d3.tip().attr('class', 'd3-tip').offset([50, 0]).html(function (d) {
-//             // return d.data.label + ": <span style='color:orangered'>" + Math.round(d.data.score) + "</span>";
-//         return d.data.label + ": <span style='color:" + d.data.hcolor + "'>" + d.data.score + "</span>";
-//     });
-//     var arc = d3.svg.arc()
-//         .innerRadius(innerRadius)
-//         .outerRadius(function (d) {
-//           return (radius - innerRadius) * (d.data.score/100) + innerRadius;
-//         });
-//     var outlineArc = d3.svg.arc().innerRadius(innerRadius).outerRadius(radius);
-//     var svg = d3.select("#disc-aster").append("svg").attr("width", width).attr("height", height).append("g")
-//         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-//     svg.call(tip);
-//
-//     // var data = $(d3Data).map(function (d) {
-//     //     d.id = d.id;
-//     //     d.order = +d.order;
-//     //     d.color = d.color;
-//     //     d.weight = +d.weight;
-//     //     d.score = +d.score;
-//     //     d.width = +d.weight;
-//     //     d.label = d.label;
-//     //     d.hcolor = d.hcolor;
-//     // });
-//     var data = d3Data;
-//
-//     var path = svg.selectAll(".solidArc").data(pie(data)).enter().append("path")
-//         .attr("fill", function (d) {
-//             return d.data.color;
-//         })
-//         .attr("class", "solidArc")
-//         .attr("stroke", "gray")
-//         .attr("d", arc)
-//         .on('mouseover', tip.show).on('mouseout', tip.hide);
-//
-//     var outerPath = svg.selectAll(".outlineArc").data(pie(data))
-//         .enter().append("path")
-//         .attr("fill", "none")
-//         .attr("stroke", "gray")
-//         .attr("class", "outlineArc")
-//         .attr("d", outlineArc);
-//       // calculate the weighted mean score
-//   var score = data.reduce(function(a, b) {
-//       return a + (b.score * b.weight);
-//     }, 0) / data.reduce(function(a, b) {
-//       return a + b.weight;
-//     }, 0);
-//
-//   svg.append("svg:text")
-//     .attr("class", "aster-score")
-//     .attr("dy", ".35em")
-//     .attr("text-anchor", "middle") // text-align: right
-//     .text(Math.round(score));
-// }
+}
