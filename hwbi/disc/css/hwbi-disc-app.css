@@ -833,3 +833,112 @@
 .indicator_slider span:active {
     background: radial-gradient(rgba(56,94,117,1.0), rgba(145,217,255,1.0)) !important;
 }
+
+/* COMPARE PAGE */
+.compare-communities-container {
+    border-top: 2px solid #aeb0b5;
+    border-bottom: 2px solid #aeb0b5;
+    padding: 6px 1em;
+}
+
+.community-col {
+    font-weight: bold;
+    font-size: 1.25em;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.domain-col {
+    border-bottom: 2px solid #d6d7d9;
+    padding: 0.25em 0 0.25em 0;
+}
+
+.domain-col-bottom {
+    padding: 0.25em 0 0.25em 0; 
+}
+
+.compare-communities-container button.add-community {
+    margin: 0 0 6px 0;
+}
+
+.compare-communities-container .button-disabled {
+    margin: 0;
+    background-color: #d6d7d9;
+    pointer-events: none;
+}
+
+.add-community-search {
+    background: #5b616b;
+    border-radius: 3px 0 3px 3px;
+    box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.3);
+    margin-top: -2px;
+    padding: 8px;
+    position: absolute;
+    width: 350px;
+}
+.search-subtext {
+    color: #fff;
+}
+.compare-search-input {
+    width: 80%;
+    height: 27px
+}
+
+.compare-search-button {
+    background-image: url(https://www.epa.gov/sites/all/themes/epa/img/svg/search.svg);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    border-radius: 0 3px 3px 0;
+    box-sizing: border-box;;
+    font-size: 0; 
+    line-height: 0;
+    right: 0;
+    text-decoration: none;
+    text-indent: -999em;
+    text-shadow: none;
+    top: 17px;
+
+    width: 32px; 
+    margin-left: -4px;
+    margin-bottom: 0;
+    height: 27px
+}
+
+.compare-hwbi-score {
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.compare-domain-score {
+    text-align: center;
+    font-size: 1.5rem;
+    background-color: #d6d7d9;
+    border-bottom: 2px solid #fff;
+    border-left: 2px solid #fff;
+}
+
+.community-location {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.community-row {
+    border-bottom: 2px solid #aeb0b5;
+}
+
+.close-compare-search {
+    background-color: #cd2026;
+    color: #fff;
+    float: right;
+    margin: 0 0 0 10px;
+    padding: 0.25em .5em;
+}
+
+.close-compare-search:hover, .close-compare-search:focus {
+    background-color: #e31c3d;
+}
+
+.close-compare-search:active {
+    background-color: #981b1e;
+}

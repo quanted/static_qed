@@ -4,6 +4,7 @@ var quoteIndex = 0;
 var acc = document.getElementsByClassName("accordion");
 var acc_i;
 var searchBox;
+var compareSearchBox = [];
 var locationValue = '{}';
 var active_domain;
 var hwbi_disc_data;
@@ -36,9 +37,16 @@ $(document).ready(function () {
     // Customize body
     $('.domain-icon').on('click', selectDomain);
 
-    google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
-
+    // Comparison body
+    $('.add-community').on('click', addComparison);
+    $('.close-compare-search').on('click', removeComparison);
+    $('.compare-search').on('click', getComparisonData);
 });
+
+function initializeGoogleMaps() {
+    google.maps.event.addDomListener(window, 'load', initializeAutocomplete);
+    google.maps.event.addDomListener(window, 'load', initializeComparisonAutocomplete);
+}
 
 function setSearchBlock(selectedTab) {
     $(".selected-tab").map(function () {
@@ -91,6 +99,8 @@ function getScoreData() {
         success: function (data, status, xhr) {
             console.log("getScoreData success: " + status);
             setScoreData(data);
+            setCompareData(data, 0);
+            displayCompareData(JSON.parse(sessionStorage.getItem("compareCommunities")).length);
             $('#customize_location').html(location['county'] + " County, " + location['state']);
             hwbi_disc_data = JSON.parse(data);
             getIndicatorData();
@@ -744,4 +754,146 @@ function calculateNewScore(domainID, domainBlock) {
     $('#score_adjusted').html(hwbi_indicator_value_adjusted[domainID].toFixed(1));
     $('#score_adjusted').css("left", adjustedScoreRounded + "%");
 
+}
+
+function setCompareData(data, columnNumber) {
+    data = JSON.parse(data);
+
+    var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
+    if (!compareCommunities) {
+        compareCommunities = [];
+    }
+
+    if (compareCommunities.length >= 3) {
+        return; // don't allow more than three comparisons
+    }
+
+    var community = {};
+
+    community.location = data["inputs"][1]["value"] + " County, " + data["inputs"][0]["value"];
+    for (var i = 0; i < compareCommunities.length; i++) {
+        if (community.location === compareCommunities[i].location) { // check for duplicates
+            return; // don't add the duplicate
+        }
+    }
+    community.score = data["outputs"]["hwbi"].toFixed(1);
+    community.nature_score = data["outputs"]["domains"][0]["score"].toFixed(1);
+    community.cultural_score = data["outputs"]["domains"][1]["score"].toFixed(1);
+    community.education_score = data["outputs"]["domains"][2]["score"].toFixed(1);
+    community.health_score = data["outputs"]["domains"][3]["score"].toFixed(1);    
+    community.leisure_score = data["outputs"]["domains"][4]["score"].toFixed(1);    
+    community.living_score = data["outputs"]["domains"][5]["score"].toFixed(1);    
+    community.safety_score = data["outputs"]["domains"][6]["score"].toFixed(1);    
+    community.cohesion_score = data["outputs"]["domains"][7]["score"].toFixed(1);
+
+    compareCommunities.push(community);
+    sessionStorage.setItem('compareCommunities', JSON.stringify(compareCommunities));
+}
+
+function displayCompareData() {
+    var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
+
+    for (var i = 0; i < compareCommunities.length; i++) {
+        var community = compareCommunities[i];
+        
+        $('#community-button-' + i).hide();
+        $('#community-close-button-' + i).show();
+        $('#community-button-'  + (+i + 1))
+            .prop('disabled', false)
+            .removeClass('button-disabled');
+
+        $('#community-location-' + i).html(community.location);
+        $('#compare-score-' + i).html(community.score);
+        $('#compare-nature-' + i).html(community.nature_score);
+        $('#compare-cultural-' + i).html(community.cultural_score);
+        $('#compare-education-' + i).html(community.education_score);
+        $('#compare-health-' + i).html(community.health_score);
+        $('#compare-leisure-' + i).html(community.leisure_score);
+        $('#compare-living-' + i).html(community.living_score);
+        $('#compare-safety-' + i).html(community.safety_score);
+        $('#compare-cohesion-' + i).html(community.cohesion_score);
+    }
+    $('.add-community-search').hide();
+}
+
+
+function clearComparisonData(columnNumber) {
+    var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
+    compareCommunities.splice(columnNumber, 1);
+    sessionStorage.setItem('compareCommunities', JSON.stringify(compareCommunities));
+}
+
+function clearComparisonDisplay() {
+    var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
+    for (var i = 0; i < compareCommunities.length; i++) {
+        $('#community-button-' + i).show();
+        $('#community-button-'  + (+i + 1))
+            .prop('disabled', true)
+            .addClass('button-disabled');
+        $('#community-close-button-' + i).hide();
+        
+        $('#community-location-' + i).empty();
+        $('#compare-score-' + i).empty();
+        $('#compare-nature-' + i).empty();
+        $('#compare-cultural-' + i).empty();
+        $('#compare-education-' + i).empty();
+        $('#compare-health-' + i).empty();
+        $('#compare-leisure-' + i).empty();
+        $('#compare-living-' + i).empty();
+        $('#compare-safety-' + i).empty();
+        $('#compare-cohesion-' + i).empty();
+    }
+}
+
+function addComparison() {
+    $me = $(this);
+    var communityNumber = $me.attr('data-community');
+    $('#compare-search-' + communityNumber).parent().toggle();
+}
+
+function removeComparison() {
+    $me = $(this);
+    var communityNumber = +$me.attr('data-community');
+    clearComparisonDisplay();
+    clearComparisonData(communityNumber);
+    displayCompareData();
+}
+
+function getComparisonData() {
+    var communityNumber = +$(this).attr('data-community'); // get the community number
+    var place = compareSearchBox[communityNumber].getPlace();
+    var county = place.address_components[1]['long_name'].replace(" County", "");
+    var state = place.address_components[2]['long_name'];
+    var location = {};
+    location["county"] = county;
+    location["state"] = state;
+    var data_url = "/hwbi/disc/rest/scores?state=" + location['state'] + "&county=" + location['county'];
+    $.ajax({ // get score data
+        url: data_url,
+        type: "GET",
+        success: function (data, status, xhr) {
+            console.log("getComparisonData success: " + status);
+            setCompareData(data, communityNumber);
+            displayCompareData();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("getComparisonData error: " + errorThrown);
+        },
+        complete: function (jqXHR, textStatus) {
+            console.log("getComparisonData complete: " + textStatus);
+            $('.add-community-search').eq(communityNumber).hide();
+            $('#compare-score-' + communityNumber).empty();
+            return false;
+        }
+    });
+}
+
+// initializeComparisonAutocomplete: Initializes google maps search places function with a restriction to only us locations.
+function initializeComparisonAutocomplete() {
+    var compareInputs = document.getElementsByClassName('compare-search-input');
+    for (var i = 0; i < compareInputs.length; i++) {
+        input = compareInputs[i];
+        compareSearchBox[i] = new google.maps.places.Autocomplete(input);
+        compareSearchBox[i].setComponentRestrictions({'country': ['us']});
+    }
 }
