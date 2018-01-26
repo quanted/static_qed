@@ -8,7 +8,7 @@ var compareSearchBox = [];
 var locationValue = '{}';
 var active_domain;
 var hwbi_disc_data;
-var hwbi_indicator_data;
+// var hwbi_indicator_data;
 var hwbi_indicator_value_adjusted = {};
 
 $(document).ready(function () {
@@ -104,6 +104,7 @@ function getScoreData() {
             $('#customize_location').html(location['county'] + " County, " + location['state']);
             hwbi_disc_data = JSON.parse(data);
             getIndicatorData();
+            hwbi_indicator_value_adjusted = {};
             setCookie('EPAHWBIDISC', location_data, 1);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -815,7 +816,6 @@ function displayCompareData() {
     }
     $('.add-community-search').hide();
 }
-
 
 function clearComparisonData(columnNumber) {
     var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
