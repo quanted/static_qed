@@ -8,7 +8,7 @@ var compareSearchBox = [];
 var locationValue = '{}';
 var active_domain;
 var hwbi_disc_data;
-// var hwbi_indicator_data;
+var hwbi_indicator_data;
 var hwbi_indicator_value_adjusted = {};
 
 $(document).ready(function () {
@@ -85,6 +85,7 @@ function getScoreData() {
         var locationCookie = getCookie("EPAHWBIDISC");
         if (locationCookie !== "") {
             location_data = locationCookie;
+            locationValue = JSON.parse(location_data);
         }
         else {
             return "";
@@ -103,7 +104,7 @@ function getScoreData() {
             displayCompareData(JSON.parse(sessionStorage.getItem("compareCommunities")).length);
             $('#customize_location').html(location.county + " County, " + location.state);
             hwbi_disc_data = JSON.parse(data);
-            getIndicatorData();
+            setTimeout(getIndicatorData, 1200);
             hwbi_indicator_value_adjusted = {};
             setCookie('EPAHWBIDISC', location_data, 1);
         },
@@ -433,18 +434,33 @@ function showDomainIndicators(domainID) {
 }
 
 function getIndicatorData() {
-    // TODO: hit api endpoint to get indicator data for selected county
-    setIndicatorSliders();
+    var location = locationValue;
+    $.ajax({
+        type: 'GET',
+        url: "/hwbi/disc/rest/indicators/scores?county=" + location.county + "&state_abbr=" + location.state_abbr,
+        success: function (data, status, xhr) {
+            hwbi_indicator_data = JSON.parse(data);
+            setIndicatorSliders();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("getScoreData error: " + errorThrown);
+        },
+        complete: function (jqXHR, textStatus) {
+            console.log("getScoreData complete: " + textStatus);
+            return false;
+        }
+    });
+
 }
 
 function setIndicatorSliders() {
-    // TODO: Set min/max/value as -/+ x of the value
+    var biophilia = hwbi_indicator_data.outputs[0].score.toFixed(2);
     $('#nature_biophilia_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: biophilia,
         create: function (event, ui) {
-            $('#nature_biophilia_value').html(50);
+            $('#nature_biophilia_value').html(biophilia);
         },
         slide: function (event, ui) {
             $('#nature_biophilia_value').html(ui.value);
@@ -452,204 +468,221 @@ function setIndicatorSliders() {
 
         }
     });
+    var culture_activity = (hwbi_indicator_data.outputs[1].score).toFixed(2);
     $('#culture_activity_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: culture_activity,
         create: function (event, ui) {
-            $('#culture_activity_value').html(50);
+            $('#culture_activity_value').html(culture_activity);
         },
         slide: function (event, ui) {
             $('#culture_activity_value').html(ui.value);
             calculateNewScore("Culture", "#culture_indicators");
         }
     });
+    var education_knowledge = (hwbi_indicator_data.outputs[2].score).toFixed(2);
     $('#education_knowledge_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: education_knowledge,
         create: function (event, ui) {
-            $('#education_knowledge_value').html(50);
+            $('#education_knowledge_value').html(education_knowledge);
         },
         slide: function (event, ui) {
             $('#education_knowledge_value').html(ui.value);
             calculateNewScore("Education", "#education_indicators");
         }
     });
+    var education_participation = (hwbi_indicator_data.outputs[3].score).toFixed(2);
     $('#education_participation_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: education_participation,
         create: function (event, ui) {
-            $('#education_participation_value').html(50);
+            $('#education_participation_value').html(education_participation);
         },
         slide: function (event, ui) {
             $('#education_participation_value').html(ui.value);
             calculateNewScore("Education", "#education_indicators");
         }
     });
+    var education_social = (hwbi_indicator_data.outputs[4].score).toFixed(2);
     $('#education_social_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: education_social,
         create: function (event, ui) {
-            $('#education_social_value').html(50);
+            $('#education_social_value').html(education_social);
         },
         slide: function (event, ui) {
             $('#education_social_value').html(ui.value);
             calculateNewScore("Education", "#education_indicators");
         }
     });
+    var health_healthcare = (hwbi_indicator_data.outputs[5].score).toFixed(2);
     $('#health_healthcare_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: health_healthcare,
         create: function (event, ui) {
-            $('#health_healthcare_value').html(50);
+            $('#health_healthcare_value').html(health_healthcare);
         },
         slide: function (event, ui) {
             $('#health_healthcare_value').html(ui.value);
             calculateNewScore("Health", "#health_indicators");
         }
     });
+    var health_life_exp = (hwbi_indicator_data.outputs[6].score).toFixed(2);
     $('#health_life_expectancy_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: health_life_exp,
         create: function (event, ui) {
-            $('#health_life_expectancy_value').html(50);
+            $('#health_life_expectancy_value').html(health_life_exp);
         },
         slide: function (event, ui) {
             $('#health_life_expectancy_value').html(ui.value);
             calculateNewScore("Health", "#health_indicators");
         }
     });
+    var health_lifestyle = (hwbi_indicator_data.outputs[7].score).toFixed(2);
     $('#health_lifestyle_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: health_lifestyle,
         create: function (event, ui) {
-            $('#health_lifestyle_value').html(50);
+            $('#health_lifestyle_value').html(health_lifestyle);
         },
         slide: function (event, ui) {
             $('#health_lifestyle_value').html(ui.value);
             calculateNewScore("Health", "#health_indicators");
         }
     });
+    var health_personal = (hwbi_indicator_data.outputs[8].score).toFixed(2);
     $('#health_personal_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: health_personal,
         create: function (event, ui) {
-            $('#health_personal_value').html(50);
+            $('#health_personal_value').html(health_personal);
         },
         slide: function (event, ui) {
             $('#health_personal_value').html(ui.value);
             calculateNewScore("Health", "#health_indicators");
         }
     });
+    var health_conditions = (hwbi_indicator_data.outputs[9].score).toFixed(2);
     $('#health_conditions_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: health_conditions,
         create: function (event, ui) {
-            $('#health_conditions_value').html(50);
+            $('#health_conditions_value').html(health_conditions);
         },
         slide: function (event, ui) {
             $('#health_conditions_value').html(ui.value);
             calculateNewScore("Health", "#health_indicators");
         }
     });
+    var leisure_activity = (hwbi_indicator_data.outputs[10].score).toFixed(2);
     $('#leisure_activity_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: leisure_activity,
         create: function (event, ui) {
-            $('#leisure_activity_value').html(50);
+            $('#leisure_activity_value').html(leisure_activity);
         },
         slide: function (event, ui) {
             $('#leisure_activity_value').html(ui.value);
             calculateNewScore("Leisure", "#leisure_indicators");
         }
     });
+    var leisure_time = (hwbi_indicator_data.outputs[11].score).toFixed(2);
     $('#leisure_time_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: leisure_time,
         create: function (event, ui) {
-            $('#leisure_time_value').html(50);
+            $('#leisure_time_value').html(leisure_time);
         },
         slide: function (event, ui) {
             $('#leisure_time_value').html(ui.value);
             calculateNewScore("Leisure", "#leisure_indicators");
         }
     });
+    var leisure_working_age = (hwbi_indicator_data.outputs[12].score).toFixed(2);
     $('#leisure_working_age_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: leisure_working_age,
         create: function (event, ui) {
-            $('#leisure_working_age_value').html(50);
+            $('#leisure_working_age_value').html(leisure_working_age);
         },
         slide: function (event, ui) {
             $('#leisure_working_age_value').html(ui.value);
             calculateNewScore("Leisure", "#leisure_indicators");
         }
     });
+    var living_basic = (hwbi_indicator_data.outputs[13].score).toFixed(2);
     $('#living_basic_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: living_basic,
         create: function (event, ui) {
-            $('#living_basic_value').html(50);
+            $('#living_basic_value').html(living_basic);
         },
         slide: function (event, ui) {
             $('#living_basic_value').html(ui.value);
             calculateNewScore("Living", "#living_indicators");
         }
     });
+    var living_income = (hwbi_indicator_data.outputs[14].score).toFixed(2);
     $('#living_income_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: living_income,
         create: function (event, ui) {
-            $('#living_income_value').html(50);
+            $('#living_income_value').html(living_income);
         },
         slide: function (event, ui) {
             $('#living_income_value').html(ui.value);
             calculateNewScore("Living", "#living_indicators");
         }
     });
+    var living_wealth = (hwbi_indicator_data.outputs[15].score).toFixed(2);
     $('#living_wealth_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: living_wealth,
         create: function (event, ui) {
-            $('#living_wealth_value').html(50);
+            $('#living_wealth_value').html(living_wealth);
         },
         slide: function (event, ui) {
             $('#living_wealth_value').html(ui.value);
             calculateNewScore("Living", "#living_indicators");
         }
     });
+    var living_work = (hwbi_indicator_data.outputs[16].score).toFixed(2);
     $('#living_work_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: living_work,
         create: function (event, ui) {
-            $('#living_work_value').html(50);
+            $('#living_work_value').html(living_work);
         },
         slide: function (event, ui) {
             $('#living_work_value').html(ui.value);
             calculateNewScore("Living", "#living_indicators");
         }
     });
+    var safety_actual = (hwbi_indicator_data.outputs[17].score).toFixed(2);
     $('#safety_actual_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: safety_actual,
         create: function (event, ui) {
-            $('#safety_actual_value').html(50);
+            $('#safety_actual_value').html(safety_actual);
         },
         slide: function (event, ui) {
             $('#safety_actual_value').html(ui.value);
@@ -657,84 +690,91 @@ function setIndicatorSliders() {
 
         }
     });
+    var safety_perceived = (hwbi_indicator_data.outputs[18].score).toFixed(2);
     $('#safety_perceived_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: safety_perceived,
         create: function (event, ui) {
-            $('#safety_perceived_value').html(50);
+            $('#safety_perceived_value').html(safety_perceived);
         },
         slide: function (event, ui) {
             $('#safety_perceived_value').html(ui.value);
             calculateNewScore("Safety", "#safety_indicators");
         }
     });
+    var safety_risk = (hwbi_indicator_data.outputs[19].score).toFixed(2);
     $('#safety_risk_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: safety_risk,
         create: function (event, ui) {
-            $('#safety_risk_value').html(50);
+            $('#safety_risk_value').html(safety_risk);
         },
         slide: function (event, ui) {
             $('#safety_risk_value').html(ui.value);
             calculateNewScore("Safety", "#safety_indicators");
         }
     });
+    var social_attitude = (hwbi_indicator_data.outputs[20].score).toFixed(2);
     $('#social_attitude_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: social_attitude,
         create: function (event, ui) {
-            $('#social_attitude_value').html(50);
+            $('#social_attitude_value').html(social_attitude);
         },
         slide: function (event, ui) {
             $('#social_attitude_value').html(ui.value);
             calculateNewScore("Social", "#social_indicators");
         }
     });
+    var social_democratic = (hwbi_indicator_data.outputs[21].score).toFixed(2);
     $('#social_democratic_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: social_democratic,
         create: function (event, ui) {
-            $('#social_democratic_value').html(50);
+            $('#social_democratic_value').html(social_democratic);
         },
         slide: function (event, ui) {
             $('#social_democratic_value').html(ui.value);
             calculateNewScore("Social", "#social_indicators");
         }
     });
+    var social_family = (hwbi_indicator_data.outputs[22].score).toFixed(2);
     $('#social_family_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: social_family,
         create: function (event, ui) {
-            $('#social_family_value').html(50);
+            $('#social_family_value').html(social_family);
         },
         slide: function (event, ui) {
             $('#social_family_value').html(ui.value);
             calculateNewScore("Social", "#social_indicators");
         }
     });
+    var social_engagement = (hwbi_indicator_data.outputs[23].score).toFixed(2);
     $('#social_engagement_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: social_engagement,
         create: function (event, ui) {
-            $('#social_engagement_value').html(50);
+            $('#social_engagement_value').html(social_engagement);
         },
         slide: function (event, ui) {
             $('#social_engagement_value').html(ui.value);
             calculateNewScore("Social", "#social_indicators");
         }
     });
+    var social_support = (hwbi_indicator_data.outputs[24].score).toFixed(2);
     $('#social_support_slider').slider({
         min: 0,
         max: 100,
-        value: 50,
+        value: social_support,
         create: function (event, ui) {
-            $('#social_support_value').html(50);
+            $('#social_support_value').html(social_support);
         },
         slide: function (event, ui) {
             $('#social_support_value').html(ui.value);
@@ -783,10 +823,10 @@ function setCompareData(data, columnNumber) {
     community.nature_score = data["outputs"]["domains"][0]["score"].toFixed(1);
     community.cultural_score = data["outputs"]["domains"][1]["score"].toFixed(1);
     community.education_score = data["outputs"]["domains"][2]["score"].toFixed(1);
-    community.health_score = data["outputs"]["domains"][3]["score"].toFixed(1);    
-    community.leisure_score = data["outputs"]["domains"][4]["score"].toFixed(1);    
-    community.living_score = data["outputs"]["domains"][5]["score"].toFixed(1);    
-    community.safety_score = data["outputs"]["domains"][6]["score"].toFixed(1);    
+    community.health_score = data["outputs"]["domains"][3]["score"].toFixed(1);
+    community.leisure_score = data["outputs"]["domains"][4]["score"].toFixed(1);
+    community.living_score = data["outputs"]["domains"][5]["score"].toFixed(1);
+    community.safety_score = data["outputs"]["domains"][6]["score"].toFixed(1);
     community.cohesion_score = data["outputs"]["domains"][7]["score"].toFixed(1);
 
     compareCommunities.push(community);
@@ -798,10 +838,10 @@ function displayCompareData() {
 
     for (var i = 0; i < compareCommunities.length; i++) {
         var community = compareCommunities[i];
-        
+
         $('#community-button-' + i).hide();
         $('#community-close-button-' + i).show();
-        $('#community-button-'  + (+i + 1))
+        $('#community-button-' + (+i + 1))
             .prop('disabled', false)
             .removeClass('button-disabled');
 
@@ -829,11 +869,11 @@ function clearComparisonDisplay() {
     var compareCommunities = JSON.parse(sessionStorage.getItem("compareCommunities"));
     for (var i = 0; i < compareCommunities.length; i++) {
         $('#community-button-' + i).show();
-        $('#community-button-'  + (+i + 1))
+        $('#community-button-' + (+i + 1))
             .prop('disabled', true)
             .addClass('button-disabled');
         $('#community-close-button-' + i).hide();
-        
+
         $('#community-location-' + i).empty();
         $('#compare-score-' + i).empty();
         $('#compare-nature-' + i).empty();
