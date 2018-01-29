@@ -92,7 +92,7 @@ function getScoreData() {
     }
     $('#community-snapshot-tab-link').trigger("click");
     var location = JSON.parse(location_data);
-    var data_url = "/hwbi/disc/rest/scores?state=" + location['state'] + "&county=" + location['county'];
+    var data_url = "/hwbi/disc/rest/scores?state=" + location.state + "&county=" + location.county + "&state_abbr=" + location.state_abbr;
     $.ajax({
         url: data_url,
         type: "GET",
@@ -101,7 +101,7 @@ function getScoreData() {
             setScoreData(data);
             setCompareData(data, 0);
             displayCompareData(JSON.parse(sessionStorage.getItem("compareCommunities")).length);
-            $('#customize_location').html(location['county'] + " County, " + location['state']);
+            $('#customize_location').html(location.county + " County, " + location.state);
             hwbi_disc_data = JSON.parse(data);
             getIndicatorData();
             hwbi_indicator_value_adjusted = {};
@@ -137,11 +137,13 @@ function initializeAutocomplete() {
 
 function setLocationValue() {
     var place = searchBox.getPlace();
-    var county = place.address_components[1]['long_name'].replace(" County", "");
-    var state = place.address_components[2]['long_name'];
+    var county = place.address_components[1].long_name.replace(" County", "");
+    var state = place.address_components[2].long_name;
+    var stateAbbr = place.address_components[2].short_name;
     var json_value = {};
     json_value["county"] = county;
     json_value["state"] = state;
+    json_value["state_abbr"] = stateAbbr;
     locationValue = JSON.stringify(json_value);
 }
 
@@ -171,64 +173,64 @@ function setScoreData(data) {
     data = JSON.parse(data);
     document.getElementById('score_indicator_span').style.transform = "rotate(0deg) skew(45deg, -45deg)";
     // Set location info
-    $('#location').html("Snapshot results for:<br>" + data["inputs"][1]["value"] + " County, " + data["inputs"][0]["value"]);
-    $('#wellbeing-score-location').html("Nation: " + data["outputs"]["nationhwbi"].toFixed(1) + ", State: " +
-        data["outputs"]["statehwbi"].toFixed(1));
+    $('#location').html("Snapshot results for:<br>" + data.inputs[1].value + " County, " + data.inputs[0].value);
+    $('#wellbeing-score-location').html("Nation: " + data.outputs.nationhwbi.toFixed(1) + ", State: " +
+        data.outputs.statehwbi.toFixed(1));
 
     // Set location score
-    var score = Math.round(data["outputs"]["hwbi"]);
+    var score = data.outputs.hwbi.toFixed(1);
     $('#wellbeing-score').html(score);
     document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(score * 90 / 50) + "deg) skew(45deg, -45deg)";
 
     // Set Domain scores
     // Nature
-    var nature_score = data["outputs"]["domains"][0]["score"].toFixed(1);
+    var nature_score = data.outputs.domains[0].score.toFixed(1);
     $('#nature_score').html(nature_score);
     $('#nature_score_bar').attr('data-percent', nature_score + "%");
-    $('#nature_location').html("[Nation: " + data["outputs"]["domains"][0]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][0]["stateScore"].toFixed(1) + "]");
+    $('#nature_location').html("[Nation: " + data.outputs.domains[0].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[0].stateScore.toFixed(1) + "]");
     // Culture
-    var cultural_score = data["outputs"]["domains"][1]["score"].toFixed(1);
+    var cultural_score = data.outputs.domains[1].score.toFixed(1);
     $('#cultural_score').html(cultural_score);
     $('#cultural_score_bar').attr('data-percent', cultural_score + "%");
-    $('#cultural_location').html("[Nation: " + data["outputs"]["domains"][1]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][1]["stateScore"].toFixed(1) + "]");
+    $('#cultural_location').html("[Nation: " + data.outputs.domains[1].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[1].stateScore.toFixed(1) + "]");
     // Education
-    var education_score = data["outputs"]["domains"][2]["score"].toFixed(1);
+    var education_score = data.outputs.domains[2].score.toFixed(1);
     $('#education_score').html(education_score);
     $('#education_score_bar').attr('data-percent', education_score + "%");
-    $('#education_location').html("[Nation: " + data["outputs"]["domains"][2]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][2]["stateScore"].toFixed(1) + "]");
+    $('#education_location').html("[Nation: " + data.outputs.domains[2].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[2].stateScore.toFixed(1) + "]");
     // Education
-    var health_score = data["outputs"]["domains"][3]["score"].toFixed(1);
+    var health_score = data.outputs.domains[3].score.toFixed(1);
     $('#health_score').html(health_score);
     $('#health_score_bar').attr('data-percent', health_score + "%");
-    $('#health_location').html("[Nation: " + data["outputs"]["domains"][3]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][3]["stateScore"].toFixed(1) + "]");
+    $('#health_location').html("[Nation: " + data.outputs.domains[3].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[3].stateScore.toFixed(1) + "]");
     // Leisure Time
-    var leisure_score = data["outputs"]["domains"][4]["score"].toFixed(1);
+    var leisure_score = data.outputs.domains[4].score.toFixed(1);
     $('#leisure_score').html(leisure_score);
     $('#leisure_score_bar').attr('data-percent', leisure_score + "%");
-    $('#leisure_location').html("[Nation: " + data["outputs"]["domains"][4]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][4]["stateScore"].toFixed(1) + "]");
+    $('#leisure_location').html("[Nation: " + data.outputs.domains[4].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[4].stateScore.toFixed(1) + "]");
     // Living Standards
-    var living_score = data["outputs"]["domains"][5]["score"].toFixed(1);
+    var living_score = data.outputs.domains[5].score.toFixed(1);
     $('#living-std_score').html(living_score);
     $('#living-std_score_bar').attr('data-percent', living_score + "%");
-    $('#living-std_location').html("[Nation: " + data["outputs"]["domains"][5]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][5]["stateScore"].toFixed(1) + "]");
+    $('#living-std_location').html("[Nation: " + data.outputs.domains[5].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[5].stateScore.toFixed(1) + "]");
     // Safety and Security
-    var safety_score = data["outputs"]["domains"][6]["score"].toFixed(1);
+    var safety_score = data.outputs.domains[6].score.toFixed(1);
     $('#safety_score').html(safety_score);
     $('#safety_score_bar').attr('data-percent', safety_score + "%");
-    $('#safety_location').html("[Nation: " + data["outputs"]["domains"][6]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][6]["stateScore"].toFixed(1) + "]");
+    $('#safety_location').html("[Nation: " + data.outputs.domains[6].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[6].stateScore.toFixed(1) + "]");
     // Social Cohesion
-    var cohesion_score = data["outputs"]["domains"][7]["score"].toFixed(1);
+    var cohesion_score = data.outputs.domains[7].score.toFixed(1);
     $('#cohesion_score').html(cohesion_score);
     $('#cohesion_score_bar').attr('data-percent', cohesion_score + "%");
-    $('#cohesion_location').html("[Nation: " + data["outputs"]["domains"][7]["stateScore"].toFixed(1) +
-        ", State: " + data["outputs"]["domains"][7]["stateScore"].toFixed(1) + "]");
+    $('#cohesion_location').html("[Nation: " + data.outputs.domains[7].nationScore.toFixed(1) +
+        ", State: " + data.outputs.domains[7].stateScore.toFixed(1) + "]");
 
     setTimeout(loadSkillbar, 600);
 }
@@ -321,7 +323,7 @@ function calculateScore() {
         adjustedLeisureScore + adjustedLivingStdScore + adjustedSafetyScore + adjustedCohesionScore;
 
     var newScore = totalScore / totalWeight;
-    $('#wellbeing-score').html(Math.round(newScore));
+    $('#wellbeing-score').html(newScore.toFixed(1));
     document.getElementById('score_indicator_span').style.transform = "rotate(" + Math.round(newScore * 90 / 50) + "deg) skew(45deg, -45deg)";
 }
 
@@ -864,10 +866,11 @@ function getComparisonData() {
     var place = compareSearchBox[communityNumber].getPlace();
     var county = place.address_components[1]['long_name'].replace(" County", "");
     var state = place.address_components[2]['long_name'];
+    var state_abbr = place.address_components[2]['short_name'];
     var location = {};
     location["county"] = county;
     location["state"] = state;
-    var data_url = "/hwbi/disc/rest/scores?state=" + location['state'] + "&county=" + location['county'];
+    var data_url = "/hwbi/disc/rest/scores?state=" + state + "&county=" + county + "&state_abbr=" + state_abbr;
     $.ajax({ // get score data
         url: data_url,
         type: "GET",
@@ -882,7 +885,7 @@ function getComparisonData() {
         complete: function (jqXHR, textStatus) {
             console.log("getComparisonData complete: " + textStatus);
             $('.add-community-search').eq(communityNumber).hide();
-            $('#compare-score-' + communityNumber).empty();
+            // $('#compare-score-' + communityNumber).empty();
             return false;
         }
     });
