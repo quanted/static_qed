@@ -85,7 +85,6 @@ function getScoreData() {
         var locationCookie = getCookie("EPAHWBIDISC");
         if (locationCookie !== "") {
             location_data = locationCookie;
-            locationValue = JSON.parse(location_data);
         }
         else {
             return "";
@@ -99,6 +98,7 @@ function getScoreData() {
         type: "GET",
         success: function (data, status, xhr) {
             console.log("getScoreData success: " + status);
+            locationValue = JSON.parse(location);
             setScoreData(data);
             setCompareData(data, 0);
             displayCompareData(JSON.parse(sessionStorage.getItem("compareCommunities")).length);
