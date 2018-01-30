@@ -19,6 +19,22 @@
     }
 }
 
+@-moz-document url-prefix() {
+    .about_search form {
+        display: block;
+    }
+    .search_block form {
+        display: block;
+    }
+
+    .about_search form button {
+        /*margin: 0 0 0 -45px !important;*/
+    }
+    .search_block form button {
+        /*margin: 0 0 0 -45px !important;*/
+    }
+}
+
 /*Contact Us*/
 
 #block-pane-epa-web-area-connect {
@@ -169,22 +185,6 @@
     left: 0;
     bottom: 0;
     float: right;
-}
-
-@-moz-document url-prefix() {
-    .about_search form {
-        display: block;
-    }
-    .search_block form {
-        display: block;
-    }
-
-    .about_search form button {
-        margin: 0 0 0 -45px !important;
-    }
-    .search_block form button {
-        margin: 0 0 0 -45px !important;
-    }
 }
 
 /* QUOTE BODY*/

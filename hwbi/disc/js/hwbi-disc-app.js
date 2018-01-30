@@ -146,6 +146,7 @@ function setLocationValue() {
     json_value["state"] = state;
     json_value["state_abbr"] = stateAbbr;
     locationValue = JSON.stringify(json_value);
+    $('#search_button').trigger('click');
 }
 
 function setCookie(cname, cvalue, exdays) {
