@@ -98,7 +98,7 @@ function getScoreData() {
         type: "GET",
         success: function (data, status, xhr) {
             console.log("getScoreData success: " + status);
-            locationValue = JSON.parse(location);
+            locationValue = location;
             setScoreData(data);
             setCompareData(data, 0);
             displayCompareData(JSON.parse(sessionStorage.getItem("compareCommunities")).length);
