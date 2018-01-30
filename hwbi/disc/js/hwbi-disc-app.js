@@ -57,11 +57,13 @@ function setSearchBlock(selectedTab) {
         $('#search_block').removeClass('search_block');
         $('#search_block').addClass('about_search');
         $('#report_pdf').hide();
+        $('#hwbi-intro').show();
     }
     else {
         $('#search_block').addClass('search_block');
         $('#search_block').removeClass('about_search');
         $('#report_pdf').show();
+        $('#hwbi-intro').hide();
     }
 }
 

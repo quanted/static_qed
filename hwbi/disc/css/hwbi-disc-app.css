@@ -43,7 +43,7 @@
 
 #hwbi-intro {
     border-top: 3px #183E62 solid;
-    font-size: 26px;
+    font-size: 16px;
     padding: 25px 20px 50px;
     font-weight: normal;
     font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
@@ -193,12 +193,20 @@
     color: white;
     transition: none;
     -webkit-transition: none;
+    font-style: italic;
+    font-size: 18px;
+}
+
+.quote_author {
+    font-style: normal;
+    float: right;
+    margin-top: 10px;
 }
 
 #quote_body {
     background-color: #183E62;
     margin: 3px 3px 0 3px;
-    padding: 10px 10px 10px 25px;
+    padding: 15px 15px 15px 25px;
     display: table;
     text-align: left;
     width: 100%;
