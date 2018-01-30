@@ -44,7 +44,7 @@
 #hwbi-intro {
     border-top: 3px #183E62 solid;
     font-size: 16px;
-    padding: 25px 20px 50px;
+    padding: 25px 20px;
     font-weight: normal;
     font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
 }
@@ -407,6 +407,10 @@
 
 #hwbi-info p {
     font-size: 14px;
+    text-align: center;
+}
+
+#hwbi-info h4 {
     text-align: center;
 }
 
