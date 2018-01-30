@@ -131,8 +131,11 @@ function cycleQuote() {
 // initializeAutocomplete: Initializes google maps search places function with a restriction to only us locations.
 function initializeAutocomplete() {
     var input = document.getElementById('search_field');
-    searchBox = new google.maps.places.Autocomplete(input);
-    searchBox.setComponentRestrictions({'country': ['us']});
+    searchBox = new google.maps.places.Autocomplete(input, {
+            types: ['(cities)'],
+            componentRestriction : { country: 'us'}
+        });
+    // searchBox.setComponentRestrictions({'country': ['us']});
     searchBox.addListener('place_changed', setLocationValue);
 }
 
@@ -937,7 +940,9 @@ function initializeComparisonAutocomplete() {
     var compareInputs = document.getElementsByClassName('compare-search-input');
     for (var i = 0; i < compareInputs.length; i++) {
         input = compareInputs[i];
-        compareSearchBox[i] = new google.maps.places.Autocomplete(input);
-        compareSearchBox[i].setComponentRestrictions({'country': ['us']});
+        compareSearchBox[i] = new google.maps.places.Autocomplete(input, {
+            types: ['(cities)'],
+            componentRestriction : { country: 'us'}
+        });
     }
 }
