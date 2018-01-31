@@ -252,16 +252,13 @@ function setAccordion() {
     for (acc_i = 0; acc_i < acc.length; acc_i++) {
         acc[acc_i].addEventListener("click", function () {
                 var closingPanel = $(this).hasClass("active");
-                var panels = $('.domain-description');
-                $(panels).map(function () {
+                $('.domain-description').map(function () {
                     this.style.display = "none";
                 });
-                var buttons = $('.domain-expand');
-                $(buttons).map(function () {
+                $('.domain-expand').map(function () {
                     $(this).removeClass("active");
                 });
 
-                // this.classList.toggle("active");
                 var panel = $(this.parentNode).find('.domain-description')[0];
                 if (closingPanel) {
                     panel.style.display = "none";
