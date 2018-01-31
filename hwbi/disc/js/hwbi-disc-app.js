@@ -40,7 +40,7 @@ $(document).ready(function () {
     // Comparison body
     $('.add-community').on('click', addComparison);
     $('.close-compare-search').on('click', removeComparison);
-    $('.compare-search').on('click', getComparisonData);
+    $('.compare-search-button').on('click', getComparisonData);
 });
 
 function initializeGoogleMaps() {
@@ -98,6 +98,10 @@ function getScoreData() {
     $.ajax({
         url: data_url,
         type: "GET",
+        beforeSend: function () {
+            $('#search_button').addClass('searching');
+            $('#search_error_notification').hide();
+        },
         success: function (data, status, xhr) {
             console.log("getScoreData success: " + status);
             locationValue = location;
@@ -112,9 +116,11 @@ function getScoreData() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("getScoreData error: " + errorThrown);
+            $('#search_error_notification').show();
         },
         complete: function (jqXHR, textStatus) {
             console.log("getScoreData complete: " + textStatus);
+            $('#search_button').removeClass('searching');
             return false;
         }
     });
@@ -822,7 +828,7 @@ function setCompareData(data, columnNumber) {
     community.location = data["inputs"][1]["value"] + " County, " + data["inputs"][0]["value"];
     for (var i = 0; i < compareCommunities.length; i++) {
         if (community.location === compareCommunities[i].location) { // check for duplicates
-            return; // don't add the duplicate
+            return "dupe"; // don't add the duplicate
         }
     }
     community.score = data["outputs"]["hwbi"].toFixed(1);
@@ -862,7 +868,6 @@ function displayCompareData() {
         $('#compare-safety-' + i).html(community.safety_score);
         $('#compare-cohesion-' + i).html(community.cohesion_score);
     }
-    $('.add-community-search').hide();
 }
 
 function clearComparisonData(columnNumber) {
@@ -920,18 +925,26 @@ function getComparisonData() {
     $.ajax({ // get score data
         url: data_url,
         type: "GET",
+        beforeSend: function () {
+            $('.compare-search-button').eq(communityNumber).addClass('searching');
+            $('.compare-search-error').hide();
+        },
         success: function (data, status, xhr) {
             console.log("getComparisonData success: " + status);
-            setCompareData(data, communityNumber);
+            if (setCompareData(data, communityNumber) !== "dupe") {
+            	$('.add-community-search').eq(communityNumber).hide();
+            } else {
+            	$('.compare-search-error').eq(communityNumber).html('This community has already been added. Please try another location.').show();
+            }
             displayCompareData();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("getComparisonData error: " + errorThrown);
+            $('.compare-search-error').eq(communityNumber).html('Your search could not be completed. Please try another location.').show();
         },
         complete: function (jqXHR, textStatus) {
             console.log("getComparisonData complete: " + textStatus);
-            $('.add-community-search').eq(communityNumber).hide();
-            // $('#compare-score-' + communityNumber).empty();
+            $('.compare-search-button').eq(communityNumber).removeClass('searching');
             return false;
         }
     });
