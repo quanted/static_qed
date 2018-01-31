@@ -113,6 +113,9 @@ function getScoreData() {
             setTimeout(getIndicatorData, 1200);
             hwbi_indicator_value_adjusted = {};
             setCookie('EPAHWBIDISC', location_data, 1);
+            $('html, body').animate({
+                scrollTop: $('#disc-tabs').offset().top
+            }, 'slow');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("getScoreData error: " + errorThrown);
@@ -263,9 +266,15 @@ function setAccordion() {
                 if (closingPanel) {
                     panel.style.display = "none";
                     $(this).removeClass("active");
+                    $('html, body').animate({
+                        scrollTop: $('#results_body').offset().top
+                    }, 'slow');
                 } else {
                     panel.style.display = "block";
                     $(this).addClass("active");
+                    $('html, body').animate({
+                        scrollTop: $(this).offset().top
+                    }, 'slow');
                 }
             }
         );
