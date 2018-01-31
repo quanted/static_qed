@@ -270,6 +270,8 @@
     font-size: 12px;
     font-weight: bold;
     display: none;
+    color: white;
+    text-shadow: 1px 1px black;
 }
 
 .about_search form #search_error_notification {
@@ -277,6 +279,8 @@
     font-size: 18px;
     font-weight: bold;
     display: none;
+    color: white;
+    text-shadow: 1px 1px black;
 }
 
 .search_block form button {
