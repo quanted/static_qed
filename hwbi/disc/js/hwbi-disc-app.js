@@ -41,6 +41,7 @@ $(document).ready(function () {
     $('.add-community').on('click', addComparison);
     $('.close-compare-search').on('click', removeComparison);
     $('.compare-search-button').on('click', getComparisonData);
+    $('.indicator_data-title').on('mouseover', displayIndicatorInformation);
 });
 
 function initializeGoogleMaps() {
@@ -449,7 +450,7 @@ function selectDomain() {
     $('#score_adjusted').css("left", adjustedScoreRounded + "%");
 
     $('#customize_domain_details').html(getDomainDescription(domainID) +
-        "Move slider left or right to change the indicator score to describe your community better.");
+        "<br>Move a slider left or right to change the indicator score to describe your community better. Mouse over an indicator to learn more about it.");
     showDomainIndicators(domainID);
 }
 
@@ -1028,4 +1029,12 @@ function initializeComparisonAutocomplete() {
             componentRestriction: {country: 'us'}
         });
     }
+}
+
+function displayIndicatorInformation () {
+	var title = $(this).html().replace(':', '');
+	var description = $(this).parent().attr('data-title');
+	var domain = $(this).closest('.domain_indicator').attr('id');
+	$('#' + domain + '_title').html(title);
+	$('#' + domain + '_description').html(description);
 }
