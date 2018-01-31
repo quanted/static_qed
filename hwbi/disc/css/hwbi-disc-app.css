@@ -601,6 +601,7 @@
     border-top: 1px black solid;
     border-bottom: 1px black solid;
     margin-bottom: 20px;
+    padding: 10px 0;
 }
 
 .slider-block {
@@ -758,6 +759,18 @@
 #cohesion-slider-bar span:active {
     background-color: #C75628;
     box-shadow: 1px 1px grey;
+}
+
+.domain_image_left {
+    width: 50%;
+    float: left;
+    padding: 5px 10px 5px 0;
+}
+
+.domain_image_right {
+    width: 50%;
+    float: right;
+    padding: 5px 0 5px 10px;
 }
 
 /* CUSTOMIZE BODY */

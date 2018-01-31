@@ -140,9 +140,9 @@ function cycleQuote() {
 function initializeAutocomplete() {
     var input = document.getElementById('search_field');
     searchBox = new google.maps.places.Autocomplete(input, {
-            types: ['(cities)'],
-            componentRestriction : { country: 'us'}
-        });
+        types: ['(cities)'],
+        componentRestriction: {country: 'us'}
+    });
     // searchBox.setComponentRestrictions({'country': ['us']});
     searchBox.addListener('place_changed', setLocationValue);
 }
@@ -251,14 +251,27 @@ function setScoreData(data) {
 function setAccordion() {
     for (acc_i = 0; acc_i < acc.length; acc_i++) {
         acc[acc_i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = $(this.parentNode).find('.domain-description')[0];
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
+                var closingPanel = $(this).hasClass("active");
+                var panels = $('.domain-description');
+                $(panels).map(function () {
+                    this.style.display = "none";
+                });
+                var buttons = $('.domain-expand');
+                $(buttons).map(function () {
+                    $(this).removeClass("active");
+                });
+
+                // this.classList.toggle("active");
+                var panel = $(this.parentNode).find('.domain-description')[0];
+                if (closingPanel) {
+                    panel.style.display = "none";
+                    $(this).removeClass("active");
+                } else {
+                    panel.style.display = "block";
+                    $(this).addClass("active");
+                }
             }
-        });
+        );
     }
 }
 
@@ -932,9 +945,9 @@ function getComparisonData() {
         success: function (data, status, xhr) {
             console.log("getComparisonData success: " + status);
             if (setCompareData(data, communityNumber) !== "dupe") {
-            	$('.add-community-search').eq(communityNumber).hide();
+                $('.add-community-search').eq(communityNumber).hide();
             } else {
-            	$('.compare-search-error').eq(communityNumber).html('This community has already been added. Please try another location.').show();
+                $('.compare-search-error').eq(communityNumber).html('This community has already been added. Please try another location.').show();
             }
             displayCompareData();
         },
@@ -957,7 +970,7 @@ function initializeComparisonAutocomplete() {
         input = compareInputs[i];
         compareSearchBox[i] = new google.maps.places.Autocomplete(input, {
             types: ['(cities)'],
-            componentRestriction : { country: 'us'}
+            componentRestriction: {country: 'us'}
         });
     }
 }
