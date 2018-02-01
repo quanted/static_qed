@@ -316,14 +316,14 @@ function setAccordion() {
                     panel.style.display = "none";
                     $(this).removeClass("active");
                     $('html, body').animate({
-                        scrollTop: $('#results_body').offset().top
-                    }, 'slow');
+                        scrollTop: $('#disc-tabs').offset().top
+                    }, 800);
                 } else {
                     panel.style.display = "block";
                     $(this).addClass("active");
                     $('html, body').animate({
                         scrollTop: $(this).offset().top
-                    }, 'slow');
+                    }, 800);
                 }
             }
         );
@@ -335,7 +335,7 @@ function loadSkillbar() {
     $('.domain-score-bar').each(function () {
         $(this).find('.score-bar').animate({
             width: jQuery(this).attr('data-percent')
-        }, 1000);
+        }, 800);
     });
 }
 

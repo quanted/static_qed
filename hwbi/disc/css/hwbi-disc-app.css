@@ -520,6 +520,11 @@
     font-size: 18px;
 }
 
+.domain-data-title {
+    float:left;
+    padding: 0 10px;
+}
+
 .domain-location {
     float: right;
     font-size: 14px;
