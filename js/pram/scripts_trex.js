@@ -4,7 +4,6 @@ $(document).ready(function() {
         ["Chemical", "Avian", "Mammal"],
         {"isSubTabs": false}
     );
-    console.log("in document ready")
     listen_trex_events();
     initialize_trex();
     num_apps_table();
@@ -15,8 +14,6 @@ function num_apps_table() {
 
     var i = 2;
     var total = $('#id_num_apps').val();
-    console.log(total);
-    console.log("in num_apps");
     $('tr[id*="noa_header"]').show();
 
     while (i <= total) {
