@@ -94,7 +94,8 @@ function listen_varroapop_events() {
         else if ($(this).val() == "true") {
             $('#id_chemical_name').removeAttr('disabled');
         }
-    });
+    }).trigger('change');
+
     $(window).bind('beforeunload', function () {
         $(":reset").click();
     }).trigger('change');
