@@ -15,11 +15,13 @@ var layerLabels;
 // -- Map functions -- //
 function onEachFeatureClick(feature, layer) {
     layer.on('click', function (e) {
-        if (this.currentHUC !== feature.properties.HUC8 || this.currentHUC === null) {
-            this.currentHUC = feature.properties.HUC8;
+        if (this.currentHUC !== feature.properties.HUC_8 || this.currentHUC === null) {
+            this.currentHUC = feature.properties.HUC_8;
             var hucs = [];
-            hucs.push(feature.properties.HUC8);
+            hucs.push(feature.properties.HUC_8);
             selectHUCs(hucs);
+            $('#hucID').html("<a href='https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + feature.properties.HUC_8 + "' target='_blank'>" +
+                feature.properties.HUC_8 + " HUC 8 ID </a>");
         }
         else {
             resetHUCLayer();
@@ -91,13 +93,14 @@ function selectHUCs(hucs) {
         }
     });
     map.fitBounds(L.featureGroup(layerGroup).getBounds());
+    enableTab($('#date-title'));
 }
 
 function binarySearch(left, right, value) {
     while (left <= right) {
         var mid = Math.floor((left + right) / 2);
         if (currentInputLayer.hasLayer(mid)) {
-            var midValue = Number(currentInputLayer.getLayer(mid).feature.properties.HUC8);
+            var midValue = Number(currentInputLayer.getLayer(mid).feature.properties.HUC_8);
             if (Number(midValue) === Number(value)) {
                 return mid;
             }
@@ -165,19 +168,59 @@ function setAccordion() {
     $('#workflow-inputs').show();
 }
 
-function enableTab() {
-    $(this).removeClass("ui-state-disabled");
+function enableTab(tab) {
+    $(tab).removeClass("ui-state-disabled");
+    $(tab).trigger('click');
 }
 
-function startLoader(){
+function startLoader() {
     $('#loading-div').show();
     setTimeout(600, stopLoader);
 }
 
-function stopLoader(){
+function stopLoader() {
     $('#loading-div').hide();
+}
+
+function setDatePickers() {
+    $('#startDate').datepicker();
+    $('#endDate').datepicker();
+}
+
+function validateDates() {
+    $('#date-input-error').html("");
+    var startDate = new Date($('#startDate').val());
+    var endDate = new Date($('#endDate').val());
+    if (!isNaN(startDate.getDate()) && !isNaN(endDate.getDate())) {
+        if((endDate > startDate))
+        {
+            enableTab($('#dataset-title'));
+        }
+        else{
+            $('#date-input-error').html("Invalid date range, start date must be before end date.");
+        }
+    }
+}
+
+function validateDataset(){
+    var dataset = $('#dataset-input').val();
+    if(dataset !== ""){
+        enableTab($("#source-title"));
+    }
+}
+
+function validateSource(){
+    var source = $('#source-input').val();
+    if(source !== ""){
+        enableTab($("#options-title"));
+    }
 }
 
 $(function () {
     setAccordion();
+    setDatePickers();
+
+    $('.date-input').on("change", validateDates);
+    $('#dataset-input').on("change", validateDataset);
+    $('#source-input').on("change", validateSource);
 });

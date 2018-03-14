@@ -80,3 +80,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.input-error{
+    color: red;
+    font-size: 12px;
+}
+
+.ui-datepicker-div {
+    width: 200px;
+    z-index: 9999;
+}
