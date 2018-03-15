@@ -174,6 +174,7 @@ function setAccordion() {
     $('#source-title').addClass("ui-state-disabled");
     $('#options-title').addClass("ui-state-disabled");
     $('#data-request').hide();
+    $('#inputSearch').val("");
     $('#workflow-inputs').show();
 }
 
@@ -266,6 +267,16 @@ function getData() {
     });
 }
 
+function searchMap(){
+    var type = $('#inputLayer').val();
+    var searchValue = $('#inputSearch').val();
+    if(type === "huc8"){
+        if(searchValue.length === 8 && !isNaN(searchValue)){
+            selectHUCs([searchValue]);
+        }
+    }
+}
+
 $(function () {
     setAccordion();
     setDatePickers();
@@ -273,4 +284,5 @@ $(function () {
     $('.date-input').on("change", validateDates);
     $('#dataset-input').on("change", validateDataset);
     $('#source-input').on("change", validateSource);
+    $('#inputSearch').on("keyup", searchMap);
 });
