@@ -47,11 +47,12 @@
     width: auto !important;
 }
 
-#huc_table_title{
+#huc_table_title {
     padding: 10px 0 10px 10px;
 }
+
 #huc_table_title > label {
-    float:left;
+    float: left;
     padding-right: 10px;
 }
 
@@ -77,16 +78,55 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.input-error{
+.input-error {
     color: red;
     font-size: 12px;
 }
 
-.ui-datepicker-div {
-    width: 200px;
-    z-index: 9999;
+.ui-datepicker {
+    z-index: 999 !important;
+    width: auto !important;
+}
+
+#inputSearchBlock {
+    display: none;
+    float: left;
+    margin-left: 25px;
+}
+
+#data-request {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+#data-request-button {
+    margin-top: 1em;
+}
+
+#data-request-messages{
+    margin: 10px;
+    text-align: center;
+}
+
+#inputLayer {
+    float:left;
+    margin-bottom: 10px;
+}
+
+#inputSearch {
+    float: left;
+    margin-left: 5px;
+}
+
+#inputSearchBlock label {
+    float: left;
 }

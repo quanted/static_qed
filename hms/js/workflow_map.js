@@ -12,6 +12,9 @@ var currentInputLayer;
 var layerESRI = L.esri.basemapLayer('Imagery');
 var layerLabels;
 
+var huc8;
+var workflowData;
+
 // -- Map functions -- //
 function onEachFeatureClick(feature, layer) {
     layer.on('click', function (e) {
@@ -20,6 +23,7 @@ function onEachFeatureClick(feature, layer) {
             var hucs = [];
             hucs.push(feature.properties.HUC_8);
             selectHUCs(hucs);
+            huc8 = feature.properties.HUC_8;
             $('#hucID').html("<a href='https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + feature.properties.HUC_8 + "' target='_blank'>" +
                 feature.properties.HUC_8 + " HUC 8 ID </a>");
         }
@@ -120,6 +124,7 @@ function binarySearch(left, right, value) {
 
 function updateInputLayer() {
     // startLoader();
+    $("#inputSearchBlock").hide();
     setAccordion();
     if (currentInputLayer == null) {
     }
@@ -131,15 +136,17 @@ function updateInputLayer() {
     if (layerSelected.localeCompare("none") === 0) {
     }
     else if (layerSelected.localeCompare("huc8") === 0) {
-
+        $("#inputSearchType").html("HUC 8 ID");
         $('#geometry-title').removeClass("ui-state-disabled");
         currentInputLayer = L.geoJson(huc8s, {
             style: hucStyle,
             onEachFeature: onEachFeatureClick
         }).addTo(map);
+        $("#inputSearchBlock").show();
         $('#geometry-title').trigger("click");
     }
     else if (layerSelected.localeCompare("streamNetwork") === 0) {
+        $("#inputSearchType").html("Stream segment ID");
         $('#geometry-title').removeClass("ui-state-disabled");
         currentInputLayer = L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
             layers: 4,
@@ -148,6 +155,7 @@ function updateInputLayer() {
             maxZoom: 18,
             transparent: true
         }).addTo(map);
+        $("#inputSearchBlock").show();
         $('#geometry-title').trigger("click");
     }
     else {
@@ -165,6 +173,7 @@ function setAccordion() {
     $('#dataset-title').addClass("ui-state-disabled");
     $('#source-title').addClass("ui-state-disabled");
     $('#options-title').addClass("ui-state-disabled");
+    $('#data-request').hide();
     $('#workflow-inputs').show();
 }
 
@@ -175,7 +184,7 @@ function enableTab(tab) {
 
 function startLoader() {
     $('#loading-div').show();
-    setTimeout(600, stopLoader);
+    // setTimeout(600, stopLoader);
 }
 
 function stopLoader() {
@@ -183,8 +192,9 @@ function stopLoader() {
 }
 
 function setDatePickers() {
-    $('#startDate').datepicker();
-    $('#endDate').datepicker();
+    var options = {autoSize: true};
+    $('#startDate').datepicker(options);
+    $('#endDate').datepicker(options);
 }
 
 function validateDates() {
@@ -192,28 +202,68 @@ function validateDates() {
     var startDate = new Date($('#startDate').val());
     var endDate = new Date($('#endDate').val());
     if (!isNaN(startDate.getDate()) && !isNaN(endDate.getDate())) {
-        if((endDate > startDate))
-        {
+        if ((endDate > startDate)) {
             enableTab($('#dataset-title'));
         }
-        else{
+        else {
             $('#date-input-error').html("Invalid date range, start date must be before end date.");
         }
     }
 }
 
-function validateDataset(){
+function validateDataset() {
     var dataset = $('#dataset-input').val();
-    if(dataset !== ""){
+    if (dataset !== "") {
         enableTab($("#source-title"));
     }
 }
 
-function validateSource(){
+function validateSource() {
     var source = $('#source-input').val();
-    if(source !== ""){
+    if (source !== "") {
         enableTab($("#options-title"));
+        enableSubmission();
     }
+}
+
+function enableSubmission() {
+    $('#data-request').show();
+}
+
+function getData() {
+    $('#data-request-error').html("");
+    $('#data-request-success').html("");
+    startLoader();
+    var dataset = $('#dataset-input').val();
+    var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
+    // var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
+    var startDate = new Date($('#startDate').val()).getDate();
+    var endDate = new Date($('#endDate').val()).getDate();
+    var source = $('#source-input').val();
+    var requestData = {
+        "geometryType": "huc",
+        "geometryInput": huc8,
+        "source": source,
+        "dateTimeSpan": {
+            "startDate": startDate,
+            "endDate": endDate
+        },
+        "timeLocalized": false
+    };
+    $.ajax({
+        url: baseUrl,
+        data: requestData,
+        success: function (data, textStatus, jqXHR) {
+            workflowData = data;
+            $("#data-request-success").html("Successfully downloaded workflow data.");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#data-request-error').html("Error downloading workflow data. " + errorThrown);
+        },
+        complete: function (jqXHR, textStatus) {
+            stopLoader();
+        }
+    });
 }
 
 $(function () {
