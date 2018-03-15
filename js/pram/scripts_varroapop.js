@@ -98,5 +98,9 @@ function listen_varroapop_events() {
 
     $(window).bind('beforeunload', function () {
         $(":reset").click();
-    }).trigger('change');
+    });
+
+    //$('#my_form').submit(function(){
+    //    $("#my_form :disabled").removeAttr('disabled');
+    //});
 };
