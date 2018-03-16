@@ -103,22 +103,22 @@
 }
 
 #data-request {
-    display: none;
-    width: 100%;
+    width: 20%;
     text-align: center;
+    float: right;
 }
 
 #data-request-button {
     margin-top: 1em;
 }
 
-#data-request-messages{
+#data-request-messages {
     margin: 10px;
     text-align: center;
 }
 
 #inputLayer {
-    float:left;
+    float: left;
     margin-bottom: 10px;
 }
 
