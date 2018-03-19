@@ -167,7 +167,13 @@ function updateInputLayer() {
 
 function setAccordion() {
     // Also functions as disableTab
-    $('#workflow-inputs').accordion({header: "h3", collapsible: true, active: false});
+    $('#workflow-inputs').accordion(
+        {
+            header: "h3",
+            collapsible: true,
+            active: false,
+            animate: 300
+        });
     $('#geometry-title').addClass("ui-state-disabled");
     $('#date-title').addClass("ui-state-disabled");
     $('#dataset-title').addClass("ui-state-disabled");
@@ -277,12 +283,17 @@ function searchMap(){
     }
 }
 
+function startup(){
+    $('#startup-div').fadeOut("slow");
+}
+
 $(function () {
     setAccordion();
     setDatePickers();
-
     $('.date-input').on("change", validateDates);
     $('#dataset-input').on("change", validateDataset);
     $('#source-input').on("change", validateSource);
     $('#inputSearch').on("keyup", searchMap);
+
+    setTimeout(startup, 1200);
 });
