@@ -2,9 +2,9 @@ $(document).ready(function() {
     // Call function to setup tabbed nav
 
     listen_varroapop_events();
-    //initialize_varroapop();
+    initialize_varroapop();
     uberNavTabs(
-        ["Colony", "Mites", "Pesticide"],
+        ["Colony", "Mites", "Chemical", "Resources"],
         {   "isSubTabs":false   }
     );
 
@@ -13,12 +13,13 @@ $(document).ready(function() {
 
 function initialize_varroapop(){
 
-    $('#id_RQEnableReQueen').trigger("change");
-    $('#id_enable_mites').trigger("change");
-    //ecosystem type conditionally triggers aquatic_body or
-    // terrestrial_field type in listen_agdrift_events()
-    $('#id_enable_pesticides').trigger("change");
-
+    //Split Resources tab into two tables
+    var $mainTable = $('.tab_Resources');
+    var splitBy = 17;
+    var rows = $mainTable.find("tr").slice(splitBy);
+    var $secondTable = $("<table id='secondTable' class='input_table tab tab_Consumption tab_Resources' style='display:none'><tbody></tbody></table>").insertAfter($mainTable);
+    $secondTable.find("tbody").append(rows);
+    $mainTable.find ( "tr" ).slice( splitBy ).remove();
 
 };
 
@@ -57,50 +58,121 @@ function listen_varroapop_events() {
     $('#id_enable_mites').change(function () {
 
         if ($(this).val() == "false") {
-            $('#id_ImmEnabled').attr('disabled', 'disabled');
-            $('#id_ImmType').attr('disabled', 'disabled');
-            $('#id_ImmStart_day').attr('disabled', 'disabled');
-            $('#id_ImmStart_month').attr('disabled', 'disabled');
-            $('#id_ImmStart_year').attr('disabled', 'disabled');
-            $('#id_ImmEnd_day').attr('disabled', 'disabled');
-            $('#id_ImmEnd_month').attr('disabled', 'disabled');
-            $('#id_ImmEnd_year').attr('disabled', 'disabled');
-            $('#id_TotalImmMites').attr('disabled', 'disabled');
-            $('#id_PctImmMitesResistant').attr('disabled', 'disabled');
-            $('#id_ICWorkerAdultInfest').attr('disabled', 'disabled');
-
+            $('.tab_Mites :input').not($(this)).attr('disabled', 'disabled');
         }
         else if ($(this).val() == "true") {
-            $('#id_ImmEnabled').removeAttr('disabled');
-            $('#id_ImmType').removeAttr('disabled');
-            $('#id_ImmStart_day').removeAttr('disabled');
-            $('#id_ImmStart_month').removeAttr('disabled');
-            $('#id_ImmStart_year').removeAttr('disabled');
-            $('#id_ImmEnd_day').removeAttr('disabled');
-            $('#id_ImmEnd_month').removeAttr('disabled');
-            $('#id_ImmEnd_year').removeAttr('disabled');
-            $('#id_TotalImmMites').removeAttr('disabled');
-            $('#id_PctImmMitesResistant').removeAttr('disabled');
-            $('#id_ICWorkerAdultInfest').removeAttr('disabled');
+            $('.tab_Mites :input').not($('.mite_imm, .mite_treat')).removeAttr('disabled');
+            $('#id_ImmEnabled').trigger('change');
+            $('#id_VTEnable').trigger('change');
         }
     }).trigger('change');
+
+
+    $('#id_ImmEnabled').change(function () {
+
+        if ($(this).val() == "false") {
+            $('.mite_imm').attr('disabled', 'disabled');
+            $('.mite_imm').closest('tr').hide();
+        }
+        else if ($(this).val() == "true") {
+            $('.mite_imm').removeAttr('disabled');
+            $('.mite_imm').closest('tr').show();
+        }
+    }).trigger('change');
+
+    $('#id_VTEnable').change(function () {
+
+        if ($(this).val() == "false") {
+            $('.mite_treat').attr('disabled', 'disabled');
+            $('.mite_treat').closest('tr').hide();
+        }
+        else if ($(this).val() == "true") {
+            $('.mite_treat').removeAttr('disabled');
+            $('.mite_treat').closest('tr').show();
+        }
+    }).trigger('change');
+
+
+    $('#id_application_type').change(function () {
+
+        if ($(this).val() == "Foliar spray") {
+            $('.foliar').closest('tr').show();
+            $('.soil').closest('tr').hide();
+            $('.seed').closest('tr').hide();
+            $('.foliar').removeAttr('disabled');
+            $('.soil').attr('disabled', 'disabled');
+            $('.seed').attr('disabled', 'disabled');
+            $('#id_foliar_enable').val('true');
+            $('#id_soil_enable').val('false');
+            $('#id_seed_enable').val('false');
+        }
+        else if ($(this).val() == "Soil") {
+            $('.foliar').closest('tr').hide();
+            $('.soil').closest('tr').show();
+            $('.seed').closest('tr').hide();
+            $('.foliar').attr('disabled', 'disabled');
+            $('.soil').removeAttr('disabled');
+            $('.seed').attr('disabled', 'disabled');
+            $('#id_foliar_enable').val('false');
+            $('#id_soil_enable').val('true');
+            $('#id_seed_enable').val('false');
+        }
+        else {
+            $('.foliar').closest('tr').hide();
+            $('.soil').closest('tr').hide();
+            $('.seed').closest('tr').show();
+            $('.foliar').attr('disabled', 'disabled');
+            $('.soil').attr('disabled', 'disabled');
+            $('.seed').removeAttr('disabled');
+            $('#id_foliar_enable').val('false');
+            $('#id_soil_enable').val('false');
+            $('#id_seed_enable').val('true');
+        }
+    }).trigger('change');
+
 
     $('#id_enable_pesticides').change(function () {
 
         if ($(this).val() == "false") {
-            $('#id_chemical_name').attr('disabled', 'disabled');
-
+            $('.tab_Chemical :input').not($(this)).attr('disabled', 'disabled');
         }
         else if ($(this).val() == "true") {
-            $('#id_chemical_name').removeAttr('disabled');
+            $('.tab_Chemical :input').removeAttr('disabled');
+            $('#id_application_type').trigger('change');
         }
     }).trigger('change');
 
-    $(window).bind('beforeunload', function () {
-        $(":reset").click();
-    });
 
-    //$('#my_form').submit(function(){
-    //    $("#my_form :disabled").removeAttr('disabled');
+    $('#id_SupPollenEnable').change(function () {
+
+        if ($(this).val() == "false") {
+            $('.sup_pol').attr('disabled', 'disabled');
+            $('.sup_pol').closest('tr').hide();
+        }
+        else if ($(this).val() == "true") {
+            $('.sup_pol').removeAttr('disabled');
+            $('.sup_pol').closest('tr').show();
+        }
+    }).trigger('change');
+
+
+    $('#id_SupNectarEnable').change(function () {
+
+        if ($(this).val() == "false") {
+            $('.sup_nec').attr('disabled', 'disabled');
+            $('.sup_nec').closest('tr').hide();
+        }
+        else if ($(this).val() == "true") {
+            $('.sup_nec').removeAttr('disabled');
+            $('.sup_nec').closest('tr').show();
+        }
+    }).trigger('change');
+
+    //$(window).bind('beforeunload', function () {
+    //    $(":reset").click();
     //});
-};
+
+    $('#main_form').submit(function () {
+        $('#main_form :disabled').removeAttr('disabled');
+    });
+}
