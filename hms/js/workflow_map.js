@@ -8,26 +8,37 @@ L.esri.basemapLayer('Topographic').addTo(map);
 // load huc watershed boundaries
 
 var currentInputLayer;
+var secondaryInputLayer = "";
 
 var layerESRI = L.esri.basemapLayer('Imagery');
 var layerLabels;
 
 var huc8;
+var comid;
+var streamData;
 var workflowData;
+
+var selectedStream;
 
 // -- Map functions -- //
 function onEachFeatureClick(feature, layer) {
     layer.on('click', function (e) {
-        if (this.currentHUC !== feature.properties.HUC_8 || this.currentHUC === null) {
+        if ((this.currentHUC !== feature.properties.HUC_8 || this.currentHUC === null) || secondaryInputLayer !== "") {
             this.currentHUC = feature.properties.HUC_8;
             var hucs = [];
             hucs.push(feature.properties.HUC_8);
-            selectHUCs(hucs);
+            var latitude = Number(e.latlng.lat).toFixed(6);
+            var longitude = Number(e.latlng.lng).toFixed(6);
+            selectHUCs(hucs, latitude, longitude);
             huc8 = feature.properties.HUC_8;
-            $('#hucID').html("<a href='https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + feature.properties.HUC_8 + "' target='_blank'>" +
-                feature.properties.HUC_8 + " HUC 8 ID </a>");
+            $('#hucID').html("Huc 8 ID: <a href='https://cfpub.epa.gov/surf/huc.cfm?huc_code=" + feature.properties.HUC_8 + "' target='_blank'>" +
+                feature.properties.HUC_8 + "</a>");
         }
         else {
+            if (secondaryInputLayer !== "") {
+                map.removeLayer(secondaryInputLayer);
+            }
+            secondaryInputLayer = "";
             resetHUCLayer();
             this.currentHUC = null;
         }
@@ -78,7 +89,7 @@ function resetHUCLayer() {
 }
 
 //style selected HUC 8 polygon
-function selectHUCs(hucs) {
+function selectHUCs(hucs, lat, lng) {
     resetHUCLayer();
     var layerGroup = [];
     var hucObject = currentInputLayer.getLayers();
@@ -96,8 +107,83 @@ function selectHUCs(hucs) {
             layerGroup.push(currentInputLayer.getLayer(resultIdx));
         }
     });
-    map.fitBounds(L.featureGroup(layerGroup).getBounds());
-    enableTab($('#date-title'));
+    var selection = document.getElementById("inputLayer");
+    var layerSelected = selection.options[selection.selectedIndex].value;
+    if (layerSelected.localeCompare("catchment") === 0 && secondaryInputLayer === "") {
+        secondaryInputLayer = L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
+            layers: 4,
+            format: 'image/png',
+            minZoom: 0,
+            maxZoom: 18,
+            transparent: true
+        }).addTo(map);
+        map.fitBounds(L.featureGroup(layerGroup).getBounds());
+
+    }
+    else if (layerSelected.localeCompare("catchment") === 0) {
+        var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+        var ptIndexParams = {
+            'pGeometry': 'POINT(' + lng + ' ' + lat + ')'
+            , 'pGeometryMod': 'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+            , 'pPointIndexingMethod': 'DISTANCE'
+            , 'pPointIndexingMaxDist': 25
+            , 'pOutputPathFlag': 'TRUE'
+            , 'pReturnFlowlineGeomFlag': 'TRUE'
+            , 'optOutCS': 'SRSNAME=urn:ogc:def:crs:OGC::CRS84'
+            , 'optOutPrettyPrint': 0
+        };
+        $.ajax({
+            type: "GET",
+            url: url,
+            jsonp: true,
+            data: ptIndexParams,
+            async: false,
+            success: function (data, status, jqXHR) {
+                streamData = JSON.parse(data);
+                comid = streamData.output.ary_flowlines[0].comid;
+                $('#comid').html("Steam segment comid: " + comid);
+                addStreamSeg(streamData);
+                enableTab($('#date-title'));
+            },
+            error: function (jqXHR, status) {
+                console.log("Error retrieving stream segment data.");
+            }
+        });
+    }
+    else {
+        map.fitBounds(L.featureGroup(layerGroup).getBounds());
+        enableTab($('#date-title'));
+    }
+}
+
+function addStreamSeg(streamData) {
+    var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function (c) {
+        return c.reverse();
+    });
+    var huc8geom;
+    if (huc8[0][0] < 0) {
+        huc8geom = huc8.map(function (c) {
+            return c.reverse();
+        });
+    }
+    if (map.hasLayer(selectedStream)) {
+        map.removeLayer(selectedStream);
+    }
+
+    selectedStream = L.polyline(latlon, {
+        color: '#02bfe7',
+        weight: 5,
+        opacity: 0.9,
+        lineJoin: 'round'
+    }).addTo(map);
+    // streamHuc = L.polygon(huc8geom, {
+    //     color: 'white',
+    //     weight: 2,
+    //     opacity: 0.9,
+    //     fillColor: '#9ecae1',
+    //     fillOpacity: 0.3
+    // }).addTo(map);
+    map.fitBounds(selectedStream.getBounds());
 }
 
 function binarySearch(left, right, value) {
@@ -125,15 +211,27 @@ function binarySearch(left, right, value) {
 function updateInputLayer() {
     // startLoader();
     $("#inputSearchBlock").hide();
+    $('#input-description').html("");
     setAccordion();
     if (currentInputLayer == null) {
     }
     else {
         map.removeLayer(currentInputLayer);
     }
+    if (secondaryInputLayer === "") {
+    }
+    else {
+        map.removeLayer(secondaryInputLayer);
+    }
     var selection = document.getElementById("inputLayer");
     var layerSelected = selection.options[selection.selectedIndex].value;
     if (layerSelected.localeCompare("none") === 0) {
+        $('#hucID').html("");
+        $('#comid').html("");
+        if (selectedStream !== "") {
+            map.removeLayer(selectedStream);
+        }
+        selectedStream = null;
     }
     else if (layerSelected.localeCompare("huc8") === 0) {
         $("#inputSearchType").html("HUC 8 ID");
@@ -142,6 +240,18 @@ function updateInputLayer() {
             style: hucStyle,
             onEachFeature: onEachFeatureClick
         }).addTo(map);
+        $('#input-description').html("Select a huc 8 by clicking on the map or entering a huc 8 ID in the search box.");
+        $("#inputSearchBlock").show();
+        $('#geometry-title').trigger("click");
+    }
+    else if (layerSelected.localeCompare("catchment") === 0) {
+        $("#inputSearchType").html("HUC 8 ID");
+        $('#geometry-title').removeClass("ui-state-disabled");
+        currentInputLayer = L.geoJson(huc8s, {
+            style: hucStyle,
+            onEachFeature: onEachFeatureClick
+        }).addTo(map);
+        $("#input-description").html("Select a huc 8 by clicking on the map or entering a huc 8 ID in the search box. Once a huc has been selected zoom into your area of interest and select the stream segment for your catchment.");
         $("#inputSearchBlock").show();
         $('#geometry-title').trigger("click");
     }
@@ -247,16 +357,35 @@ function getData() {
     var startDate = new Date($('#startDate').val()).getDate();
     var endDate = new Date($('#endDate').val()).getDate();
     var source = $('#source-input').val();
-    var requestData = {
-        "geometryType": "huc",
-        "geometryInput": huc8,
-        "source": source,
-        "dateTimeSpan": {
-            "startDate": startDate,
-            "endDate": endDate
-        },
-        "timeLocalized": false
-    };
+    var requestData;
+    var selection = document.getElementById("inputLayer");
+    var layerSelected = selection.options[selection.selectedIndex].value;
+    if (layerSelected.localeCompare("catchment")){
+        requestData = {
+            "geometryTypes": {
+                "huc8" : huc8,
+                "commid": comid
+            },
+            "source": source,
+            "dateTimeSpan": {
+                "startDate": startDate,
+                "endDate": endDate
+            },
+            "timeLocalized": false
+        };
+    }
+    else {
+        requestData = {
+            "geometryType": "huc",
+            "geometryInput": huc8,
+            "source": source,
+            "dateTimeSpan": {
+                "startDate": startDate,
+                "endDate": endDate
+            },
+            "timeLocalized": false
+        };
+    }
     $.ajax({
         url: baseUrl,
         data: requestData,
@@ -273,17 +402,17 @@ function getData() {
     });
 }
 
-function searchMap(){
+function searchMap() {
     var type = $('#inputLayer').val();
     var searchValue = $('#inputSearch').val();
-    if(type === "huc8"){
-        if(searchValue.length === 8 && !isNaN(searchValue)){
+    if (type === "huc8") {
+        if (searchValue.length === 8 && !isNaN(searchValue)) {
             selectHUCs([searchValue]);
         }
     }
 }
 
-function startup(){
+function startup() {
     $('#startup-div').fadeOut("slow");
 }
 
