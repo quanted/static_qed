@@ -17,7 +17,7 @@ function initialize_varroapop(){
     var $mainTable = $('.tab_Resources');
     var splitBy = 17;
     var rows = $mainTable.find("tr").slice(splitBy);
-    var $secondTable = $("<table id='secondTable' class='input_table tab tab_Consumption tab_Resources' style='display:none'><tbody></tbody></table>").insertAfter($mainTable);
+    var $secondTable = $("<table id='secondTable' class='input_table tab tab_Resources tab_Consumption ' style='display:none'><tbody></tbody></table>").insertAfter($mainTable);
     $secondTable.find("tbody").append(rows);
     $mainTable.find ( "tr" ).slice( splitBy ).remove();
 
@@ -176,3 +176,11 @@ function listen_varroapop_events() {
         $('#main_form :disabled').removeAttr('disabled');
     });
 }
+
+
+//$(window).bind("pageshow", function(event) {
+//    if (event.originalEvent.persisted) {
+//        listen_varroapop_events();
+//        initialize_varroapop();
+//    }
+//});

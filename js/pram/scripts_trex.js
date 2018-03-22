@@ -208,6 +208,12 @@ function listen_trex_events() {
             $('#id_tw_bird_noael').val(7);
         }
     }).trigger('change');
+
+
+    $('#main_form').submit(function () {
+        $('#main_form :disabled').removeAttr('disabled');
+    });
+
 };
 
 function rmFormFields(fields) {

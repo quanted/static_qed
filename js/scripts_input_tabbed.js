@@ -241,12 +241,15 @@ function uberNavTabs( modelTabs, subTabs ) {
 	});
 
 	// Error Handling, show tab with error
-	//var isError = $('form').find('.errorlist');
-	//if (isError.length > 0) {
-	//	var tableWithError = $(isError).closest('table');
-	//	var tableWithErrorClass = tableWithError.attr('class').split(' ')[2].slice(4);
-	//	if (contains(modelTabs, tableWithErrorClass)) {
-	//		$('.' + tableWithErrorClass).trigger('click');
-	//	}
-	//}
+	var isError = $('form').find('.errorlist');
+	if (isError.length > 0) {
+		var tableWithError = $(isError).closest('table');
+		var tableWithErrorClass = tableWithError.attr('class').split(' ')[2].slice(4);
+		console.log(tableWithErrorClass);
+		console.log(modelTabs);
+		if (modelTabs.includes(tableWithErrorClass)) {
+			console.log('inside contains');
+			$('.' + tableWithErrorClass).trigger('click');
+		}
+	}
 }

@@ -53,4 +53,8 @@ $(document).ready(function() {
        }
    });
 
+    $('#main_form').submit(function () {
+        $('#main_form :disabled').removeAttr('disabled');
+    });
+
 });
