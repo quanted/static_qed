@@ -27,7 +27,7 @@ $(document).ready(function () {
     setAccordion();
     setRankSliders();
     setTimeout(getScoreData, 600);
-    $('#community_pdf').on("click", notImplementedAlert);
+    $('#report_pdf').on("click", generateReport);
     $('#rank_btn').on("click", toggleRank);
     $('#rank-exit').on("click", function () {
         $('#rank-window').hide();
@@ -115,7 +115,7 @@ function getScoreData() {
             hwbi_disc_data = JSON.parse(data);
             setTimeout(getIndicatorData, 1200);
             hwbi_indicator_value_adjusted = {};
-            setCookie('EPAHWBIDISC', location_data, 1);
+            setCookie('EPAHWBIDISC', location_data, 0.5);
             $('html, body').animate({
                 scrollTop: $('#disc-tabs').offset().top
             }, 'slow');
@@ -164,7 +164,6 @@ function setLocationValue() {
     json_value["state"] = state;
     json_value["state_abbr"] = stateAbbr;
     locationValue = JSON.stringify(json_value);
-    // $('#search_button').trigger('click');
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -255,51 +254,6 @@ function setScoreData(data) {
     setTimeout(loadSkillbar, 600);
 }
 
-function zeroScoreData() {
-    document.getElementById('score_indicator_span').style.transform = "rotate(0deg) skew(45deg, -45deg)";
-    // Set location info
-    $('#location').html("Snapshot results for: [location]");
-    $('#wellbeing-score-location').html("Nation: 0.00, State: 0.00");
-
-    // Set location score
-    $('#wellbeing-score').html("0.0");
-    document.getElementById('score_indicator_span').style.transform = "rotate(0deg) skew(45deg, -45deg)";
-
-    $('#nature_score').html("0.0");
-    $('#nature_score_bar').attr('data-percent', "0%");
-    $('#nature_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#cultural_score').html("0.0");
-    $('#cultural_score_bar').attr('data-percent', "0%");
-    $('#cultural_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#education_score').html("0.0");
-    $('#education_score_bar').attr('data-percent', "0%");
-    $('#education_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#health_score').html("0.0");
-    $('#health_score_bar').attr('data-percent', "0%");
-    $('#health_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#leisure_score').html("0.0");
-    $('#leisure_score_bar').attr('data-percent', "0%");
-    $('#leisure_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#living-std_score').html("0.0");
-    $('#living-std_score_bar').attr('data-percent', "0%");
-    $('#living-std_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#safety_score').html("0.0");
-    $('#safety_score_bar').attr('data-percent', "0%");
-    $('#safety_location').html("[Nation: 0.0, State: 0.0]");
-
-    $('#cohesion_score').html("0.0");
-    $('#cohesion_score_bar').attr('data-percent', "0%");
-    $('#cohesion_location').html("[Nation: 0.0, State: 0.0]");
-
-    setTimeout(loadSkillbar, 600);
-}
-
 function setAccordion() {
     for (acc_i = 0; acc_i < acc.length; acc_i++) {
         acc[acc_i].addEventListener("click", function () {
@@ -317,13 +271,13 @@ function setAccordion() {
                     $(this).removeClass("active");
                     $('html, body').animate({
                         scrollTop: $('#disc-tabs').offset().top
-                    }, 800);
+                    }, 400);
                 } else {
                     panel.style.display = "block";
                     $(this).addClass("active");
                     $('html, body').animate({
                         scrollTop: $(this).offset().top
-                    }, 800);
+                    }, 300);
                 }
             }
         );
@@ -413,7 +367,7 @@ function sumArray(total, num) {
     return total + num;
 }
 
-function notImplementedAlert() {
+function generateReport() {
     alert("This feature has not yet been implemented.");
 }
 
