@@ -354,16 +354,18 @@ function getData() {
     var dataset = $('#dataset-input').val();
     var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
     // var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
-    var startDate = new Date($('#startDate').val()).getDate();
-    var endDate = new Date($('#endDate').val()).getDate();
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
     var source = $('#source-input').val();
+    var temporalResolution = document.getElementById("temporal-resolution").options[document.getElementById("temporal-resolution").selectedIndex].value;
+    var timeLocalized = document.getElementById("time-localized").options[document.getElementById("time-localized").selectedIndex].value;
     var requestData;
     var selection = document.getElementById("inputLayer");
     var layerSelected = selection.options[selection.selectedIndex].value;
-    if (layerSelected.localeCompare("catchment")){
+    if (layerSelected == "catchment") {
         requestData = {
-            "geometryTypes": {
-                "huc8" : huc8,
+            "geometryInputs": {
+                "huc8": huc8,
                 "commid": comid
             },
             "source": source,
@@ -371,7 +373,8 @@ function getData() {
                 "startDate": startDate,
                 "endDate": endDate
             },
-            "timeLocalized": false
+            "timeLocalized": timeLocalized,
+            "temporalResolution": temporalResolution
         };
     }
     else {
@@ -383,12 +386,16 @@ function getData() {
                 "startDate": startDate,
                 "endDate": endDate
             },
-            "timeLocalized": false
+            "timeLocalized": timeLocalized,
+            "temporalResolution": temporalResolution
         };
     }
+    requestData = JSON.stringify(requestData);
     $.ajax({
         url: baseUrl,
         data: requestData,
+        dataType: 'json',
+        type: 'post',
         success: function (data, textStatus, jqXHR) {
             workflowData = data;
             $("#data-request-success").html("Successfully downloaded workflow data.");
