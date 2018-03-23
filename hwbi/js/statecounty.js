@@ -45,13 +45,13 @@ $(document).ready(function(){
 
         var poststateData = {
             "state":stateVal,"county":countyVal
-            }
+            };
 
         console.log(poststateData);
 
-
-        $.post('https://qedinternal.epa.gov/hwbi/rest/locations/run',             // url
-        // $.post('https://134.67.114.8/hwbi/rest/hwbi/locations/run',             // old url
+        var postUrl = "/hwbi/rest/locations/run/";
+        $.post(
+            postUrl,
             JSON.stringify(poststateData),                  // data (as JS object)
             function(data) {                                // success (callback) function
                 $.unblockUI();

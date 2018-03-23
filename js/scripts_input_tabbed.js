@@ -245,7 +245,7 @@ function uberNavTabs( modelTabs, subTabs ) {
 	if (isError.length > 0) {
 		var tableWithError = $(isError).closest('table');
 		var tableWithErrorClass = tableWithError.attr('class').split(' ')[2].slice(4);
-		if (contains(modelTabs, tableWithErrorClass)) {
+		if (modelTabs.includes(tableWithErrorClass)) {
 			$('.' + tableWithErrorClass).trigger('click');
 		}
 	}
