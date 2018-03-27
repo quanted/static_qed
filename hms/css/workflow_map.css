@@ -138,3 +138,42 @@
 #inputSearchBlock label {
     float: left;
 }
+
+#data-display{
+    display: none;
+    position: absolute;
+    background: white;
+    height: auto;
+    padding: 15px;
+    border: 1px solid #c5c5c5;
+    border-radius: 10px;
+    float: right;
+    text-align: center;
+    z-index: 9999;
+    right: 25%;
+    margin-top: 5%;
+    width: 50%;
+}
+
+#data-display-exit {
+    float: right;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#data-display-exit:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#metadata-table {
+    padding: 10px;
+}
+
+#data-table {
+    padding: 10px;
+}
+
+#data-display-button-div {
+    display: none;
+}

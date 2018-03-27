@@ -20,6 +20,11 @@ var workflowData;
 
 var selectedStream;
 
+var datatableData;
+var dataTableMetadata;
+
+google.charts.load('current', {'packages': ['table']});
+
 // -- Map functions -- //
 function onEachFeatureClick(feature, layer) {
     layer.on('click', function (e) {
@@ -211,6 +216,7 @@ function binarySearch(left, right, value) {
 function updateInputLayer() {
     // startLoader();
     $("#inputSearchBlock").hide();
+    $('#data-display-button-div').hide();
     $('#input-description').html("");
     setAccordion();
     if (currentInputLayer == null) {
@@ -352,8 +358,8 @@ function getData() {
     $('#data-request-success').html("");
     startLoader();
     var dataset = $('#dataset-input').val();
-    var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
-    // var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
+    // var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
+    var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
     var startDate = $('#startDate').val();
     var endDate = $('#endDate').val();
     var source = $('#source-input').val();
@@ -362,6 +368,17 @@ function getData() {
     var requestData;
     var selection = document.getElementById("inputLayer");
     var layerSelected = selection.options[selection.selectedIndex].value;
+    // requestData = {
+    //     "geometryType": "test",
+    //     "geometryInput": huc8,
+    //     "source": source,
+    //     "dateTimeSpan": {
+    //         "startDate": startDate,
+    //         "endDate": endDate
+    //     },
+    //     "timeLocalized": timeLocalized,
+    //     "temporalResolution": temporalResolution
+    // };
     if (layerSelected == "catchment") {
         requestData = {
             "geometryInputs": {
@@ -379,7 +396,7 @@ function getData() {
     }
     else {
         requestData = {
-            "geometryType": "huc",
+            "geometryType": "test",
             "geometryInput": huc8,
             "source": source,
             "dateTimeSpan": {
@@ -399,6 +416,10 @@ function getData() {
         success: function (data, textStatus, jqXHR) {
             workflowData = data;
             $("#data-request-success").html("Successfully downloaded workflow data.");
+            setMetaTable();
+            populateDataTable();
+            // google.charts.setOnLoadCallback(populateDataTable);
+            $('#data-display-button-div').show();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             $('#data-request-error').html("Error downloading workflow data. " + errorThrown);
@@ -421,6 +442,58 @@ function searchMap() {
 
 function startup() {
     $('#startup-div').fadeOut("slow");
+}
+
+function populateDataTable() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Catchment Total Flow');
+    //var columns = workflowData['data'][Object.keys(workflowData['data'])[0]].length;
+    $.each(workflowData['data'], function (index, row) {
+        var r = [];
+        var dt = index.split(' ');
+        var d = dt[0].split("-");
+        var date = new Date(d[0], d[1]-1, d[2]);
+        date.setHours(dt[1], 0, 0);
+        r.push(date);
+        $.each(row, function (key, value) {
+            r.push(parseFloat(value));
+        });
+        data.addRow(r);
+    });
+    var table = new google.visualization.Table(document.getElementById('data-table'));
+    datatableData = data;
+    table.draw(data, {allowHtml: true, showRowNumber: false, width: '100%', height: '100%', page: 'enable'});
+}
+
+function showData() {
+    $('#data-display').fadeIn(300);
+}
+
+function closeData() {
+    $('#data-display').fadeOut(300);
+}
+
+function setMetaTable() {
+    var metaTable = new google.visualization.DataTable();
+    metaTable.addColumn('string', 'MetaData');
+    metaTable.addColumn('string', 'Value');
+    $.each(workflowData['metadata'], function (key, value) {
+        metaTable.addRow([key, value]);
+    });
+    var table = new google.visualization.Table(document.getElementById('metadata-table'));
+    dataTableMetadata = metaTable;
+    table.draw(metaTable, {allowHtml: true, showRowNumber: false, width: '100%', height: '100%', page: 'enable'});
+}
+
+function downloadDataAsCSV() {
+    var csvData = google.visualization.dataTableToCsv(datatableData);
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvData));
+    element.setAttribute('download', 'workflow-data.csv');
+    element.setAttribute('target', '_blank');
+    element.style.display = 'none';
+    element.click();
 }
 
 $(function () {
