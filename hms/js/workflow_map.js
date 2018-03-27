@@ -358,8 +358,8 @@ function getData() {
     $('#data-request-success').html("");
     startLoader();
     var dataset = $('#dataset-input').val();
-    var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
-    // var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
+    // var baseUrl = "http://127.0.0.1:8000/hms/rest/api/hydrology/" + dataset;
+    var baseUrl = "https://qedinternal.epa.gov/hms/rest/api/hydrology/" + dataset;
     var startDate = $('#startDate').val();
     var endDate = $('#endDate').val();
     var source = $('#source-input').val();
@@ -368,45 +368,45 @@ function getData() {
     var requestData;
     var selection = document.getElementById("inputLayer");
     var layerSelected = selection.options[selection.selectedIndex].value;
-    requestData = {
-        "geometryType": "test",
-        "geometryInput": huc8,
-        "source": source,
-        "dateTimeSpan": {
-            "startDate": startDate,
-            "endDate": endDate
-        },
-        "timeLocalized": timeLocalized,
-        "temporalResolution": temporalResolution
-    };
-    // if (layerSelected == "catchment") {
-    //     requestData = {
-    //         "geometryInputs": {
-    //             "huc8": huc8,
-    //             "commid": comid
-    //         },
-    //         "source": source,
-    //         "dateTimeSpan": {
-    //             "startDate": startDate,
-    //             "endDate": endDate
-    //         },
-    //         "timeLocalized": timeLocalized,
-    //         "temporalResolution": temporalResolution
-    //     };
-    // }
-    // else {
-    //     requestData = {
-    //         "geometryType": "test",
-    //         "geometryInput": huc8,
-    //         "source": source,
-    //         "dateTimeSpan": {
-    //             "startDate": startDate,
-    //             "endDate": endDate
-    //         },
-    //         "timeLocalized": timeLocalized,
-    //         "temporalResolution": temporalResolution
-    //     };
-    // }
+    // requestData = {
+    //     "geometryType": "test",
+    //     "geometryInput": huc8,
+    //     "source": source,
+    //     "dateTimeSpan": {
+    //         "startDate": startDate,
+    //         "endDate": endDate
+    //     },
+    //     "timeLocalized": timeLocalized,
+    //     "temporalResolution": temporalResolution
+    // };
+    if (layerSelected == "catchment") {
+        requestData = {
+            "geometryInputs": {
+                "huc8": huc8,
+                "commid": comid
+            },
+            "source": source,
+            "dateTimeSpan": {
+                "startDate": startDate,
+                "endDate": endDate
+            },
+            "timeLocalized": timeLocalized,
+            "temporalResolution": temporalResolution
+        };
+    }
+    else {
+        requestData = {
+            "geometryType": "test",
+            "geometryInput": huc8,
+            "source": source,
+            "dateTimeSpan": {
+                "startDate": startDate,
+                "endDate": endDate
+            },
+            "timeLocalized": timeLocalized,
+            "temporalResolution": temporalResolution
+        };
+    }
     requestData = JSON.stringify(requestData);
     $.ajax({
         url: baseUrl,
