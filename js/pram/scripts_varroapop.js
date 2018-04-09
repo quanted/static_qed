@@ -102,9 +102,9 @@ function listen_varroapop_events() {
             $('.foliar').removeAttr('disabled');
             $('.soil').attr('disabled', 'disabled');
             $('.seed').attr('disabled', 'disabled');
-            $('#id_foliar_enable').val('true');
-            $('#id_soil_enable').val('false');
-            $('#id_seed_enable').val('false');
+            $('#id_Foliar_enable').val('true');
+            $('#id_Soil_enabled').val('false');
+            $('#id_Seed_enabled').val('false');
         }
         else if ($(this).val() == "Soil") {
             $('.foliar').closest('tr').hide();
@@ -113,9 +113,9 @@ function listen_varroapop_events() {
             $('.foliar').attr('disabled', 'disabled');
             $('.soil').removeAttr('disabled');
             $('.seed').attr('disabled', 'disabled');
-            $('#id_foliar_enable').val('false');
-            $('#id_soil_enable').val('true');
-            $('#id_seed_enable').val('false');
+            $('#id_Foliar_enabled').val('false');
+            $('#id_Soil_enabled').val('true');
+            $('#id_Seed_enabled').val('false');
         }
         else {
             $('.foliar').closest('tr').hide();
@@ -124,9 +124,9 @@ function listen_varroapop_events() {
             $('.foliar').attr('disabled', 'disabled');
             $('.soil').attr('disabled', 'disabled');
             $('.seed').removeAttr('disabled');
-            $('#id_foliar_enable').val('false');
-            $('#id_soil_enable').val('false');
-            $('#id_seed_enable').val('true');
+            $('#id_Foliar_enabled').val('false');
+            $('#id_Soil_enabled').val('false');
+            $('#id_Seed_enabled').val('true');
         }
     }).trigger('change');
 
