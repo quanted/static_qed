@@ -102,9 +102,9 @@ function listen_varroapop_events() {
             $('.foliar').removeAttr('disabled');
             $('.soil').attr('disabled', 'disabled');
             $('.seed').attr('disabled', 'disabled');
-            $('#id_Foliar_enable').val('true');
-            $('#id_Soil_enabled').val('false');
-            $('#id_Seed_enabled').val('false');
+            $('#id_FoliarEnabled').val('true');
+            $('#id_SoilEnabled').val('false');
+            $('#id_SeedEnabled').val('false');
         }
         else if ($(this).val() == "Soil") {
             $('.foliar').closest('tr').hide();
@@ -113,9 +113,9 @@ function listen_varroapop_events() {
             $('.foliar').attr('disabled', 'disabled');
             $('.soil').removeAttr('disabled');
             $('.seed').attr('disabled', 'disabled');
-            $('#id_Foliar_enabled').val('false');
-            $('#id_Soil_enabled').val('true');
-            $('#id_Seed_enabled').val('false');
+            $('#id_FoliarEnabled').val('false');
+            $('#id_SoilEnabled').val('true');
+            $('#id_SeedEnabled').val('false');
         }
         else {
             $('.foliar').closest('tr').hide();
@@ -124,9 +124,9 @@ function listen_varroapop_events() {
             $('.foliar').attr('disabled', 'disabled');
             $('.soil').attr('disabled', 'disabled');
             $('.seed').removeAttr('disabled');
-            $('#id_Foliar_enabled').val('false');
-            $('#id_Soil_enabled').val('false');
-            $('#id_Seed_enabled').val('true');
+            $('#id_FoliarEnabled').val('false');
+            $('#id_SoilEnabled').val('false');
+            $('#id_SeedEnabled').val('true');
         }
     }).trigger('change');
 
@@ -135,6 +135,9 @@ function listen_varroapop_events() {
 
         if ($(this).val() == "false") {
             $('.tab_Chemical :input').not($(this)).attr('disabled', 'disabled');
+            $('#id_FoliarEnabled').val('false');
+            $('#id_SoilEnabled').val('false');
+            $('#id_SeedEnabled').val('false');
         }
         else if ($(this).val() == "true") {
             $('.tab_Chemical :input').removeAttr('disabled');
@@ -174,6 +177,15 @@ function listen_varroapop_events() {
 
     $('#main_form').submit(function () {
         $('#main_form :disabled').removeAttr('disabled');
+
+        if ($('#id_enable_mites').val() == "false"){
+            $('#id_ICWorkerAdultInfest').val(0);
+            $('#id_ICWorkerBroodInfest').val(0);
+            $('#id_ICDroneAdultInfest').val(0);
+            $('#id_ICDroneBroodInfest').val(0);
+            $('#id_ImmEnabled').val("false");
+            $('#id_VTEnable').val("false");
+        }
     });
 }
 
