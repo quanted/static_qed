@@ -74,6 +74,8 @@ function importMol(chemical) {
     // marvinSketcherInstance.importStructure("mrv", molecule_info.data.structureData.structure);
   });
 
+  clearChemicalEditorContent();  // clears marvinsketch and results table
+
 }
 
 
@@ -135,7 +137,12 @@ function displayErrorInTextbox(errorMessage) {
     errorMessage = "Name not recognized..";
   }
   $('#id_chem_struct').addClass("formError").val(errorMessage); //Enter SMILES txtbox
-  // $('#id_chem_struct').val(errorMessage); //Enter SMILES txtbox
+  clearChemicalEditorContent();
+}
+
+
+function clearChemicalEditorContent() {
+  // Clears MarvinSketch instance and results table
   $('#chemical').val("");
   $('#smiles').val("");
   $('#origsmiles').val("");

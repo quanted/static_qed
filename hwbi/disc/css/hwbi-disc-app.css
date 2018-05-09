@@ -56,7 +56,7 @@
     opacity: 0;
 }
 
-#disc-tabs ul {
+#main-tab-nav {
     border: none;
     background: none;
     height: 2.35em;
@@ -66,7 +66,7 @@
     margin-bottom: 40px;
 }
 
-#disc-tabs ul li {
+#main-tab-nav li {
     width: 20%;
     list-style: none;
     background-color: #235A8E;
@@ -77,7 +77,7 @@
 
 }
 
-#disc-tabs ul li:hover {
+#main-tab-nav li:hover {
     background-color: #183E62;
     cursor: pointer;
 }
@@ -91,7 +91,7 @@
     cursor: default !important;
 }
 
-#disc-tabs ul li a {
+#main-tab-nav li a {
     color: white;
     float: none;
     display: inline-block;
@@ -100,7 +100,7 @@
     width: 100%;
 }
 
-#disc-tabs ul li a:hover {
+#main-tab-nav li a:hover {
     cursor: pointer;
 }
 
