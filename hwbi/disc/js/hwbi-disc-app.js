@@ -11,6 +11,7 @@ var hwbi_disc_data;
 var hwbi_indicator_data;
 var hwbi_indicator_value_adjusted = {};
 
+
 $(document).ready(function () {
 
     initializeTabs();
@@ -369,7 +370,28 @@ function sumArray(total, num) {
 
 function generateReport() {
     alert("This feature has not yet been implemented.");
+    // var community_snapshot = $(document.getElementById('community-snapshot-content')).html().toString();
+    // // report.fromHTML(community_snapshot, margins.left, margins.top, function(){});
+    // var customize_content = $(document.getElementById('customize-content')).html().toString();
+    // // report.fromHTML(customize_content, margins.left, margins.top, function(){});
+    // var compare_content = $(document.getElementById('compare-tab')).html().toString();
+    // // report.fromHTML(compare_content, margins.left, margins.top, function(){});
+    // compilePDFReport('DISC-Report');
 }
+
+// function compilePDFReport(fileName) {
+//     var pdf = new jsPDF('p', 'pt', 'a4'),
+//         pdfConf = {
+//             pagesplit: false,
+//             background: '#fff'
+//         };
+//     var epa_logo = document.getElementsByClassName('site-logo')[0];
+//
+//     epa_logo.height = 50;
+//     epa_logo.width = 50;
+//     pdf.addImage(epa_logo, 'JPEG', 15, 40, 180, 160);
+//     pdf.save(fileName + '.pdf');
+// }
 
 function selectDomain() {
     if (hwbi_disc_data === undefined) {
@@ -985,10 +1007,10 @@ function initializeComparisonAutocomplete() {
     }
 }
 
-function displayIndicatorInformation () {
-	var title = $(this).html().replace(':', '');
-	var description = $(this).parent().attr('data-title');
-	var domain = $(this).closest('.domain_indicator').attr('id');
-	$('#' + domain + '_title').html(title);
-	$('#' + domain + '_description').html(description);
+function displayIndicatorInformation() {
+    var title = $(this).html().replace(':', '');
+    var description = $(this).parent().attr('data-title');
+    var domain = $(this).closest('.domain_indicator').attr('id');
+    $('#' + domain + '_title').html(title);
+    $('#' + domain + '_description').html(description);
 }
