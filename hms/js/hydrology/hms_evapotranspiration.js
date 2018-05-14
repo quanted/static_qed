@@ -1,16 +1,55 @@
 $(document).ready(function () {
     // form initialization
     initializeInputForm();
-    // form events
-	$('#id_source').change(toggleParameters);
+    // form events 
+	$('#id_algorithm').change(toggleParameters);
+	$('#id_source').change(toggleSource);
 });
 
 function initializeInputForm() {
-	resetParameters();
+	$('#id_albedo').closest('tr').hide();
+	$('#id_centlong').closest('tr').hide();
+	$('#id_sunangle').closest('tr').hide();
+	$('#id_emissivity').closest('tr').hide();
+	$('#id_model').closest('tr').hide();
+	$('#id_zenith').closest('tr').hide();
+	$('#id_lakesurfarea').closest('tr').hide();
+	$('#id_lakedepth').closest('tr').hide();
+	$('#id_subsurfres').closest('tr').hide();
+	$('#id_stomres').closest('tr').hide();
+	$('#id_leafwidth').closest('tr').hide();
+	$('#id_roughlength').closest('tr').hide();
+	$('#id_vegheight').closest('tr').hide();
+	$('#id_leafarea_0').addClass("hidden");
+	$('#id_airtemps_0').addClass("hidden");
+	$('#id_leafarea_0').closest('tr').hide();
+	$('#id_airtemps_0').closest('tr').hide();
+	$('#id_stationID').closest('tr').hide();
+}
+
+function toggleSource(){
+	var state = $('#id_source').val();
+	switch(state){
+		case 'ncdc':
+			$('#id_latitude').closest('tr').hide();
+            $('#id_longitude').closest('tr').hide();
+            $('#id_stationID').closest('tr').show();
+			break;
+		case 'nldas':
+		case 'gldas':
+		case 'wgen':
+		case 'daymet':
+		case 'prism':
+			$('#id_latitude').closest('tr').show();
+            $('#id_longitude').closest('tr').show();
+            $('#id_stationID').closest('tr').hide();
+			break;
+		default:
+	}
 }
 
 function toggleParameters() {
-	var state = $('#id_source').val();
+	var state = $('#id_algorithm').val();
 	resetParameters();
 	switch(state){
 		case 'nldas':
@@ -47,6 +86,7 @@ function toggleParameters() {
 			$('#id_albedo').closest('tr').show();
 			$('#id_centlong').closest('tr').show();
 			$('#id_sunangle').closest('tr').show();
+			//$('#id_temporalresolution')["0"].options[4] = new Option('hourly', 'hourly');
 			break;
         case "mortoncrae":
 			$('#id_albedo').closest('tr').show();
@@ -91,6 +131,7 @@ function toggleParameters() {
 			$('#id_albedo').closest('tr').show();
 			$('#id_centlong').closest('tr').show();
 			$('#id_sunangle').closest('tr').show();
+			//$('#id_temporalresolution')["0"].options[4] = new Option('hourly', 'hourly');
 			break;
 		default:
 	}
@@ -114,4 +155,10 @@ function resetParameters() {
 	$('#id_airtemps_0').addClass("hidden");
 	$('#id_leafarea_0').closest('tr').hide();
 	$('#id_airtemps_0').closest('tr').hide();
+	/*
+	$('#id_temporalresolution').empty();
+	$('#id_temporalresolution')["0"].options[0] = new Option('default', 'default');
+	$('#id_temporalresolution')["0"].options[1] = new Option('daily', 'daily');
+	$('#id_temporalresolution')["0"].options[2] = new Option('weekly', 'weekly');
+	$('#id_temporalresolution')["0"].options[3] = new Option('monthly', 'monthly');*/
 }

@@ -724,16 +724,14 @@ div.pka-wrapper {
 div#pchem_wait {
   height: 300px;
 }
-
 #pchem_wait {
   margin: 6px;
 }
-
 #pchem_wait input {
   /*margin: 0 auto;*/
   float: right;
-  height: 24px;
-  width: 64px;
+  height: 36px;
+  width: 96px;
   /*margin-bottom: 6px;*/
 }
 
