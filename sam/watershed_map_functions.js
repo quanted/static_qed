@@ -350,7 +350,7 @@ function fetchHUC8Shape(hucID){
     //y = $.grep(huc8s, function(n,i){
     //    return n.properties.HUC_CODE===hucID;
     //});
-    var out = huc8s.features.filter(x => x.properties.HUC_CODE == hucID)[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
+    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
     //$(huc8s).filter(function (i,n){return n.features.properties['HUC_CODE']===comID});
     return out;
 }
