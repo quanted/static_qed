@@ -1,8 +1,13 @@
 
 // initialize the map
 var map = L.map('map',{
-    loadingControl: true
-}).setView([39.609280, -92.100678], 8);
+    loadingControl: true,
+    preferCanvas: true
+});
+
+start_point = [39.609280, -92.100678];
+start_zoom = 8;
+map.setView(start_point, start_zoom);
 
 // read model output
 var outputData = readOutputJSON();
@@ -39,12 +44,17 @@ huc8Layer = L.geoJson(huc8s, {
     //onEachFeature: onEachFeatureClick
 }).addTo(map);
 colorHUC8s($('#fieldselect').val(), $('#summaryselect').val());
+map.on('click', onMapClick);
 
 
 
 addStreams();
-// --------------- INFO WINDOW code -------------- //
+//map.setZoomAround([39.609280, -92.100678],8); //with canvas rendering doing a map pan/zoom seems needed to see the layers
 
+
+// --------------- INFO WINDOW code -------------- //
+info_box_title = "Stream Segment Info"
+info_box_id = "ComID"
 var info = L.control();
 
 info.onAdd = function (map) {
