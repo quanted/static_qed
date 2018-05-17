@@ -14,5 +14,5 @@
 
 <br><br>
 
-<h3>Mammalian Metabolism Reaction Library</h3>
-<p>The Mammalian Metabolism Reaction Library contains 156 reaction schemes based on cytochrome P450 (CYP450) phase one biotransformations.  This reaction library was developed by Chemaxon.  The reaction library is proprietary, so details of the reactions schemes cannot be viewed.</p>
+<h3>Human Phase 1 Metabolism Reaction Library</h3>
+<p>The Human Phase 1 Metabolism Reaction Library contains 156 reaction schemes based on cytochrome P450 (CYP450) phase one biotransformations.  This reaction library was developed by Chemaxon.  The reaction library is proprietary, so details of the reactions schemes cannot be viewed.</p>
