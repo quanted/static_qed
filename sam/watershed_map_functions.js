@@ -330,6 +330,11 @@ function colorHUC8s(fieldVal, summary_stat) {
             fillOpacity: getHUCFillOpacity(stat)
         }
     });
+    map.setView(start_point, start_zoom); //with canvas rendering doing a map pan/zoom seems needed to see the layers
+    //zoom = map.getZoom();
+    //center = map.getCenter();
+    //map.setZoomAround(center,zoom);
+
 }
 
 // for the selected HUC (clicked), set border to be thicker
@@ -350,7 +355,7 @@ function fetchHUC8Shape(hucID){
     //y = $.grep(huc8s, function(n,i){
     //    return n.properties.HUC_CODE===hucID;
     //});
-    var out = huc8s.features.filter(x => x.properties.HUC_CODE == hucID)[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
+    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
     //$(huc8s).filter(function (i,n){return n.features.properties['HUC_CODE']===comID});
     return out;
 }
@@ -525,7 +530,7 @@ function displayOutput(field) {
 // refresh the map, popup content, and info box to reflect new settings
 function refreshOutput(newfield, summaryfield) {
     map.removeLayer(outLayer);
-    displayOutput(newfield.value);
+    //displayOutput(newfield.value);
     colorHUC8s(newfield.value, summaryfield.value);//$('#summaryselect').val());
     if(selectedHuc != null){
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
