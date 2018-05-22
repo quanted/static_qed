@@ -426,6 +426,8 @@ function GetHuc(latitude, longitude) {
     $.ajax({
         url: hucURL,
         method: 'GET',
+        crossDomain: true,
+        cache: true, //for now won't work as the api response forbids caching
         success: function (result_huc) {
             if (selectedHuc !== null) {
                 map.removeLayer(selectedHuc);
