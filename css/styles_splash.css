@@ -186,4 +186,8 @@
   color: #ffffff;
 }
 
+#no-page-main {
+  float:left !important;
+  width: 100% !important;
+}
 

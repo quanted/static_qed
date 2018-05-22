@@ -8,9 +8,17 @@ var selectedIntake;
 var selectedHucName = null;
 var selectedHucNumber = null;
 var selectedHucArea = null;
+var summaryHUC8Data;
+var outputData;
+var mode; // no longer needed?
+
+// specify field (placeholder)
+var field = "chronic_em_inv";
+
+//print to console for debuggin?
+var DEBUG = false;
 
 
-//console.log(comid);
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
@@ -60,7 +68,7 @@ function getStreamData(lat, lng) {
             if(wantedData.length == 0){
                 $('#pestTable').hide();
                 $('#saveTable').hide();
-                console.log("Selected stream was not included in SAM run");
+                DEBUG && console.log("Selected stream was not included in SAM run");
                 return false;
             }
             setTimeout(populateFilteredTable(wantedData[0].properties), 300);
@@ -76,7 +84,7 @@ function getStreamData(lat, lng) {
 
 <!--- add stream to map -->
 function addStreamSeg(streamData, comid) {
-    console.log(comid);
+    DEBUG && console.log(comid);
     var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function (c) {
         return c.reverse();
     });
@@ -188,16 +196,17 @@ function readOutputJSON() {
     $.ajax({
         type: "GET",
         url: url,
-        async: false,
+        async: true,
         success: function (data) {
-            console.log("Read output JSON from file: " + url.toString());
-            console.log("Output JSON data contents...");
-            console.log(data.toString());
+            DEBUG && console.log("Read output JSON from file: " + url.toString());
+            DEBUG && console.log("Output JSON data contents...");
+            DEBUG && console.log(data.toString());
             samOutput = data;
+            outputData = data;
             return false;
         },
         error: function (jqXHR, status) {
-            console.log("Failed to retrieve output json data.");
+            DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get river data.");
             return false;
         }
@@ -215,16 +224,19 @@ function readSummaryHUC8JSON() {
     $.ajax({
         type: "GET",
         url: url,
-        async: false,
+        async: true,
         success: function (data) {
-            console.log("Read output JSON from file: " + url.toString());
-            console.log("Output JSON data contents...");
-            console.log(data.toString());
+            DEBUG && console.log("Read summary JSON from file: " + url.toString());
+            //DEBUG && console.log("Output JSON data contents...");
+            //DEBUG && console.log(data.toString());
             samOutput = data;
+            summaryHUC8Data = data;
+            addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+            colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
             return false;
         },
         error: function (jqXHR, status) {
-            console.log("Failed to retrieve output json data.");
+            DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get watershed data.");
             return false;
         }
@@ -233,7 +245,7 @@ function readSummaryHUC8JSON() {
 }
 
 
-// Determine if output is points or lines
+// Determine if output is points or lines - no longer used
 function getMode(outputData) {
     var outputMode = outputData.features[0].geometry.type;
     return outputMode
@@ -312,7 +324,7 @@ function getColor(d) {
 var hucStyleSelected = {
     fillColor: 'white',
     weight: 0.0,
-    opacity: 0.9,
+    opacity: 0.0,
     color: 'black',
     fillOpacity: 0.0
 };
@@ -331,10 +343,6 @@ function colorHUC8s(fieldVal, summary_stat) {
         }
     });
     map.setView(start_point, start_zoom); //with canvas rendering doing a map pan/zoom seems needed to see the layers
-    //zoom = map.getZoom();
-    //center = map.getCenter();
-    //map.setZoomAround(center,zoom);
-
 }
 
 // for the selected HUC (clicked), set border to be thicker
@@ -351,12 +359,8 @@ function setSelectedHUC8(hucID) {
 
 // returns the huc8 feature for a given huc8 ID
 function fetchHUC8Shape(hucID){
-    console.log(hucID);
-    //y = $.grep(huc8s, function(n,i){
-    //    return n.properties.HUC_CODE===hucID;
-    //});
-    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
-    //$(huc8s).filter(function (i,n){return n.features.properties['HUC_CODE']===comID});
+    DEBUG && console.log(hucID);
+    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0];
     return out;
 }
 
@@ -377,8 +381,6 @@ function clearMap() {
 //grab huc8 summary stats for a certain huc, from the object created in watershed_map_scripts.js
 function fetchHUC8Statistics(huc_code) {
     if(summaryHUC8Data[huc_code] != null) {
-        //console.log('found stats for huc: '+ huc_code);
-        //console.log(summaryHUC8Data[huc_code]);
         return summaryHUC8Data[huc_code]
     }
     else {
@@ -426,6 +428,8 @@ function GetHuc(latitude, longitude) {
     $.ajax({
         url: hucURL,
         method: 'GET',
+        crossDomain: true,
+        cache: true, //for now won't work b/c the api response forbids caching
         success: function (result_huc) {
             if (selectedHuc !== null) {
                 map.removeLayer(selectedHuc);
@@ -491,7 +495,7 @@ function onMapClick(e){
 
 
 
-
+// note: this function is not currently used
 function displayOutput(field) {
     if (mode == "Point") {
         outLayer = L.geoJSON(outputData, {
@@ -529,10 +533,9 @@ function displayOutput(field) {
 
 // refresh the map, popup content, and info box to reflect new settings
 function refreshOutput(newfield, summaryfield) {
-    map.removeLayer(outLayer);
-    //displayOutput(newfield.value);
     colorHUC8s(newfield.value, summaryfield.value);//$('#summaryselect').val());
     if(selectedHuc != null){
+        setSelectedHUC8(selectedHucNumber);
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
     }
 }
