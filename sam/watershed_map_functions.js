@@ -11,6 +11,7 @@ var selectedHucArea = null;
 var summaryHUC8Data;
 var outputData;
 var mode; // no longer needed?
+var hucsRun = [];
 
 // specify field (placeholder)
 var field = "chronic_em_inv";
@@ -231,8 +232,17 @@ function readSummaryHUC8JSON() {
             //DEBUG && console.log(data.toString());
             samOutput = data;
             summaryHUC8Data = data;
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    hucsRun.push(key);  //track which hucs were actually run!
+                }
+            }
+            console.log(hucsRun);
             addHUC8Statistics(); //add the huc8 stats to the huc8 layer
             colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            addStreams(); //add the stream layer
+            addIntakes(); //add the drinking water intake marker layergroup
+
             return false;
         },
         error: function (jqXHR, status) {
@@ -585,4 +595,48 @@ function addStreams() {
         maxZoom: 18,
         transparent: true
     }).addTo(map);
+}
+
+
+//------------ DRINKING WATER INTAKES ------------//
+
+var intakes;
+var intakeMarkers = new L.LayerGroup();
+
+//helper function that works across all browsers
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function addIntakes() {
+    intakes = L.geoJSON(intake_data, {
+                style: {
+                    weight: 0.0,
+                    fill_weight : 0.0
+                },
+                filter: function(feature) {
+                    huc_12 = feature.properties.HUC12;
+                    huc_8 = huc_12.substring(0,8);
+                    if(contains(hucsRun,huc_8)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                },
+                onEachFeature: function onEachFeature(feature, layer) {
+                    points = layer.getLatLngs();
+                    var center = points[Math.floor(points.length/2)];
+                    if(typeof(center) != undefined ) {
+                        var marker = L.marker(center);
+                        intakeMarkers.addLayer(marker);
+                    }
+                }
+            }).addTo(map);
+    intakeMarkers.addTo(map);
 }
