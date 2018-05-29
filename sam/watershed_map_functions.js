@@ -12,6 +12,8 @@ var summaryHUC8Data;
 var outputData;
 var mode; // no longer needed?
 var hucsRun = [];
+var huc8ColorLayer;
+var legend;
 
 // specify field (placeholder)
 var field = "chronic_em_inv";
@@ -24,6 +26,15 @@ $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
 
+//helper function that works across all browsers
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // handler for a stream click
 function onStreamMapClick(e) {
@@ -31,6 +42,25 @@ function onStreamMapClick(e) {
         map.removeLayer(selectedHuc);
     }
     getStreamData(e.latlng.lat, e.latlng.lng);
+}
+
+
+// set to hide huc coloring when zoomed to stream level
+function setZoomHandler(){
+    map.on('zoomend', function() {
+        if (map.getZoom() >=11){
+            if (map.hasLayer(huc8ColorLayer)) {
+                map.removeLayer(huc8ColorLayer);
+                map.removeControl(legend);
+            }
+        }
+        if (map.getZoom() < 11){
+            if (! map.hasLayer(huc8ColorLayer)){
+                map.addLayer(huc8ColorLayer);
+                map.addControl(legend);
+            }
+        }
+    });
 }
 
 
@@ -185,6 +215,24 @@ function getCookie(name) {
 
 
 
+// creates a huc layer on top of the other huc layer that contains only the hucs that were run.
+// we can interact with this layer without doing anything to the hucs that weren't run, saving us
+// computation time on the client
+function hucColorLayer(){
+    huc8ColorLayer = L.geoJson(huc8s, {
+    style: hucStyle,
+    filter: function(feature) {
+        huc_8 = feature.properties.HUC_CODE;
+        if (contains(hucsRun, huc_8)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    }).addTo(map);
+
+}
 
 
 
@@ -237,12 +285,13 @@ function readSummaryHUC8JSON() {
                     hucsRun.push(key);  //track which hucs were actually run!
                 }
             }
-            console.log(hucsRun);
+            hucColorLayer(); //create a layer for the shaded hucs
             addHUC8Statistics(); //add the huc8 stats to the huc8 layer
             colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
             addStreams(); //add the stream layer
             addIntakes(); //add the drinking water intake marker layergroup
-
+            addHucLegend();
+            setZoomHandler();
             return false;
         },
         error: function (jqXHR, status) {
@@ -316,17 +365,17 @@ function streamStyle(feature, field) {
 //huc8 initial style
 function hucStyle(feature) {
     return {
-        fillColor: getColor(feature.properties),
+        fillColor: getColor(),
         weight: .3,
         opacity: 0.9,
         color: 'black',
-        fillOpacity: 0.3
+        fillOpacity: 0.0 // clear
     };
 }
 
 
 //style HUC8 polygon - default
-function getColor(d) {
+function getColor() {
     return '#93D4BC'
 }
 
@@ -342,14 +391,16 @@ var hucStyleSelected = {
 
 //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
 function colorHUC8s(fieldVal, summary_stat) {
-    huc8Layer.setStyle(function(feature) {
+    huc8ColorLayer.setStyle(function(feature) {
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
         return {
             fillColor: exceedanceColor(stat),
             weight: .3,
             opacity: 0.9,
             color: 'black',
-            fillOpacity: getHUCFillOpacity(stat)
+            fillOpacity: getHUCFillOpacity(stat),
+            minZoom: 0,
+            maxZoom: 10
         }
     });
     map.setView(start_point, start_zoom); //with canvas rendering doing a map pan/zoom seems needed to see the layers
@@ -361,7 +412,7 @@ function setSelectedHUC8(hucID) {
     huc8Layer.setStyle(function(feature) {
         if(feature.properties.HUC_CODE == hucID){
             return {
-                weight: 1.5
+                weight: 2.0
             }
         }
     });
@@ -603,16 +654,6 @@ function addStreams() {
 var intakes;
 var intakeMarkers = new L.LayerGroup();
 
-//helper function that works across all browsers
-function contains(a, obj) {
-    for (var i = 0; i < a.length; i++) {
-        if (a[i] === obj) {
-            return true;
-        }
-    }
-    return false;
-}
-
 //function to set the popup content for an intake click
 function intakeContent(feature){
     var in_comid = feature.properties.COMID;
@@ -645,7 +686,8 @@ function addIntakes() {
                 },
                 onEachFeature: function onEachFeature(feature, layer) {
                     points = layer.getLatLngs();
-                    var center = points[Math.floor(points.length/2)];
+                    //var center = points[Math.floor(points.length/2)];
+                    var center = points[0];
                     if(typeof(center) != undefined ) {
                         var marker = L.marker(center);
                         marker.bindPopup(intakeContent(feature));
@@ -654,4 +696,26 @@ function addIntakes() {
                 }
             }).addTo(map);
     intakeMarkers.addTo(map);
+}
+
+
+function addHucLegend(){
+    legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [0, .1, .2, .3, .4, .5],
+            labels = [];
+
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + exceedanceColor(grades[i] + .01) + '"></i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
 }

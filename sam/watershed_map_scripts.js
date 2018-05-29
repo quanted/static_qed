@@ -40,8 +40,8 @@ map.on('click', onMapClick);
 
 
 // --------------- INFO WINDOW code -------------- //
-info_box_title = "Stream Segment Info"
-info_box_id = "ComID"
+info_box_title = "Stream Segment Info";
+info_box_id = "ComID";
 var info = L.control();
 
 info.onAdd = function (map) {
@@ -59,4 +59,3 @@ info.update = function (props) {
 };
 
 info.addTo(map);
-
