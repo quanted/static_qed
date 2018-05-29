@@ -613,6 +613,20 @@ function contains(a, obj) {
     return false;
 }
 
+//function to set the popup content for an intake click
+function intakeContent(feature){
+    var in_comid = feature.properties.COMID;
+    var in_sourceName = feature.properties.SourceName;
+    var in_systemName = feature.properties.SystemName;
+    var e1 = document.createElement('div');
+    e1.classList.add("intake_popup");
+    e1.innerHTML = '<h3> <strong> Drinking water intake </strong></h3>';
+    e1.innerHTML += '<strong>COMID #: </strong>' + in_comid + '<br><strong>' + 'Source: </strong>' + in_sourceName;
+    e1.innerHTML += '<br><strong>' + 'System: </strong>' + in_systemName;
+    return e1;
+
+}
+
 function addIntakes() {
     intakes = L.geoJSON(intake_data, {
                 style: {
@@ -634,6 +648,7 @@ function addIntakes() {
                     var center = points[Math.floor(points.length/2)];
                     if(typeof(center) != undefined ) {
                         var marker = L.marker(center);
+                        marker.bindPopup(intakeContent(feature));
                         intakeMarkers.addLayer(marker);
                     }
                 }
