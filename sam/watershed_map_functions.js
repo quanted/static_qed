@@ -14,6 +14,7 @@ var mode; // no longer needed?
 var hucsRun = [];
 var huc8ColorLayer;
 var legend;
+var region = '07';
 
 // specify field (placeholder)
 var field = "chronic_em_inv";
@@ -291,6 +292,7 @@ function readSummaryHUC8JSON() {
             addStreams(); //add the stream layer
             addIntakes(); //add the drinking water intake marker layergroup
             addHucLegend();
+            //addColoredStreams(region);
             setZoomHandler();
             return false;
         },
@@ -340,6 +342,7 @@ function getHUCFillOpacity(d) {
 }
 
 
+//deprecated
 function intakeStyle(feature, field) {
     return {
         radius: 10,
@@ -461,8 +464,8 @@ function addHUC8Statistics() {
 function popupContent(hucNumber, hucName){
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
-    e1.innerHTML = '<h3> <strong> HUC8 Summary </strong></h3>';
-    e1.innerHTML += '<strong>ID #: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
+    e1.innerHTML = '<h3> <strong> Watershed Summary </strong></h3>';
+    e1.innerHTML += '<strong>HUC8#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
     e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(selectedHucArea).toFixed(2) + ' km'+'2'.sup();
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
@@ -581,7 +584,7 @@ function displayOutput(field) {
     } else {
         outLayer = L.geoJson(outputData, {
             style: function (feature) {
-                return streamStyle(feature, field)
+                return streamStyle2(feature, field)
             }
         }).addTo(map);
         map.on('click', onMapClick);
