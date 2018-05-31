@@ -11,7 +11,7 @@ map.setView(start_point, start_zoom);
 
 // read model output
 readOutputJSON(); //async ajax call
-readSummaryHUC8JSON(); //async ajax call
+readSummaryHUC8JSON(); //async ajax call - also triggers HUC12s
 
 // add out data
 var info_box_title = null;
