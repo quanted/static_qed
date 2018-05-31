@@ -8,13 +8,36 @@ var selectedIntake;
 var selectedHucName = null;
 var selectedHucNumber = null;
 var selectedHucArea = null;
+var summaryHUC8Data;
+var summaryHUC12Data;
+var outputData;
+var mode; // no longer needed?
+var hucsRun = [];
+var huc8ColorLayer;
+var legend;
+var region = '07';
+var huc12_json = 'test';
+
+// specify field (placeholder)
+var field = "chronic_em_inv";
+
+//print to console for debuggin?
+var DEBUG = false;
 
 
-//console.log(comid);
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
 
+//helper function that works across all browsers
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // handler for a stream click
 function onStreamMapClick(e) {
@@ -22,6 +45,40 @@ function onStreamMapClick(e) {
         map.removeLayer(selectedHuc);
     }
     getStreamData(e.latlng.lat, e.latlng.lng);
+}
+
+
+// set to hide huc coloring when zoomed to stream level
+function setZoomHandler(){
+    map.on('zoomend', function() {
+        if (map.getZoom() >=11){
+            if (map.hasLayer(huc8ColorLayer)) {
+                map.removeLayer(huc8ColorLayer);
+                //map.removeControl(legend);
+            }
+            if(! map.hasLayer(huc12s)){
+                map.addLayer(huc12s);
+            }
+        }
+        if (map.getZoom() < 11){
+            if(! map.hasLayer(huc12s)){
+                map.addLayer(huc12s);
+            }
+            if (map.hasLayer(huc8ColorLayer)) {
+                map.removeLayer(huc8ColorLayer);
+            }
+        }
+        if (map.getZoom() < 9){
+            if(map.hasLayer(huc12s)){
+                map.removeLayer(huc12s);
+            }
+            if (! map.hasLayer(huc8ColorLayer)){
+                map.addLayer(huc8ColorLayer);
+                //map.addControl(legend);
+            }
+        }
+
+    });
 }
 
 
@@ -60,7 +117,7 @@ function getStreamData(lat, lng) {
             if(wantedData.length == 0){
                 $('#pestTable').hide();
                 $('#saveTable').hide();
-                console.log("Selected stream was not included in SAM run");
+                DEBUG && console.log("Selected stream was not included in SAM run");
                 return false;
             }
             setTimeout(populateFilteredTable(wantedData[0].properties), 300);
@@ -76,7 +133,7 @@ function getStreamData(lat, lng) {
 
 <!--- add stream to map -->
 function addStreamSeg(streamData, comid) {
-    console.log(comid);
+    DEBUG && console.log(comid);
     var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function (c) {
         return c.reverse();
     });
@@ -176,6 +233,24 @@ function getCookie(name) {
 
 
 
+// creates a huc layer on top of the other huc layer that contains only the hucs that were run.
+// we can interact with this layer without doing anything to the hucs that weren't run, saving us
+// computation time on the client
+function hucColorLayer(){
+    huc8ColorLayer = L.geoJson(huc8s, {
+    style: hucStyle,
+    filter: function(feature) {
+        huc_8 = feature.properties.HUC_CODE;
+        if (contains(hucsRun, huc_8)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    }).addTo(map);
+
+}
 
 
 
@@ -188,16 +263,17 @@ function readOutputJSON() {
     $.ajax({
         type: "GET",
         url: url,
-        async: false,
+        async: true,
         success: function (data) {
-            console.log("Read output JSON from file: " + url.toString());
-            console.log("Output JSON data contents...");
-            console.log(data.toString());
+            DEBUG && console.log("Read output JSON from file: " + url.toString());
+            DEBUG && console.log("Output JSON data contents...");
+            DEBUG && console.log(data.toString());
             samOutput = data;
+            outputData = data;
             return false;
         },
         error: function (jqXHR, status) {
-            console.log("Failed to retrieve output json data.");
+            DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get river data.");
             return false;
         }
@@ -215,16 +291,59 @@ function readSummaryHUC8JSON() {
     $.ajax({
         type: "GET",
         url: url,
-        async: false,
+        async: true,
         success: function (data) {
-            console.log("Read output JSON from file: " + url.toString());
-            console.log("Output JSON data contents...");
-            console.log(data.toString());
+            DEBUG && console.log("Read summary JSON from file: " + url.toString());
+            //DEBUG && console.log("Output JSON data contents...");
+            //DEBUG && console.log(data.toString());
             samOutput = data;
+            summaryHUC8Data = data;
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    hucsRun.push(key);  //track which hucs were actually run!
+                }
+            }
+            readSummaryHUC12JSON(); //async ajax call
+            hucColorLayer(); //create a layer for the shaded hucs
+            addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+            colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            addStreams(); //add the stream layer
+            addIntakes(); //add the drinking water intake marker layergroup
+            addHucLegend();
+            map.invalidateSize();
+            //addColoredStreams(region);
+            //setZoomHandler();
             return false;
         },
         error: function (jqXHR, status) {
-            console.log("Failed to retrieve output json data.");
+            DEBUG && console.log("Failed to retrieve output json data.");
+            $('#boxid').html("Error attempting to get watershed data.");
+            return false;
+        }
+    });
+    return samOutput
+}
+
+function readSummaryHUC12JSON() {
+    var key = getCookie('task_id');
+    // TODO: change to correct base url
+    var url = "/pram/rest/pram/sam/summary/huc12/" + key.toString();
+    var samOutput = null;
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        success: function (data) {
+            DEBUG && console.log("Read summary JSON from file: " + url.toString());
+            //DEBUG && console.log("Output JSON data contents...");
+            //DEBUG && console.log(data.toString());
+            samOutput = data;
+            summaryHUC12Data = data;
+            addHUC12s(); //ajax async call
+            return false;
+        },
+        error: function (jqXHR, status) {
+            DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get watershed data.");
             return false;
         }
@@ -233,7 +352,8 @@ function readSummaryHUC8JSON() {
 }
 
 
-// Determine if output is points or lines
+
+// Determine if output is points or lines - no longer used
 function getMode(outputData) {
     var outputMode = outputData.features[0].geometry.type;
     return outputMode
@@ -269,6 +389,7 @@ function getHUCFillOpacity(d) {
 }
 
 
+//deprecated
 function intakeStyle(feature, field) {
     return {
         radius: 10,
@@ -294,17 +415,17 @@ function streamStyle(feature, field) {
 //huc8 initial style
 function hucStyle(feature) {
     return {
-        fillColor: getColor(feature.properties),
+        fillColor: getColor(),
         weight: .3,
         opacity: 0.9,
         color: 'black',
-        fillOpacity: 0.3
+        fillOpacity: 0.0 // clear
     };
 }
 
 
 //style HUC8 polygon - default
-function getColor(d) {
+function getColor() {
     return '#93D4BC'
 }
 
@@ -312,7 +433,7 @@ function getColor(d) {
 var hucStyleSelected = {
     fillColor: 'white',
     weight: 0.0,
-    opacity: 0.9,
+    opacity: 0.0,
     color: 'black',
     fillOpacity: 0.0
 };
@@ -320,22 +441,38 @@ var hucStyleSelected = {
 
 //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
 function colorHUC8s(fieldVal, summary_stat) {
-    huc8Layer.setStyle(function(feature) {
+    huc8ColorLayer.setStyle(function(feature) {
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
         return {
             fillColor: exceedanceColor(stat),
             weight: .3,
             opacity: 0.9,
             color: 'black',
-            fillOpacity: getHUCFillOpacity(stat)
+            fillOpacity: getHUCFillOpacity(stat),
+            minZoom: 0,
+            maxZoom: 10
         }
     });
-    map.setView(start_point, start_zoom); //with canvas rendering doing a map pan/zoom seems needed to see the layers
-    //zoom = map.getZoom();
-    //center = map.getCenter();
-    //map.setZoomAround(center,zoom);
-
+    //map.setView(start_point, start_zoom); //with canvas rendering doing a map pan/zoom seems needed to see the layers
 }
+
+
+//style HUC12's based on summary statistics of a given toxicity threshold exceedance probability
+function colorHUC12s(fieldVal, summary_stat) {
+    huc12s.setStyle(function(feature) {
+        stat = feature.properties.summary[fieldVal + "_" + summary_stat];
+        return {
+            fillColor: exceedanceColor(stat),
+            weight: .3,
+            opacity: 0.9,
+            color: 'black',
+            fillOpacity: getHUCFillOpacity(stat),
+            minZoom: 0,
+            maxZoom: 10
+        }
+    });
+}
+
 
 // for the selected HUC (clicked), set border to be thicker
 function setSelectedHUC8(hucID) {
@@ -343,7 +480,7 @@ function setSelectedHUC8(hucID) {
     huc8Layer.setStyle(function(feature) {
         if(feature.properties.HUC_CODE == hucID){
             return {
-                weight: 1.5
+                weight: 2.0
             }
         }
     });
@@ -351,12 +488,8 @@ function setSelectedHUC8(hucID) {
 
 // returns the huc8 feature for a given huc8 ID
 function fetchHUC8Shape(hucID){
-    console.log(hucID);
-    //y = $.grep(huc8s, function(n,i){
-    //    return n.properties.HUC_CODE===hucID;
-    //});
-    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0]; //{x for x in huc8s.features if x.properties.HUC_CODE == comID};
-    //$(huc8s).filter(function (i,n){return n.features.properties['HUC_CODE']===comID});
+    DEBUG && console.log(hucID);
+    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0];
     return out;
 }
 
@@ -377,9 +510,18 @@ function clearMap() {
 //grab huc8 summary stats for a certain huc, from the object created in watershed_map_scripts.js
 function fetchHUC8Statistics(huc_code) {
     if(summaryHUC8Data[huc_code] != null) {
-        //console.log('found stats for huc: '+ huc_code);
-        //console.log(summaryHUC8Data[huc_code]);
         return summaryHUC8Data[huc_code]
+    }
+    else {
+        return 'not_run'
+    }
+}
+
+
+//grab huc12 summary stats for a certain huc, from the object created in watershed_map_scripts.js
+function fetchHUC12Statistics(huc_code) {
+    if(summaryHUC12Data[huc_code] != null) {
+        return summaryHUC12Data[huc_code]
     }
     else {
         return 'not_run'
@@ -394,12 +536,21 @@ function addHUC8Statistics() {
     }
 }
 
-// Content for the popup bubble, based on the selected huc's id number and name
+
+// append huc12 summary statistics as properties in the huc8 geojson
+function addHUC12Statistics() {
+    for (var i = 0; i < huc12_json.features.length; i++) {
+        huc12_json.features[i].properties.summary = fetchHUC12Statistics(huc12_json.features[i].properties.HUC_12)
+    }
+}
+
+
+// Content for the popup bubble, based on the selected huc's id number and name / TODO modify to work for huc8s and 12s
 function popupContent(hucNumber, hucName){
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
-    e1.innerHTML = '<h3> <strong> HUC8 Summary </strong></h3>';
-    e1.innerHTML += '<strong>ID #: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
+    e1.innerHTML = '<h3> <strong> Watershed Summary </strong></h3>';
+    e1.innerHTML += '<strong>HUC8#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
     e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(selectedHucArea).toFixed(2) + ' km'+'2'.sup();
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
@@ -426,6 +577,8 @@ function GetHuc(latitude, longitude) {
     $.ajax({
         url: hucURL,
         method: 'GET',
+        crossDomain: true,
+        cache: true, //for now won't work b/c the api response forbids caching
         success: function (result_huc) {
             if (selectedHuc !== null) {
                 map.removeLayer(selectedHuc);
@@ -451,9 +604,13 @@ function GetHuc(latitude, longitude) {
             selectedHucName = huc_data["features"][0]["attributes"]["HU_" + tempHuc + "_NAME"];
             selectedHucArea = huc_data["features"][0]["attributes"]["AREA_SQKM"];
             setSelectedHUC8(selectedHucNumber);
-            map.fitBounds(selectedHuc.getBounds());
-            //map.setContent('Selected');
+            //map.fitBounds(selectedHuc.getBounds());
             selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName)).openPopup();
+            if(map.getZoom() > 8){
+                map.setZoom(8,{animate:false});
+            }
+            map.panTo(selectedHuc.getBounds().getCenter(),{animate:false});
+            //map.setContent('Selected');
         },
         error: function () {
             $('#hucNumber').html("ERROR: Unable to download data for selected HUC");
@@ -491,7 +648,7 @@ function onMapClick(e){
 
 
 
-
+// note: this function is not currently used
 function displayOutput(field) {
     if (mode == "Point") {
         outLayer = L.geoJSON(outputData, {
@@ -516,7 +673,7 @@ function displayOutput(field) {
     } else {
         outLayer = L.geoJson(outputData, {
             style: function (feature) {
-                return streamStyle(feature, field)
+                return streamStyle2(feature, field)
             }
         }).addTo(map);
         map.on('click', onMapClick);
@@ -529,10 +686,11 @@ function displayOutput(field) {
 
 // refresh the map, popup content, and info box to reflect new settings
 function refreshOutput(newfield, summaryfield) {
-    map.removeLayer(outLayer);
-    //displayOutput(newfield.value);
     colorHUC8s(newfield.value, summaryfield.value);//$('#summaryselect').val());
+    colorHUC12s(newfield.value, summaryfield.value);//$('#summaryselect').val());
+    map.invalidateSize();
     if(selectedHuc != null){
+        setSelectedHUC8(selectedHucNumber);
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
     }
 }
@@ -582,4 +740,123 @@ function addStreams() {
         maxZoom: 18,
         transparent: true
     }).addTo(map);
+}
+
+//------------ HUC12 shapes ------------//
+
+
+//fetch the huc12s inside each huc8 that was actually run
+function addHUC12s() {
+    var huc8_string = hucsRun.join('%27%2C+%27');
+    var url = 'https://watersgeo.epa.gov/arcgis/rest/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/0/query?where=' +
+        'HUC_8+IN+%28%27' + huc8_string + '%27%29&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=' +
+        '&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=HUC_12%2C+HU_12_NAME%2C+AREA_SQKM&returnGeometry=true&returnTrueCurves=' +
+        'false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&' +
+        'groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=' +
+        '&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson';
+    $.ajax({
+        url: url,
+        method: 'GET',
+        crossDomain: true,
+        cache: true, //for now won't work b/c the api response forbids caching
+        success: function (result_huc12s) {
+            if (selectedHuc !== null) {
+                map.removeLayer(selectedHuc);
+            }
+            huc12_json = JSON.parse(result_huc12s);
+            delete huc12_json["crs"];
+            huc12s = L.geoJSON(huc12_json, {
+                style: hucStyle,
+                onEachFeature: function onEachFeature(feature, layer) {
+                    layer.on('click', function(e) {
+                        var zoomLvl = map.getZoom();
+                        if(zoomLvl >= 11) {
+                            onMapClick(e);
+                        }
+                    });
+                }
+            });
+            setZoomHandler();
+            addHUC12Statistics(); //add the huc8 stats to the huc12 layer
+            colorHUC12s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            map.invalidateSize();
+        },
+        error: function () {
+            console.log("ERROR: Unable to download data for HUC12s");
+        }
+    })
+}
+
+
+
+
+//------------ DRINKING WATER INTAKES ------------//
+
+var intakes;
+var intakeMarkers = new L.LayerGroup();
+
+//function to set the popup content for an intake click
+function intakeContent(feature){
+    var in_comid = feature.properties.COMID;
+    var in_sourceName = feature.properties.SourceName;
+    var in_systemName = feature.properties.SystemName;
+    var e1 = document.createElement('div');
+    e1.classList.add("intake_popup");
+    e1.innerHTML = '<h3> <strong> Drinking water intake </strong></h3>';
+    e1.innerHTML += '<strong>COMID #: </strong>' + in_comid + '<br><strong>' + 'Source: </strong>' + in_sourceName;
+    e1.innerHTML += '<br><strong>' + 'System: </strong>' + in_systemName;
+    return e1;
+
+}
+
+function addIntakes() {
+    intakes = L.geoJSON(intake_data, {
+                style: {
+                    weight: 0.0,
+                    fill_weight : 0.0
+                },
+                filter: function(feature) {
+                    huc_12 = feature.properties.HUC12;
+                    huc_8 = huc_12.substring(0,8);
+                    if(contains(hucsRun,huc_8)){
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                },
+                onEachFeature: function onEachFeature(feature, layer) {
+                    points = layer.getLatLngs();
+                    //var center = points[Math.floor(points.length/2)];
+                    var center = points[0];
+                    if(typeof(center) != undefined ) {
+                        var marker = L.marker(center);
+                        marker.bindPopup(intakeContent(feature));
+                        intakeMarkers.addLayer(marker);
+                    }
+                }
+            }).addTo(map);
+    intakeMarkers.addTo(map);
+}
+
+
+function addHucLegend(){
+    legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+            grades = [0, .1, .2, .3, .4, .5],
+            labels = [];
+
+        // loop through our density intervals and generate a label with a colored square for each interval
+        for (var i = 0; i < grades.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + exceedanceColor(grades[i] + .01) + '"></i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    legend.addTo(map);
 }

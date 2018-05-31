@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     initializeTabs();
 
-    // fix for Firefox UI
+    // fix for Firefox UIf
     $('#community-snapshot-tab-link').trigger("click");
     $('#about-tab-link').trigger("click");
 
@@ -367,8 +367,107 @@ function sumArray(total, num) {
     return total + num;
 }
 
-function generateReport() {
-    alert("This feature has not yet been implemented.");
+// function generateReport() {
+//
+//     var reportDoc = new PDFDocument();
+//     var stream = reportDoc.pipe(blobStream());
+//
+//     // reportDoc.fontSize(25).text('Testing pdf report txt input', 100, 80);
+//     // Report items get appended to reportDoc before reportDoc.end();
+//     //var epaLogo = getImageCanvasDataURL(document.getElementsByClassName('site-logo').item(0));
+//     // reportDoc.image(epaLogo, 0, 15);
+//     var epaLogo = createTestCanvas();
+//     var epaURL = epaLogo.toDataURL("image/jpeg");
+//
+//     reportDoc.image(epaURL, 0, 15);
+//
+//     reportDoc.end();
+//     var saveData = (function () {
+//         var a = document.createElement("a");
+//         document.body.appendChild(a);
+//         a.style = "display: none";
+//         return function (blob, fileName) {
+//             var url = window.URL.createObjectURL(blob);
+//             a.href = url;
+//             a.download = fileName;
+//             a.target = "_black";
+//             a.click();
+//             setTimeout(function () {
+//                 document.body.removeChild(a);
+//                 window.URL.revokeObjectURL(url);
+//             }, 300);
+//             return false;
+//         };
+//     }());
+//
+//     stream.on('finish', function () {
+//         var blob = stream.toBlob('application/pdf');
+//         saveData(blob, "DISC-report.pdf");
+//     });
+// }
+//
+// function createTestCanvas(){
+//     var canvas = document.createElement('canvas');
+//     canvas.width = 300;
+//     canvas.height = 150;
+//     document.body.appendChild(canvas);
+//     var ctx = canvas.getContext("2d");
+//     var imgUrl = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+//     var image = new Image();
+//     image.addEventListener("load", function(){
+//         ctx.drawImage(image, 0, 0);
+//     }, false);
+//     // ctx.drawImage(image, 0, 0);
+//     image.src = imgUrl;
+//     return canvas;
+// }
+
+function getImageCanvasDataURL(imageEle) {
+    var canvas = document.createElement('canvas');
+    canvas.height = 150;
+    canvas.width = 150;
+    var ctx = canvas.getContext("2d");
+    var image = new Image();
+
+    // setTimeout(ctx.drawImage(image, 0, 0), 600);
+    image.crossOrigin = "Anonymous";
+    image.src = 'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg';
+    // image.onload = function() {
+    //     ctx.drawImage(this, 0, 0);
+    // };
+    // var image = document.createElement("img");
+
+    // image.crossOrigin = 'Anonymous';
+    // image.src = imageEle.src;
+    //
+    // canvas.width = imageEle.width;
+    // canvas.height = imageEle.height;
+    // image.onload = function(){
+    //     ctx.drawImage(image, 0, 0);
+    // };
+
+    //image.src = imageEle.src;
+    return canvas;
+}
+
+function getDataUri(url, callback) {
+    var image = document.createElement("img");
+
+    image.crossOrigin = 'Anonymous';
+    image.src = url;
+    image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+        canvas.getContext('2d').drawImage(this, 0, 0);
+
+        // // Get raw image data
+        //callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+
+        // ... or get as Data URI
+        callback(canvas.toDataURL('image/png'));
+    };
 }
 
 function selectDomain() {
@@ -985,10 +1084,10 @@ function initializeComparisonAutocomplete() {
     }
 }
 
-function displayIndicatorInformation () {
-	var title = $(this).html().replace(':', '');
-	var description = $(this).parent().attr('data-title');
-	var domain = $(this).closest('.domain_indicator').attr('id');
-	$('#' + domain + '_title').html(title);
-	$('#' + domain + '_description').html(description);
+function displayIndicatorInformation() {
+    var title = $(this).html().replace(':', '');
+    var description = $(this).parent().attr('data-title');
+    var domain = $(this).closest('.domain_indicator').attr('id');
+    $('#' + domain + '_title').html(title);
+    $('#' + domain + '_description').html(description);
 }

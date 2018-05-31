@@ -5,20 +5,13 @@ var map = L.map('map',{
     preferCanvas: true
 });
 
-start_point = [39.609280, -92.100678];
-start_zoom = 8;
+var start_point = [39.609280, -92.100678];
+var start_zoom = 8;
 map.setView(start_point, start_zoom);
 
 // read model output
-var outputData = readOutputJSON();
-var summaryHUC8Data = readSummaryHUC8JSON();
-addHUC8Statistics();
-
-// get feature output mode
-var mode = getMode(outputData);
-
-// specify field (placeholder)
-var field = "chronic_em_inv";
+readOutputJSON(); //async ajax call
+readSummaryHUC8JSON(); //async ajax call - also triggers HUC12s
 
 // add out data
 var info_box_title = null;
@@ -26,7 +19,6 @@ var info_box_id = null;
 var outLayer = null;
 
 
-displayOutput(field);
 
 // load a tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -43,18 +35,13 @@ huc8Layer = L.geoJson(huc8s, {
     style: hucStyle//,
     //onEachFeature: onEachFeatureClick
 }).addTo(map);
-colorHUC8s($('#fieldselect').val(), $('#summaryselect').val());
 map.on('click', onMapClick);
 
 
 
-addStreams();
-//map.setZoomAround([39.609280, -92.100678],8); //with canvas rendering doing a map pan/zoom seems needed to see the layers
-
-
 // --------------- INFO WINDOW code -------------- //
-info_box_title = "Stream Segment Info"
-info_box_id = "ComID"
+info_box_title = "Stream Segment Info";
+info_box_id = "ComID";
 var info = L.control();
 
 info.onAdd = function (map) {
