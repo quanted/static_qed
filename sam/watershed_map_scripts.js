@@ -38,12 +38,10 @@ huc8Layer = L.geoJson(huc8s, {
 map.on('click', onMapClick);
 
 
-addStreams();
-
 
 // --------------- INFO WINDOW code -------------- //
-info_box_title = "Stream Segment Info"
-info_box_id = "ComID"
+info_box_title = "Stream Segment Info";
+info_box_id = "ComID";
 var info = L.control();
 
 info.onAdd = function (map) {

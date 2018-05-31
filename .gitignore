@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+ hwbi/disc/js/node_modules/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
