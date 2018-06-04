@@ -2,6 +2,7 @@
 //  create placeholder global variables
 var comid = null;
 var selectedHuc = null;
+var selectedHuc12;
 // sets variable for selected stream
 var selectedStream;
 var selectedIntake;
@@ -16,7 +17,7 @@ var hucsRun = [];
 var huc8ColorLayer;
 var legend;
 var region = '07';
-var huc12_json = 'test';
+var huc12_json;
 
 // specify field (placeholder)
 var field = "chronic_em_inv";
@@ -474,6 +475,15 @@ function setSelectedHUC8(hucID) {
 }
 
 
+// called when huc12 layer is clicked, sets the clicked feature to be outlined
+function setSelectedHUC12(layer){
+    huc12s.setStyle({weight: 0.3});
+    layer.setStyle({weight:2.0});
+    selectedHuc12 = layer;
+}
+
+
+
 // returns the huc8 feature for a given huc8 ID
 function fetchHUC8Shape(hucID){
     DEBUG && console.log(hucID);
@@ -677,6 +687,9 @@ function refreshOutput(newfield, summaryfield) {
     huc12s.eachLayer(function(layer){
                 layer._popup.setContent(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
                         layer.feature.properties.AREA_SQKM));});
+    if(selectedHuc12 != null){
+        setSelectedHUC12(selectedHuc12); //redraw the bold lines if a huc12 was selected b/c colorHUC12 reset the lines
+    }
 }
 
 
@@ -757,6 +770,7 @@ function addHUC12s() {
                         if(zoomLvl >= 11) {   //currently redundant as this layer is set to non-interactive at zoom>=11
                             onMapClick(e);
                         } else{
+                            setSelectedHUC12(layer);
                             if (map.hasLayer(selectedStream)) {
                                 map.removeLayer(selectedStream);
                             }
