@@ -45,6 +45,7 @@ function onStreamMapClick(e) {
         map.removeLayer(selectedHuc);
     }
     getStreamData(e.latlng.lat, e.latlng.lng);
+    map.closePopup();
 }
 
 
@@ -59,18 +60,22 @@ function setZoomHandler(){
             if(! map.hasLayer(huc12s)){
                 map.addLayer(huc12s);
             }
+            huc12s.setStyle({interactive:false});
         }
-        if (map.getZoom() < 11){
+        if (map.getZoom() < 11){ //huc12 geojson layer is currently overrulling this click level
             if(! map.hasLayer(huc12s)){
                 map.addLayer(huc12s);
             }
             if (map.hasLayer(huc8ColorLayer)) {
                 map.removeLayer(huc8ColorLayer);
             }
+            huc12s.setStyle({interactive:true});
+
         }
         if (map.getZoom() < 9){
             if(map.hasLayer(huc12s)){
                 map.removeLayer(huc12s);
+                huc12s.setStyle({interactive:true});
             }
             if (! map.hasLayer(huc8ColorLayer)){
                 map.addLayer(huc8ColorLayer);
@@ -157,27 +162,27 @@ function populateFilteredTable(data) {
         "<table id='samWatershedTable'>" +
         "<thead style='display:none;'><th></th><th></th><th></th><th></th><th></th><th></th></thead>" +
         "<tbody>" +
-        "<tr><td id='tbl_col'>Acute Em Fish</td><td>" + data["acute_em_fish"] + "</td>" +
-        "<td id='tbl_col'>Chronic Em Fish</td><td>" + data["chronic_em_fish"] + "</td>" +
-        "<td id='tbl_col'>Overall Em Fish</td><td>" + data["overall_em_fish"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Em Inv</td><td>" + data["acute_em_inv"] + "</td>" +
-        "<td id='tbl_col'>Chronic Em Inv</td><td>" + data["chronic_em_inv"] + "</td>" +
-        "<td id='tbl_col'>Overall Em Inv</td><td>" + data["overall_em_inv"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Fw Fish</td><td>" + data["acute_fw_fish"] + "</td>" +
-        "<td id='tbl_col'>Chronic Fw Fish</td><td>" + data["chronic_fw_fish"] + "</td>" +
-        "<td id='tbl_col'>Overall Fw Fish</td><td>" + data["overall_fw_fish"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Fw Inv</td><td>" + data["acute_fw_inv"] + "</td>" +
-        "<td id='tbl_col'>Chronic Fw Inv</td><td>" + data["chronic_fw_inv"] + "</td>" +
-        "<td id='tbl_col'>Overall Fw Inv</td><td>" + data["overall_fw_inv"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Human</td><td>" + data["acute_human"] + "</td>" +
-        "<td id='tbl_col'>Chronic Human</td><td>" + data["chronic_human"] + "</td>" +
-        "<td id='tbl_col'>Overall Human</td><td>" + data["overall_human"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Nonvasc Plant</td><td>" + data["acute_nonvasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Chronic Nonvasc Plant</td><td>" + data["chronic_nonvasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Overall Nonvasc Plant</td><td>" + data["overall_nonvasc_plant"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Vasc Plant</td><td>" + data["acute_vasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Chronic Vasc Plant</td><td>" + data["chronic_vasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Overall Vasc Plant</td><td>" + data["overall_vasc_plant"] + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Em Fish</td><td>" + Number(data["acute_em_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Em Fish</td><td>" + Number(data["chronic_em_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Em Fish</td><td>" + Number(data["overall_em_fish"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Em Inv</td><td>" + Number(data["acute_em_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Em Inv</td><td>" + Number(data["chronic_em_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Em Inv</td><td>" + Number(data["overall_em_inv"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Fw Fish</td><td>" + Number(data["acute_fw_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Fw Fish</td><td>" + Number(data["chronic_fw_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Fw Fish</td><td>" + Number(data["overall_fw_fish"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Fw Inv</td><td>" + Number(data["acute_fw_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Fw Inv</td><td>" + Number(data["chronic_fw_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Fw Inv</td><td>" + Number(data["overall_fw_inv"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Human</td><td>" + Number(data["acute_human"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Human</td><td>" + Number(data["chronic_human"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Human</td><td>" + Number(data["overall_human"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Nonvasc Plant</td><td>" + Number(data["acute_nonvasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Nonvasc Plant</td><td>" + Number(data["chronic_nonvasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Nonvasc Plant</td><td>" + Number(data["overall_nonvasc_plant"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Vasc Plant</td><td>" + Number(data["acute_vasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Vasc Plant</td><td>" + Number(data["chronic_vasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Vasc Plant</td><td>" + Number(data["overall_vasc_plant"]).toFixed(3) + "</td></tr>" +
         "</tbody>" +
         "</table>";
     $('#pestTable').html(dataHtml);
@@ -500,6 +505,19 @@ function fetchHUC8LayerData(hucID, summary_stat){
 }
 
 
+function fetchHUC12Shape(hucID){
+    DEBUG && console.log(hucID);
+    var out = huc12_json.features.filter(function(x) { return x.properties.HUC_12 == hucID})[0];
+    return out;
+}
+
+//returns a given summary stat for a hucID, from the huc8 shapefile
+function fetchHUC12LayerData(hucID, summary_stat){
+    feat = fetchHUC12Shape(hucID);
+    return feat.properties.summary[summary_stat]
+}
+
+
 function clearMap() {
     map.eachLayer(function (layer) {
         map.removeLayer(layer);
@@ -546,17 +564,21 @@ function addHUC12Statistics() {
 
 
 // Content for the popup bubble, based on the selected huc's id number and name / TODO modify to work for huc8s and 12s
-function popupContent(hucNumber, hucName){
+function popupContent(hucNumber, hucName, hucArea){
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
     e1.innerHTML = '<h3> <strong> Watershed Summary </strong></h3>';
-    e1.innerHTML += '<strong>HUC8#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
-    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(selectedHucArea).toFixed(2) + ' km'+'2'.sup();
+    e1.innerHTML += '<strong>HUC#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
+    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(hucArea).toFixed(2) + ' km'+'2'.sup();
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
     e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^'+summary_select[0]+''), summary_select[0].toUpperCase()) +
         ' probability of exceedance: </strong><br>';
-    prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+    if(hucNumber.length == 8){
+            prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+    } else{
+        prob = Number(fetchHUC12LayerData(hucNumber, summary_stat)).toFixed(2);
+    }
     if(isNaN(prob)){prob = "Not calculated";}
     e1.innerHTML += prob;
     return e1;
@@ -605,7 +627,7 @@ function GetHuc(latitude, longitude) {
             selectedHucArea = huc_data["features"][0]["attributes"]["AREA_SQKM"];
             setSelectedHUC8(selectedHucNumber);
             //map.fitBounds(selectedHuc.getBounds());
-            selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName)).openPopup();
+            selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName, selectedHucArea)).openPopup();
             if(map.getZoom() > 8){
                 map.setZoom(8,{animate:false});
             }
@@ -631,6 +653,16 @@ function onMapClick(e){
     if(zoomLvl >= 11) {
         map.closePopup();
         onStreamMapClick(e);
+        return;
+    } else if(zoomLvl >=9){
+        if (map.hasLayer(selectedStream)) {
+            map.removeLayer(selectedStream);
+        }
+        $('#pestTable').hide();
+        $('#saveTable').hide();
+        $('#latVal').html("");
+        $('#lngVal').html("");
+        $('#boxid').html("");
     } else{
         if (map.hasLayer(selectedStream)) {
             map.removeLayer(selectedStream);
@@ -640,7 +672,6 @@ function onMapClick(e){
         $('#latVal').html("");
         $('#lngVal').html("");
         $('#boxid').html("");
-
         hucOnClick(e);
     }
 }
@@ -693,6 +724,9 @@ function refreshOutput(newfield, summaryfield) {
         setSelectedHUC8(selectedHucNumber);
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
     }
+    huc12s.eachLayer(function(layer){
+                layer._popup.setContent(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
+                        layer.feature.properties.AREA_SQKM));});
 }
 
 
@@ -770,8 +804,17 @@ function addHUC12s() {
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function(e) {
                         var zoomLvl = map.getZoom();
-                        if(zoomLvl >= 11) {
+                        if(zoomLvl >= 11) {   //currently redundant as this layer is set to non-interactive at zoom>=11
                             onMapClick(e);
+                        } else{
+                            if (map.hasLayer(selectedStream)) {
+                                map.removeLayer(selectedStream);
+                            }
+                            $('#pestTable').hide();
+                            $('#saveTable').hide();
+                            $('#latVal').html("");
+                            $('#lngVal').html("");
+                            $('#boxid').html("");
                         }
                     });
                 }
@@ -779,6 +822,10 @@ function addHUC12s() {
             setZoomHandler();
             addHUC12Statistics(); //add the huc8 stats to the huc12 layer
             colorHUC12s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            huc12s.eachLayer(function(layer){
+                layer.bindPopup(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
+                        layer.feature.properties.AREA_SQKM));
+            });
             map.invalidateSize();
         },
         error: function () {
