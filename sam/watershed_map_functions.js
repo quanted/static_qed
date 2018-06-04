@@ -155,7 +155,7 @@ function addStreamSeg(streamData, comid) {
 }
 
 
-
+// populate exceedance table for the selected stream (below map)
 function populateFilteredTable(data) {
     //convert object into an array of objects
     var dataHtml = "<h4 style=\"text-align: center; width: 100%\">Probability of Pesticide Concentration Exceedance</h4>" +
@@ -238,9 +238,9 @@ function getCookie(name) {
 
 
 
-// creates a huc layer on top of the other huc layer that contains only the hucs that were run.
-// we can interact with this layer without doing anything to the hucs that weren't run, saving us
-// computation time on the client
+// creates a huc8 layer on top of the other huc8 layer that contains only the huc8s that were run.
+// we can interact with this layer without doing anything to the huc8s that weren't run, saving us
+// computation time on the client-side
 function hucColorLayer(){
     huc8ColorLayer = L.geoJson(huc8s, {
     style: hucStyle,
@@ -259,7 +259,7 @@ function hucColorLayer(){
 
 
 
-// function to read SAM output
+// function to read SAM stream level output
 function readOutputJSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -287,7 +287,7 @@ function readOutputJSON() {
 }
 
 
-//function to read the SAM postprocessing summary stats through the django-to-flask proxy
+//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -329,6 +329,7 @@ function readSummaryHUC8JSON() {
     return samOutput
 }
 
+//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC12s)
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -358,14 +359,7 @@ function readSummaryHUC12JSON() {
 
 
 
-// Determine if output is points or lines - no longer used
-function getMode(outputData) {
-    var outputMode = outputData.features[0].geometry.type;
-    return outputMode
-}
-
-
-// sets the HUC8 color based on a summary stat
+// sets the HUC color based on a summary stat
 function exceedanceColor(d) {
     if (d == null) {
         return '#93D4BC'
@@ -384,26 +378,13 @@ function exceedanceColor(d) {
     }
 }
 
-// sets HUC8 fill opacity to be higher if there is data on the HUC8
+// sets HUC fill opacity to be higher if there is data on the HUC
 function getHUCFillOpacity(d) {
     if (d == null) {
         return 0.2;
     } else {
         return 0.4;
     }
-}
-
-
-//deprecated
-function intakeStyle(feature, field) {
-    return {
-        radius: 10,
-        fillColor: exceedanceColor(feature.properties[field]),
-        color: exceedanceColor(feature.properties[field]),
-        weight: 5,
-        opacity: 1,
-        fillOpacity: 0.5
-    };
 }
 
 
@@ -429,12 +410,13 @@ function hucStyle(feature) {
 }
 
 
-//style HUC8 polygon - default
+//style HUC polygon - default
 function getColor() {
     return '#93D4BC'
 }
 
-//style the downloaded selected huc shapefile - setting to invisible because it is not simplified like the base layer
+
+//style the downloaded selected huc8 shapefile - setting to invisible because it is not simplified like the base layer
 var hucStyleSelected = {
     fillColor: 'white',
     weight: 0.0,
@@ -479,7 +461,7 @@ function colorHUC12s(fieldVal, summary_stat) {
 }
 
 
-// for the selected HUC (clicked), set border to be thicker
+// for the selected HUC8 (clicked), set border to be thicker
 function setSelectedHUC8(hucID) {
     huc8Layer.setStyle({weight: 0.3});
     huc8Layer.setStyle(function(feature) {
@@ -491,6 +473,7 @@ function setSelectedHUC8(hucID) {
     });
 }
 
+
 // returns the huc8 feature for a given huc8 ID
 function fetchHUC8Shape(hucID){
     DEBUG && console.log(hucID);
@@ -498,20 +481,21 @@ function fetchHUC8Shape(hucID){
     return out;
 }
 
-//returns a given summary stat for a hucID, from the huc8 shapefile
+//returns a given summary stat for a hucID, from the huc8 geojson
 function fetchHUC8LayerData(hucID, summary_stat){
     feat = fetchHUC8Shape(hucID);
     return feat.properties.summary[summary_stat]
 }
 
 
+// returns the huc12 feature for a given huc12 ID
 function fetchHUC12Shape(hucID){
     DEBUG && console.log(hucID);
     var out = huc12_json.features.filter(function(x) { return x.properties.HUC_12 == hucID})[0];
     return out;
 }
 
-//returns a given summary stat for a hucID, from the huc8 shapefile
+//returns a given summary stat for a huc12, from the huc12 geojson
 function fetchHUC12LayerData(hucID, summary_stat){
     feat = fetchHUC12Shape(hucID);
     return feat.properties.summary[summary_stat]
@@ -536,7 +520,7 @@ function fetchHUC8Statistics(huc_code) {
 }
 
 
-//grab huc12 summary stats for a certain huc, from the object created in watershed_map_scripts.js
+//grab huc12 summary stats for a certain huc
 function fetchHUC12Statistics(huc_code) {
     if(summaryHUC12Data[huc_code] != null) {
         return summaryHUC12Data[huc_code]
@@ -555,7 +539,7 @@ function addHUC8Statistics() {
 }
 
 
-// append huc12 summary statistics as properties in the huc8 geojson
+// append huc12 summary statistics (from SAM) as properties in the huc12 geojson
 function addHUC12Statistics() {
     for (var i = 0; i < huc12_json.features.length; i++) {
         huc12_json.features[i].properties.summary = fetchHUC12Statistics(huc12_json.features[i].properties.HUC_12)
@@ -563,7 +547,7 @@ function addHUC12Statistics() {
 }
 
 
-// Content for the popup bubble, based on the selected huc's id number and name / TODO modify to work for huc8s and 12s
+// Content for the popup bubble, based on the selected huc's id number and name and area
 function popupContent(hucNumber, hucName, hucArea){
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
@@ -641,13 +625,16 @@ function GetHuc(latitude, longitude) {
 }
 
 
-// HUC on click action
+// HUC8 on click action
 function hucOnClick(e){
     GetHuc(e.latlng.lat, e.latlng.lng);
 }
 
 
-// Overall click handler - routes to huc handler if zoom is out enough that streams are hidden
+// Overall click handler - if zoomed in to stream level, routes to stream map click handler,
+//                         if zoomed to huc8 level, routes to huc8 click handler
+//                         if zoomed to huc12 level, the code here should not run run as it will be intercepted by the
+//                          huc12 layer's own onclick handler
 function onMapClick(e){
     var zoomLvl = map.getZoom();
     if(zoomLvl >= 11) {
@@ -676,43 +663,6 @@ function onMapClick(e){
     }
 }
 
-
-
-
-// note: this function is not currently used
-function displayOutput(field) {
-    if (mode == "Point") {
-        outLayer = L.geoJSON(outputData, {
-            onEachFeature: function (feature, layer) {
-                layer.on({
-                    click: function (e) {
-                        var lat = feature.geometry.coordinates[0];
-                        var lng = feature.geometry.coordinates[1];
-                        $('#boxid').html(feature.properties.SystemName);
-                        $('#latVal').html(Number(lat).toFixed(6));
-                        $('#lngVal').html(Number(lng).toFixed(6));
-                        populateFilteredTable(feature.properties)
-                    }
-                })
-            },
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, intakeStyle(feature, field));
-            }
-        }).addTo(map);
-        info_box_title = "Drinking Water Intake Info"
-        info_box_id = "System"
-    } else {
-        outLayer = L.geoJson(outputData, {
-            style: function (feature) {
-                return streamStyle2(feature, field)
-            }
-        }).addTo(map);
-        map.on('click', onMapClick);
-        info_box_title = "Stream Segment Info"
-        info_box_id = "ComID"
-    }
-
-}
 
 
 // refresh the map, popup content, and info box to reflect new settings
@@ -856,6 +806,7 @@ function intakeContent(feature){
 
 }
 
+//add the intakes to the map (only those in huc8s that were run)
 function addIntakes() {
     intakes = L.geoJSON(intake_data, {
                 style: {
@@ -887,6 +838,7 @@ function addIntakes() {
 }
 
 
+//add a legend for the huc coloring
 function addHucLegend(){
     legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
