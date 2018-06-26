@@ -83,6 +83,8 @@ function setZoomHandler(){
                 //map.addControl(legend);
             }
         }
+        map.invalidateSize(); //test first
+
 
     });
 }
