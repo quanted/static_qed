@@ -25,6 +25,7 @@ function initializeInputForm() {
 	$('#id_leafarea_0').closest('tr').hide();
 	$('#id_airtemps_0').closest('tr').hide();
 	$('#id_stationID').closest('tr').hide();
+	$('#id_userdata').closest('tr').hide();
 }
 
 function toggleSource(){
@@ -44,7 +45,11 @@ function toggleSource(){
             $('#id_longitude').closest('tr').show();
             $('#id_stationID').closest('tr').hide();
 			break;
+		case 'custom':
+			$('#id_userdata').closest('tr').show();
+			break;
 		default:
+			break;
 	}
 }
 

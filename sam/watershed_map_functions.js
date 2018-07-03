@@ -2,6 +2,7 @@
 //  create placeholder global variables
 var comid = null;
 var selectedHuc = null;
+var selectedHuc12;
 // sets variable for selected stream
 var selectedStream;
 var selectedIntake;
@@ -16,7 +17,7 @@ var hucsRun = [];
 var huc8ColorLayer;
 var legend;
 var region = '07';
-var huc12_json = 'test';
+var huc12_json;
 
 // specify field (placeholder)
 var field = "chronic_em_inv";
@@ -45,6 +46,7 @@ function onStreamMapClick(e) {
         map.removeLayer(selectedHuc);
     }
     getStreamData(e.latlng.lat, e.latlng.lng);
+    map.closePopup();
 }
 
 
@@ -59,24 +61,30 @@ function setZoomHandler(){
             if(! map.hasLayer(huc12s)){
                 map.addLayer(huc12s);
             }
+            huc12s.setStyle({interactive:false});
         }
-        if (map.getZoom() < 11){
+        if (map.getZoom() < 11){ //huc12 geojson layer is currently overrulling this click level
             if(! map.hasLayer(huc12s)){
                 map.addLayer(huc12s);
             }
             if (map.hasLayer(huc8ColorLayer)) {
                 map.removeLayer(huc8ColorLayer);
             }
+            huc12s.setStyle({interactive:true});
+
         }
         if (map.getZoom() < 9){
             if(map.hasLayer(huc12s)){
                 map.removeLayer(huc12s);
+                huc12s.setStyle({interactive:true});
             }
             if (! map.hasLayer(huc8ColorLayer)){
                 map.addLayer(huc8ColorLayer);
                 //map.addControl(legend);
             }
         }
+        map.invalidateSize(); //test first
+
 
     });
 }
@@ -150,34 +158,34 @@ function addStreamSeg(streamData, comid) {
 }
 
 
-
+// populate exceedance table for the selected stream (below map)
 function populateFilteredTable(data) {
     //convert object into an array of objects
     var dataHtml = "<h4 style=\"text-align: center; width: 100%\">Probability of Pesticide Concentration Exceedance</h4>" +
         "<table id='samWatershedTable'>" +
         "<thead style='display:none;'><th></th><th></th><th></th><th></th><th></th><th></th></thead>" +
         "<tbody>" +
-        "<tr><td id='tbl_col'>Acute Em Fish</td><td>" + data["acute_em_fish"] + "</td>" +
-        "<td id='tbl_col'>Chronic Em Fish</td><td>" + data["chronic_em_fish"] + "</td>" +
-        "<td id='tbl_col'>Overall Em Fish</td><td>" + data["overall_em_fish"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Em Inv</td><td>" + data["acute_em_inv"] + "</td>" +
-        "<td id='tbl_col'>Chronic Em Inv</td><td>" + data["chronic_em_inv"] + "</td>" +
-        "<td id='tbl_col'>Overall Em Inv</td><td>" + data["overall_em_inv"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Fw Fish</td><td>" + data["acute_fw_fish"] + "</td>" +
-        "<td id='tbl_col'>Chronic Fw Fish</td><td>" + data["chronic_fw_fish"] + "</td>" +
-        "<td id='tbl_col'>Overall Fw Fish</td><td>" + data["overall_fw_fish"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Fw Inv</td><td>" + data["acute_fw_inv"] + "</td>" +
-        "<td id='tbl_col'>Chronic Fw Inv</td><td>" + data["chronic_fw_inv"] + "</td>" +
-        "<td id='tbl_col'>Overall Fw Inv</td><td>" + data["overall_fw_inv"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Human</td><td>" + data["acute_human"] + "</td>" +
-        "<td id='tbl_col'>Chronic Human</td><td>" + data["chronic_human"] + "</td>" +
-        "<td id='tbl_col'>Overall Human</td><td>" + data["overall_human"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Nonvasc Plant</td><td>" + data["acute_nonvasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Chronic Nonvasc Plant</td><td>" + data["chronic_nonvasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Overall Nonvasc Plant</td><td>" + data["overall_nonvasc_plant"] + "</td></tr>" +
-        "<tr><td id='tbl_col'>Acute Vasc Plant</td><td>" + data["acute_vasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Chronic Vasc Plant</td><td>" + data["chronic_vasc_plant"] + "</td>" +
-        "<td id='tbl_col'>Overall Vasc Plant</td><td>" + data["overall_vasc_plant"] + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Em Fish</td><td>" + Number(data["acute_em_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Em Fish</td><td>" + Number(data["chronic_em_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Em Fish</td><td>" + Number(data["overall_em_fish"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Em Inv</td><td>" + Number(data["acute_em_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Em Inv</td><td>" + Number(data["chronic_em_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Em Inv</td><td>" + Number(data["overall_em_inv"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Fw Fish</td><td>" + Number(data["acute_fw_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Fw Fish</td><td>" + Number(data["chronic_fw_fish"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Fw Fish</td><td>" + Number(data["overall_fw_fish"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Fw Inv</td><td>" + Number(data["acute_fw_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Fw Inv</td><td>" + Number(data["chronic_fw_inv"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Fw Inv</td><td>" + Number(data["overall_fw_inv"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Human</td><td>" + Number(data["acute_human"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Human</td><td>" + Number(data["chronic_human"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Human</td><td>" + Number(data["overall_human"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Nonvasc Plant</td><td>" + Number(data["acute_nonvasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Nonvasc Plant</td><td>" + Number(data["chronic_nonvasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Nonvasc Plant</td><td>" + Number(data["overall_nonvasc_plant"]).toFixed(3) + "</td></tr>" +
+        "<tr><td id='tbl_col'>Acute Vasc Plant</td><td>" + Number(data["acute_vasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Chronic Vasc Plant</td><td>" + Number(data["chronic_vasc_plant"]).toFixed(3) + "</td>" +
+        "<td id='tbl_col'>Overall Vasc Plant</td><td>" + Number(data["overall_vasc_plant"]).toFixed(3) + "</td></tr>" +
         "</tbody>" +
         "</table>";
     $('#pestTable').html(dataHtml);
@@ -233,9 +241,9 @@ function getCookie(name) {
 
 
 
-// creates a huc layer on top of the other huc layer that contains only the hucs that were run.
-// we can interact with this layer without doing anything to the hucs that weren't run, saving us
-// computation time on the client
+// creates a huc8 layer on top of the other huc8 layer that contains only the huc8s that were run.
+// we can interact with this layer without doing anything to the huc8s that weren't run, saving us
+// computation time on the client-side
 function hucColorLayer(){
     huc8ColorLayer = L.geoJson(huc8s, {
     style: hucStyle,
@@ -254,7 +262,7 @@ function hucColorLayer(){
 
 
 
-// function to read SAM output
+// function to read SAM stream level output
 function readOutputJSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -282,7 +290,7 @@ function readOutputJSON() {
 }
 
 
-//function to read the SAM postprocessing summary stats through the django-to-flask proxy
+//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -324,6 +332,7 @@ function readSummaryHUC8JSON() {
     return samOutput
 }
 
+//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC12s)
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
@@ -353,14 +362,7 @@ function readSummaryHUC12JSON() {
 
 
 
-// Determine if output is points or lines - no longer used
-function getMode(outputData) {
-    var outputMode = outputData.features[0].geometry.type;
-    return outputMode
-}
-
-
-// sets the HUC8 color based on a summary stat
+// sets the HUC color based on a summary stat
 function exceedanceColor(d) {
     if (d == null) {
         return '#93D4BC'
@@ -379,26 +381,13 @@ function exceedanceColor(d) {
     }
 }
 
-// sets HUC8 fill opacity to be higher if there is data on the HUC8
+// sets HUC fill opacity to be higher if there is data on the HUC
 function getHUCFillOpacity(d) {
     if (d == null) {
         return 0.2;
     } else {
         return 0.4;
     }
-}
-
-
-//deprecated
-function intakeStyle(feature, field) {
-    return {
-        radius: 10,
-        fillColor: exceedanceColor(feature.properties[field]),
-        color: exceedanceColor(feature.properties[field]),
-        weight: 5,
-        opacity: 1,
-        fillOpacity: 0.5
-    };
 }
 
 
@@ -424,12 +413,13 @@ function hucStyle(feature) {
 }
 
 
-//style HUC8 polygon - default
+//style HUC polygon - default
 function getColor() {
     return '#93D4BC'
 }
 
-//style the downloaded selected huc shapefile - setting to invisible because it is not simplified like the base layer
+
+//style the downloaded selected huc8 shapefile - setting to invisible because it is not simplified like the base layer
 var hucStyleSelected = {
     fillColor: 'white',
     weight: 0.0,
@@ -474,7 +464,7 @@ function colorHUC12s(fieldVal, summary_stat) {
 }
 
 
-// for the selected HUC (clicked), set border to be thicker
+// for the selected HUC8 (clicked), set border to be thicker
 function setSelectedHUC8(hucID) {
     huc8Layer.setStyle({weight: 0.3});
     huc8Layer.setStyle(function(feature) {
@@ -486,6 +476,16 @@ function setSelectedHUC8(hucID) {
     });
 }
 
+
+// called when huc12 layer is clicked, sets the clicked feature to be outlined
+function setSelectedHUC12(layer){
+    huc12s.setStyle({weight: 0.3});
+    layer.setStyle({weight:2.0});
+    selectedHuc12 = layer;
+}
+
+
+
 // returns the huc8 feature for a given huc8 ID
 function fetchHUC8Shape(hucID){
     DEBUG && console.log(hucID);
@@ -493,9 +493,23 @@ function fetchHUC8Shape(hucID){
     return out;
 }
 
-//returns a given summary stat for a hucID, from the huc8 shapefile
+//returns a given summary stat for a hucID, from the huc8 geojson
 function fetchHUC8LayerData(hucID, summary_stat){
     feat = fetchHUC8Shape(hucID);
+    return feat.properties.summary[summary_stat]
+}
+
+
+// returns the huc12 feature for a given huc12 ID
+function fetchHUC12Shape(hucID){
+    DEBUG && console.log(hucID);
+    var out = huc12_json.features.filter(function(x) { return x.properties.HUC_12 == hucID})[0];
+    return out;
+}
+
+//returns a given summary stat for a huc12, from the huc12 geojson
+function fetchHUC12LayerData(hucID, summary_stat){
+    feat = fetchHUC12Shape(hucID);
     return feat.properties.summary[summary_stat]
 }
 
@@ -518,7 +532,7 @@ function fetchHUC8Statistics(huc_code) {
 }
 
 
-//grab huc12 summary stats for a certain huc, from the object created in watershed_map_scripts.js
+//grab huc12 summary stats for a certain huc
 function fetchHUC12Statistics(huc_code) {
     if(summaryHUC12Data[huc_code] != null) {
         return summaryHUC12Data[huc_code]
@@ -537,7 +551,7 @@ function addHUC8Statistics() {
 }
 
 
-// append huc12 summary statistics as properties in the huc8 geojson
+// append huc12 summary statistics (from SAM) as properties in the huc12 geojson
 function addHUC12Statistics() {
     for (var i = 0; i < huc12_json.features.length; i++) {
         huc12_json.features[i].properties.summary = fetchHUC12Statistics(huc12_json.features[i].properties.HUC_12)
@@ -545,18 +559,22 @@ function addHUC12Statistics() {
 }
 
 
-// Content for the popup bubble, based on the selected huc's id number and name / TODO modify to work for huc8s and 12s
-function popupContent(hucNumber, hucName){
+// Content for the popup bubble, based on the selected huc's id number and name and area
+function popupContent(hucNumber, hucName, hucArea){
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
     e1.innerHTML = '<h3> <strong> Watershed Summary </strong></h3>';
-    e1.innerHTML += '<strong>HUC8#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
-    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(selectedHucArea).toFixed(2) + ' km'+'2'.sup();
+    e1.innerHTML += '<strong>HUC#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
+    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(hucArea).toFixed(2) + ' km'+'2'.sup();
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
     e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^'+summary_select[0]+''), summary_select[0].toUpperCase()) +
         ' probability of exceedance: </strong><br>';
-    prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+    if(hucNumber.length == 8){
+            prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+    } else{
+        prob = Number(fetchHUC12LayerData(hucNumber, summary_stat)).toFixed(2);
+    }
     if(isNaN(prob)){prob = "Not calculated";}
     e1.innerHTML += prob;
     return e1;
@@ -605,7 +623,7 @@ function GetHuc(latitude, longitude) {
             selectedHucArea = huc_data["features"][0]["attributes"]["AREA_SQKM"];
             setSelectedHUC8(selectedHucNumber);
             //map.fitBounds(selectedHuc.getBounds());
-            selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName)).openPopup();
+            selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName, selectedHucArea)).openPopup();
             if(map.getZoom() > 8){
                 map.setZoom(8,{animate:false});
             }
@@ -619,18 +637,31 @@ function GetHuc(latitude, longitude) {
 }
 
 
-// HUC on click action
+// HUC8 on click action
 function hucOnClick(e){
     GetHuc(e.latlng.lat, e.latlng.lng);
 }
 
 
-// Overall click handler - routes to huc handler if zoom is out enough that streams are hidden
+// Overall click handler - if zoomed in to stream level, routes to stream map click handler,
+//                         if zoomed to huc8 level, routes to huc8 click handler
+//                         if zoomed to huc12 level, the code here should not run run as it will be intercepted by the
+//                          huc12 layer's own onclick handler
 function onMapClick(e){
     var zoomLvl = map.getZoom();
     if(zoomLvl >= 11) {
         map.closePopup();
         onStreamMapClick(e);
+        return;
+    } else if(zoomLvl >=9){
+        if (map.hasLayer(selectedStream)) {
+            map.removeLayer(selectedStream);
+        }
+        $('#pestTable').hide();
+        $('#saveTable').hide();
+        $('#latVal').html("");
+        $('#lngVal').html("");
+        $('#boxid').html("");
     } else{
         if (map.hasLayer(selectedStream)) {
             map.removeLayer(selectedStream);
@@ -640,48 +671,10 @@ function onMapClick(e){
         $('#latVal').html("");
         $('#lngVal').html("");
         $('#boxid').html("");
-
         hucOnClick(e);
     }
 }
 
-
-
-
-// note: this function is not currently used
-function displayOutput(field) {
-    if (mode == "Point") {
-        outLayer = L.geoJSON(outputData, {
-            onEachFeature: function (feature, layer) {
-                layer.on({
-                    click: function (e) {
-                        var lat = feature.geometry.coordinates[0];
-                        var lng = feature.geometry.coordinates[1];
-                        $('#boxid').html(feature.properties.SystemName);
-                        $('#latVal').html(Number(lat).toFixed(6));
-                        $('#lngVal').html(Number(lng).toFixed(6));
-                        populateFilteredTable(feature.properties)
-                    }
-                })
-            },
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, intakeStyle(feature, field));
-            }
-        }).addTo(map);
-        info_box_title = "Drinking Water Intake Info"
-        info_box_id = "System"
-    } else {
-        outLayer = L.geoJson(outputData, {
-            style: function (feature) {
-                return streamStyle2(feature, field)
-            }
-        }).addTo(map);
-        map.on('click', onMapClick);
-        info_box_title = "Stream Segment Info"
-        info_box_id = "ComID"
-    }
-
-}
 
 
 // refresh the map, popup content, and info box to reflect new settings
@@ -692,6 +685,12 @@ function refreshOutput(newfield, summaryfield) {
     if(selectedHuc != null){
         setSelectedHUC8(selectedHucNumber);
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
+    }
+    huc12s.eachLayer(function(layer){
+                layer._popup.setContent(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
+                        layer.feature.properties.AREA_SQKM));});
+    if(selectedHuc12 != null){
+        setSelectedHUC12(selectedHuc12); //redraw the bold lines if a huc12 was selected b/c colorHUC12 reset the lines
     }
 }
 
@@ -770,8 +769,18 @@ function addHUC12s() {
                 onEachFeature: function onEachFeature(feature, layer) {
                     layer.on('click', function(e) {
                         var zoomLvl = map.getZoom();
-                        if(zoomLvl >= 11) {
+                        if(zoomLvl >= 11) {   //currently redundant as this layer is set to non-interactive at zoom>=11
                             onMapClick(e);
+                        } else{
+                            setSelectedHUC12(layer);
+                            if (map.hasLayer(selectedStream)) {
+                                map.removeLayer(selectedStream);
+                            }
+                            $('#pestTable').hide();
+                            $('#saveTable').hide();
+                            $('#latVal').html("");
+                            $('#lngVal').html("");
+                            $('#boxid').html("");
                         }
                     });
                 }
@@ -779,6 +788,10 @@ function addHUC12s() {
             setZoomHandler();
             addHUC12Statistics(); //add the huc8 stats to the huc12 layer
             colorHUC12s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            huc12s.eachLayer(function(layer){
+                layer.bindPopup(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
+                        layer.feature.properties.AREA_SQKM));
+            });
             map.invalidateSize();
         },
         error: function () {
@@ -809,6 +822,7 @@ function intakeContent(feature){
 
 }
 
+//add the intakes to the map (only those in huc8s that were run)
 function addIntakes() {
     intakes = L.geoJSON(intake_data, {
                 style: {
@@ -840,6 +854,7 @@ function addIntakes() {
 }
 
 
+//add a legend for the huc coloring
 function addHucLegend(){
     legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
