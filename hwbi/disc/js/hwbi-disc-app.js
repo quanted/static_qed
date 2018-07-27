@@ -147,7 +147,7 @@ function initializeAutocomplete() {
     var input = document.getElementById('search_field');
     searchBox = new google.maps.places.Autocomplete(input, {
         types: ['(cities)'],
-        componentRestriction: {country: 'us'}
+        componentRestrictions: {country: 'us'}
     });
     // searchBox.setComponentRestrictions({'country': ['us']});
     searchBox.addListener('place_changed', setLocationValue);
