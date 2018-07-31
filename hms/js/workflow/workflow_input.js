@@ -73,7 +73,7 @@ function spatialInputValidation() {
     var selectedType = $("#spatial_type").val();
     if (selectedType === "hucid") {
         var hucid = $("#huc_id").val();
-        if (Number.isInteger(Number(hucid)) && hucid.length === 12) {
+        if (Number.isInteger(Number(hucid)) && (hucid.length === 12 || hucid.length === 8)){
             $('#add_spatial_input').removeClass("blocked");
         }
         else {
@@ -188,6 +188,7 @@ function addToInputTable(row, key, value) {
     var inputValue = document.createElement("div");
     inputValue.setAttribute("class", "input_column_1");
     inputValue.innerHTML = value;
+    $(row).empty();
     row.appendChild(inputKey);
     row.appendChild(inputValue);
     if (validateInput()) {
@@ -220,6 +221,7 @@ function addSpatialInput() {
     console.log(inputJSON);
     setErrorMessage("", true);
     $('#add_spatial_input').text("Update");
+    $('#add_spatial_input').attr("title", "Update selected spatial input.");
     return false;
 }
 
@@ -242,6 +244,7 @@ function addTemporalInput() {
     addToInputTable(row3, "timestep", timestep);
     console.log(inputJSON);
     $('#add_temporal_input').text("Update");
+    $('#add_temporal_input').attr("title", "Update selected date/time inputs.");
     return false;
 }
 
@@ -259,6 +262,7 @@ function addRunoffInput() {
     }
     console.log(inputJSON);
     $("#add_runoff_input").text("Update");
+    $('#add_runoff_input').attr("title", "Update selected runoff input.");
     return false;
 }
 
@@ -270,6 +274,7 @@ function addPrecipInput() {
     addToInputTable(row, "precipSource", precipSelected);
     console.log(inputJSON);
     $('#add_precip_input').text("Update");
+    $('#add_precip_input').attr("title", "Update selected precipitation input.");
     return false;
 }
 
@@ -281,6 +286,7 @@ function addStreamInput() {
     addToInputTable(row, "streamAlgorithm", streamSelected);
     console.log(inputJSON);
     $("#add_stream_input").text("Update");
+    $('#add_stream_input').attr("title", "Update selected stream algorithm input.");
     return false;
 }
 
