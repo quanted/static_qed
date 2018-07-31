@@ -164,9 +164,25 @@ function initializeAutocomplete() {
 function setLocationValue() {
     console.log("setLocationValue called");
     var place = searchBox.getPlace();
-    var county = place.address_components[1].long_name.replace(" County", "");
-    var state = place.address_components[2].long_name;
-    var stateAbbr = place.address_components[2].short_name;
+    var county = '';
+    var state = '';
+    var stateAbbr = '';
+    for (var i = 0; i < place.address_components.length; i++) {
+        switch (place.address_components[i].types[0]) {
+            case "administrative_area_level_1":
+                state = place.address_components[i].long_name;
+                stateAbbr = place.address_components[i].short_name;
+                break;
+            case "administrative_area_level_2":
+                county = place.address_components[i].long_name.replace(" County", "");
+                break;
+        }
+    }
+
+    if (state === '' || county === '' || stateAbbr === '') {
+        console.log("invalid entry")
+        return;
+    }
     var json_value = {};
     json_value["county"] = county;
     json_value["state"] = state;
