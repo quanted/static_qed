@@ -4,7 +4,7 @@
         format: 'image/png',
         minZoom: 0,
         maxZoom: 18,
-        transparent: true
+        transparent: true,
     }),
     HUC4: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/WmsServer?', {
         layers: 1,
@@ -12,7 +12,6 @@
         minZoom: 0,
         maxZoom: 18,
         transparent: true,
-        bgcolor: "ffffff",
     }),
     HUC6: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/WmsServer?', {
         layers: 2,
@@ -20,7 +19,6 @@
         minZoom: 0,
         maxZoom: 18,
         transparent: true,
-        bgcolor: "ffffff",
     }),
     HUC8: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/WmsServer?', {
         layers: 3,
@@ -28,7 +26,6 @@
         minZoom: 0,
         maxZoom: 18,
         transparent: true,
-        bgcolor: "ffffff",
     }),
     HUC10: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/WmsServer?', {
         layers: 4,
@@ -36,7 +33,6 @@
         minZoom: 0,
         maxZoom: 18,
         transparent: true,
-        bgcolor: "ffffff",
     }),
     HUC12: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/WmsServer?', {
         layers: 5,
@@ -44,7 +40,6 @@
         minZoom: 0,
         maxZoom: 18,
         transparent: true,
-        bgcolor: "ffffff",
     }),
     streamNetwork: L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
         layers: 4,

@@ -108,6 +108,8 @@
 
 #huc_map_block h5 {
     margin-top: 10px;
+    float: left;
+    padding-left: 5%;
     font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 }
 
@@ -129,6 +131,23 @@
     font-size: small;
     margin-left: 5%;
     margin-top: -7px;
+}
+
+#current_huc_level {
+    float: left;
+    font-size: small;
+    margin-top: 11px;
+    padding-left: 5px;
+}
+
+.selection_info {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#huc_map_button_add {
+    margin: 0 !important;
 }
 
 /*HMS Hydrology Workflow About */
@@ -219,6 +238,7 @@
     cursor: pointer;
     float: right;
     font-weight: bold;
+    margin-top: -10px
 }
 
 .input_fields select {
@@ -314,6 +334,19 @@
 
 #huc_map_button {
     float: left;
+}
+
+#comid_choice_div {
+    float: left;
+    padding: 0 15px;
+}
+
+#comid_choice_div input {
+    position: relative;
+    left: 0;
+    padding: 0;
+    float: inherit;
+    margin-right: 5px;
 }
 
 #submit_workflow {
