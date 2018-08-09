@@ -64,21 +64,15 @@ $(document).ready(function() {
         submitButtonLogic(); //tie submitLogic() to any checkbox changes
         pchempropTableLogic();
 
-        var workflow_url = window.location.href;
-
-        // abandon if not in gentrans workflow to begin with:
-        // if (workflow_url.indexOf("gentrans") < 0) { return; }
-
-        var is_checked = this.checked;
-        var is_TEST = false;
-
-        if (this.id.indexOf("test") > -1) { is_TEST = true; }
-
-        if (is_checked && is_TEST) {
-            // warn user that TEST takes awhile:
-            // TODO: maybe do a fancier popup near the TEST checkbox, not an obtrusive alert message!!!
-            alert("Note: The TEST calculator can take several minutes to run");
-        }
+        // Brings up warning that TEST is slow (no longer needed for TESTWS, 08/08/18)
+        // var is_checked = this.checked;
+        // var is_TEST = false;
+        // if (this.id.indexOf("test") > -1) { is_TEST = true; }
+        // if (is_checked && is_TEST) {
+        //     // warn user that TEST takes awhile:
+        //     // TODO: maybe do a fancier popup near the TEST checkbox, not an obtrusive alert message!!!
+        //     alert("Note: The TEST calculator can take several minutes to run");
+        // }
 
     });
 
