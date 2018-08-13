@@ -314,11 +314,15 @@ function openHucMap() {
         for (var huc in huc_basemaps) {
             if (huc_basemaps.hasOwnProperty(huc)) {
                 huc_basemaps[huc].setOpacity(0.4);
+                huc_basemaps[huc].setZIndex(10);
                 hucMap.addLayer(huc_basemaps[huc]);
             }
         }
         hucMap.on("click", function (e) {
-            clickGetStreamComid(e);
+            // Check if click originated from mapSelectionInfo window
+            if (e.originalEvent.path[0].id === "huc_map_div" || e.originalEvent.path[0].localName === "path"){
+                clickGetStreamComid(e);
+            }
         });
         hucMap.on("zoomend", function(){
             var currentLevel = getHucFromZoom();
@@ -331,7 +335,12 @@ function openHucMap() {
             return this._div;
         };
         mapSelectionInfo.update = function(){
-            this._div.innerHTML = '<h4>HUC Selection Info</h4>' +
+            this._div.innerHTML = '<h4>HUC Selection Options</h4>' +
+                '<div id="selection_huc_options">' +
+                '<label class="selection_huc_button">HUC 8<input type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                '<label class="selection_huc_button">HUC 12<input type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                '</div>' +
+                '<h4>HUC Selection Info</h4>' +
                 '<div id="selection_info_div">' +
                 '<div id="selection_id_div">ID: <span id="selection_id"></span></div>' +
                 '<div id="selection_name_div">Name: <span id="selection_name"></span></div>' +
@@ -347,8 +356,6 @@ function openHucMap() {
     }
     return false;
 }
-
-
 
 function toggleHucMap() {
     $('#huc_map_block').fadeOut("faster");
@@ -382,8 +389,9 @@ function clickGetStreamComid(e) {
 
     // Specify which huc to get based on the zoom level and which huc is currently visible.
     // Put radio button check for comid or huc on the map.
-    var zoomedHuc = getHucFromZoom();
-    var requestUrl = getHucData(zoomedHuc, lat, lng);
+    // var zoomedHuc = getHucFromZoom();
+    var zoomedHuc = $('#selection_huc_options input:checked').val();
+    getHucData(zoomedHuc, lat, lng);
 
     // COMID Request
     // var url = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
