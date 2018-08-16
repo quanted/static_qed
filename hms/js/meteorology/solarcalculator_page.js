@@ -28,7 +28,11 @@ function setOutputUI(){
     setMetadata();
     setOutputPage();
     setDataTable();
-    drawInitialPlot();
+    // drawInitialPlot();
+    var xAxis = dataTable.getNumberOfColumns() - 4;
+    var yAxis = [dataTable.getNumberOfColumns() - 1];
+    drawPlot(xAxis, yAxis);
+    setTimeout(setPlotSelection, 300);
     document.getElementById('updatePlot').addEventListener("click", updatePlot);
 }
 
@@ -169,12 +173,7 @@ function drawInitialPlot() {
     });
     var chartOptions = {
         title: 'Solar Calculator Graph',
-        // curveType: 'function',
-        vAxes: {
-            1: {title: dataTable.getColumnLabel(columnIndex[0])},
-            0: {title: dataTable.getColumnLabel(columnIndex[1])}
-        },
-        legend: {position: 'bottom'}
+        legend: {position: 'right'}
     };
     var lineChart = new google.visualization.LineChart(document.getElementById('lineChartDiv'));
     lineChart.draw(plotData, chartOptions);
@@ -201,16 +200,25 @@ function setPlotSelection() {
     }
 }
 
-function updatePlot() {
+function updatePlot(){
     var xAxis = parseInt(document.getElementById('x-Axis').value);
     var yAxis = $('#y-Axis').val();
+    drawPlot(xAxis, yAxis);
+    return false;
+}
+
+function drawPlot(xAxis, yAxis) {
+    // var xAxis = parseInt(document.getElementById('x-Axis').value);
+    // var yAxis = $('#y-Axis').val();
     var columnIndex = [xAxis];
     yAxis.map(function (y) {
         columnIndex.push(parseInt(y));
     });
     var plotData = new google.visualization.DataTable();
     columnIndex.map(function (cI) {
-        plotData.addColumn(dataTable.getColumnType(cI), dataTable.getColumnLabel(cI));
+        var type = dataTable.getColumnType(cI);
+        var label = dataTable.getColumnLabel(cI);
+        plotData.addColumn(type, label);
     });
     var rowIndex = [];
     for (var i = 0; i < dataTable.getNumberOfRows(); i++) {
@@ -225,7 +233,7 @@ function updatePlot() {
     });
     var chartOptions = {
         title: 'Solar Calculator Graph',
-        legend: {position: 'bottom'}
+        legend: {position: 'right'}
     };
     var lineChart = new google.visualization.LineChart(document.getElementById('lineChartDiv'));
     lineChart.draw(plotData, chartOptions);

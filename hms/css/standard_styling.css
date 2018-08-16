@@ -200,9 +200,9 @@
     float: left;
 }
 
-#output_data div {
-    width: 100% !important;
-}
+/*#output_data div {*/
+    /*width: 100% !important;*/
+/*}*/
 
 .loading_icon {
     border: 7px solid #c5c5c5;
