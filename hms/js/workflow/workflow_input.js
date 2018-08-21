@@ -42,7 +42,7 @@ function pageLoadStart() {
 function setErrorMessage(errorMsg, remove) {
     var errorMsgBlock = document.getElementById("notifications");
     if (remove) {
-        errorMsgBlock.innerText = null;
+        errorMsgBlock.innerText = "";
     } else {
         errorMsgBlock.innerHTML = errorMsg;
     }
@@ -320,7 +320,12 @@ function openHucMap() {
         }
         hucMap.on("click", function (e) {
             // Check if click originated from mapSelectionInfo window
-            if (e.originalEvent.path[0].id === "huc_map_div" || e.originalEvent.path[0].localName === "path"){
+            if (window.navigator.userAgent.indexOf("Edge") === -1) {
+                if (e.originalEvent.path[0].id === "huc_map_div" || e.originalEvent.path[0].localName === "path") {
+                    clickGetStreamComid(e);
+                }
+            }
+            else {
                 clickGetStreamComid(e);
             }
         });

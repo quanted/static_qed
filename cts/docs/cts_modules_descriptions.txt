@@ -3,12 +3,12 @@
 <p><b>Chemical Speciation (CS):</b> CTS&apos;s Chemical Speciation (CS) workflow uses <a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a> to generate:</p>
 <ul class=bullet_indent>
 <li>The speciation of a chemical as a function of pH;</li>
-<li>The ionization constans;</li>
+<li>The ionization constants;</li>
 <li>The dominant tautomer distribution; and </li>
 <li>Structures for all possible isomers.</li>
 </ul>
 
-<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PPC is based on a consensus approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
+<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PPC is based on an approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
 
 The calculators PPC is currently accessing include:
 <br>
