@@ -3,7 +3,7 @@
 <p><b>Chemical Speciation (CS):</b> CTS&apos;s Chemical Speciation (CS) workflow uses <a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a> to generate:</p>
 <ul class=bullet_indent>
 <li>The speciation of a chemical as a function of pH;</li>
-<li>The ionization constans;</li>
+<li>The ionization constants;</li>
 <li>The dominant tautomer distribution; and </li>
 <li>Structures for all possible isomers.</li>
 </ul>
