@@ -8,7 +8,7 @@
 <li>Structures for all possible isomers.</li>
 </ul>
 
-<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PPC is based on a consensus approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
+<p><b>Physicochemical Properties Calculator (PPC): </b>CTS&apos;s Physicochemical Properties Calculator (PPC) calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PPC is based on an approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
 
 The calculators PPC is currently accessing include:
 <br>
