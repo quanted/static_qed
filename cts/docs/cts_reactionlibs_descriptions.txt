@@ -1,3 +1,7 @@
+<p>The reaction libraries are composed of generalized reaction schemes that compose a reaction library for a given transformation process (e.g., abiotic hydrolysis, abiotic reduction, and mammalian metabolism) that are based on specific examples published in the peer-reviewed literature. Reaction libraries that allows us to &quot;encode&quot; the known process science published in the peer-reviewed literature. The reactions libraries are considered to be comprehensive based on the review of the current literature; however, updates will be made as additional studies are published. The encoding of process science is accomplished using Chemical Terms Language and Smart Reaction Smile string through cheminformatics applications. The execution of these reaction libraries provides dominant transformation pathways and products for the chemical of interest as a function of environmental conditions.</p>
+
+<br><br>
+
 <h3>Abiotic Hydrolysis Reaction Library</h3>
 <p>Version 1.7 of the Abiotic Hydrolysis Reaction Library contains 25 reaction schemes.  Left click a reaction scheme to view the generalized reaction scheme, supporting reaction rules for reactivity, selectivity and exclusion, as well as example transformation pathways based on the execution of the reaction scheme.  References to process science on which the reaction scheme was developed are also provided.</p>
 
