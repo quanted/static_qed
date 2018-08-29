@@ -2,6 +2,7 @@
 var componentData;
 var resultMetaTable;
 var resultDataTable;
+var dyGraph;
 
 google.charts.load('current', {'packages': ['table', 'corechart']});
 
@@ -21,7 +22,13 @@ $(function () {
     $("#id_endDate").datepicker(datepicker_options);
 
     $('#submit_data_request').on('click', getData);
+    setTimeout(pageLoad, 600);
 });
+
+function pageLoad(){
+    $('#load_page').fadeToggle(600);
+    return false;
+}
 
 function getData() {
     toggleLoader();
@@ -43,6 +50,7 @@ function getData() {
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
             toggleLoader();
+            dyGraph.resize();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
@@ -98,9 +106,9 @@ function setDataGraph() {
         }
     });
     var colNum = componentData.data[Object.keys(componentData.data)[0]].length;
-    if ((j-1) < colNum){
+    if ((j - 1) < colNum) {
         var i;
-        for(i = colNum; i < j-1; i++){
+        for (i = colNum; i < j - 1; i++) {
             resultDataTable.addColumn({type: 'number', label: 'Data Column ' + i.toString()});
         }
     }
@@ -114,9 +122,9 @@ function setDataGraph() {
         $.each(row, function (key, value) {
             r.push(parseFloat(value));
         });
-        if (r.length < j - 1){
+        if (r.length < j - 1) {
             var k;
-            for (k = r.length; k < j - 1; k++){
+            for (k = r.length; k < j - 1; k++) {
                 r.push(0.0);
             }
         }
@@ -126,6 +134,45 @@ function setDataGraph() {
     var chart = new google.visualization.LineChart(document.getElementById("output_data"));
     chart.draw(resultDataTable, chartOption);
     return false;
+}
+
+function setDataGraph2() {
+    var dataTitle = componentData.dataset;
+    var sourceTitle = componentData.dataSource;
+
+    var labels = ["Date"];
+    var j = 2;
+    $.each(componentData.metadata, function (k, v) {
+        var testKey = "column_" + j.toString();
+        if (k === testKey) {
+            labels.push(v);
+            j++;
+        }
+    });
+
+    var dataCSV = [];
+    var graphOptions = {
+        labels: labels,
+        title: dataTitle + ": " + sourceTitle + " Data",
+        legend: 'always',
+        showRangeSelector: true,
+        width: 600
+    };
+    $.each(componentData['data'], function (index, row) {
+        if (row.length + 1 === labels.length) {
+            var rowD = [];
+            var dt = index.split(' ');
+            var d = dt[0].split('-');
+            var date = new Date(d[0], d[1] - 1, d[2], dt[1], 0, 0, 0);
+            rowD.push(date);
+            $.each(row, function (key, value) {
+                rowD.push(parseFloat(value));
+            });
+            dataCSV.push(rowD);
+        }
+    });
+    var graphEle = document.getElementById('output_data');
+    dyGraph = new Dygraph(graphEle, dataCSV, graphOptions);
 }
 
 function toggleLoader() {
