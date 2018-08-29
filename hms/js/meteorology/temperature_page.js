@@ -2,7 +2,7 @@ var baseUrl = "/hms/rest/api/hydrology/temperature/";
 
 function setOutputUI(){
     setMetadata();
-    setDataGraph();
+    setDataGraph2();
     return false;
 }
 

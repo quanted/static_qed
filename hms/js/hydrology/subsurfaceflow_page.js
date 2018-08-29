@@ -1,9 +1,6 @@
-var baseUrl = "/hms/rest/api/hydrology/precipitation/";
+var baseUrl = "/hms/rest/api/hydrology/subsurfaceflow/";
 
 $(function () {
-    $('#id_stationID').parent().parent().hide();
-
-    $('#id_source').on('change', updateSourceSelection);
 });
 
 function setOutputUI(){
@@ -37,16 +34,4 @@ function getParameters() {
         "outputFormat": "json"
     };
     return requestJson;
-}
-
-function updateSourceSelection() {
-    var selectedSource = $('#id_source').val();
-    var ncdcSelect = $('#id_stationID').parent().parent();
-    if (selectedSource === "ncdc") {
-        ncdcSelect.show();
-    }
-    else {
-        ncdcSelect.hide();
-    }
-    return false;
 }
