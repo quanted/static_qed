@@ -140,15 +140,22 @@ function setDataGraph2() {
     var dataTitle = componentData.dataset;
     var sourceTitle = componentData.dataSource;
 
-    var labels = ["Date"];
-    var j = 2;
-    $.each(componentData.metadata, function (k, v) {
-        var testKey = "column_" + j.toString();
-        if (k === testKey) {
-            labels.push(v);
-            j++;
+    var labels = [];
+    var maxColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    // var j = 2;
+    $.each(maxColumns, function(v){
+        var testKey = "column_" + v.toString();
+        if (testKey in componentData.metadata) {
+            labels.push(componentData.metadata[testKey]);
         }
     });
+    // $.each(componentData.metadata, function (k, v) {
+    //     var testKey = "column_" + j.toString();
+    //     if (k === testKey) {
+    //         labels.push(v);
+    //         j++;
+    //     }
+    // });
 
     var dataCSV = [];
     var graphOptions = {

@@ -170,7 +170,7 @@
 
 /*HMS Hydrology Workflow About */
 #workflow_info_p{
-    box-shadow: 3px 1px 8px 0px;
+    /*box-shadow: 3px 1px 8px 0px;*/
     margin: 0;
     padding: 10px 25px;
     border-radius: 3px;
