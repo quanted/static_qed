@@ -353,17 +353,27 @@ img.metabolite {
   z-index: -9999999999999999999999999px;
 }
 
+
 /* qtip2 stuff */
 .tooltiptext {
+  /* This class is for molecule popups */
   display: none;
 }
+.pchem-popup-tooltiptext {
+  /* This class if for pchem table popups */
+  display: none;
+  max-width: 250px;
+  /*max-height: 150px;*/
+  /*font-size: 12px;*/
+  font-size: 1.2em;
+}
+/* end qtip2 stuff */
+
 
 body.wait *, body.wait
 {
     cursor: progress !important;
 }
-
-
 
 #pchemprop_table table {
   width: 100%;
