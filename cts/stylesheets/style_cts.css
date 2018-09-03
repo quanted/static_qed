@@ -582,7 +582,7 @@ for nodes on gentrans output */
 }
 
 /* error messages for popup metabolite navigation div */
-.gentransError, .selectNodeForData {
+.gentransError, .selectNodeForData, .pchemSelectError {
   color:red; 
   text-align:right; 
   margin-right:0px;
