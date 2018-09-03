@@ -74,7 +74,7 @@ $(document).ready(function() {
     });
 
     //submit button logic:
-    $('.submit.input_button').prop('disabled', true); //initialize submit as disabled
+    // $('.submit.input_button').prop('disabled', true); //initialize submit as disabled
 
 
     // Triggered if any checkbox is clicked on pchem table:
@@ -121,7 +121,8 @@ function submitButtonLogic() {
     // disable submit if no calculator is checked (and not gentrans/batch)
     // if ($(calc_checkbox).is(':not(:checked)') && window.location.href.indexOf('gentrans') < 0) {
     if ($(calc_checkbox).is(':not(:checked)' && window.location.href.indexOf('gentrans/batch') < 0)) {
-        $('.submit.input_button').prop('disabled', true).removeClass('brightBorders');
+        // $('.submit.input_button').prop('disabled', true).removeClass('brightBorders');
+        $('.submit.input_button').removeClass('brightBorders');
     }
 
     // if (window.location.href.indexOf('pchemprop') > -1) {
@@ -133,7 +134,8 @@ function submitButtonLogic() {
                 var availableProps = $('td.ChemCalcs_available.' + calcName);
                 //enable submit if checked calculator has checked properties
                 if ($(availableProps).parent().find('input[type=checkbox]').is(':checked')) {
-                    $('.submit.input_button').prop('disabled', false).addClass('brightBorders');
+                    // $('.submit.input_button').prop('disabled', false).addClass('brightBorders');
+                    $('.submit.input_button').addClass('brightBorders');
                 }
             }
         });

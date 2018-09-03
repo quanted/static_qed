@@ -37,7 +37,8 @@ $(document).ready(function() {
     $(unaviable_options).prop('disabled', true); // these options are currently not available
 
     // disable checkboxes and submit button
-    $('#cts_reaction_libs input[type="checkbox"], input.submit').prop('disabled', true);
+    // $('#cts_reaction_libs input[type="checkbox"], input.submit').prop('disabled', true);
+    $('#cts_reaction_libs input[type="checkbox"]').prop('disabled', true);
 
     brightenBorder($('#cts_reaction_paths')); // brighten first table for user input
 
@@ -200,10 +201,12 @@ $(document).ready(function() {
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
-            $('input.submit').prop('disabled', false).addClass('brightBorders');
+            // $('input.submit').prop('disabled', false).addClass('brightBorders');
+            $('input.submit').addClass('brightBorders');
         }
         else {
-            $('input.submit').prop('disabled', true).removeClass('brightBorders');
+            // $('input.submit').prop('disabled', true).removeClass('brightBorders');
+            $('input.submit').removeClass('brightBorders');
         }
     });
 
