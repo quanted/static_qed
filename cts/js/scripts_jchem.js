@@ -1,4 +1,5 @@
 var marvinSketcherInstance;
+// var scrollDownButtonHtml = '<div><p>Scroll down to view results</p><img id="scroll-arrow" src="/static_qed/cts/images/scroll-down.jpg></div>';
 
 $(document).ready(function handleDocumentReady (e) {
 
@@ -71,7 +72,19 @@ function importMol(chemical) {
   getChemDetails(chemical_obj, function (molecule_info) {
     sessionStorage.setItem('molecule', JSON.stringify(molecule_info.data)); // set current chemical in session cache
     populateChemEditDOM(molecule_info.data);
-    // marvinSketcherInstance.importStructure("mrv", molecule_info.data.structureData.structure);
+
+    // Scrolls to the top of the MarvinSketch div, plus the width of the 
+    // Heading table row (where it says "Draw Chemical Structure", etc.)
+
+    var chemHeader = $('#chemEditDraw').children('table')
+                .children('tbody').children('tr')[0];
+
+    var headerHeight = $(chemHeader).height();
+
+    $('html,body').animate({
+      scrollTop: $('#chemEditDraw').offset().top + headerHeight
+    }, 'slow');
+
   });
 
   clearChemicalEditorContent();  // clears marvinsketch and results table
@@ -98,6 +111,19 @@ function importMolFromCanvas() {
       sessionStorage.setItem('molecule', JSON.stringify(molecule_info.data)); // set current chemical in session cache
       populateChemEditDOM(molecule_info.data);
       // marvinSketcherInstance.importStructure("mrv", molecule_info.data.structureData.structure);
+
+      // Scrolls to the top of the MarvinSketch div, plus the width of the 
+      // Heading table row (where it says "Draw Chemical Structure", etc.)
+
+      var chemHeader = $('#chemEditDraw').children('table')
+            .children('tbody').children('tr')[0];
+
+      var headerHeight = $(chemHeader).height();
+
+      $('html,body').animate({
+        scrollTop: $('#chemEditDraw').offset().top + headerHeight
+      }, 'slow');
+
     });
   });
 }
