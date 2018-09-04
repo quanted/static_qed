@@ -3,6 +3,7 @@ var baseUrl = "/hms/rest/api/hydrology/soilmoisture/";
 $(function () {
     // form events
     $('#id_source').change(updateForm);
+    $('#id_source').trigger("change");
 });
 
 function setOutputUI() {
@@ -62,4 +63,5 @@ function updateForm() {
             }
         }
     });
+    document.getElementById("id_layers").options[0].selected = "selected";
 }
