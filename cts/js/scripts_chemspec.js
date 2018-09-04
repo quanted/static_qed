@@ -100,10 +100,12 @@ function enableTable(chkbox) {
 
         //Submit only enabled if a checkbox is selected:
         if ($('input[type="checkbox"]').is(":checked")) {
-            $('input[type="submit"]').prop('disabled', false).addClass('brightBorders');
+            // $('input[type="submit"]').prop('disabled', false).addClass('brightBorders');
+            $('input[type="submit"]').addClass('brightBorders');
         }
         else {
-            $('input[type="submit"]').prop('disabled', true).removeClass('brightBorders');
+            // $('input[type="submit"]').prop('disabled', true).removeClass('brightBorders');
+            $('input[type="submit"]').removeClass('brightBorders');
         }
 
     });

@@ -110,6 +110,19 @@ div#reactionpathways {
     color:#1a1a1a;
 }
 
+#zoom-controls {
+    /*position:absolute;*/
+    padding-right: 8px;
+    position: relative;
+    float: right;
+    top:8px;
+    font-size:1.4em;
+    font-weight: bold;
+    /*width: 300px;*/
+    /*color:#23A4FF;*/
+    color:#1a1a1a;
+}
+
 
 #infovis {
     position:relative;
@@ -154,19 +167,3 @@ div#reactionpathways {
     padding: 2px;
     padding-left: 36px;
 }
-
-/*.node_spinners {*/
-    /*float: left;*/
-    /*position: relative;*/
-    /*position: absolute;*/
-    /*left: 40px;*/
-    /*top: 0px;*/
-    /*z-index: -1;*/
-/*}*/
-
-/*.blank_node {*/
-    /*position: absolute;*/
-    /*left: 0px;*/
-    /*top: 0px;*/
-    /*z-index: -1;*/
-/*}*/
