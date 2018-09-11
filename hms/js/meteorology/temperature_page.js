@@ -1,4 +1,6 @@
-var baseUrl = "/hms/rest/api/hydrology/temperature/";
+// var baseUrl = "/hms/rest/api/hydrology/temperature/";
+var baseUrl = "/hms/rest/api/v3/hydrology/temperature/";
+
 
 function setOutputUI(){
     setMetadata();

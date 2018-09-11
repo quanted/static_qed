@@ -1,8 +1,8 @@
-var baseUrl = "/hms/rest/api/hydrology/precipitation/";
+// var baseUrl = "/hms/rest/api/hydrology/precipitation/";
+var baseUrl = "/hms/rest/api/v3/hydrology/precipitation/";
 
 $(function () {
     $('#id_stationID').parent().parent().hide();
-
     $('#id_source').on('change', updateSourceSelection);
 });
 

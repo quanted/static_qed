@@ -1,4 +1,6 @@
 // General js for hms model/submodel pages //
+var taskID;
+var counter = 25;
 var componentData;
 var resultMetaTable;
 var resultDataTable;
@@ -21,11 +23,11 @@ $(function () {
     $("#id_startDate").datepicker(datepicker_options);
     $("#id_endDate").datepicker(datepicker_options);
 
-    $('#submit_data_request').on('click', getData);
-    setTimeout(pageLoad, 600);
+    $('#submit_data_request').on('click', getData2);
+    setTimeout(pageLoad, 400);
 });
 
-function pageLoad(){
+function pageLoad() {
     $('#load_page').fadeToggle(600);
     return false;
 }
@@ -61,6 +63,79 @@ function getData() {
             console.log("Data request complete");
         }
     });
+    return false;
+}
+
+function getData2() {
+    toggleLoader();
+    var params = getParameters();
+    $.ajax({
+        type: "POST",
+        url: baseUrl,
+        accepts: "application/json",
+        data: JSON.stringify(params),
+        processData: false,
+        timeout: 0,
+        contentType: "application/json",
+        success: function (data, textStatus, jqXHR) {
+            taskID = data.job_id;
+            console.log("Data request success. Task ID: " + taskID);
+            getDataPolling();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Data request error...");
+            console.log(errorThrown);
+            toggleLoader();
+        },
+        complete: function (jqXHR, textStatus) {
+            console.log("Data request complete");
+        }
+    });
+    return false;
+}
+
+function getDataPolling() {
+    counter = counter - 1;
+    var requestUrl = "hms/rest/api/v2/hms/data";
+    if (counter > 0) {
+        $.ajax({
+            type: "GET",
+            url: requestUrl + "?job_id=" + taskID,
+            accepts: "application/json",
+            timeout: 0,
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status === "SUCCESS") {
+                    componentData = data.data;
+                    console.log("Task successfully completed and data was retrieved.");
+                    setOutputUI();
+                    $('#component_tabs').tabs("enable", 2);
+                    $('#component_tabs').tabs("option", "active", 2);
+                    toggleLoader();
+                    dyGraph.resize();
+                    counter = 25;
+                }
+                else if (data.status === "FAILED") {
+                    console.log("Task failed to complete.");
+                }
+                else {
+                    setTimeout(getDataPolling, 3000);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Data request error...");
+                console.log(errorThrown);
+                toggleLoader();
+            },
+            complete: function (jqXHR, textStatus) {
+                console.log("Data request complete");
+            }
+        });
+    }
+    else {
+        console.log("Failed to get data, reached polling cap.")
+    }
     return false;
 }
 
@@ -141,8 +216,8 @@ function setDataGraph2() {
     var sourceTitle = componentData.dataSource.toUpperCase();
 
     var labels = [];
-    var maxColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    $.each(maxColumns, function(v){
+    var maxColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    $.each(maxColumns, function (v) {
         var testKey = "column_" + v.toString();
         if (testKey in componentData.metadata) {
             labels.push(componentData.metadata[testKey]);
@@ -161,7 +236,19 @@ function setDataGraph2() {
             var rowD = [];
             var dt = index.split(' ');
             var d = dt[0].split('-');
-            var date = new Date(d[0], d[1] - 1, d[2], dt[1], 0, 0, 0);
+            var date;
+            if (dt.length === 2) {
+                var hr = dt[1].split(':');
+                if (hr.length === 2) {
+                    date = new Date(d[0], d[1] - 1, d[2], hr[0], hr[1], 0, 0);
+                }
+                else {
+                    date = new Date(d[0], d[1] - 1, d[2], dt[1], 0, 0, 0);
+                }
+            }
+            else {
+                date = new Date(d[0], d[1] - 1, d[2], 0, 0, 0);
+            }
             rowD.push(date);
             $.each(row, function (key, value) {
                 rowD.push(parseFloat(value));

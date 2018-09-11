@@ -1,4 +1,5 @@
-var baseUrl = "/hms/rest/api/hydrology/evapotranspiration/";
+// var baseUrl = "/hms/rest/api/hydrology/evapotranspiration/";
+var baseUrl = "/hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
     // form initialization
@@ -57,7 +58,7 @@ function getParameters() {
         console.log("custom input currently in development");
         // uses id_userData?
     }
-    else if ($('#id_algorithm') === "shuttleworthwallace"){
+    else if ($('#id_algorithm').val() === "shuttleworthwallace"){
         requestJson["leafareaindices"] = {
                     1: $("#id_leafarea_0").val(),
                     2: $("#id_leafarea_1").val(),
@@ -73,7 +74,7 @@ function getParameters() {
                     12: $("#id_leafarea_11").val()
             };
     }
-    else if($("#id_algorithm") === "mcjannett"){
+    else if($("#id_algorithm").val() === "mcjannett"){
         requestJson["airtemperature"] = {
             1: $("#id_airtemps_0").val(),
             2: $("#id_airtemps_1").val(),
