@@ -13,8 +13,8 @@ var pchemPopupMap = {
   'koc': 'koc',
   'log_bcf': 'bcf',
   'log_baf': 'baf', 
-  'kow_wph': 'kow',
-  'water_sol_ph': 'ws'
+  'kow_wph': 'd_ow',
+  'water_sol_ph': 'wsph'
 };
 
 $(document).ready(function() {
