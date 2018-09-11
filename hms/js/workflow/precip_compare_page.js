@@ -1,4 +1,5 @@
-var baseUrl = "/hms/rest/api/workflow/compare/";
+// var baseUrl = "/hms/rest/api/workflow/compare/";
+var baseUrl = "/hms/rest/api/v3/workflow/compare/";
 
 $(function () {
 });

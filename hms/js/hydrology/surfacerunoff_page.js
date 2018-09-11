@@ -1,4 +1,5 @@
-var baseUrl = "/hms/rest/api/hydrology/surfacerunoff/";
+// var baseUrl = "/hms/rest/api/hydrology/surfacerunoff/";
+var baseUrl = "/hms/rest/api/v3/hydrology/surfacerunoff/";
 
 $(function () {
 });

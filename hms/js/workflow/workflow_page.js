@@ -1,7 +1,9 @@
+var baseUrl = "/hms/rest/api/v3/workflow/watershed/";
 var inputJSON = {};
 var requiredInputs = ["spatialType", "spatialInput", "startDate", "endDate", "timestep", "runoffSource", "precipSource", "streamAlgorithm"];
-
 var hucMap = null;
+var counter = 25;
+var testData = true;
 
 $(function () {
     pageLoadStart();
@@ -292,8 +294,117 @@ function addStreamInput() {
 
 function submitWorkflowJob() {
     // submit ajax call to hms job
-    if (!$('#submit_workflow').hasClass("blocked")) {
-        alert("Would now submit the workflow job. Not yet implemented!");
+    // if (!$('#submit_workflow').hasClass("blocked")) {
+    //     alert("Would now submit the workflow job. Not yet implemented!");
+    // }
+    if (testData){
+        jobData = test_data;
+    }
+    else{
+        getData();
+    }
+    setOutputPage();
+    $('#workflow_tabs').tabs("enable", 2);
+    $('#workflow_tabs').tabs("option", "active", 2);
+    return false;
+}
+
+function getParameters() {
+    // Dataset specific request object
+    var requestJson = {
+        "source": $('#id_source').val(),
+        "dateTimeSpan": {
+            "startDate": $("#id_startDate").val(),
+            "endDate": $('#id_endDate').val(),
+            "dateTimeFormat": $("#id_datetimeformat").val()
+        },
+        "geometry": {
+            "point": {
+                "latitude": $("#id_latitude").val(),
+                "longitude": $("#id_longitude").val()
+            },
+            "geometryMetadata": {
+                "stationID": $("#id_stationID").val()
+            }
+        },
+        "dataValueFormat": $("#id_outputformat").val(),
+        "temporalResolution": $("#id_temporalresolution").val(),
+        "timeLocalized": $("#id_timelocalized").val(),
+        "units": "default",
+        "outputFormat": "json"
+    };
+    return requestJson;
+}
+
+function getData() {
+    toggleLoader();
+    var params = getParameters();
+    $.ajax({
+        type: "POST",
+        url: baseUrl,
+        accepts: "application/json",
+        data: JSON.stringify(params),
+        processData: false,
+        timeout: 0,
+        contentType: "application/json",
+        success: function (data, textStatus, jqXHR) {
+            taskID = data.job_id;
+            console.log("Data request success. Task ID: " + taskID);
+            getDataPolling();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Data request error...");
+            console.log(errorThrown);
+            toggleLoader();
+        },
+        complete: function (jqXHR, textStatus) {
+            console.log("Data request complete");
+        }
+    });
+    return false;
+}
+
+function getDataPolling() {
+    counter = counter - 1;
+    var requestUrl = "hms/rest/api/v2/hms/data";
+    if (counter > 0) {
+        $.ajax({
+            type: "GET",
+            url: requestUrl + "?job_id=" + taskID,
+            accepts: "application/json",
+            timeout: 0,
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status === "SUCCESS") {
+                    componentData = data.data;
+                    console.log("Task successfully completed and data was retrieved.");
+                    // setOutputUI();
+                    // $('#component_tabs').tabs("enable", 2);
+                    // $('#component_tabs').tabs("option", "active", 2);
+                    // toggleLoader();
+                    dyGraph.resize();
+                    counter = 25;
+                }
+                else if (data.status === "FAILED") {
+                    console.log("Task failed to complete.");
+                }
+                else {
+                    setTimeout(getDataPolling, 10000);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Data request error...");
+                console.log(errorThrown);
+                toggleLoader();
+            },
+            complete: function (jqXHR, textStatus) {
+                console.log("Data request complete");
+            }
+        });
+    }
+    else {
+        console.log("Failed to get data, reached polling cap.")
     }
     return false;
 }

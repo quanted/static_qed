@@ -1,4 +1,6 @@
-var baseUrl = "/hms/rest/api/meteorology/solar/";
+// var baseUrl = "/hms/rest/api/meteorology/solar/";
+var baseUrl = "/hms/rest/api/v3/meteorology/solar/";
+
 var dataTable;
 var columnsDict = {};
 var columns;
