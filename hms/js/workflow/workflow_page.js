@@ -312,32 +312,28 @@ function submitWorkflowJob() {
 function getParameters() {
     // Dataset specific request object
     var requestJson = {
-        "source": $('#id_source').val(),
-        "dateTimeSpan": {
-            "startDate": $("#id_startDate").val(),
-            "endDate": $('#id_endDate').val(),
-            "dateTimeFormat": $("#id_datetimeformat").val()
+        "runoffsource": inputJSON.runoffSource,
+        "precipsource": inputJSON.precipSource,
+        "streamhydrology": inputJSON.streamAlgorithm,
+        "datetimespan": {
+            "startdate": inputJSON.startDate,
+            "enddate": inputJSON.endDate,
         },
-        "geometry": {
-            "point": {
-                "latitude": $("#id_latitude").val(),
-                "longitude": $("#id_longitude").val()
-            },
-            "geometryMetadata": {
-                "stationID": $("#id_stationID").val()
-            }
-        },
-        "dataValueFormat": $("#id_outputformat").val(),
-        "temporalResolution": $("#id_temporalresolution").val(),
-        "timeLocalized": $("#id_timelocalized").val(),
-        "units": "default",
-        "outputFormat": "json"
+        "geometry": {},
+        "temporalresolution": inputJSON.timestep,
+        "outputformat": "json"
     };
+    if (requestJson.spatialType === "hucid"){
+        requestJson.geometry["hucID"] = requestJson.spatialInput;
+    }
+    else{
+        requestJson.geometry["comID"] = requestJson.spatialInput;
+    }
     return requestJson;
 }
 
 function getData() {
-    toggleLoader();
+    // toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -355,7 +351,7 @@ function getData() {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader();
+            // toggleLoader();
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");

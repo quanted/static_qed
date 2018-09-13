@@ -93,7 +93,7 @@ function setOutputComidList() {
             var d = row.getData();
             if (selectedRow === null || selectedRow !== d.id) {
                 toggleLoader(false, "Loading data for Catchment: " + d.id);
-                setTimeout(function() {
+                setTimeout(function () {
                     showCatchmentDetails(true);
                     selectedRow = d.id;
                     selectComid(d.id);
@@ -290,12 +290,109 @@ function toggleSaveButtons() {
 }
 
 function exportAllDataToCSV() {
-    window.alert("Functionality not yet implemented.");
+    // window.alert("Functionality not yet implemented.");
+    // return false;
+    var fileName = "hms_catchment_data_" + jobID + ".csv";
+    var metadata = "";
+    var dataRows = [];
+    var columns = "Date,ComID";
+    var first = true;
+    var i = 0;
+    // each catchment
+    $.each(jobData.data, function (j, u) {
+        var comid = j;
+        // each dataset
+        $.each(u, function (k, v) {
+            if (v.metadata["column_2"]) {
+                columns += "," + k + " (" + v.metadata["column_2"] + ")";
+            }
+            else {
+                columns += "," + k;
+            }
+            $.each(v.metadata, function (l, w) {
+                metadata += k + "_" + l + "," + w + "\n";
+            });
+            if (first) {
+                $.each(v.data, function (m, x) {
+                    dataRows[i] = m + "," + comid + "," + x;
+                    i += 1;
+                });
+            }
+            else {
+                $.each(v.data, function (m, x) {
+                    dataRows[i] += "," + x;
+                    i += 1;
+                });
+            }
+            i = 0;
+            first = false;
+        });
+        first = true;
+    });
+    var data = dataRows.join("\n");
+    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+    // TODO: Add table to csv output.
+    var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
+    var pom = document.createElement('a');
+    pom.setAttribute('href', dataStr);
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
     return false;
 }
 
 function exportCatchmentDataToCSV() {
-    window.alert("Functionality not yet implemented.");
+    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".csv";
+    var metadata = "";
+    var dataRows = [];
+    var columns = "Date,ComID";
+    var first = true;
+    var i = 0;
+    $.each(jobData.data[selectedCatchment], function (k, v) {
+        if (v.metadata["column_2"]) {
+            columns += "," + k + " (" + v.metadata["column_2"] + ")";
+        }
+        else {
+            columns += "," + k;
+        }
+        $.each(v.metadata, function (l, w) {
+            metadata += k + "_" + l + "," + w + "\n";
+        });
+        if (first) {
+            $.each(v.data, function (m, x) {
+                dataRows[i] = m + "," + selectedCatchment + "," + x;
+                i += 1;
+            });
+        }
+        else {
+            $.each(v.data, function (m, x) {
+                dataRows[i] += "," + x;
+                i += 1;
+            });
+        }
+        i = 0;
+        first = false;
+    });
+    var data = dataRows.join("\n");
+    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+    var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
+    var pom = document.createElement('a');
+    pom.setAttribute('href', dataStr);
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
     return false;
 }
 
