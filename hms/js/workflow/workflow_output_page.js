@@ -5,10 +5,11 @@ var catchmentInfo = null;
 var catchmentMap = null;
 var dyGraph = null;
 var selectedRow = null;
+var selectedCatchment = null;
 
 function setOutputTitle() {
     if (jobID === null && testData) {
-        jobID = "TEST TASK";
+        jobID = "TESTTASK1234567890";
     }
     var title = "Data for Workflow job: " + jobID.toString();
     var output_title = $("#output_title");
@@ -91,14 +92,21 @@ function setOutputComidList() {
         rowClick: function (e, row) {
             var d = row.getData();
             if (selectedRow === null || selectedRow !== d.id) {
-                showCatchmentDetails(true);
-                selectedRow = d.id;
-                selectComid(d.id);
+                toggleLoader(false, "Loading data for Catchment: " + d.id);
+                setTimeout(function () {
+                    showCatchmentDetails(true);
+                    selectedRow = d.id;
+                    selectComid(d.id);
+                    setTimeout(function () {
+                        toggleLoader(true, "");
+                    }, 100);
+                }, 300);
             }
             else {
                 showCatchmentDetails(false);
                 selectedRow = null;
             }
+
             return false;
         },
         initialSort: [{column: 'id', dir: "asc"}],
@@ -244,6 +252,7 @@ function setOutputPage() {
 }
 
 function selectComid(comid) {
+    selectedCatchment = comid;
     setInfoDiv(comid);
     setOutputGraph(comid);
     return false;
@@ -258,7 +267,163 @@ function showCatchmentDetails(hide) {
         $("#output_info").hide();
         $("#output_center_bottom").hide();
     }
+    toggleSaveButtons();
     return false;
+}
+
+function toggleLoader(hide, msg) {
+    if (hide) {
+        $("#output_loading").fadeOut(100);
+        $("#loading_msg").html();
+    }
+    else {
+        $("#output_loading").fadeIn(100);
+        $("#loading_msg").html("<span>" + msg + "</span>");
+    }
+    return false;
+}
+
+function toggleSaveButtons() {
+    $('#export_json_catchment').toggle();
+    $('#export_csv_catchment').toggle();
+    return false;
+}
+
+function exportAllDataToCSV() {
+    // window.alert("Functionality not yet implemented.");
+    // return false;
+    var fileName = "hms_catchment_data_" + jobID + ".csv";
+    var metadata = "";
+    var dataRows = [];
+    var columns = "Date,ComID";
+    var first = true;
+    var i = 0;
+    // each catchment
+    $.each(jobData.data, function (j, u) {
+        var comid = j;
+        // each dataset
+        $.each(u, function (k, v) {
+            if (v.metadata["column_2"]) {
+                columns += "," + k + " (" + v.metadata["column_2"] + ")";
+            }
+            else {
+                columns += "," + k;
+            }
+            $.each(v.metadata, function (l, w) {
+                metadata += k + "_" + l + "," + w + "\n";
+            });
+            if (first) {
+                $.each(v.data, function (m, x) {
+                    dataRows[i] = m + "," + comid + "," + x;
+                    i += 1;
+                });
+            }
+            else {
+                $.each(v.data, function (m, x) {
+                    dataRows[i] += "," + x;
+                    i += 1;
+                });
+            }
+            i = 0;
+            first = false;
+        });
+        first = true;
+    });
+    var data = dataRows.join("\n");
+    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+    // TODO: Add table to csv output.
+    var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
+    var pom = document.createElement('a');
+    pom.setAttribute('href', dataStr);
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+    return false;
+}
+
+function exportCatchmentDataToCSV() {
+    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".csv";
+    var metadata = "";
+    var dataRows = [];
+    var columns = "Date,ComID";
+    var first = true;
+    var i = 0;
+    $.each(jobData.data[selectedCatchment], function (k, v) {
+        if (v.metadata["column_2"]) {
+            columns += "," + k + " (" + v.metadata["column_2"] + ")";
+        }
+        else {
+            columns += "," + k;
+        }
+        $.each(v.metadata, function (l, w) {
+            metadata += k + "_" + l + "," + w + "\n";
+        });
+        if (first) {
+            $.each(v.data, function (m, x) {
+                dataRows[i] = m + "," + selectedCatchment + "," + x;
+                i += 1;
+            });
+        }
+        else {
+            $.each(v.data, function (m, x) {
+                dataRows[i] += "," + x;
+                i += 1;
+            });
+        }
+        i = 0;
+        first = false;
+    });
+    var data = dataRows.join("\n");
+    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+    var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
+    var pom = document.createElement('a');
+    pom.setAttribute('href', dataStr);
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+    return false;
+}
+
+function exportAllDataToJSON() {
+    var fileName = "hms_data_" + jobID + ".json";
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(jobData)));
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+}
+
+function exportCatchmentDataToJSON() {
+    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".json";
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(jobData.data[selectedCatchment])));
+    pom.setAttribute('download', fileName);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
 }
 
 $(function () {
