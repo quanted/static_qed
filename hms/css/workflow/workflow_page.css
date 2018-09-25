@@ -399,3 +399,24 @@
     padding: 0 10px;
 }
 
+
+/* Data Tab Styling */
+#data_tab_task_id {
+    width: 80%;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+#data_tab_task_id label {
+    float: left;
+    margin-right: 20px;
+}
+
+#data_tab_task_id input {
+    float: left;
+    width: 60%;
+}
+
+#get_previous_data {
+    margin-top: -10px;
+}

@@ -80,7 +80,7 @@ function getData2() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
-            getDataPolling();
+            setTimeout(getDataPolling, 4000);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
@@ -115,11 +115,11 @@ function getDataPolling() {
                     dyGraph.resize();
                     counter = 25;
                 }
-                else if (data.status === "FAILED") {
+                else if (data.status === "FAILURE") {
                     console.log("Task failed to complete.");
                 }
                 else {
-                    setTimeout(getDataPolling, 3000);
+                    setTimeout(getDataPolling, 4000);
                 }
 
             },
