@@ -293,6 +293,9 @@ function addStreamInput() {
 }
 
 function submitWorkflowJob() {
+    if ($('#submit_workflow').hasClass("blocked")){
+        return false;
+    }
     if (testData) {
         jobData = test_data;
     }
@@ -341,6 +344,7 @@ function getData() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
+            toggleLoader(false, "Data request successfull. Task ID: " + taskID);
             getDataPolling();
         },
         error: function (jqXHR, textStatus, errorThrown) {
