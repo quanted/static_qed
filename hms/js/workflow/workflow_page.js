@@ -35,7 +35,7 @@ $(function () {
 function pageLoadStart() {
     $("#workflow_tabs").tabs({
         active: 0,
-        disabled: [2, 3]
+        disabled: [2]
     });
     return false;
 }
@@ -293,10 +293,9 @@ function addStreamInput() {
 }
 
 function submitWorkflowJob() {
-    // submit ajax call to hms job
-    // if (!$('#submit_workflow').hasClass("blocked")) {
-    //     alert("Would now submit the workflow job. Not yet implemented!");
-    // }
+    if ($('#submit_workflow').hasClass("blocked")){
+        return false;
+    }
     if (testData) {
         jobData = test_data;
     }
@@ -323,17 +322,16 @@ function getParameters() {
         "temporalresolution": inputJSON.timestep,
         "outputformat": "json"
     };
-    if (requestJson.spatialType === "hucid"){
+    if (requestJson.spatialType === "hucid") {
         requestJson.geometry["hucID"] = requestJson.spatialInput;
     }
-    else{
+    else {
         requestJson.geometry["comID"] = requestJson.spatialInput;
     }
     return requestJson;
 }
 
 function getData() {
-    // toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -346,12 +344,12 @@ function getData() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
+            toggleLoader(false, "Data request successfull. Task ID: " + taskID);
             getDataPolling();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            // toggleLoader();
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -374,10 +372,6 @@ function getDataPolling() {
                 if (data.status === "SUCCESS") {
                     componentData = data.data;
                     console.log("Task successfully completed and data was retrieved.");
-                    // setOutputUI();
-                    // $('#component_tabs').tabs("enable", 2);
-                    // $('#component_tabs').tabs("option", "active", 2);
-                    // toggleLoader();
                     dyGraph.resize();
                     counter = 25;
                 }
@@ -387,12 +381,11 @@ function getDataPolling() {
                 else {
                     setTimeout(getDataPolling, 10000);
                 }
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader();
+                toggleLoader(false, "Error retrieving data for task ID: " + taskID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -402,6 +395,15 @@ function getDataPolling() {
     else {
         console.log("Failed to get data, reached polling cap.")
     }
+    return false;
+}
+
+function getPreviousData() {
+     taskID = $('#previous_task_id').val();
+    setTimeout(function(){toggleLoader(false, "Retrieving data for task ID: " + taskID);});
+    getDataPolling();
+    $('#workflow_tabs').tabs("enable", 2);
+    $('#workflow_tabs').tabs("option", "active", 2);
     return false;
 }
 
@@ -480,7 +482,7 @@ function openHucMap() {
     if (currentHucInput !== undefined) {
         getHucDataById(currentHucInput);
     }
-    else if (currentComIDInput !== undefined){
+    else if (currentComIDInput !== undefined) {
         getStreamDataByComID(currentComIDInput);
     }
 
