@@ -63,7 +63,7 @@ function getCatchmentData() {
 
 function catchmentTableToggle(comid, select) {
     let selectOption = "selectRow";
-    if(!select){
+    if (!select) {
         selectOption = "deselectRow";
     }
     let rows = $('#output_comid_list').tabulator("getData");
@@ -77,7 +77,7 @@ function catchmentTableToggle(comid, select) {
     });
     console.log(row + " " + rows[row].id);
     $('#output_comid_list').tabulator(selectOption, rows[row].id);
-    if(select) {
+    if (select) {
         $('#output_comid_list').tabulator("scrollToRow", rows[row].id);
     }
 }
@@ -139,7 +139,7 @@ function setOutputComidList() {
     $.each(catchmentData.features, function (index, value) {
         var d = {
             id: value.properties.FEATUREID,
-            region: value.properties.NHDPLUS_REGION,
+            // region: value.properties.NHDPLUS_REGION,
             huc12: value.properties.WBD_HUC12,
             area: Number.parseFloat(value.properties.AREASQKM).toFixed(4)
         };
@@ -182,7 +182,7 @@ function setOutputComidList() {
         initialSort: [{column: 'id', dir: "asc"}],
         columns: [
             {title: "Catchment ID", field: "id", align: "left", sorter: "number"},
-            {title: "Region", field: "region", align: "left", headerSort: false},
+            // {title: "Region", field: "region", align: "left", headerSort: false},
             {title: "HUC 12", field: "huc12", align: "left", headerSort: false},
             {title: "Area (km&#178)", field: "area", align: "left", headerSort: false},
         ],
@@ -191,7 +191,7 @@ function setOutputComidList() {
 }
 
 function setInfoDiv(comid) {
-    let title = "Catchment: " + comid.toString() + " Details";
+    let title = "Stream: " + comid.toString() + " Details";
     $('#output_info h4').html(title);
     let data = {};
     $.each(jobData.table[comid], function (k, v) {
@@ -216,10 +216,8 @@ function setInfoDiv(comid) {
             {title: "Length (km)", field: "LengthKM", align: "left", headerSort: false},
             {title: "Stream Level", field: "StreamLeve", align: "left", headerSort: false},
             {title: "Stream Order", field: "StreamOrde", align: "left", headerSort: false},
-            {title: "Mean Annual Flow", field: "MeanAnnFlowM3PS", align: "left", headerSort: false},
-            {title: "Mean Annual Velocity", field: "MeanAnnVelMPS", align: "left", headerSort: false},
-            {title: "Direction", field: "DIRECTION", align: "left", headerSort: false},
-            {title: "Reach Code", field: "ReachCode", align: "left", headerSort: false},
+            {title: "Mean Annual Flow (cfs)", field: "MeanAnnFlowM3PS", align: "left", headerSort: false},
+            {title: "Mean Annual Velocity (fps)", field: "MeanAnnVelMPS", align: "left", headerSort: false},
         ],
         data: [data]
     });
@@ -227,7 +225,7 @@ function setInfoDiv(comid) {
 
 function setOutputGraph(comid) {
     var dataTitle = "Catchment: " + comid + " Data";
-    var labels = ["Date", "Precipitation", "Surface Runoff", "Subsurface Flow", "Stream Flow"];
+    var labels = ["Date", "Precipitation (mm)", "Surface Runoff (mm)", "Subsurface Flow (mm)", "Stream Flow (cfs)"];
     var dataCSV = [];
     var dataDict = [];
     var graphOptions = {
@@ -293,16 +291,26 @@ function setOutputTable(data) {
         $('#output_table').tabulator("destroy");
         catchmentDataTable = null;
     }
+    //custom date formatter
+    var dateFormatter = function (cell, formatterParams) {
+        var value = cell.getValue();
+
+        if (value) {
+            value = moment(value, "YYYY/MM/DD").format("MM/DD/YYYY");
+        }
+
+        return value;
+    }
     catchmentDataTable = true;
     $('#output_table').tabulator({
         layout: "fitColumns",
         height: "250px",
         columns: [
-            {title: "Date", field: "date", align: "left", headerSort: false},
-            {title: "Precipitation", field: "precip", align: "left", headerSort: false},
-            {title: "Surface Runoff", field: "runoff", align: "left", headerSort: false},
-            {title: "Subsurface Flow", field: "subsurfaceflow", align: "left", headerSort: false},
-            {title: "Stream Flow", field: "streamflow", align: "left", headerSort: false}
+            {title: "Date", field: "date", align: "left", headerSort: false, formatter: dateFormatter},
+            {title: "Precipitation (mm)", field: "precip", align: "left", headerSort: false},
+            {title: "Surface Runoff (mm)", field: "runoff", align: "left", headerSort: false},
+            {title: "Subsurface Runoff (mm)", field: "subsurfaceflow", align: "left", headerSort: false},
+            {title: "Stream Flow (m&#178/s)", field: "streamflow", align: "left", headerSort: false}
         ],
         data: data
     });
@@ -317,6 +325,7 @@ function setOutputPage() {
 
 function selectComid(comid) {
     selectedCatchment = comid;
+    $('#output_center_bottom').tabs();
     setInfoDiv(comid);
     setOutputGraph(comid);
     return false;

@@ -293,7 +293,7 @@ function addStreamInput() {
 }
 
 function submitWorkflowJob() {
-    if ($('#submit_workflow').hasClass("blocked")){
+    if ($('#submit_workflow').hasClass("blocked")) {
         return false;
     }
     if (testData) {
@@ -399,8 +399,10 @@ function getDataPolling() {
 }
 
 function getPreviousData() {
-     taskID = $('#previous_task_id').val();
-    setTimeout(function(){toggleLoader(false, "Retrieving data for task ID: " + taskID);});
+    taskID = $('#previous_task_id').val();
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+    });
     getDataPolling();
     $('#workflow_tabs').tabs("enable", 2);
     $('#workflow_tabs').tabs("option", "active", 2);
@@ -429,10 +431,18 @@ function openHucMap() {
         }
         hucMap.on("click", function (e) {
             // Check if click originated from mapSelectionInfo window
-            if (window.navigator.userAgent.indexOf("Edge") === -1) {
+            if (window.navigator.userAgent.indexOf("Chrome") > -1) {
                 if (e.originalEvent.path[0].id === "huc_map_div" || e.originalEvent.path[0].localName === "path") {
                     clickGetStreamComid(e);
                 }
+            }
+            else if (window.navigator.userAgent.indexOf("Firefox") > -1) {
+                if (e.originalEvent.originalTarget.attributes[0].nodeValue === "huc_map_div") {
+                    clickGetStreamComid(e);
+                }
+            }
+            else if (window.navigator.userAgent.indexOf("Edge") > -1) {
+                clickGetStreamComid(e);
             }
             else {
                 clickGetStreamComid(e);
