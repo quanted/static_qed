@@ -261,6 +261,8 @@ function addRunoffInput() {
     }
     else {
         inputJSON.precipSource = "NULL";
+        $("#precip_source_input_button").addClass("blocked");
+        addToInputTable($('#selected_precip_input'), "", "");
     }
     console.log(inputJSON);
     $("#add_runoff_input").text("Update");
