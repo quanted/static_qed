@@ -179,6 +179,11 @@
     padding: 10px 25px;
     border-radius: 3px;
     width: 100%;
+    text-align: left;
+}
+
+#workflow_info_p img {
+    padding-top: 10px;
 }
 
 .workflow_stream_img {

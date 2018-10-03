@@ -1,7 +1,15 @@
 /*Map styling*/
 
+#output_center_top {
+    display: flex;
+    margin: 0 -45px;
+    padding: 5px;
+    height: 300px;
+}
+
 #output_map {
-    height: 250px;
+    /*height: 250px;*/
+    height: 100%;
     width: 50%;
     float: left;
 }
@@ -47,8 +55,9 @@
 }
 
 #output_graph_div {
-    width: 50%;
+    width: 100%;
     float: left;
+    /*margin-left: -45px;*/
 }
 
 #output_graph {
@@ -57,9 +66,18 @@
     font-size: 10px;
 }
 
+#output_center_bottom {
+    border: none;
+}
+
+#output_center_bottom ul {
+    /*display: block;*/
+    text-align: center;
+}
+
 #output_table_div {
-    width: 50%;
-    float: right;
+    width: 100%;
+    /*float: right;*/
 }
 
 #output_table {
@@ -70,8 +88,9 @@
 
 #output_loading {
     display: none;
-    width: 100%;
+    width: 110%;
     height: 100%;
+    margin: 0 -45px;
     background: white;
     opacity: 0.95;
     z-index: 9999999;
