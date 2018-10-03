@@ -3,7 +3,7 @@ var inputJSON = {};
 var requiredInputs = ["spatialType", "spatialInput", "startDate", "endDate", "timestep", "runoffSource", "precipSource", "streamAlgorithm"];
 var hucMap = null;
 var counter = 25;
-var testData = true;
+var testData = false;
 
 $(function () {
     pageLoadStart();
@@ -300,35 +300,40 @@ function submitWorkflowJob() {
     }
     if (testData) {
         jobData = test_data;
+        setOutputPage();
+        $('#workflow_tabs').tabs("enable", 2);
+        $('#workflow_tabs').tabs("option", "active", 2);
+        return false;
     }
     else {
         getData();
     }
-    setOutputPage();
-    $('#workflow_tabs').tabs("enable", 2);
-    $('#workflow_tabs').tabs("option", "active", 2);
-    return false;
 }
 
 function getParameters() {
     // Dataset specific request object
     var requestJson = {
+        "source": "nldas",
+        "aggregation": false,
         "runoffsource": inputJSON.runoffSource,
-        "precipsource": inputJSON.precipSource,
         "streamhydrology": inputJSON.streamAlgorithm,
         "datetimespan": {
             "startdate": inputJSON.startDate,
             "enddate": inputJSON.endDate,
         },
-        "geometry": {},
+        "geometry": {
+            "geometryMetadata": {
+                "precipSource": inputJSON.precipSource,
+            }
+        },
         "temporalresolution": inputJSON.timestep,
         "outputformat": "json"
     };
-    if (requestJson.spatialType === "hucid") {
-        requestJson.geometry["hucID"] = requestJson.spatialInput;
+    if (inputJSON.spatialType === "hucid") {
+        requestJson.geometry["hucID"] = inputJSON.spatialInput;
     }
     else {
-        requestJson.geometry["comID"] = requestJson.spatialInput;
+        requestJson.geometry["comID"] = inputJSON.spatialInput;
     }
     return requestJson;
 }
@@ -344,10 +349,12 @@ function getData() {
         timeout: 0,
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
-            taskID = data.job_id;
-            console.log("Data request success. Task ID: " + taskID);
-            toggleLoader(false, "Data request successfull. Task ID: " + taskID);
-            getDataPolling();
+            jobID = data.job_id;
+            console.log("Data request success. Task ID: " + jobID);
+            toggleLoader(false, "Data request successfull. Task ID: " + jobID);
+            setTimeout(getDataPolling, 30000);
+            $('#workflow_tabs').tabs("enable", 2);
+            $('#workflow_tabs').tabs("option", "active", 2);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
@@ -366,18 +373,20 @@ function getDataPolling() {
     if (counter > 0) {
         $.ajax({
             type: "GET",
-            url: requestUrl + "?job_id=" + taskID,
+            url: requestUrl + "?job_id=" + jobID,
             accepts: "application/json",
             timeout: 0,
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    componentData = data.data;
+                    jobData = data.data;
+                    setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
                     dyGraph.resize();
                     counter = 25;
                 }
-                else if (data.status === "FAILED") {
+                else if (data.status === "FAILURE") {
+                    toggleLoader(false, "Task " + jobID + " encountered an error.");
                     console.log("Task failed to complete.");
                 }
                 else {
@@ -387,7 +396,7 @@ function getDataPolling() {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader(false, "Error retrieving data for task ID: " + taskID);
+                toggleLoader(false, "Error retrieving data for task ID: " + jobID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -401,9 +410,9 @@ function getDataPolling() {
 }
 
 function getPreviousData() {
-    taskID = $('#previous_task_id').val();
+    jobID = $('#previous_task_id').val();
     setTimeout(function () {
-        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+        toggleLoader(false, "Retrieving data for task ID: " + jobID);
     });
     getDataPolling();
     $('#workflow_tabs').tabs("enable", 2);

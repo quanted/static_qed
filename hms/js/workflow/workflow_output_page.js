@@ -26,17 +26,17 @@ function getCatchmentData() {
     var catchment_url_options = "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=%7B%22wkt%22+%3A+%22GEOGCS%5B%5C%22GCS_WGS_1984%5C%22%2CDATUM%5B%5C%22D_WGS_1984%5C%22%2C+SPHEROID%5B%5C%22WGS_1984%5C%22%2C6378137%2C298.257223563%5D%5D%2CPRIMEM%5B%5C%22Greenwich%5C%22%2C0%5D%2C+UNIT%5B%5C%22Degree%5C%22%2C0.017453292519943295%5D%5D%22%7D&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson";
     var n = 1;
     var query = "FEATUREID+IN+(";
-    var catchments = jobData.metadata.catchments.split(',');
-    catchments.map(function (i) {
-        if (n === 1) {
-            query += i.toString();
-        }
-        else {
-            query += "," + i.toString();
-        }
-        n = n + 1;
-    });
-    query += ")";
+    var catchments = jobData.metadata.catchments;//.split(',');
+    // catchments.map(function (i) {
+    //     if (n === 1) {
+    //         query += i.toString();
+    //     }
+    //     else {
+    //         query += "," + i.toString();
+    //     }
+    //     n = n + 1;
+    // });
+    query += catchments + ")";
     var query_url = catchment_base_url + query + catchment_url_options;
 
     $.ajax({
@@ -326,8 +326,10 @@ function setOutputPage() {
 function selectComid(comid) {
     selectedCatchment = comid;
     $('#output_center_bottom').tabs();
+    $('#output_center_bottom').tabs("option", "active", 0);
     setInfoDiv(comid);
     setOutputGraph(comid);
+    dyGraph.resize();
     return false;
 }
 
