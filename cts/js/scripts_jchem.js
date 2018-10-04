@@ -142,7 +142,7 @@ function populateChemEditDOM(data) {
 
   $('#chemical').val(data['chemical']);
   $('#smiles').val(data["smiles"]); //SMILES string txtbox - results table
-  $('#origsmiles').val(data['orig_smiles']);
+  $('#orig_smiles').val(data['orig_smiles']);
   $('#preferredName').val(data['preferredName']);
   $('#iupac').val(data["iupac"]); //IUPAC txtbox - results table
   $('#formula').val(data["formula"]); //Formula txtbox - results table
@@ -171,7 +171,7 @@ function clearChemicalEditorContent() {
   // Clears MarvinSketch instance and results table
   $('#chemical').val("");
   $('#smiles').val("");
-  $('#origsmiles').val("");
+  $('#orig_smiles').val("");
   $('#preferredName').val("");
   $('#iupac').val("");
   $('#formula').val("");
