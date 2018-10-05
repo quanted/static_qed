@@ -327,6 +327,14 @@ function selectComid(comid) {
     selectedCatchment = comid;
     $('#output_center_bottom').tabs();
     $('#output_center_bottom').tabs("option", "active", 0);
+    $('#output_center_bottom').tabs({
+        activate: function(event, ui){
+            var active = $('#output_center_bottom').tabs("option", "active");
+            if(active === 1){
+                $('#output_table').tabulator("redraw");
+            }
+        }
+    });
     setInfoDiv(comid);
     setOutputGraph(comid);
     dyGraph.resize();
@@ -526,3 +534,4 @@ function exportCatchmentDataToJSON() {
         pom.click();
     }
 }
+

@@ -312,6 +312,13 @@ function submitWorkflowJob() {
 
 function getParameters() {
     // Dataset specific request object
+    let precip = "";
+    if (inputJSON.precipSource === "NULL") {
+        precip = "daymet";
+    }
+    else{
+        precip = inputJSON.precipSource;
+    }
     var requestJson = {
         "source": "nldas",
         "aggregation": false,
@@ -323,7 +330,7 @@ function getParameters() {
         },
         "geometry": {
             "geometryMetadata": {
-                "precipSource": inputJSON.precipSource,
+                "precipSource": precip,
             }
         },
         "temporalresolution": inputJSON.timestep,
@@ -335,6 +342,8 @@ function getParameters() {
     else {
         requestJson.geometry["comID"] = inputJSON.spatialInput;
     }
+
+
     return requestJson;
 }
 

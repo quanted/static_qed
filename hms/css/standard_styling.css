@@ -289,3 +289,7 @@
     height: 100%;
     position: absolute;
 }
+
+#overview_tab p {
+    text-align: left;
+}
