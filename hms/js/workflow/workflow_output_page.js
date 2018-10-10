@@ -230,7 +230,7 @@ function setOutputGraph(comid) {
     var dataDict = [];
     var graphOptions = {
         labels: labels,
-        rollPeriod: 12,
+        rollPeriod: 1,
         showRoller: true
     };
     var cData = jobData.data[comid];
