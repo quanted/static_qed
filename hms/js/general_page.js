@@ -29,6 +29,7 @@ $(function () {
 
 function pageLoad() {
     $('#load_page').fadeToggle(600);
+    browserCheck();
     return false;
 }
 
@@ -283,20 +284,20 @@ function exportDataToJSON() {
 function exportDataToCSV() {
     var fileName = componentData.dataset + "_" + componentData.dataSource;
     var metadata = "";
-    $.each(componentData.metadata, function(k, v){
+    $.each(componentData.metadata, function (k, v) {
         metadata += k + "," + v + "\n";
     });
     var columns = "Date";
-    var c_index = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-    $.each(c_index, function(v){
-       if(componentData.metadata["column_" + v] && componentData.metadata["column_" + v] !== "Date"){
-           columns += "," + componentData.metadata["column_" + v];
-       }
+    var c_index = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    $.each(c_index, function (v) {
+        if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v] !== "Date") {
+            columns += "," + componentData.metadata["column_" + v];
+        }
     });
     var data = "";
-    $.each(componentData.data, function(k, v){
+    $.each(componentData.data, function (k, v) {
         data += k;
-        $.each(v, function(j, w){
+        $.each(v, function (j, w) {
             data += "," + w;
         });
         data += "\n";

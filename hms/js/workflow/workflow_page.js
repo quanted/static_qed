@@ -2,7 +2,7 @@ var baseUrl = "/hms/rest/api/v3/workflow/watershed/";
 var inputJSON = {};
 var requiredInputs = ["spatialType", "spatialInput", "startDate", "endDate", "timestep", "runoffSource", "precipSource", "streamAlgorithm"];
 var hucMap = null;
-var counter = 25;
+var counter = 100;
 var testData = false;
 
 $(function () {
@@ -33,10 +33,12 @@ $(function () {
 });
 
 function pageLoadStart() {
+    $('#load_page').fadeOut(600);
     $("#workflow_tabs").tabs({
         active: 0,
         disabled: [2]
     });
+    browserCheck();
     return false;
 }
 
@@ -137,7 +139,7 @@ function spatialTypeSelect() {
 
 function validateInput() {
     var valid = true;
-    requiredInputs.map((input) => {
+    requireInputs.map(function (input) {
         if (!inputJSON.hasOwnProperty(input)) {
             valid = false;
         }
@@ -316,7 +318,7 @@ function getParameters() {
     if (inputJSON.precipSource === "NULL") {
         precip = "daymet";
     }
-    else{
+    else {
         precip = inputJSON.precipSource;
     }
     var requestJson = {
@@ -423,6 +425,7 @@ function getPreviousData() {
     setTimeout(function () {
         toggleLoader(false, "Retrieving data for task ID: " + jobID);
     });
+    counter = 100;
     getDataPolling();
     $('#workflow_tabs').tabs("enable", 2);
     $('#workflow_tabs').tabs("option", "active", 2);
