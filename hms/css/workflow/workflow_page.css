@@ -47,7 +47,7 @@
 /*HMS Hydrology Workflow Main*/
 .single_tab {
     display: none;
-    padding: 0 !important;
+    /*padding: 0 !important;*/
 }
 
 #workflow_tabs {
@@ -60,7 +60,7 @@
     list-style: none;
     padding: 0;
     margin: auto 0 0 0;
-    display: contents;
+    display: inline-block;
     border: none !important;
 }
 
@@ -75,11 +75,14 @@
 
 #workflow_tabs ul li {
     background: none;
-    margin: 1px 2px 0 2px;
-    padding: 0.5em 1em;
+    /*margin: 1px 2px 0 2px;*/
+    /*padding: 0.5em 1em;*/
     list-style: none;
-    float: none;
+    float: left;
+    /*width: 24%;*/
     display: inline-block;
+    padding: 0;
+    margin: auto 3px;
 }
 
 #workflow_tabs ul li a{
@@ -87,6 +90,7 @@
     font-weight: bold;
     display: block;
     font-size: small;
+    padding: 1em 2em 1em 2em;
 }
 
 #workflow_tabs ul li:hover {
@@ -175,6 +179,11 @@
     padding: 10px 25px;
     border-radius: 3px;
     width: 100%;
+    text-align: left;
+}
+
+#workflow_info_p img {
+    padding-top: 10px;
 }
 
 .workflow_stream_img {
@@ -187,6 +196,7 @@
     display: inline-block;
     box-shadow: 3px 1px 8px 0px;
     border-radius: 3px;
+    margin-top: 15px;
 }
 
 #input_buttons_block {
@@ -399,3 +409,24 @@
     padding: 0 10px;
 }
 
+
+/* Data Tab Styling */
+#data_tab_task_id {
+    width: 80%;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+#data_tab_task_id label {
+    float: left;
+    margin-right: 20px;
+}
+
+#data_tab_task_id input {
+    float: left;
+    width: 60%;
+}
+
+#get_previous_data {
+    margin-top: -10px;
+}

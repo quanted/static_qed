@@ -2,8 +2,8 @@ var baseUrl = "/hms/rest/api/v3/workflow/watershed/";
 var inputJSON = {};
 var requiredInputs = ["spatialType", "spatialInput", "startDate", "endDate", "timestep", "runoffSource", "precipSource", "streamAlgorithm"];
 var hucMap = null;
-var counter = 25;
-var testData = true;
+var counter = 100;
+var testData = false;
 
 $(function () {
     pageLoadStart();
@@ -33,10 +33,12 @@ $(function () {
 });
 
 function pageLoadStart() {
+    $('#load_page').fadeOut(600);
     $("#workflow_tabs").tabs({
         active: 0,
-        disabled: [2, 3]
+        disabled: [2]
     });
+    browserCheck();
     return false;
 }
 
@@ -137,7 +139,7 @@ function spatialTypeSelect() {
 
 function validateInput() {
     var valid = true;
-    requiredInputs.map((input) => {
+    requireInputs.map(function (input) {
         if (!inputJSON.hasOwnProperty(input)) {
             valid = false;
         }
@@ -261,6 +263,8 @@ function addRunoffInput() {
     }
     else {
         inputJSON.precipSource = "NULL";
+        $("#precip_source_input_button").addClass("blocked");
+        addToInputTable($('#selected_precip_input'), "", "");
     }
     console.log(inputJSON);
     $("#add_runoff_input").text("Update");
@@ -293,47 +297,59 @@ function addStreamInput() {
 }
 
 function submitWorkflowJob() {
-    // submit ajax call to hms job
-    // if (!$('#submit_workflow').hasClass("blocked")) {
-    //     alert("Would now submit the workflow job. Not yet implemented!");
-    // }
+    if ($('#submit_workflow').hasClass("blocked")) {
+        return false;
+    }
     if (testData) {
         jobData = test_data;
+        setOutputPage();
+        $('#workflow_tabs').tabs("enable", 2);
+        $('#workflow_tabs').tabs("option", "active", 2);
+        return false;
     }
     else {
         getData();
     }
-    setOutputPage();
-    $('#workflow_tabs').tabs("enable", 2);
-    $('#workflow_tabs').tabs("option", "active", 2);
-    return false;
 }
 
 function getParameters() {
     // Dataset specific request object
+    let precip = "";
+    if (inputJSON.precipSource === "NULL") {
+        precip = "daymet";
+    }
+    else {
+        precip = inputJSON.precipSource;
+    }
     var requestJson = {
+        "source": "nldas",
+        "aggregation": false,
         "runoffsource": inputJSON.runoffSource,
-        "precipsource": inputJSON.precipSource,
         "streamhydrology": inputJSON.streamAlgorithm,
         "datetimespan": {
             "startdate": inputJSON.startDate,
             "enddate": inputJSON.endDate,
         },
-        "geometry": {},
+        "geometry": {
+            "geometryMetadata": {
+                "precipSource": precip,
+            }
+        },
         "temporalresolution": inputJSON.timestep,
         "outputformat": "json"
     };
-    if (requestJson.spatialType === "hucid"){
-        requestJson.geometry["hucID"] = requestJson.spatialInput;
+    if (inputJSON.spatialType === "hucid") {
+        requestJson.geometry["hucID"] = inputJSON.spatialInput;
     }
-    else{
-        requestJson.geometry["comID"] = requestJson.spatialInput;
+    else {
+        requestJson.geometry["comID"] = inputJSON.spatialInput;
     }
+
+
     return requestJson;
 }
 
 function getData() {
-    // toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -344,14 +360,16 @@ function getData() {
         timeout: 0,
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
-            taskID = data.job_id;
-            console.log("Data request success. Task ID: " + taskID);
-            getDataPolling();
+            jobID = data.job_id;
+            console.log("Data request success. Task ID: " + jobID);
+            toggleLoader(false, "Data request successfull. Task ID: " + jobID);
+            setTimeout(getDataPolling, 30000);
+            $('#workflow_tabs').tabs("enable", 2);
+            $('#workflow_tabs').tabs("option", "active", 2);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            // toggleLoader();
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -366,33 +384,30 @@ function getDataPolling() {
     if (counter > 0) {
         $.ajax({
             type: "GET",
-            url: requestUrl + "?job_id=" + taskID,
+            url: requestUrl + "?job_id=" + jobID,
             accepts: "application/json",
             timeout: 0,
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    componentData = data.data;
+                    jobData = data.data;
+                    setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
-                    // setOutputUI();
-                    // $('#component_tabs').tabs("enable", 2);
-                    // $('#component_tabs').tabs("option", "active", 2);
-                    // toggleLoader();
                     dyGraph.resize();
                     counter = 25;
                 }
-                else if (data.status === "FAILED") {
+                else if (data.status === "FAILURE") {
+                    toggleLoader(false, "Task " + jobID + " encountered an error.");
                     console.log("Task failed to complete.");
                 }
                 else {
                     setTimeout(getDataPolling, 10000);
                 }
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader();
+                toggleLoader(false, "Error retrieving data for task ID: " + jobID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -402,6 +417,18 @@ function getDataPolling() {
     else {
         console.log("Failed to get data, reached polling cap.")
     }
+    return false;
+}
+
+function getPreviousData() {
+    jobID = $('#previous_task_id').val();
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + jobID);
+    });
+    counter = 100;
+    getDataPolling();
+    $('#workflow_tabs').tabs("enable", 2);
+    $('#workflow_tabs').tabs("option", "active", 2);
     return false;
 }
 
@@ -427,10 +454,18 @@ function openHucMap() {
         }
         hucMap.on("click", function (e) {
             // Check if click originated from mapSelectionInfo window
-            if (window.navigator.userAgent.indexOf("Edge") === -1) {
+            if (window.navigator.userAgent.indexOf("Chrome") > -1) {
                 if (e.originalEvent.path[0].id === "huc_map_div" || e.originalEvent.path[0].localName === "path") {
                     clickGetStreamComid(e);
                 }
+            }
+            else if (window.navigator.userAgent.indexOf("Firefox") > -1) {
+                if (e.originalEvent.originalTarget.attributes[0].nodeValue === "huc_map_div") {
+                    clickGetStreamComid(e);
+                }
+            }
+            else if (window.navigator.userAgent.indexOf("Edge") > -1) {
+                clickGetStreamComid(e);
             }
             else {
                 clickGetStreamComid(e);
@@ -480,7 +515,7 @@ function openHucMap() {
     if (currentHucInput !== undefined) {
         getHucDataById(currentHucInput);
     }
-    else if (currentComIDInput !== undefined){
+    else if (currentComIDInput !== undefined) {
         getStreamDataByComID(currentComIDInput);
     }
 
