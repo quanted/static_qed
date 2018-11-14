@@ -244,11 +244,11 @@ function ajaxCall(data_obj, callback) {
           $.ajax(this);
           return;
         }
-        displayErrorInTextbox("Name not recognized..");
+        displayErrorInTextbox("Name not recognized");
         return;
       }
       else {
-        displayErrorInTextbox("Name not recognized..");
+        displayErrorInTextbox("Name not recognized");
         return;
       }
     }
