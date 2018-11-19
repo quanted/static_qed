@@ -3,7 +3,7 @@
 <svg version="1.2" baseProfile="tiny" width="215.9mm" height="406.4mm" viewBox="0 0 21590 40640" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
  <defs>
   <font id="EmbeddedFont_1" horiz-adv-x="2048">
-   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1852" descent="450"/>
+   <font-face font-family="sans-serif" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1852" descent="450"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
    <glyph unicode="y" horiz-adv-x="928" d="M 127,-409 L 107,-240 C 146,-251 181,-256 210,-256 250,-256 282,-249 306,-236 330,-223 350,-204 365,-180 376,-162 395,-117 420,-46 423,-36 429,-21 436,-2 L 33,1062 227,1062 448,447 C 477,369 502,287 525,201 546,284 570,364 599,443 L 826,1062 1006,1062 602,-18 C 559,-135 525,-215 501,-259 469,-318 432,-362 391,-389 350,-417 300,-431 243,-431 208,-431 170,-424 127,-409 Z"/>
    <glyph unicode="w" horiz-adv-x="1430" d="M 331,0 L 6,1062 192,1062 361,449 424,221 C 427,232 445,305 479,440 L 648,1062 833,1062 992,446 1045,243 1106,448 1288,1062 1463,1062 1131,0 944,0 775,636 734,817 519,0 331,0 Z"/>
@@ -41,12 +41,13 @@
    <glyph unicode="C" horiz-adv-x="1298" d="M 1204,514 L 1398,465 C 1357,306 1284,184 1179,101 1073,17 944,-25 791,-25 633,-25 505,7 406,72 307,136 231,229 180,351 128,473 102,604 102,744 102,897 131,1030 190,1144 248,1257 331,1344 439,1403 546,1462 665,1491 794,1491 941,1491 1064,1454 1164,1379 1264,1304 1334,1199 1373,1064 L 1182,1019 C 1148,1126 1099,1203 1034,1252 969,1301 888,1325 790,1325 677,1325 583,1298 508,1244 432,1190 379,1118 348,1027 317,936 302,842 302,745 302,620 320,512 357,419 393,326 449,256 526,210 603,164 686,141 775,141 884,141 976,172 1051,235 1126,298 1177,391 1204,514 Z"/>
    <glyph unicode="A" horiz-adv-x="1376" d="M -3,0 L 560,1466 769,1466 1369,0 1148,0 977,444 364,444 203,0 -3,0 Z M 420,602 L 917,602 764,1008 C 717,1131 683,1233 660,1312 641,1218 615,1125 581,1032 L 420,602 Z"/>
    <glyph unicode="?" horiz-adv-x="927" d="M 472,361 C 471,385 471,403 471,415 471,486 481,547 501,598 516,637 539,676 572,715 596,744 639,786 702,841 764,896 804,939 823,972 842,1005 851,1040 851,1079 851,1149 824,1211 769,1264 714,1317 647,1343 568,1343 491,1343 427,1319 376,1271 325,1223 291,1148 275,1046 L 90,1068 C 107,1205 156,1309 239,1382 321,1455 430,1491 565,1491 708,1491 823,1452 908,1374 993,1296 1036,1202 1036,1091 1036,1027 1021,968 991,914 961,860 902,794 815,717 756,665 718,627 700,602 682,577 669,549 660,517 651,485 646,433 645,361 L 472,361 Z M 461,0 L 461,205 666,205 666,0 461,0 Z"/>
+   <glyph unicode="/" horiz-adv-x="557" d="M 0,-25 L 425,1491 569,1491 145,-25 0,-25 Z"/>
    <glyph unicode=" " horiz-adv-x="556"/>
   </font>
  </defs>
  <defs>
   <font id="EmbeddedFont_2" horiz-adv-x="2048">
-   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="bold" font-style="normal" ascent="1879" descent="476"/>
+   <font-face font-family="sans-serif" units-per-em="2048" font-weight="bold" font-style="normal" ascent="1879" descent="476"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
    <glyph unicode="w" horiz-adv-x="1615" d="M 345,0 L 9,1062 282,1062 481,366 664,1062 935,1062 1112,366 1315,1062 1592,1062 1251,0 981,0 798,683 618,0 345,0 Z"/>
    <glyph unicode="t" horiz-adv-x="610" d="M 634,1062 L 634,838 442,838 442,410 C 442,323 444,273 448,259 451,244 460,232 473,223 486,214 501,209 520,209 546,209 584,218 633,236 L 657,18 C 592,-10 518,-24 435,-24 384,-24 339,-15 298,2 257,19 228,41 209,68 190,95 176,131 169,177 163,210 160,276 160,375 L 160,838 31,838 31,1062 160,1062 160,1273 442,1437 442,1062 634,1062 Z"/>
@@ -75,18 +76,18 @@
   <rect fill="none" stroke="none" x="0" y="0" width="21590" height="40640"/>
  </g>
  <g visibility="visible" id="Slide_1_page1">
-  <g id="DrawingGroup_1">
-   <g>
-    <path fill="rgb(207,231,245)" stroke="none" d="M 11367,3771 C 13599,3771 15304,4156 15304,4660 15304,5164 13599,5549 11367,5549 9135,5549 7430,5164 7430,4660 7430,4156 9135,3771 11367,3771 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" id="Drawing_1_0" stroke-linejoin="round" d="M 11367,3771 C 13599,3771 15304,4156 15304,4660 15304,5164 13599,5549 11367,5549 9135,5549 7430,5164 7430,4660 7430,4156 9135,3771 11367,3771 Z"/>
-    <rect fill="none" stroke="none" x="7430" y="3771" width="7875" height="1779"/>
-   </g>
-   <g id="Drawing_2">
-    <rect fill="none" stroke="none" x="7884" y="4316" width="8637" height="726"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
-     <text x="8134" y="4822">
-      <tspan x="8134 8392 8511 8748 8985 9192 9404 9497 9709 9946 10158 10395 10632 10987 11080 11292 11529 11622 11741 11881 12118 12350 12587 12825 13036 13155 13273 13366 13578 13697 14052 14289 14526">A physicochemical request is made</tspan></text>
-    </g>
+  <g>
+   <path fill="rgb(207,231,245)" stroke="none" d="M 11414,3794 C 13646,3794 15351,4179 15351,4683 15351,5187 13646,5572 11414,5572 9182,5572 7477,5187 7477,4683 7477,4179 9182,3794 11414,3794 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_1_0" stroke-linejoin="round" d="M 11414,3794 C 13646,3794 15351,4179 15351,4683 15351,5187 13646,5572 11414,5572 9182,5572 7477,5187 7477,4683 7477,4179 9182,3794 11414,3794 Z"/>
+   <rect fill="none" stroke="none" x="7477" y="3794" width="7875" height="1779"/>
+  </g>
+  <g id="Drawing_2">
+   <rect fill="none" stroke="none" x="8519" y="4119" width="6071" height="1200"/>
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+    <text x="10236" y="4625">
+     <tspan x="10236 10541 10752 10990 11129 11248 11387 11625 11857 12094 12332 12543 12662 12873">User requests </tspan></text>
+    <text fill="rgb(0,0,0)" stroke="none" x="8995" y="5099">
+     <tspan x="8995 9232 9469 9677 9888 9981 10193 10430 10642 10879 11116 11472 11565 11776 12013 12107 12225 12462 12602 12839 13076 13313 13453 13571 13664 13901">physicochemical properties</tspan></text>
    </g>
   </g>
   <g>
@@ -95,7 +96,7 @@
   </g>
   <g id="Drawing_4">
    <rect fill="none" stroke="none" x="2087" y="763" width="18416" height="3172"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="988" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="988" font-style="normal" font-weight="700">
     <text x="4608" y="1802">
      <tspan x="4608 5319 5920 6577 6852 7673 8223 8498 8829 9104 9705 10306 10581 11237 11839 12114 12715 13045 13320 13921 14197 14798 15564 16114 16715 17266 17651">CTS Melting Point Flowchart</tspan></text>
    </g>
@@ -106,19 +107,19 @@
   </g>
   <g id="Drawing_6">
    <rect fill="none" stroke="none" x="11106" y="8892" width="1525" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="11356" y="9398">
      <tspan x="11356 11475 11614 11851">true</tspan></text>
    </g>
   </g>
   <g id="Drawing_7">
    <rect fill="none" stroke="none" x="7369" y="6933" width="2287" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="7619" y="7439">
      <tspan x="7619 7742 7979 8072 8284">false</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_2">
+  <g id="DrawingGroup_1">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 11263,6423 L 13882,7632 11263,8842 8645,7632 11263,6423 11263,6423 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_8_0" stroke-linejoin="round" d="M 11263,6423 L 13882,7632 11263,8842 8645,7632 11263,6423 11263,6423 Z"/>
@@ -127,7 +128,7 @@
   </g>
   <g id="Drawing_9">
    <rect fill="none" stroke="none" x="9462" y="6840" width="3784" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="10753" y="7346">
      <tspan x="10753 10872 11083 11202 11413 11650 11744">Is calc</tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="10219" y="7820">
@@ -136,7 +137,7 @@
      <tspan x="10520 10804 11058 11341 11646 11951">SPARC?</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_3">
+  <g id="DrawingGroup_2">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 4994,8671 C 6788,8671 8158,9056 8158,9560 8158,10064 6788,10449 4994,10449 3200,10449 1830,10064 1830,9560 1830,9056 3200,8671 4994,8671 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_10_0" stroke-linejoin="round" d="M 4994,8671 C 6788,8671 8158,9056 8158,9560 8158,10064 6788,10449 4994,10449 3200,10449 1830,10064 1830,9560 1830,9056 3200,8671 4994,8671 Z"/>
@@ -144,7 +145,7 @@
    </g>
    <g id="Drawing_11">
     <rect fill="none" stroke="none" x="1895" y="9016" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="2468" y="9522">
       <tspan x="2468 2798 3035 3154 3365 3484 3721 3861 4098 4335 4572 4712 4830 5038 5156 5457 5550 5668 5905 6143 6380 6498 6617 6854 7065 7159 7396 7628">Gets property without using </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="3843" y="9996">
@@ -165,7 +166,7 @@
   </g>
   <g id="Drawing_15">
    <rect fill="none" stroke="none" x="8537" y="15195" width="5461" height="1271"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="9068" y="15701">
      <tspan x="9068 9398 9635 9754 9965 10084 10440 10677 10770 10888 10981 11219 11451 11570 11807 12044 12137 12374 12493 12611 12734 12874 13111 13466">Gets melting point from </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="10323" y="16175">
@@ -186,11 +187,11 @@
   </g>
   <g id="Drawing_19">
    <rect fill="none" stroke="none" x="8537" y="21595" width="5461" height="1271"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="9068" y="22101">
      <tspan x="9068 9398 9635 9754 9965 10084 10440 10677 10770 10888 10981 11219 11451 11570 11807 12044 12137 12374 12493 12611 12734 12874 13111 13466">Gets melting point from </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="10370" y="22575">
-     <tspan x="10370 10632 10916 11200 11462 11881">TESTWS</tspan></text>
+    <text fill="rgb(0,0,0)" stroke="none" x="9295" y="22575">
+     <tspan x="9295 9557 9841 10125 10387 10806 11090 11208 11420 11657 11894 12106 12343 12580 12792 13029">TESTWS consensus</tspan></text>
    </g>
   </g>
   <g>
@@ -207,12 +208,12 @@
   </g>
   <g id="Drawing_23">
    <rect fill="none" stroke="none" x="7242" y="18085" width="1525" height="732"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="7492" y="18591">
      <tspan x="7492 7611 7750 7987">true</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_4">
+  <g id="DrawingGroup_3">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 11186,17422 L 14027,18754 11186,20086 8345,18754 11186,17422 11186,17422 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_24_0" stroke-linejoin="round" d="M 11186,17422 L 14027,18754 11186,20086 8345,18754 11186,17422 11186,17422 Z"/>
@@ -221,7 +222,7 @@
   </g>
   <g id="Drawing_25">
    <rect fill="none" stroke="none" x="9363" y="17940" width="3784" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="10052" y="18446">
      <tspan x="10052 10403 10640 10734 10852 10945 11182 11415 11534 11771 12008 12101 12338 12457">Melting point </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9968" y="18920">
@@ -232,7 +233,7 @@
   </g>
   <g id="Drawing_26">
    <rect fill="none" stroke="none" x="11069" y="20134" width="2287" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="11319" y="20640">
      <tspan x="11319 11442 11679 11772 11984">false</tspan></text>
    </g>
@@ -247,12 +248,12 @@
   </g>
   <g id="Drawing_29">
    <rect fill="none" stroke="none" x="7243" y="24484" width="1525" height="732"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="7493" y="24990">
      <tspan x="7493 7612 7751 7988">true</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_5">
+  <g id="DrawingGroup_4">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 11187,23821 L 14028,25153 11187,26485 8346,25153 11187,23821 11187,23821 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_30_0" stroke-linejoin="round" d="M 11187,23821 L 14028,25153 11187,26485 8346,25153 11187,23821 11187,23821 Z"/>
@@ -261,7 +262,7 @@
   </g>
   <g id="Drawing_31">
    <rect fill="none" stroke="none" x="9364" y="24339" width="3784" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="10053" y="24845">
      <tspan x="10053 10404 10641 10735 10853 10946 11183 11416 11535 11772 12009 12102 12339 12458">Melting point </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9969" y="25319">
@@ -272,7 +273,7 @@
   </g>
   <g id="Drawing_32">
    <rect fill="none" stroke="none" x="11070" y="26533" width="2287" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="11320" y="27039">
      <tspan x="11320 11443 11680 11773 11985">false</tspan></text>
    </g>
@@ -281,7 +282,7 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_33_0" stroke-linejoin="round" d="M 11180,26485 L 11180,27432"/>
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_33_1" d="M 11180,27882 L 11330,27432 11030,27432 11180,27882 Z"/>
   </g>
-  <g id="DrawingGroup_6">
+  <g id="DrawingGroup_5">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 4994,19971 C 6788,19971 8158,20356 8158,20860 8158,21364 6788,21749 4994,21749 3200,21749 1830,21364 1830,20860 1830,20356 3200,19971 4994,19971 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_34_0" stroke-linejoin="round" d="M 4994,19971 C 6788,19971 8158,20356 8158,20860 8158,21364 6788,21749 4994,21749 3200,21749 1830,21364 1830,20860 1830,20356 3200,19971 4994,19971 Z"/>
@@ -289,7 +290,7 @@
    </g>
    <g id="Drawing_35">
     <rect fill="none" stroke="none" x="1895" y="20316" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="2736" y="20822">
       <tspan x="2736 3041 3252 3490 3701 3820 4175 4412 4506 4624 4717 4954 5187 5306 5543 5780 5873 6110 6229 6347 6648 6885 7122 7359">Uses melting point when </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="2762" y="21296">
@@ -303,19 +304,19 @@
   </g>
   <g id="Drawing_37">
    <rect fill="none" stroke="none" x="11007" y="13192" width="1525" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="11257" y="13698">
      <tspan x="11257 11376 11515 11752">true</tspan></text>
    </g>
   </g>
   <g id="Drawing_38">
    <rect fill="none" stroke="none" x="6970" y="10933" width="2287" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="7220" y="11439">
      <tspan x="7220 7343 7580 7673 7885">false</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_7">
+  <g id="DrawingGroup_6">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 11206,10223 L 14255,11644 11206,13065 8158,11644 11206,10223 11206,10223 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_39_0" stroke-linejoin="round" d="M 11206,10223 L 14255,11644 11206,13065 8158,11644 11206,10223 11206,10223 Z"/>
@@ -324,7 +325,7 @@
   </g>
   <g id="Drawing_40">
    <rect fill="none" stroke="none" x="9363" y="10840" width="3784" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="9678" y="11346">
      <tspan x="9678 9797 10008 10127 10364 10504 10741 10978 11215 11354 11473 11680 11799 12099 12337 12455 12692 12832">Is property water </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="10196" y="11820">
@@ -348,7 +349,7 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_44_0" stroke-linejoin="round" d="M 5083,18707 L 5083,19527"/>
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_44_1" d="M 5083,19977 L 5233,19527 4933,19527 5083,19977 Z"/>
   </g>
-  <g id="DrawingGroup_8">
+  <g id="DrawingGroup_7">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 4994,12671 C 6788,12671 8158,13056 8158,13560 8158,14064 6788,14449 4994,14449 3200,14449 1830,14064 1830,13560 1830,13056 3200,12671 4994,12671 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_45_0" stroke-linejoin="round" d="M 4994,12671 C 6788,12671 8158,13056 8158,13560 8158,14064 6788,14449 4994,14449 3200,14449 1830,14064 1830,13560 1830,13056 3200,12671 4994,12671 Z"/>
@@ -356,7 +357,7 @@
    </g>
    <g id="Drawing_46">
     <rect fill="none" stroke="none" x="1895" y="13016" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="2468" y="13522">
       <tspan x="2468 2798 3035 3154 3365 3484 3721 3861 4098 4335 4572 4712 4830 5038 5156 5457 5550 5668 5905 6143 6380 6498 6617 6854 7065 7159 7396 7628">Gets property without using </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="3843" y="13996">
@@ -371,7 +372,7 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_48_0" stroke-linejoin="round" d="M 4956,11595 L 4956,12288"/>
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_48_1" d="M 4956,12738 L 5106,12288 4806,12288 4956,12738 Z"/>
   </g>
-  <g id="DrawingGroup_9">
+  <g id="DrawingGroup_8">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 4994,25971 C 6788,25971 8158,26356 8158,26860 8158,27364 6788,27749 4994,27749 3200,27749 1830,27364 1830,26860 1830,26356 3200,25971 4994,25971 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_49_0" stroke-linejoin="round" d="M 4994,25971 C 6788,25971 8158,26356 8158,26860 8158,27364 6788,27749 4994,27749 3200,27749 1830,27364 1830,26860 1830,26356 3200,25971 4994,25971 Z"/>
@@ -379,7 +380,7 @@
    </g>
    <g id="Drawing_50">
     <rect fill="none" stroke="none" x="1895" y="26316" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="2736" y="26822">
       <tspan x="2736 3041 3252 3490 3701 3820 4175 4412 4506 4624 4717 4954 5187 5306 5543 5780 5873 6110 6229 6347 6648 6885 7122 7359">Uses melting point when </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="2762" y="27296">
@@ -395,16 +396,16 @@
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_52_1" d="M 4829,25946 L 4979,25496 4679,25496 4829,25946 Z"/>
   </g>
   <g>
-   <path fill="rgb(207,231,245)" stroke="none" d="M 11207,29465 L 8737,29465 8737,27941 13677,27941 13677,29465 11207,29465 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_53_0" stroke-linejoin="round" d="M 11207,29465 L 8737,29465 8737,27941 13677,27941 13677,29465 11207,29465 Z"/>
+   <path fill="rgb(207,231,245)" stroke="none" d="M 11160,29465 L 8366,29465 8366,27941 13954,27941 13954,29465 11160,29465 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_53_0" stroke-linejoin="round" d="M 11160,29465 L 8366,29465 8366,27941 13954,27941 13954,29465 11160,29465 Z"/>
   </g>
   <g id="Drawing_54">
-   <rect fill="none" stroke="none" x="8437" y="28095" width="5461" height="1271"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
-    <text x="8968" y="28601">
-     <tspan x="8968 9298 9535 9654 9865 9984 10340 10577 10670 10788 10881 11119 11351 11470 11707 11944 12037 12274 12393 12511 12634 12774 13011 13366">Gets melting point from </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="10280" y="29075">
-     <tspan x="10280 10564 10847 10966 11084 11368 11605 11698 11817">EPI Suite</tspan></text>
+   <rect fill="none" stroke="none" x="8237" y="28095" width="5899" height="1271"/>
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+    <text x="8739" y="28601">
+     <tspan x="8739 9069 9306 9425 9636 9755 9967 10204 10297 10509 10746 10839 11076 11194 11431 11668 11787 12024 12236 12354 12447 12803 13040 13159 13396 13633">Gets calculated/estimated </tspan></text>
+    <text fill="rgb(0,0,0)" stroke="none" x="8549" y="29075">
+     <tspan x="8549 8905 9142 9235 9353 9446 9684 9916 10035 10272 10509 10602 10839 10958 11076 11199 11339 11576 11931 12050 12334 12617 12736 12854 13138 13375 13468 13587">melting point from EPI Suite</tspan></text>
    </g>
   </g>
   <g>
@@ -419,7 +420,7 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_57_0" stroke-linejoin="round" d="M 11116,31908 L 11116,32220"/>
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_57_1" d="M 11116,32670 L 11266,32220 10966,32220 11116,32670 Z"/>
   </g>
-  <g id="DrawingGroup_10">
+  <g id="DrawingGroup_9">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 11087,30321 L 13928,31653 11087,32985 8246,31653 11087,30321 11087,30321 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_58_0" stroke-linejoin="round" d="M 11087,30321 L 13928,31653 11087,32985 8246,31653 11087,30321 11087,30321 Z"/>
@@ -428,7 +429,7 @@
   </g>
   <g id="Drawing_59">
    <rect fill="none" stroke="none" x="9264" y="30839" width="3784" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="9953" y="31345">
      <tspan x="9953 10304 10541 10635 10753 10846 11083 11316 11435 11672 11909 12002 12239 12358">Melting point </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9869" y="31819">
@@ -437,7 +438,7 @@
      <tspan x="10150 10434 10717 10836 10954 11238 11475 11568 11687 11924">EPI Suite?</tspan></text>
    </g>
   </g>
-  <g id="DrawingGroup_11">
+  <g id="DrawingGroup_10">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 4994,32472 C 6788,32472 8158,32857 8158,33361 8158,33865 6788,34250 4994,34250 3200,34250 1830,33865 1830,33361 1830,32857 3200,32472 4994,32472 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_60_0" stroke-linejoin="round" d="M 4994,32472 C 6788,32472 8158,32857 8158,33361 8158,33865 6788,34250 4994,34250 3200,34250 1830,33865 1830,33361 1830,32857 3200,32472 4994,32472 Z"/>
@@ -445,7 +446,7 @@
    </g>
    <g id="Drawing_61">
     <rect fill="none" stroke="none" x="1895" y="32817" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="2736" y="33323">
       <tspan x="2736 3041 3252 3490 3701 3820 4175 4412 4506 4624 4717 4954 5187 5306 5543 5780 5873 6110 6229 6347 6648 6885 7122 7359">Uses melting point when </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="2762" y="33797">
@@ -462,7 +463,7 @@
   </g>
   <g id="Drawing_64">
    <rect fill="none" stroke="none" x="7243" y="31085" width="1525" height="732"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="7493" y="31591">
      <tspan x="7493 7612 7751 7988">true</tspan></text>
    </g>
@@ -471,7 +472,7 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_65_0" stroke-linejoin="round" d="M 11052,33058 L 11052,35656"/>
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_65_1" d="M 11052,36106 L 11202,35656 10902,35656 11052,36106 Z"/>
   </g>
-  <g id="DrawingGroup_12">
+  <g id="DrawingGroup_11">
    <g>
     <path fill="rgb(207,231,245)" stroke="none" d="M 10994,36072 C 12788,36072 14158,36457 14158,36961 14158,37465 12788,37850 10994,37850 9200,37850 7830,37465 7830,36961 7830,36457 9200,36072 10994,36072 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" id="Drawing_66_0" stroke-linejoin="round" d="M 10994,36072 C 12788,36072 14158,36457 14158,36961 14158,37465 12788,37850 10994,37850 9200,37850 7830,37465 7830,36961 7830,36457 9200,36072 10994,36072 Z"/>
@@ -479,7 +480,7 @@
    </g>
    <g id="Drawing_67">
     <rect fill="none" stroke="none" x="7895" y="36417" width="6306" height="1200"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
      <text x="8468" y="36923">
       <tspan x="8468 8798 9035 9154 9365 9484 9721 9861 10098 10335 10572 10712 10830 11038 11156 11457 11550 11668 11905 12143 12380 12498 12617 12854 13065 13159 13396 13628">Gets property without using </tspan></text>
      <text fill="rgb(0,0,0)" stroke="none" x="9843" y="37397">
@@ -489,7 +490,7 @@
   </g>
   <g id="Drawing_68">
    <rect fill="none" stroke="none" x="11070" y="32934" width="2287" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
     <text x="11320" y="33440">
      <tspan x="11320 11443 11680 11773 11985">false</tspan></text>
    </g>
