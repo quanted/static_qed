@@ -55,23 +55,26 @@ function calculateGeomean(_geomeanDict, pchemData) {
     calculators. Adds data to pchem table as well.
 	*/
 
-	var alreadyLogProps = ['kow_no_ph', 'koc', 'log_bcf', 'log_baf', 'kow_wph'];
-    var nonLogProps = ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'henrys_law_con', 'water_sol_ph'];
+	// Props that use the standard mean calculation (already in log, or have negative values):
+	var meanProps = ['melting_point', 'boiling_point', 'kow_no_ph', 'koc', 'log_bcf', 'log_baf', 'kow_wph'];
 
-    var props = alreadyLogProps.concat(nonLogProps);
+	// Props that use the geometric mean:
+    var geomeanProps = ['water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'henrys_law_con', 'water_sol_ph'];
+
+    var props = meanProps.concat(geomeanProps);
 
     for (var ind in props) {
 
         var prop = props[ind];
         var geomeanSum = 0.0;
 
-        if (alreadyLogProps.indexOf(prop) > -1) {
+        if (meanProps.indexOf(prop) > -1) {
             // Gets average for props already in log form:
             var geomeanSumVals = sumPropValsForGeomean(prop, true, pchemData);
             geomeanSum = geomeanSumVals.sum;
             _geomeanDict[prop] = geomeanSum / geomeanSumVals.numVals;
         }
-        else if (nonLogProps.indexOf(prop) > -1) {
+        else if (geomeanProps.indexOf(prop) > -1) {
             // Gets geomean for props not yet in log form:
             var geomeanSumVals = sumPropValsForGeomean(prop, false, pchemData);
             geomeanSum = geomeanSumVals.sum;
