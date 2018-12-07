@@ -5,9 +5,9 @@ var v2URL = "/hms/rest/api/v3/workflow/compare/v2.0";
 var sources = [];
 var statistics = [];
 var pearson_coefficients = [];
-var stats = ["sum", "mean", "mode", "median", "max", "standard_deviation", "variance", "root_mean_square", "skewness", "75_percentile", "75_percentile_count",
+var stats = ["sum", "mean", "median", "max", "standard_deviation", "variance", "root_mean_square", "skewness", "75_percentile", "75_percentile_count",
     "95_percentile", "95_percentile_count", "99_percentile", "99_percentile_count", "zero_count"];
-var mm_stats = ["sum", "mean", "mode", "median", "max", "standard_deviation", "variance", "root_mean_square", "75_percentile",
+var mm_stats = ["sum", "mean", "median", "max", "standard_deviation", "variance", "root_mean_square", "75_percentile",
     "95_percentile", "99_percentile"];
 
 $(function () {
