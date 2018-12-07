@@ -430,3 +430,96 @@
 #get_previous_data {
     margin-top: -10px;
 }
+
+/*Version 2 updates*/
+.show {
+    display: inline-block;
+}
+.hide {
+    display: none;
+}
+.input_version_title {
+    display: inline-block;
+}
+.version {
+    display: inline-block;
+}
+#input_block_v1 {
+    float: left;
+    width: 100%;
+    margin: 25px;
+}
+#input_block_v2 {
+    border: 1px solid lightgray;
+    margin: 25px;
+    padding: 20px;
+    font-size: smaller;
+}
+.block_title {
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    display: inline-flex;
+}
+.location_input_row {
+    display: inline-flex;
+    float: left;
+    width: 100%;
+    font-size: small;
+    margin: 10px;
+}
+.location_text_input {
+    margin: 0 8px;
+}
+.location_input_link {
+    color: blue !important;
+}
+.location_checkbox_input {
+    margin-right: 10px;
+}
+.notification {
+    font-size: smaller;
+    color: red;
+}
+.temporal_input_row {
+    display: inline-flex;
+    float: left;
+    width: 100%;
+    font-size: small;
+    margin: 10px;
+}
+.temporal_text_input {
+    margin: 0 8px;
+}
+.subblock_title {
+    width: 100%;
+    display: inline-flex;
+}
+.temporal_input_row_radio {
+    display: inline-flex;
+    float: left;
+    width: 100%;
+    font-size: small;
+    margin: 3px 10px;
+}
+.temporal_input_row_ext {
+    display: block;
+    float: left;
+    width: 100%;
+    font-size: small;
+    margin: 3px 10px;
+}
+.temporal_input_row_ext * {
+    display: block;
+    float:left;
+}
+.sources_input_row {
+    display: inline-flex;
+    float: left;
+    width: 100%;
+    font-size: small;
+    margin: 10px;
+}
+.source_input_label {
+    margin: 0 auto;
+}

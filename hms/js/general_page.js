@@ -23,7 +23,8 @@ $(function () {
     $("#id_startDate").datepicker(datepicker_options);
     $("#id_endDate").datepicker(datepicker_options);
 
-    $('#submit_data_request').on('click', getData2);
+    // $('.submit_data_request').on('click', getTestData);
+    $('.submit_data_request').on('click', getData2);
     setTimeout(pageLoad, 400);
 });
 
@@ -81,7 +82,7 @@ function getData2() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
-            setTimeout(getDataPolling, 4000);
+            setTimeout(getDataPolling, 12000);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
@@ -120,7 +121,7 @@ function getDataPolling() {
                     console.log("Task failed to complete.");
                 }
                 else {
-                    setTimeout(getDataPolling, 4000);
+                    setTimeout(getDataPolling, 12000);
                 }
 
             },
@@ -252,7 +253,11 @@ function setDataGraph2() {
             }
             rowD.push(date);
             $.each(row, function (key, value) {
-                rowD.push(parseFloat(value));
+                var datapoint = parseFloat(value);
+                if(datapoint === -9999 || datapoint === -9998){
+                    datapoint = -1;
+                }
+                rowD.push(datapoint);
             });
             dataCSV.push(rowD);
         }
@@ -262,8 +267,8 @@ function setDataGraph2() {
 }
 
 function toggleLoader() {
-    $('#submit_data_request_loader').toggleClass("loading_icon");
-    $('#submit_data_request').toggleClass("hidden");
+    $('.submit_data_request_loader').toggleClass("loading_icon");
+    $('.submit_data_request').toggleClass("hidden");
 }
 
 function exportDataToJSON() {
