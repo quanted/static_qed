@@ -60,9 +60,9 @@ function getParameters() {
             requestJson["extremeTotal"] = $('#extreme_5_total').val();
             requestJson["extremeDaily"] = $('#extreme_5_daily').val();
         }
-        else if (resolution === "extreme_1") {
-            requestJson["extremeDaily"] = $('#extreme_1_daily').val();
-        }
+        // else if (resolution === "extreme_1") {
+        //     requestJson["extremeDaily"] = $('#extreme_1_daily').val();
+        // }
         var sourceList = [];
         $('#source_list input:checked').each(function () {
             sourceList.push($(this).val());
