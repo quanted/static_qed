@@ -2,7 +2,7 @@ let browserType = "";
 let enableWebApp = true;
 
 function getBrowser() {
-    if (!!window.chrome && !!window.chrome.webstore) {
+    if (!!window.chrome) {
         browserType = "Chrome";
     }
     else if (typeof InstallTrigger !== 'undefined') {

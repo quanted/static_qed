@@ -466,7 +466,7 @@
     float: left;
     width: 100%;
     font-size: small;
-    margin: 10px;
+    margin: 10px 15px;
 }
 .location_text_input {
     margin: 0 8px;
@@ -486,7 +486,7 @@
     float: left;
     width: 100%;
     font-size: small;
-    margin: 10px;
+    margin: 10px 15px;
 }
 .temporal_text_input {
     margin: 0 8px;

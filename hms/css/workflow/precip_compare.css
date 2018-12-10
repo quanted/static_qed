@@ -31,3 +31,22 @@
 #output_metadata_block {
     border-bottom: 1px solid lightgray;
 }
+.blue_notification {
+    float:left;
+    color: blue;
+}
+.input_location_block {
+    display: inline-block;
+}
+.temporal_location_block {
+    display: inline-block;
+}
+.source_location_block {
+    display: inline-block;
+}
+.input_nav {
+    display: inline-block;
+}
+.temporal_location_agg_block {
+    margin: 10px 15px;
+}
