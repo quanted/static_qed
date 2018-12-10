@@ -3,6 +3,8 @@ Functions for calculating geometric mean for the
 p-chem table. Gets called by cts_pchemprop_requests.html.
 */
 
+var geomeanDict;
+
 function handleGeomean(workflow, run_type) {
     /*
     Handles geomean calculation by workflow and
