@@ -39,8 +39,8 @@ function getParameters() {
     if (version === "v2") {
         baseUrl = v2URL;
         requestJson["dateTimeSpan"] = {
-            "startDate": $("#temporal_start").val(),
-            "endDate": $('#temporal_end').val(),
+            "startDate": $("#temporal_start").val() + '-01-01',
+            "endDate": $('#temporal_end').val() + '-12-31',
         };
         if ($("#source_comid").prop("checked")) {
             requestJson["geometry"] = {
