@@ -40521,6 +40521,11 @@ var StressTest = {
 
 	trackProgress: function (data_obj) {
 		var start_time = data_obj['request_post']['start_time'];
+
+		if (!(start_time)) {
+			start_time = data_obj['start_time'];			
+		}
+
 		var stop_time = Date.now();
 
 		// var latency = stop_time - start_time;  // diff in ms
