@@ -40331,7 +40331,7 @@ var StressTest = {
 			}
 		});
 
-		// Do this stuff once file is uploaded:
+		// Do this stuff once file is uploaded (for batch mode testing):
 		$('#upfile1').change(function () {
 
 			var file = this.files[0];
@@ -40341,6 +40341,31 @@ var StressTest = {
 				var reader = new FileReader();
 				reader.onload = function (e) {
 					StressTest.batch_data = StressTest.readBatchInputFile(reader.result);
+				}
+				reader.readAsText(file);
+			}
+			else {
+				$('#fileDisplayArea').html("File not supported!");
+			}
+
+		});
+
+		// Upload button for viewing stress results:
+		$('#upload-results-button').change(function () {
+
+			var file = this.files[0];
+			// var textType = /text.*/;
+			var textType = "application/json";
+
+			if (file.type.match(textType)) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					// StressTest.batch_data = StressTest.readBatchInputFile(reader.result);
+
+					// Loads data into cts_stress_test_result.js module for plotting:
+					var stressData = JSON.parse(reader.result);
+					ctsStressResults.init(stressData);
+
 				}
 				reader.readAsText(file);
 			}
@@ -40978,7 +41003,8 @@ require('./jsPDF_plugin');
 // DOM Elements:
 var DomElements = {
 	downloadPdfButton: $('#download-pdf-button'),
-	downloadHtmlButton: $('#download-html-button')
+	downloadHtmlButton: $('#download-html-button'),
+	downloadJsonButton: $('#download-json-button')
 };
 
 
@@ -41030,6 +41056,29 @@ var CtsStressMain = {
   			$(fileDownloadForm).attr({'action': '/cts/stress/html'}).submit();
 
 			console.log("HTML file generated.");
+
+		});
+
+		DomElements.downloadJsonButton.on('click', function () {
+
+			// NOTE: Using table.gethtml as DOM element to pass
+			// JSON data to the backup (was originally created for HTML downloads)
+
+			console.log("Generating JSON...");
+
+			var fileDownloadForm = $('form.post_form');
+			$('table.gethtml').html("");
+
+			var stressData = ctsStressTester.scenario.data;
+
+			$('<tr style="display:none"><td><input type="hidden" name="stress_json"></td></tr>')
+				.appendTo('.gethtml')
+				.find('input')
+				.val(JSON.stringify(stressData));
+
+  			$(fileDownloadForm).attr({'action': '/cts/stress/json'}).submit();
+
+			console.log("JSON generated.");
 
 		});
 
