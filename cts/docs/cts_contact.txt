@@ -1,3 +1,4 @@
-<p>
-Send any questions or comments via email to: <b>cts AT epa DOT gov</b>
-</p>
+<div>
+<p style="float:left;">Send any questions or comments via email to:</p>
+<img src="/static_qed/cts/images/contact_info.png" style="float:left;padding-top:2px;"/>
+</div>
