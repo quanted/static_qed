@@ -774,3 +774,33 @@ ul.bullet_indent {
   /*padding-left: 15px;*/
   margin-left: 15px;
 }
+
+
+
+/* CSV download button dropdown for gentrans */
+.csv-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.csv-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+  margin-right: 50px;
+}
+.csv-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+/* Change color of dropdown links on hover */
+.csv-dropdown-content a:hover {
+  background-color: #ddd;
+}
+/* Show the dropdown menu on hover */
+.csv-dropdown:hover .csv-dropdown-content {display: block;}
+/* Change the background color of the dropdown button when the dropdown content is shown */
+/*.csv-dropdown:hover .dropbtn {background-color: #3e8e41;}*/
