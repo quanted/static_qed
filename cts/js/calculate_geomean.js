@@ -3,6 +3,8 @@ Functions for calculating geometric mean for the
 p-chem table. Gets called by cts_pchemprop_requests.html.
 */
 
+var geomeanDict;
+
 function handleGeomean(workflow, run_type) {
     /*
     Handles geomean calculation by workflow and
@@ -68,7 +70,9 @@ function calculateGeomean(_geomeanDict, pchemData) {
         var prop = props[ind];
         var geomeanSum = 0.0;
 
-        if (meanProps.indexOf(prop) > -1) {
+        var isNegative = checkForNegativeValues(prop, pchemData);
+
+        if (meanProps.indexOf(prop) > -1 || isNegative) {
             // Gets average for props already in log form:
             var geomeanSumVals = sumPropValsForGeomean(prop, true, pchemData);
             geomeanSum = geomeanSumVals.sum;
@@ -287,4 +291,24 @@ function buildChemDictFromBatchList() {
 
 	return pchemDict;
 
+}
+
+
+
+function checkForNegativeValues(prop, pchemData) {
+	/*
+	Checks data for any negative values before
+	computing the geomean.
+	*/
+	for (var ind in pchemData) {
+        
+        var dataObj = pchemData[ind];
+
+        if (dataObj['data'] < 0) {
+        	return true;
+        }
+
+    }
+
+    return false;
 }
