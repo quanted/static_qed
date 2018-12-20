@@ -1,4 +1,3 @@
-// var baseUrl = "/hms/rest/api/workflow/compare/v1";
 var baseUrl = "/hms/rest/api/v3/workflow/compare/v1.0";
 var v2URL = "/hms/rest/api/v3/workflow/compare/v2.0";
 
@@ -34,35 +33,33 @@ function getParameters() {
     var version = $('#version_select').val();
     var requestJson = {
         "dataset": "Precipitation",
-        "source": "compare"
+        "source": "compare",
+        "timeLocalized": true
     };
     if (version === "v2") {
         baseUrl = v2URL;
         requestJson["dateTimeSpan"] = {
-            "startDate": $("#temporal_start").val(),
-            "endDate": $('#temporal_end').val(),
+            "startDate": $("#temporal_start").val() + "-01-01",
+            "endDate": $('#temporal_end').val() + "-12-31",
         };
         if ($("#source_comid").prop("checked")) {
             requestJson["geometry"] = {
                 "comID": $('#location_comid').val()
             };
-            requestJson["weighted"] = $('#comid_weighted_spatial_avg').prop('checked').toString();
+            requestJson["Weighted"] = $('#comid_weighted_spatial_avg').prop('checked').toString();
             requestJson["closestStation"] = $('#comid_ncdc_station').prop('checked').toString();
         }
         else {
             requestJson["geometry"] = {
-                "stationID": $('#location_ncdc').val()
+                "StationID": $('#location_ncdc').val()
             };
         }
         var resolution = $('input[name=aggregation]:checked').val();
         requestJson["temporalResolution"] = resolution;
         if (resolution === "extreme_5") {
-            requestJson["extremeTotal"] = $('#extreme_5_total').val();
-            requestJson["extremeDaily"] = $('#extreme_5_daily').val();
+            requestJson["ExtremeTotal"] = $('#extreme_5_total').val();
+            requestJson["ExtremeDaily"] = $('#extreme_5_daily').val();
         }
-        // else if (resolution === "extreme_1") {
-        //     requestJson["extremeDaily"] = $('#extreme_1_daily').val();
-        // }
         var sourceList = [];
         $('#source_list input:checked').each(function () {
             sourceList.push($(this).val());
@@ -108,6 +105,7 @@ function selectInputVersion() {
 }
 
 function setCoefficients() {
+    pearson_coefficients = [];
     $.map(sources, function (source1) {
         var row = [];
         $.map(sources, function (source2) {
@@ -120,6 +118,7 @@ function setCoefficients() {
 }
 
 function setStatistics() {
+    statistics = [];
     $.map(stats, function (stat) {
         var stat_title = stat.replace(/_/g, " ");
         var units = (mm_stats.includes(stat)) ? " (mm)" : "";
@@ -135,9 +134,19 @@ function setStatistics() {
 }
 
 function createStatisticsTable() {
-    var stats_block = document.createElement("div");
+    var block = document.getElementById('output_data_2');
+    var stats_block;
+    if(document.getElementById("stats_block")){
+        stats_block = document.getElementById("stats_block");
+        while(stats_block.lastChild){
+            stats_block.removeChild(stats_block.lastChild);
+        }
+    }
+    else {
+        stats_block = document.createElement("div");
+    }
     stats_block.id = "stats_block";
-    document.getElementById('output_data_2').appendChild(stats_block);
+    block.appendChild(stats_block);
 
     var stats_title = document.createElement("h3");
     stats_title.id = "stats_title";
@@ -156,7 +165,7 @@ function createStatisticsTable() {
     statsDataTable.addRows(statistics);
     var tableOptions = {
         title: "Statistics For Data Sources",
-        pageSize: 10,
+        // pageSize: 10,
         width: '100%'
     };
     var statsTable = new google.visualization.Table(stats_container);
@@ -169,7 +178,16 @@ function createCorrelationGraph() {
     var labels = sources;
     var data = pearson_coefficients;
 
-    var matrix_block = document.createElement("div");
+    var matrix_block;
+    if (document.getElementById("matrix_block")){
+        matrix_block = document.getElementById("matrix_block");
+        while(matrix_block.lastChild){
+            matrix_block.removeChild(matrix_block.lastChild);
+        }
+    }
+    else {
+        matrix_block = document.createElement("div");
+    }
     matrix_block.id = "matrix_block";
     document.getElementById('output_data_2').appendChild(matrix_block);
 
