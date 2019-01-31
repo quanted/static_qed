@@ -46,11 +46,36 @@ $(document).ajaxStart(function () {
 
 
 function loadCachedChemical() {
-  var cached_molecule = JSON.parse(sessionStorage.getItem('molecule'));
-  if (cached_molecule !== null) {
-    populateChemEditDOM(cached_molecule);
+  var cachedMolecule = JSON.parse(sessionStorage.getItem('molecule'));
+  if (cachedMolecule !== null) {
+    populateChemEditDOM(cachedMolecule);
+  }
+
+  // Checking for missing MarvinSketch, if there isn't
+  // <cml> data for it, then it requests it:
+  console.log("Checking for marvin sketch data: ");
+  console.log(cachedMolecule)
+  checkForMarvinSketchData(cachedMolecule);
+
+}
+
+
+
+function checkForMarvinSketchData(cachedMolecule) {
+  // Checks for missing MarvinSketch, if there isn't
+  // <cml> data for it, then it requests it:
+  if (!('structureData' in cachedMolecule)) {
+    console.log("Getting chem details..");
+    var chemicalObj = {'chemical': cachedMolecule.chemical, 'get_structure_data': true};
+    getChemDetails(chemicalObj, function (molecule_info) {
+      console.log("data received: ")
+      console.log(molecule_info)
+      sessionStorage.setItem('molecule', JSON.stringify(molecule_info.data)); // set current chemical in session cache
+      populateChemEditDOM(molecule_info.data);
+    });
   }
 }
+
 
 
 function importMol(chemical) {
@@ -152,7 +177,12 @@ function populateChemEditDOM(data) {
   $('#mass').val(data["mass"]); //Mass txtbox - results table
   $('#exactmass').val(data['exactMass']);
 
-  marvinSketcherInstance.importStructure("mrv", data.structureData.structure);
+  try {
+    marvinSketcherInstance.importStructure("mrv", data.structureData.structure);
+  }
+  catch (e) {
+    console.log(e);
+  }
 
 }
 
@@ -244,11 +274,11 @@ function ajaxCall(data_obj, callback) {
           $.ajax(this);
           return;
         }
-        displayErrorInTextbox("Name not recognized..");
+        displayErrorInTextbox("Name not recognized");
         return;
       }
       else {
-        displayErrorInTextbox("Name not recognized..");
+        displayErrorInTextbox("Name not recognized");
         return;
       }
     }

@@ -2,7 +2,7 @@ let browserType = "";
 let enableWebApp = true;
 
 function getBrowser() {
-    if (!!window.chrome && !!window.chrome.webstore) {
+    if (!!window.chrome) {
         browserType = "Chrome";
     }
     else if (typeof InstallTrigger !== 'undefined') {
@@ -37,7 +37,7 @@ function browserCheck() {
         let load = $('#load_page');
         setTimeout(function () {
             load.fadeIn(600);
-            $('#load_message').html("Incompatible browser detected. Please use Chrome or Firefow to access HMS web applications.");
+            $('#load_message').html("Incompatible browser detected. Please use Chrome or Firefox to access HMS web applications.");
             return false;
         }, 600);
     }
