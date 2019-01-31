@@ -17,6 +17,12 @@ function checkJobExists(){
                 if (data['status'] === "Not found") {
                     errorDisplay();
                 }
+                else if(data['status'].startsWith("Failed")){
+                    var message = data['status'];
+                    var error_info = data['error_info'];
+                    $('#download_area').html(message);
+                    $('#except_info').html("Error info: "+ error_info);
+                }
             }
             else{
                 console.log("Error: No status in response!");

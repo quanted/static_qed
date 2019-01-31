@@ -8,8 +8,9 @@ $(document).ready(function(){
 
 
 var jobid = window.location.pathname.split("/").pop();
-var timeout = 5000; // Timeout length in milliseconds (1000 = 1 second)
+var timeout = 10000; // Timeout length in milliseconds (1000 = 1 second)
 var attemptCount = 0;
+var maxAttempts = 45;
 
 $(document).ready(function () {
     setTimeout(checkJobStatus, 1000)
@@ -33,13 +34,27 @@ function checkJobStatus(){
                     $(location).attr('href', outputUrl);
                 }
                 else if(data['status'] === "Not found"){
-                    $('#status').html("Error: NTA task not found!");
+                    $('#status').html("Error: NTA task failed to start!");
                     $('#wait_gif').html("");
 
                 }
+                else if(data['status'].startsWith("Failed")){
+                    var message = data['status'];
+                    var error_info = data['error_info'];
+                    $('#status').html(message);
+                    $('#wait_gif').html("");
+                    $('#except_info').html("Error info: "+ error_info);
+                }
                 else {
                     console.log("Status: " + data['status']);
-                    setTimeout(checkJobStatus, 5000);
+                    if(attemptCount<maxAttempts){
+                        setTimeout(checkJobStatus, timeout);
+                    }
+                    else{
+                       $('#status').html("Error: NTA task timed out!");
+                       $('#wait_gif').html("");
+                    }
+
                 }
             }
             else{
