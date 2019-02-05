@@ -48,6 +48,11 @@ function getParameters() {
             };
             requestJson["Weighted"] = $('#comid_weighted_spatial_avg').prop('checked').toString();
             requestJson["closestStation"] = $('#comid_ncdc_station').prop('checked').toString();
+            if ($("#comid_ncdc_station").prop("checked")){
+                requestJson["geometry"] = {
+                    "StationID": $('#location_input_comid_ncdc').val()
+                };
+            }
         }
         else {
             requestJson["geometry"] = {
@@ -102,6 +107,14 @@ function selectInputVersion() {
         v2.classList = 'hide';
     }
     return false;
+}
+
+function toggleNCEIInput() {
+    var block = document.getElementById('location_input_comid_ncdc_block');
+    $(block).toggle();
+    if(block.style.display !== "none"){
+        block.style.display = "inline-flex";
+    }
 }
 
 function setCoefficients() {

@@ -50,3 +50,7 @@
 .temporal_location_agg_block {
     margin: 10px 15px;
 }
+#location_input_comid_ncdc_block {
+    float: left;
+    display: none;
+}
