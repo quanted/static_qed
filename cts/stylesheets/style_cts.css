@@ -42,6 +42,10 @@ input[type="checkbox"], input[type="radio"] {
   width: 1.5em;
 }
 
+input.calc_checkbox {
+  float: none;
+}
+
 .tabUnsel {
   color: #4289AA;
 }
