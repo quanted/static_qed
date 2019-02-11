@@ -58,10 +58,10 @@ function calculateGeomean(_geomeanDict, pchemData) {
 	*/
 
 	// Props that use the standard mean calculation (already in log, or have negative values):
-	var meanProps = ['melting_point', 'boiling_point', 'kow_no_ph', 'koc', 'log_bcf', 'log_baf', 'kow_wph'];
+	var meanProps = ['kow_no_ph', 'koc', 'log_bcf', 'log_baf', 'kow_wph'];
 
 	// Props that use the geometric mean:
-    var geomeanProps = ['water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'henrys_law_con', 'water_sol_ph'];
+    var geomeanProps = ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'henrys_law_con', 'water_sol_ph'];
 
     var props = meanProps.concat(geomeanProps);
 
@@ -77,12 +77,17 @@ function calculateGeomean(_geomeanDict, pchemData) {
             var geomeanSumVals = sumPropValsForGeomean(prop, true, pchemData);
             geomeanSum = geomeanSumVals.sum;
             _geomeanDict[prop] = geomeanSum / geomeanSumVals.numVals;
+            isNegative = false;
         }
         else if (geomeanProps.indexOf(prop) > -1) {
             // Gets geomean for props not yet in log form:
             var geomeanSumVals = sumPropValsForGeomean(prop, false, pchemData);
             geomeanSum = geomeanSumVals.sum;
-            _geomeanDict[prop] = Math.pow(10, (1.0/geomeanSumVals.numVals)*geomeanSum);
+            var geomeanVal = Math.pow(10, (1.0/geomeanSumVals.numVals)*geomeanSum);
+            if (prop == 'melting_point' || prop == 'boiling_point') {
+            	geomeanVal = convertKelvinToCelsius(geomeanVal);
+            }
+            _geomeanDict[prop] = geomeanVal;
         }
 
     }
@@ -107,6 +112,7 @@ function sumPropValsForGeomean(prop, isLog, pchemData) {
     for (var ind in pchemData) {
         
         var dataObj = pchemData[ind];
+        var dataVal;
 
         // Continues looping until data for requested prop is found:
         if (dataObj['prop'] != prop) { continue; }
@@ -114,7 +120,11 @@ function sumPropValsForGeomean(prop, isLog, pchemData) {
         // Skips 'measured' data for geomean calculations:
         if (dataObj['calc'] == "measured") { continue; }
 
-        var dataVal = parseFloat(dataObj['data']);  // gets pchem data value
+        dataVal = parseFloat(dataObj['data']);  // gets pchem data value
+
+        if(dataObj['prop'] == 'melting_point' || dataObj['prop'] == 'boiling_point') {
+         	dataVal = convertCelsiusToKelvin(dataVal);
+        }
 
         // Ignore any vals that aren't numbers (e.g., error message):
         if (isNaN(dataVal)) { continue; }
@@ -304,6 +314,10 @@ function checkForNegativeValues(prop, pchemData) {
         
         var dataObj = pchemData[ind];
 
+        if (dataObj['prop'] != prop) {
+        	continue;
+        }
+
         if (dataObj['data'] < 0) {
         	return true;
         }
@@ -311,4 +325,16 @@ function checkForNegativeValues(prop, pchemData) {
     }
 
     return false;
+}
+
+
+
+function convertCelsiusToKelvin(data) {
+	return 273.15 + parseFloat(data);
+}
+
+
+
+function convertKelvinToCelsius(data) {
+	return parseFloat(data) - 273.15;
 }
