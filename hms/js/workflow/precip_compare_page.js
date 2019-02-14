@@ -221,8 +221,8 @@ function createCorrelationGraph() {
         container: '#matrix_container',
         data: data,
         labels: labels,
-        start_color: '#ffffff',
-        end_color: '#3498db'
+        start_color: '#369FE5',
+        end_color: '#194969'
     });
 
 }
