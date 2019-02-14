@@ -42,18 +42,18 @@ function getParameters() {
     };
     requestJson["algorithm"] = $('#id_algorithm').val();
     requestJson["albedo"] = $("#id_albedo").val();
-    requestJson["centrallongitude"] = $("#id_centrallongitude").val();
+    requestJson["centrallongitude"] = $("#id_centlong").val();
     requestJson["sunangle"] = $("#id_sunangle").val();
     requestJson["emissivity"] = $("#id_emissivity").val();
     requestJson["model"] = $("#id_model").val();
     requestJson["zenith"] =  $("#id_zenith").val();
-    requestJson["lakesurfacearea"] = $("#id_lakesurfacearea").val();
+    requestJson["lakesurfacearea"] = $("#id_lakesurfarea").val();
     requestJson["lakedepth"] = $("#id_lakedepth").val();
-    requestJson["subsurfaceresistance"] = $("#id_subsurfaceresistance").val();
-    requestJson["stomatalresistance"] = $("#id_stomatalresistance").val();
+    requestJson["subsurfaceresistance"] = $("#id_subsurfres").val();
+    requestJson["stomatalresistance"] = $("#id_stomres").val();
     requestJson["leafwidth"] = $("#id_leafwidth").val();
-    requestJson["roughnesslength"] = $("#id_roughnesslength").val();
-    requestJson["vegetationheight"] = $("#id_vegetationheight").val();
+    requestJson["roughnesslength"] = $("#id_roughlength").val();
+    requestJson["vegetationheight"] = $("#id_vegheight").val();
     if ($('#id_source').val() === "custom"){
         console.log("custom input currently in development");
         // uses id_userData?
@@ -118,7 +118,7 @@ function initializeInputForm() {
 function toggleSource(){
 	var state = $('#id_source').val();
 	switch(state){
-		case 'ncdc':
+		case 'ncei':
 			$('#id_latitude').parent().parent().hide();
             $('#id_longitude').parent().parent().hide();
             $('#id_stationID').parent().parent().show();
