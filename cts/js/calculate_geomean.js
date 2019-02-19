@@ -59,7 +59,8 @@ function calculateGeomean(_geomeanDict, pchemData) {
         var prop = props[ind];
         var geomeanSum = 0.0;
         var isNegative = checkForNegativeValues(prop, pchemData);
-        if (meanProps.indexOf(prop) > -1 || isNegative) {
+        var isMPorBP = prop == 'melting_point' || prop == 'boiling_point';
+    	if (meanProps.indexOf(prop) > -1 || (isNegative && !isMPorBP)) {
             // Gets average for props already in log form:
             var geomeanSumVals = sumPropValsForGeomean(prop, true, pchemData);
             geomeanSum = geomeanSumVals.sum;
