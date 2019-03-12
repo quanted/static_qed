@@ -13,7 +13,7 @@
 The PCP module is currently accessing:
 <br>
 <ol>
-	<li>&nbsp;SPARC Performs Automated Reasoning in Chemistry (SPARC), which uses a mechanistic-based approach;</li>
+	<!--<li>&nbsp;SPARC Performs Automated Reasoning in Chemistry (SPARC), which uses a mechanistic-based approach;</li>-->
 	<li>&nbsp;EPI Suite, which uses a fragment-based approach;</li>
 	<li>&nbsp;Toxicity Estimation Software Tool (TEST), which uses QSAR-based approaches; and </li>
 	<li>&nbsp;ChemAxon plug-in calculators, which use an atom-based fragment approach. </li>
