@@ -139,7 +139,7 @@ function spatialTypeSelect() {
 
 function validateInput() {
     var valid = true;
-    requireInputs.map(function (input) {
+    requiredInputs.map(function (input) {
         if (!inputJSON.hasOwnProperty(input)) {
             valid = false;
         }
@@ -379,7 +379,7 @@ function getData() {
 }
 
 function getDataPolling() {
-    counter = counter - 1;
+    // counter = counter - 1;
     var requestUrl = "hms/rest/api/v2/hms/data";
     if (counter > 0) {
         $.ajax({
@@ -394,7 +394,7 @@ function getDataPolling() {
                     setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
                     dyGraph.resize();
-                    counter = 25;
+                    // counter = 25;
                 }
                 else if (data.status === "FAILURE") {
                     toggleLoader(false, "Task " + jobID + " encountered an error.");

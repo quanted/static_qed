@@ -235,7 +235,7 @@ function getTestData() {
     $('#component_tabs').tabs("enable", 2);
     $('#component_tabs').tabs("option", "active", 2);
     dyGraph.resize();
-    counter = 25;
+    // counter = 25;
 }
 
 // Copied from https://bl.ocks.org/arpitnarechania/caeba2e6579900ea12cb2a4eb157ce74, open source d3 examples
