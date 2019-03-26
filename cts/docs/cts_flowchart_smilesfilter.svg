@@ -3,7 +3,7 @@
 <svg version="1.2" baseProfile="tiny" width="215.9mm" height="762mm" viewBox="0 0 21590 76200" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
  <defs>
   <font id="EmbeddedFont_1" horiz-adv-x="2048">
-   <font-face font-family="sans-serif" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1852" descent="450"/>
+   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="normal" font-style="normal" ascent="1852" descent="450"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
    <glyph unicode="”" horiz-adv-x="530" d="M 87,1272 L 87,1481 280,1481 280,1316 C 280,1227 270,1162 249,1123 220,1069 176,1028 115,1001 L 71,1072 C 107,1087 134,1110 152,1142 169,1173 179,1217 181,1272 L 87,1272 Z M 397,1272 L 397,1481 590,1481 590,1316 C 590,1227 580,1162 559,1123 530,1069 486,1028 425,1001 L 381,1072 C 417,1087 444,1110 462,1142 479,1173 489,1217 491,1272 L 397,1272 Z"/>
    <glyph unicode="“" horiz-adv-x="504" d="M 276,1220 L 276,1011 83,1011 83,1176 C 83,1265 94,1330 115,1370 143,1423 187,1464 248,1491 L 292,1421 C 255,1406 228,1383 211,1353 194,1322 184,1278 182,1220 L 276,1220 Z M 586,1220 L 586,1011 393,1011 393,1176 C 393,1265 404,1330 425,1370 453,1423 497,1464 558,1491 L 602,1421 C 565,1406 538,1383 521,1353 504,1322 494,1278 492,1220 L 586,1220 Z"/>
@@ -62,7 +62,7 @@
  </defs>
  <defs>
   <font id="EmbeddedFont_2" horiz-adv-x="2048">
-   <font-face font-family="sans-serif" units-per-em="2048" font-weight="bold" font-style="normal" ascent="1879" descent="476"/>
+   <font-face font-family="Arial embedded" units-per-em="2048" font-weight="bold" font-style="normal" ascent="1879" descent="476"/>
    <missing-glyph horiz-adv-x="2048" d="M 0,0 L 2047,0 2047,2047 0,2047 0,0 Z"/>
    <glyph unicode="z" horiz-adv-x="954" d="M 34,0 L 34,219 432,676 C 497,751 546,804 577,835 544,833 501,832 448,831 L 73,829 73,1062 951,1062 951,863 545,395 402,240 C 480,245 528,247 547,247 L 982,247 982,0 34,0 Z"/>
    <glyph unicode="y" horiz-adv-x="1059" d="M 14,1062 L 313,1062 567,308 815,1062 1106,1062 731,40 664,-145 C 639,-207 616,-254 594,-287 571,-320 546,-346 517,-366 488,-387 452,-403 410,-414 367,-425 319,-431 266,-431 212,-431 159,-425 107,-414 L 82,-194 C 126,-203 166,-207 201,-207 266,-207 315,-188 346,-149 377,-111 401,-62 418,-3 L 14,1062 Z"/>
@@ -88,7 +88,6 @@
    <glyph unicode="W" horiz-adv-x="1906" d="M 357,0 L 7,1466 310,1466 531,459 799,1466 1151,1466 1408,442 1633,1466 1931,1466 1575,0 1261,0 969,1096 678,0 357,0 Z"/>
    <glyph unicode="T" horiz-adv-x="1165" d="M 479,0 L 479,1218 44,1218 44,1466 1209,1466 1209,1218 775,1218 775,0 479,0 Z"/>
    <glyph unicode="S" horiz-adv-x="1192" d="M 74,477 L 362,505 C 379,408 415,337 468,292 521,247 592,224 682,224 777,224 849,244 898,285 946,325 970,372 970,426 970,461 960,490 940,515 919,539 884,560 833,578 798,590 719,611 596,642 437,681 326,730 262,787 172,868 127,966 127,1082 127,1157 148,1227 191,1292 233,1357 294,1406 374,1440 453,1474 549,1491 662,1491 846,1491 985,1451 1078,1370 1171,1289 1219,1182 1224,1047 L 928,1034 C 915,1109 888,1164 847,1197 805,1230 742,1246 659,1246 573,1246 506,1228 457,1193 426,1170 410,1140 410,1102 410,1067 425,1038 454,1013 491,982 582,949 726,915 870,881 977,846 1046,810 1115,773 1169,724 1208,661 1247,598 1266,520 1266,427 1266,343 1243,264 1196,191 1149,118 1083,63 998,28 913,-8 806,-26 679,-26 494,-26 351,17 252,103 153,188 93,313 74,477 Z"/>
-   <glyph unicode="R" horiz-adv-x="1324" d="M 150,0 L 150,1466 773,1466 C 930,1466 1044,1453 1115,1427 1186,1400 1242,1353 1285,1286 1328,1219 1349,1142 1349,1055 1349,945 1317,854 1252,783 1187,711 1091,666 962,647 1026,610 1079,569 1121,524 1162,479 1218,400 1289,286 L 1468,0 1114,0 900,319 C 824,433 772,505 744,535 716,564 686,585 655,596 624,607 574,612 506,612 L 446,612 446,0 150,0 Z M 446,846 L 665,846 C 807,846 896,852 931,864 966,876 994,897 1014,926 1034,955 1044,992 1044,1036 1044,1085 1031,1125 1005,1156 978,1186 941,1205 893,1213 869,1216 797,1218 677,1218 L 446,1218 446,846 Z"/>
    <glyph unicode="P" horiz-adv-x="1113" d="M 149,0 L 149,1466 624,1466 C 804,1466 921,1459 976,1444 1060,1422 1130,1374 1187,1301 1244,1227 1272,1132 1272,1015 1272,925 1256,849 1223,788 1190,727 1149,679 1099,644 1048,609 997,585 945,574 874,560 772,553 638,553 L 445,553 445,0 149,0 Z M 445,1218 L 445,802 607,802 C 724,802 802,810 841,825 880,840 911,864 934,897 956,930 967,968 967,1011 967,1064 951,1108 920,1143 889,1178 849,1199 801,1208 766,1215 695,1218 588,1218 L 445,1218 Z"/>
    <glyph unicode="M" horiz-adv-x="1430" d="M 145,0 L 145,1466 588,1466 854,466 1117,1466 1561,1466 1561,0 1286,0 1286,1154 995,0 710,0 420,1154 420,0 145,0 Z"/>
    <glyph unicode="L" horiz-adv-x="1006" d="M 157,0 L 157,1454 453,1454 453,247 1189,247 1189,0 157,0 Z"/>
@@ -116,7 +115,7 @@
   </g>
   <g id="Drawing_2">
    <rect fill="none" stroke="none" x="2651" y="492" width="15622" height="1706"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="847" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="847" font-style="normal" font-weight="700">
     <text x="4630" y="1400">
      <tspan x="4630 5240 5756 6319 6556 7119 7826 8063 8580 9143 9706 9943 10506 10790 11259 11776 12292 12762 13092 13609 13846 14269 14739 15023 15260 15776">CTS SMILES Standardization</tspan></text>
    </g>
@@ -132,7 +131,7 @@
   </g>
   <g id="Drawing_5">
    <rect fill="none" stroke="none" x="7577" y="12525" width="6097" height="1017"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="9683" y="13031">
      <tspan x="9683 9988 10225 10343 10462 10669 10906 11000 11093 11330">Not valid?</tspan></text>
    </g>
@@ -146,7 +145,7 @@
   </g>
   <g id="Drawing_8">
    <rect fill="none" stroke="none" x="12831" y="14889" width="6097" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="13617" y="15395">
      <tspan x="13617 13922 14159 14277 14514 14654 14891 15103 15221 15459 15598 15738 15975 16115 16233 16373 16678 16915 17152 17507 17601 17812 18049 18142">Returns error “Chemical </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="13739" y="15869">
@@ -155,14 +154,14 @@
   </g>
   <g id="Drawing_9">
    <rect fill="none" stroke="none" x="11541" y="12144" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="12546" y="12650">
      <tspan x="12546 12665 12804 13041">true</tspan></text>
    </g>
   </g>
   <g id="Drawing_10">
    <rect fill="none" stroke="none" x="9841" y="13944" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10761" y="14450">
      <tspan x="10761 10884 11121 11214 11426">false</tspan></text>
    </g>
@@ -173,7 +172,7 @@
   </g>
   <g id="Drawing_12">
    <rect fill="none" stroke="none" x="6731" y="17389" width="7540" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="7410" y="17895">
      <tspan x="7410 7715 7926 8164 8375 8494 8799 9036 9273 9628 9912 10119 10356 10593 10712 10996 11114 11351 11588 11825 12062 12202 12439 12532 12740 12977 13117 13235 13354 13591">Uses ChemAxon Standardizer to </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="7732" y="18369">
@@ -188,7 +187,7 @@
   </g>
   <g id="Drawing_14">
    <rect fill="none" stroke="none" x="7531" y="20389" width="6097" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="8640" y="20895">
      <tspan x="8640 8970 9207 9326 9537 9656 10012 10249 10342 10579 10719 10837 10956 11193 11430 11548 11785 12141 12378">Gets major tautomer</tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9043" y="21369">
@@ -209,7 +208,7 @@
   </g>
   <g id="Drawing_18">
    <rect fill="none" stroke="none" x="7532" y="22589" width="6424" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="7890" y="23095">
      <tspan x="7890 8195 8406 8644 8855 8974 9279 9516 9753 10108 10392 10599 10836 11073 11192 11476 11594 11831 12068 12305 12542 12682 12919 13012 13220 13457 13597">Uses ChemAxon Standardizer </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="8691" y="23569">
@@ -226,7 +225,7 @@
   </g>
   <g id="Drawing_21">
    <rect fill="none" stroke="none" x="1354" y="27714" width="7028" height="2148"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="1809" y="28220">
      <tspan x="1809 2093 2211 2448 2685 2922 3159 3299 3536 3629 3837 4074 4311 4429 4713 5064 5183 5420 5704 5987 6106 6199 6411 6529 6766 6978 7215 7452 7571 7689 7926">Standardized SMILES is used to </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="2093" y="28694">
@@ -254,7 +253,7 @@
   </g>
   <g id="Drawing_26">
    <rect fill="none" stroke="none" x="2313" y="25406" width="5192" height="739"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="2585" y="25925">
      <tspan x="2585 2822 2941 3059 3343 3601 3838 4075 4194 4431 4570 4689 4947 5205 5324 5718 5976 6141 6378 6518 6636 6895">1. Speciation Workflow</tspan></text>
    </g>
@@ -264,7 +263,7 @@
   </g>
   <g id="Drawing_28">
    <rect fill="none" stroke="none" x="14343" y="25401" width="4827" height="1226"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="14978" y="25920">
      <tspan x="14978 15215 15334 15452 15685 15850 16087 16345 16582 16722 16980 17145 17522 17759 17899 18018 18276 18534">3. Transformation </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="14824" y="26407">
@@ -277,7 +276,7 @@
   </g>
   <g id="Drawing_30">
    <rect fill="none" stroke="none" x="13627" y="27790" width="6130" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="13968" y="28296">
      <tspan x="13968 14273 14510 14747 14959 15077 15170 15407 15644 15763 16047 16284 16402 16639 16940 17177 17384 17503 17786 17880 18235 18472 18565 18802 18921 19158 19298">Reaction Pathway Simulator:</tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="15142" y="28770">
@@ -292,7 +291,7 @@
   </g>
   <g id="Drawing_32">
    <rect fill="none" stroke="none" x="8193" y="26090" width="4824" height="1226"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="8649" y="26609">
      <tspan x="8649 8886 9005 9123 9407 9665 9889 10126 10245 10482 10740 10977 11236 11473 11849 11968 12205 12442 12561">2. Physicochemical </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="8541" y="27096">
@@ -313,7 +312,7 @@
   </g>
   <g id="Drawing_36">
    <rect fill="none" stroke="none" x="6026" y="33637" width="9018" height="1716"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="635" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="635" font-style="normal" font-weight="700">
     <text x="6306" y="34350">
      <tspan x="6306 6729 7119 7466 7817 7995 8346 8736 9087 9477 9828 10391 10569 10920 11272 11450 11627 12051 12296 12686 13075 13426 13672 13884 14061 14413 14764">Physicochemical Properties </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="8151" y="35082">
@@ -347,7 +346,7 @@
   </g>
   <g id="Drawing_44">
    <rect fill="none" stroke="none" x="8177" y="37958" width="4827" height="2222"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="9422" y="38464">
      <tspan x="9422 9541 9752 9871 10010 10248 10480 10717 10954 11166 11285 11403 11522 11759">Is request to </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9422" y="38938">
@@ -360,7 +359,7 @@
   </g>
   <g id="Drawing_46">
    <rect fill="none" stroke="none" x="7531" y="70789" width="6097" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="8198" y="71295">
      <tspan x="8198 8482 8621 8858 9095 9189 9400 9519 9730 9849 10086 10323 10531 10742 10835 11047 11284 11496 11733 11970 12326 12419 12630 12867 12961">Predicts physicochemical </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="7796" y="71769">
@@ -379,7 +378,7 @@
   </g>
   <g id="Drawing_49">
    <rect fill="none" stroke="none" x="1941" y="45444" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="2201" y="45963">
      <tspan x="2201 2506 2764 3001 3378 3670 3907 4165">ChemAxon</tspan></text>
    </g>
@@ -390,7 +389,7 @@
   </g>
   <g id="Drawing_51">
    <rect fill="none" stroke="none" x="7333" y="40996" width="6424" height="1306"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="7808" y="41502">
      <tspan x="7808 8113 8350 8587 8799 9010 9222 9340 9552 9789 10026 10382 10475 10687 10924 11017 11135 11491 11728 11940 12151 12270 12507 12719 12812 13049 13282">Checks chemical mass using </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9567" y="41976">
@@ -408,7 +407,7 @@
   </g>
   <g id="Drawing_54">
    <rect fill="none" stroke="none" x="8447" y="43943" width="4192" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="8729" y="44449">
      <tspan x="8729 8848 9059 9178 9533 9770 9864 10101 10312 10549 10642 10880 11019 11138 11438 11675 11769 12001 12238 12357">Is molecular weight </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9249" y="44923">
@@ -425,7 +424,7 @@
   </g>
   <g id="Drawing_57">
    <rect fill="none" stroke="none" x="14967" y="46069" width="4995" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="15295" y="46575">
      <tspan x="15295 15600 15837 15955 16192 16332 16569 16781 16899 17137 17276 17416 17653 17793 17911 18267 18504 18716 18927 19164 19397 19634">Returns error message </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="16814" y="47049">
@@ -441,7 +440,7 @@
   </g>
   <g id="Drawing_60">
    <rect fill="none" stroke="none" x="12041" y="43844" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="12961" y="44350">
      <tspan x="12961 13084 13321 13414 13626">false</tspan></text>
    </g>
@@ -452,13 +451,11 @@
    <rect fill="none" stroke="none" x="7588" y="46736" width="5959" height="2939"/>
   </g>
   <g id="Drawing_62">
-   <rect fill="none" stroke="none" x="8531" y="47493" width="4254" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
-    <text x="9051" y="47999">
-     <tspan x="9051 9170 9381 9500 9711 9948 10042 10253 10372 10655 10939 11058 11176 11460 11697 11790 11909 12146 12264">Is calc EPI Suite, </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="9635" y="48473">
-     <tspan x="9635 9919 10173 10456 10761 11066 11184 11303 11540 11680">SPARC, or </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="9595" y="48947">
+   <rect fill="none" stroke="none" x="8531" y="47693" width="4254" height="1228"/>
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <text x="8804" y="48199">
+     <tspan x="8804 8923 9134 9253 9464 9701 9795 10006 10125 10408 10692 10811 10929 11213 11450 11543 11662 11899 12017 12136 12373 12512">Is calc EPI Suite, or </tspan></text>
+    <text fill="rgb(0,0,0)" stroke="none" x="9595" y="48673">
      <tspan x="9595 9946 10183 10421 10632 10869 11009 11246 11483">Measured?</tspan></text>
    </g>
   </g>
@@ -468,28 +465,28 @@
   </g>
   <g id="Drawing_64">
    <rect fill="none" stroke="none" x="9641" y="45544" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10646" y="46050">
      <tspan x="10646 10765 10904 11141">true</tspan></text>
    </g>
   </g>
   <g id="Drawing_65">
    <rect fill="none" stroke="none" x="18335" y="52700" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="18821" y="53219">
      <tspan x="18821 19079 19363 19647 19905 20307">TESTWS</tspan></text>
    </g>
   </g>
   <g id="Drawing_66">
    <rect fill="none" stroke="none" x="12741" y="47644" width="2743" height="726"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="13661" y="48150">
      <tspan x="13661 13784 14021 14114 14326">false</tspan></text>
    </g>
   </g>
   <g id="Drawing_67">
    <rect fill="none" stroke="none" x="9741" y="49644" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10746" y="50150">
      <tspan x="10746 10865 11004 11241">true</tspan></text>
    </g>
@@ -500,7 +497,7 @@
   </g>
   <g id="Drawing_69">
    <rect fill="none" stroke="none" x="6734" y="50696" width="7510" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="7398" y="51202">
      <tspan x="7398 7703 7914 8152 8363 8482 8787 9024 9261 9616 9900 10107 10344 10581 10700 10984 11102 11339 11576 11813 12050 12190 12427 12520 12728 12965 13105 13223 13342 13579">Uses ChemAxon Standardizer to </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="7045" y="51676">
@@ -524,7 +521,7 @@
   </g>
   <g id="Drawing_73">
    <rect fill="none" stroke="none" x="8532" y="53893" width="4254" height="1228"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="8864" y="54399">
      <tspan x="8864 8983 9194 9313 9524 9761 9855 10066 10185 10468 10752 10871 10989 11273 11510 11603 11722 11959 12077 12314 12454">Is calc EPI Suite or </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9596" y="54873">
@@ -533,14 +530,14 @@
   </g>
   <g id="Drawing_74">
    <rect fill="none" stroke="none" x="9668" y="55594" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10673" y="56100">
      <tspan x="10673 10792 10931 11168">true</tspan></text>
    </g>
   </g>
   <g id="Drawing_75">
    <rect fill="none" stroke="none" x="8235" y="56600" width="4593" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="700">
     <text x="8501" y="57119">
      <tspan x="8501 8785 9068 9187 9305 9589 9847 9966 10105 10343 10461 10580 10931 11168 11405 11642 11900 12065 12303">EPI Suite, Measured</tspan></text>
    </g>
@@ -566,60 +563,53 @@
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_81_0" stroke-linejoin="round" d="M 7604,54308 L 6207,54308"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_82_0" stroke-linejoin="round" d="M 6207,54308 L 6207,55197"/>
-  </g>
-  <g id="Drawing_83">
-   <rect fill="none" stroke="none" x="4835" y="55200" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="700">
-    <text x="5487" y="55719">
-     <tspan x="5487 5771 6025 6317 6622">SPARC</tspan></text>
-   </g>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_82_0" stroke-linejoin="round" d="M 6207,54308 L 6207,56245"/>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 6258,66350 C 6211,66350 6171,66341 6131,66322 6091,66303 6061,66279 6038,66245 6015,66212 6004,66179 6004,66141 6004,66102 6015,66069 6038,66036 6061,66002 6091,65978 6131,65959 6171,65940 6211,65931 6258,65931 6305,65931 6345,65940 6385,65959 6425,65978 6455,66002 6478,66036 6501,66069 6512,66102 6512,66141 6512,66179 6501,66212 6478,66245 6455,66279 6425,66303 6385,66322 6345,66341 6305,66350 6258,66350 L 6258,66350 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_84_0" stroke-linejoin="round" d="M 6258,66350 C 6211,66350 6171,66341 6131,66322 6091,66303 6061,66279 6038,66245 6015,66212 6004,66179 6004,66141 6004,66102 6015,66069 6038,66036 6061,66002 6091,65978 6131,65959 6171,65940 6211,65931 6258,65931 6305,65931 6345,65940 6385,65959 6425,65978 6455,66002 6478,66036 6501,66069 6512,66102 6512,66141 6512,66179 6501,66212 6478,66245 6455,66279 6425,66303 6385,66322 6345,66341 6305,66350 6258,66350 L 6258,66350 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_83_0" stroke-linejoin="round" d="M 6258,66350 C 6211,66350 6171,66341 6131,66322 6091,66303 6061,66279 6038,66245 6015,66212 6004,66179 6004,66141 6004,66102 6015,66069 6038,66036 6061,66002 6091,65978 6131,65959 6171,65940 6211,65931 6258,65931 6305,65931 6345,65940 6385,65959 6425,65978 6455,66002 6478,66036 6501,66069 6512,66102 6512,66141 6512,66179 6501,66212 6478,66245 6455,66279 6425,66303 6385,66322 6345,66341 6305,66350 6258,66350 L 6258,66350 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_85_0" stroke-linejoin="round" d="M 6588,66169 L 9821,66169"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_85_1" d="M 10271,66169 L 9821,66019 9821,66319 10271,66169 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_84_0" stroke-linejoin="round" d="M 6588,66169 L 9821,66169"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_84_1" d="M 10271,66169 L 9821,66019 9821,66319 10271,66169 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_86_0" stroke-linejoin="round" d="M 6207,55959 L 6207,65447"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_86_1" d="M 6207,65897 L 6357,65447 6057,65447 6207,65897 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_85_0" stroke-linejoin="round" d="M 6207,55959 L 6207,65447"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_85_1" d="M 6207,65897 L 6357,65447 6057,65447 6207,65897 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_87_0" stroke-linejoin="round" d="M 7477,38433 L 3286,38433"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_86_0" stroke-linejoin="round" d="M 7477,38433 L 3286,38433"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_88_0" stroke-linejoin="round" d="M 3286,38433 L 3286,44968"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_88_1" d="M 3286,45418 L 3436,44968 3136,44968 3286,45418 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_87_0" stroke-linejoin="round" d="M 3286,38433 L 3286,44968"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_87_1" d="M 3286,45418 L 3436,44968 3136,44968 3286,45418 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_89_0" stroke-linejoin="round" d="M 3286,52022 L 3286,66151"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_88_0" stroke-linejoin="round" d="M 3286,52022 L 3286,66151"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_90_0" stroke-linejoin="round" d="M 3286,66196 L 5503,66196"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_90_1" d="M 5953,66196 L 5503,66046 5503,66346 5953,66196 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_89_0" stroke-linejoin="round" d="M 3286,66196 L 5503,66196"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_89_1" d="M 5953,66196 L 5503,66046 5503,66346 5953,66196 Z"/>
   </g>
-  <g id="Drawing_91">
+  <g id="Drawing_90">
    <rect fill="none" stroke="none" x="5568" y="53594" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="6488" y="54100">
      <tspan x="6488 6611 6848 6941 7153">false</tspan></text>
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_92_0" stroke-linejoin="round" d="M 10525,66452 L 10525,66986"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_92_1" d="M 10525,67436 L 10675,66986 10375,66986 10525,67436 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_91_0" stroke-linejoin="round" d="M 10525,66452 L 10525,66986"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_91_1" d="M 10525,67436 L 10675,66986 10375,66986 10525,67436 Z"/>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 10567,2635 L 12777,3990 10567,5345 8358,3990 10567,2635 10567,2635 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_93_0" stroke-linejoin="round" d="M 10567,2635 L 12777,3990 10567,5345 8358,3990 10567,2635 10567,2635 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_92_0" stroke-linejoin="round" d="M 10567,2635 L 12777,3990 10567,5345 8358,3990 10567,2635 10567,2635 Z"/>
    <rect fill="none" stroke="none" x="8358" y="2636" width="4419" height="2710"/>
   </g>
-  <g id="Drawing_94">
+  <g id="Drawing_93">
    <rect fill="none" stroke="none" x="8693" y="3117" width="3811" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="9747" y="3623">
      <tspan x="9747 10052 10289 10526 10738 10856 10975 11212 11449">Does the </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9074" y="4097">
@@ -629,51 +619,51 @@
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_95_0" stroke-linejoin="round" d="M 10539,5363 L 10528,6900"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_95_1" d="M 10525,7350 L 10678,6901 10378,6899 10525,7350 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_94_0" stroke-linejoin="round" d="M 10539,5363 L 10528,6900"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_94_1" d="M 10525,7350 L 10678,6901 10378,6899 10525,7350 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_96_0" stroke-linejoin="round" d="M 8366,4048 L 3667,4048"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_95_0" stroke-linejoin="round" d="M 8366,4048 L 3667,4048"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_97_0" stroke-linejoin="round" d="M 3659,4048 L 3659,5249"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_97_1" d="M 3659,5699 L 3809,5249 3509,5249 3659,5699 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_96_0" stroke-linejoin="round" d="M 3659,4048 L 3659,5249"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_96_1" d="M 3659,5699 L 3809,5249 3509,5249 3659,5699 Z"/>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 3659,7689 C 3051,7689 2534,7646 2008,7553 1482,7459 1103,7343 799,7181 495,7019 357,6860 357,6673 357,6486 495,6327 799,6165 1103,6003 1482,5887 2008,5793 2534,5700 3051,5657 3659,5657 4267,5657 4784,5700 5310,5793 5836,5887 6215,6003 6519,6165 6823,6327 6961,6486 6961,6673 6961,6860 6823,7019 6519,7181 6215,7343 5836,7459 5310,7553 4784,7646 4267,7689 3659,7689 L 3659,7689 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_98_0" stroke-linejoin="round" d="M 3659,7689 C 3051,7689 2534,7646 2008,7553 1482,7459 1103,7343 799,7181 495,7019 357,6860 357,6673 357,6486 495,6327 799,6165 1103,6003 1482,5887 2008,5793 2534,5700 3051,5657 3659,5657 4267,5657 4784,5700 5310,5793 5836,5887 6215,6003 6519,6165 6823,6327 6961,6486 6961,6673 6961,6860 6823,7019 6519,7181 6215,7343 5836,7459 5310,7553 4784,7646 4267,7689 3659,7689 L 3659,7689 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_97_0" stroke-linejoin="round" d="M 3659,7689 C 3051,7689 2534,7646 2008,7553 1482,7459 1103,7343 799,7181 495,7019 357,6860 357,6673 357,6486 495,6327 799,6165 1103,6003 1482,5887 2008,5793 2534,5700 3051,5657 3659,5657 4267,5657 4784,5700 5310,5793 5836,5887 6215,6003 6519,6165 6823,6327 6961,6486 6961,6673 6961,6860 6823,7019 6519,7181 6215,7343 5836,7459 5310,7553 4784,7646 4267,7689 3659,7689 L 3659,7689 Z"/>
   </g>
-  <g id="Drawing_99">
+  <g id="Drawing_98">
    <rect fill="none" stroke="none" x="711" y="6024" width="6097" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="1509" y="6530">
      <tspan x="1509 1814 2051 2169 2406 2546 2783 2995 3113 3351 3490 3630 3867 4007 4125 4265 4570 4832 5116 5234 5471 5708 5802 6009">Returns error “CTS only </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="1200" y="7004">
      <tspan x="1200 1437 1649 1860 2097 2335 2453 2665 2783 3020 3160 3393 3630 3867 3960 4172 4290 4502 4739 4976 5332 5425 5637 5874 5967 6178">accepts organic chemicals”</tspan></text>
    </g>
   </g>
-  <g id="Drawing_100">
+  <g id="Drawing_99">
    <rect fill="none" stroke="none" x="6341" y="3444" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="7261" y="3950">
      <tspan x="7261 7384 7621 7714 7926">false</tspan></text>
    </g>
   </g>
-  <g id="Drawing_101">
+  <g id="Drawing_100">
    <rect fill="none" stroke="none" x="9841" y="5144" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10846" y="5650">
      <tspan x="10846 10965 11104 11341">true</tspan></text>
    </g>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 10543,7335 L 13228,8795 10543,10255 7859,8795 10543,7335 10543,7335 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_102_0" stroke-linejoin="round" d="M 10543,7335 L 13228,8795 10543,10255 7859,8795 10543,7335 10543,7335 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_101_0" stroke-linejoin="round" d="M 10543,7335 L 13228,8795 10543,10255 7859,8795 10543,7335 10543,7335 Z"/>
    <rect fill="none" stroke="none" x="7859" y="7336" width="5369" height="2920"/>
   </g>
-  <g id="Drawing_103">
+  <g id="Drawing_102">
    <rect fill="none" stroke="none" x="8694" y="7817" width="3811" height="1674"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="9748" y="8323">
      <tspan x="9748 10053 10290 10527 10739 10857 10976 11213 11450">Does the </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="9075" y="8797">
@@ -682,20 +672,20 @@
      <tspan x="8972 9209 9328 9539 9776 9869 9988 10107 10344 10483 10602 10957 11051 11258 11377 11614 11753 11990">a salt or mixture?</tspan></text>
    </g>
   </g>
-  <g id="Drawing_104">
+  <g id="Drawing_103">
    <rect fill="none" stroke="none" x="5751" y="8128" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="6756" y="8634">
      <tspan x="6756 6875 7014 7251">true</tspan></text>
    </g>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 3659,11689 C 3051,11689 2534,11646 2008,11553 1482,11459 1103,11343 799,11181 495,11019 357,10860 357,10673 357,10486 495,10327 799,10165 1103,10003 1482,9887 2008,9793 2534,9700 3051,9657 3659,9657 4267,9657 4784,9700 5310,9793 5836,9887 6215,10003 6519,10165 6823,10327 6961,10486 6961,10673 6961,10860 6823,11019 6519,11181 6215,11343 5836,11459 5310,11553 4784,11646 4267,11689 3659,11689 L 3659,11689 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_105_0" stroke-linejoin="round" d="M 3659,11689 C 3051,11689 2534,11646 2008,11553 1482,11459 1103,11343 799,11181 495,11019 357,10860 357,10673 357,10486 495,10327 799,10165 1103,10003 1482,9887 2008,9793 2534,9700 3051,9657 3659,9657 4267,9657 4784,9700 5310,9793 5836,9887 6215,10003 6519,10165 6823,10327 6961,10486 6961,10673 6961,10860 6823,11019 6519,11181 6215,11343 5836,11459 5310,11553 4784,11646 4267,11689 3659,11689 L 3659,11689 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_104_0" stroke-linejoin="round" d="M 3659,11689 C 3051,11689 2534,11646 2008,11553 1482,11459 1103,11343 799,11181 495,11019 357,10860 357,10673 357,10486 495,10327 799,10165 1103,10003 1482,9887 2008,9793 2534,9700 3051,9657 3659,9657 4267,9657 4784,9700 5310,9793 5836,9887 6215,10003 6519,10165 6823,10327 6961,10486 6961,10673 6961,10860 6823,11019 6519,11181 6215,11343 5836,11459 5310,11553 4784,11646 4267,11689 3659,11689 L 3659,11689 Z"/>
   </g>
-  <g id="Drawing_106">
+  <g id="Drawing_105">
    <rect fill="none" stroke="none" x="711" y="10024" width="6097" height="1200"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="1497" y="10530">
      <tspan x="1497 1802 2039 2157 2394 2534 2771 2983 3101 3339 3478 3618 3855 3995 4113 4253 4558 4795 5032 5387 5481 5692 5929 6022">Returns error “Chemical </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="1185" y="11004">
@@ -703,41 +693,41 @@
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_107_0" stroke-linejoin="round" d="M 7885,8774 L 3568,8774"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_106_0" stroke-linejoin="round" d="M 7885,8774 L 3568,8774"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_108_0" stroke-linejoin="round" d="M 3540,8747 L 3540,9313"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_108_1" d="M 3540,9763 L 3690,9313 3390,9313 3540,9763 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_107_0" stroke-linejoin="round" d="M 3540,8747 L 3540,9313"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_107_1" d="M 3540,9763 L 3690,9313 3390,9313 3540,9763 Z"/>
   </g>
-  <g id="Drawing_109">
+  <g id="Drawing_108">
    <rect fill="none" stroke="none" x="9741" y="10144" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10661" y="10650">
      <tspan x="10661 10784 11021 11114 11326">false</tspan></text>
    </g>
   </g>
-  <g id="Drawing_110">
+  <g id="Drawing_109">
    <rect fill="none" stroke="none" x="5370" y="37830" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="6375" y="38336">
      <tspan x="6375 6494 6633 6870">true</tspan></text>
    </g>
   </g>
-  <g id="Drawing_111">
+  <g id="Drawing_110">
    <rect fill="none" stroke="none" x="9941" y="40044" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10861" y="40550">
      <tspan x="10861 10984 11221 11314 11526">false</tspan></text>
    </g>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 10536,58454 L 13529,59788 10536,61122 7544,59788 10536,58454 10536,58454 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_112_0" stroke-linejoin="round" d="M 10536,58454 L 13529,59788 10536,61122 7544,59788 10536,58454 10536,58454 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_111_0" stroke-linejoin="round" d="M 10536,58454 L 13529,59788 10536,61122 7544,59788 10536,58454 10536,58454 Z"/>
    <rect fill="none" stroke="none" x="7544" y="58455" width="5985" height="2668"/>
   </g>
-  <g id="Drawing_113">
+  <g id="Drawing_112">
    <rect fill="none" stroke="none" x="8117" y="59190" width="4762" height="1228"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="8809" y="59696">
      <tspan x="8809 9114 9351 9588 9800 9918 10037 10274 10511 10629 10913 11264 11383 11620 11904 12187">Does the SMILES </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="8481" y="60170">
@@ -745,33 +735,33 @@
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_114_0" stroke-linejoin="round" d="M 6209,59608 L 6209,60497"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_113_0" stroke-linejoin="round" d="M 6209,59608 L 6209,60497"/>
   </g>
-  <g id="Drawing_115">
+  <g id="Drawing_114">
    <rect fill="none" stroke="none" x="9815" y="61198" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="10735" y="61704">
      <tspan x="10735 10858 11095 11188 11400">false</tspan></text>
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_116_0" stroke-linejoin="round" d="M 10525,61198 L 10525,65447"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_116_1" d="M 10525,65897 L 10675,65447 10375,65447 10525,65897 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_115_0" stroke-linejoin="round" d="M 10525,61198 L 10525,65447"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_115_1" d="M 10525,65897 L 10675,65447 10375,65447 10525,65897 Z"/>
   </g>
-  <g id="Drawing_117">
+  <g id="Drawing_116">
    <rect fill="none" stroke="none" x="12668" y="59094" width="2743" height="747"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="13673" y="59600">
      <tspan x="13673 13792 13931 14168">true</tspan></text>
    </g>
   </g>
   <g>
    <path fill="rgb(207,231,245)" stroke="none" d="M 15478,63992 C 14870,63992 14353,63949 13827,63856 13301,63762 12922,63646 12618,63484 12314,63322 12176,63163 12176,62976 12176,62789 12314,62630 12618,62468 12922,62306 13301,62190 13827,62096 14353,62003 14870,61960 15478,61960 16086,61960 16603,62003 17129,62096 17655,62190 18034,62306 18338,62468 18642,62630 18780,62789 18780,62976 18780,63163 18642,63322 18338,63484 18034,63646 17655,63762 17129,63856 16603,63949 16086,63992 15478,63992 L 15478,63992 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_118_0" stroke-linejoin="round" d="M 15478,63992 C 14870,63992 14353,63949 13827,63856 13301,63762 12922,63646 12618,63484 12314,63322 12176,63163 12176,62976 12176,62789 12314,62630 12618,62468 12922,62306 13301,62190 13827,62096 14353,62003 14870,61960 15478,61960 16086,61960 16603,62003 17129,62096 17655,62190 18034,62306 18338,62468 18642,62630 18780,62789 18780,62976 18780,63163 18642,63322 18338,63484 18034,63646 17655,63762 17129,63856 16603,63949 16086,63992 15478,63992 L 15478,63992 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_117_0" stroke-linejoin="round" d="M 15478,63992 C 14870,63992 14353,63949 13827,63856 13301,63762 12922,63646 12618,63484 12314,63322 12176,63163 12176,62976 12176,62789 12314,62630 12618,62468 12922,62306 13301,62190 13827,62096 14353,62003 14870,61960 15478,61960 16086,61960 16603,62003 17129,62096 17655,62190 18034,62306 18338,62468 18642,62630 18780,62789 18780,62976 18780,63163 18642,63322 18338,63484 18034,63646 17655,63762 17129,63856 16603,63949 16086,63992 15478,63992 L 15478,63992 Z"/>
   </g>
-  <g id="Drawing_119">
+  <g id="Drawing_118">
    <rect fill="none" stroke="none" x="12557" y="62361" width="6097" height="1251"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="12843" y="62867">
      <tspan x="12843 13148 13385 13503 13740 13880 14117 14329 14447 14685 14824 14964 15201 15341 15459 15599 15811 16048 16285 16522 16759 16877 16996 17208 17445 17682 17800 18037 18130 18368">Returns error “cannot contain </tspan></text>
     <text fill="rgb(0,0,0)" stroke="none" x="13848" y="63341">
@@ -779,35 +769,32 @@
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_120_0" stroke-linejoin="round" d="M 19796,48244 L 19796,52239"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_120_1" d="M 19796,52689 L 19946,52239 19646,52239 19796,52689 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_119_0" stroke-linejoin="round" d="M 19796,48244 L 19796,52239"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_119_1" d="M 19796,52689 L 19946,52239 19646,52239 19796,52689 Z"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_121_0" stroke-linejoin="round" d="M 13573,59801 L 15478,59801"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_120_0" stroke-linejoin="round" d="M 13573,59801 L 15478,59801"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_122_0" stroke-linejoin="round" d="M 15478,59801 L 15478,61510"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_122_1" d="M 15478,61960 L 15628,61510 15328,61510 15478,61960 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_121_0" stroke-linejoin="round" d="M 15478,59801 L 15478,61510"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_121_1" d="M 15478,61960 L 15628,61510 15328,61510 15478,61960 Z"/>
   </g>
   <g>
-   <path fill="#0071bc" stroke="none" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_123_0" stroke-linejoin="round" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
+   <path fill="rgb(207,231,245)" stroke="none" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" id="Drawing_122_0" stroke-linejoin="round" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
   </g>
-  <g id="Drawing_124">
-   <!-- Melting Point Flowchart Link -->
-   <a xlink:href="/cts/flowcharts/meltingpoint" target="_top">
-      <rect fill="none" stroke="none" x="6115" y="67561" width="8764" height="1251"/>
-      <g fill="white" stroke="none" font-family="sans-serif" font-size="423" font-style="normal" font-weight="400">
-       <text x="6373" y="68067">
-        <tspan x="6373 6703 6940 7177 7389 7508 7626 7863 8003 8240 8477 8710 8947 9065 9421 9658 9751 9870 9963 10200 10433 10551 10788 11025 11119 11356 11474 11593 11715 11809 12046 12346 12558 12795 13032 13172 13290 13409 13646 13883 14006 14243 14382 14620">Goes through melting point flowchart before </tspan></text>
-       <text fill="white" stroke="none" x="6901" y="68541">
-        <tspan x="6901 7138 7278 7515 7752 7845 8057 8175 8268 8505 8738 8857 9094 9331 9538 9750 9843 10055 10292 10504 10741 10978 11333 11426 11638 11875 11968 12087 12324 12464 12701 12938 13175 13315 13433 13526 13763 13975">predicting physicochemical properties </tspan></text>
-      </g>
-   </a>
+  <g id="Drawing_123">
+   <rect fill="none" stroke="none" x="6115" y="67561" width="8764" height="1251"/>
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+    <text x="6373" y="68067">
+     <tspan x="6373 6703 6940 7177 7389 7508 7626 7863 8003 8240 8477 8710 8947 9065 9421 9658 9751 9870 9963 10200 10433 10551 10788 11025 11119 11356 11474 11593 11715 11809 12046 12346 12558 12795 13032 13172 13290 13409 13646 13883 14006 14243 14382 14620">Goes through melting point flowchart before </tspan></text>
+    <text fill="rgb(0,0,0)" stroke="none" x="6901" y="68541">
+     <tspan x="6901 7138 7278 7515 7752 7845 8057 8175 8268 8505 8738 8857 9094 9331 9538 9750 9843 10055 10292 10504 10741 10978 11333 11426 11638 11875 11968 12087 12324 12464 12701 12938 13175 13315 13433 13526 13763 13975">predicting physicochemical properties </tspan></text>
+   </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_125_0" stroke-linejoin="round" d="M 10589,68850 L 10589,69896"/>
-   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_125_1" d="M 10589,70346 L 10739,69896 10439,69896 10589,70346 Z"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_124_0" stroke-linejoin="round" d="M 10589,68850 L 10589,69895"/>
+   <path fill="rgb(0,0,0)" stroke="none" id="Drawing_124_1" d="M 10589,70345 L 10739,69895 10439,69895 10589,70345 Z"/>
   </g>
  </g>
 </svg>
