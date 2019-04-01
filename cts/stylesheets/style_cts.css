@@ -808,3 +808,10 @@ ul.bullet_indent {
 .csv-dropdown:hover .csv-dropdown-content {display: block;}
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /*.csv-dropdown:hover .dropbtn {background-color: #3e8e41;}*/
+
+/* Landing page image */
+#landing-page-pic {
+  width: 100%;
+  max-height: 275px;
+  vertical-align: top;
+}
