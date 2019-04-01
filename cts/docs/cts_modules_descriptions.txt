@@ -17,6 +17,7 @@ The PCP module is currently accessing:
 	<li>&nbsp;EPI Suite, which uses a fragment-based approach;</li>
 	<li>&nbsp;Toxicity Estimation Software Tool (TEST), which uses QSAR-based approaches; and </li>
 	<li>&nbsp;ChemAxon plug-in calculators, which use an atom-based fragment approach. </li>
+	<li>&nbsp;OPERA, which uses QSAR-based modeling.
 </ol>
 
 <p>Users also have the option to request measured data that is available in the EPI Suite physicochemical database.   </p>
