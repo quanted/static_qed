@@ -780,17 +780,20 @@
    <path fill="rgb(0,0,0)" stroke="none" id="Drawing_121_1" d="M 15478,61960 L 15628,61510 15328,61510 15478,61960 Z"/>
   </g>
   <g>
-   <path fill="rgb(207,231,245)" stroke="none" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
+   <path fill="#0071bc" stroke="none" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
    <path fill="none" stroke="rgb(128,128,128)" id="Drawing_122_0" stroke-linejoin="round" d="M 10524,68845 L 6269,68845 6269,67575 14778,67575 14778,68845 10524,68845 Z"/>
   </g>
   <g id="Drawing_123">
+   <!-- Melting Point Flowchart Link -->
+   <a xlink:href="/cts/flowcharts/meltingpoint" target="_top">
    <rect fill="none" stroke="none" x="6115" y="67561" width="8764" height="1251"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
+   <g fill="white" stroke="none" font-family="Arial embedded" font-size="423" font-style="normal" font-weight="400">
     <text x="6373" y="68067">
      <tspan x="6373 6703 6940 7177 7389 7508 7626 7863 8003 8240 8477 8710 8947 9065 9421 9658 9751 9870 9963 10200 10433 10551 10788 11025 11119 11356 11474 11593 11715 11809 12046 12346 12558 12795 13032 13172 13290 13409 13646 13883 14006 14243 14382 14620">Goes through melting point flowchart before </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="6901" y="68541">
+    <text fill="white" stroke="none" x="6901" y="68541">
      <tspan x="6901 7138 7278 7515 7752 7845 8057 8175 8268 8505 8738 8857 9094 9331 9538 9750 9843 10055 10292 10504 10741 10978 11333 11426 11638 11875 11968 12087 12324 12464 12701 12938 13175 13315 13433 13526 13763 13975">predicting physicochemical properties </tspan></text>
    </g>
+   </a>
   </g>
   <g>
    <path fill="none" stroke="rgb(0,0,0)" id="Drawing_124_0" stroke-linejoin="round" d="M 10589,68850 L 10589,69895"/>
