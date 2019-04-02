@@ -9,6 +9,7 @@ var stats = ["sum", "mean", "median", "max", "standard_deviation", "variance", "
 var mm_stats = ["sum", "mean", "median", "max", "standard_deviation", "variance", "root_mean_square", "75_percentile",
     "95_percentile", "99_percentile"];
 
+
 $(function () {
 
 });
@@ -19,12 +20,13 @@ function setOutputUI() {
     setCoefficients();
     setStatistics();
     setDataGraph2();
-
     var data_block_2 = document.createElement("div");
     data_block_2.id = "output_data_2";
     document.getElementById('output_data_block_table').appendChild(data_block_2);
 
-    createCorrelationGraph();
+    if (submodel === "precip_compare") {
+        createCorrelationGraph();
+    }
     createStatisticsTable();
     return false;
 }
@@ -36,7 +38,7 @@ function getParameters() {
         "source": "compare",
         "timeLocalized": true
     };
-    if (version === "v2") {
+    if (submodel === "precip_compare") {
         baseUrl = v2URL;
         requestJson["dateTimeSpan"] = {
             "startDate": $("#temporal_start").val() + "-01-01",
@@ -86,28 +88,28 @@ function getParameters() {
 }
 
 // Version 2 updates
-function selectInputVersion() {
-    var selection = document.getElementById('version_select').value;
-    var v1 = document.getElementById('input_block_v1');
-    var v2 = document.getElementById('input_block_v2');
-    if (selection === '') {
-        v1.classList = 'hide';
-        v2.classList = 'hide';
-    }
-    else if (selection === 'v1') {
-        v1.classList = 'show';
-        v2.classList = 'hide';
-    }
-    else if (selection === 'v2') {
-        v1.classList = 'hide';
-        v2.classList = 'show';
-    }
-    else {
-        v1.classList = 'hide';
-        v2.classList = 'hide';
-    }
-    return false;
-}
+// function selectInputVersion() {
+//     var selection = document.getElementById('version_select').value;
+//     var v1 = document.getElementById('input_block_v1');
+//     var v2 = document.getElementById('input_block_v2');
+//     if (selection === '') {
+//         v1.classList = 'hide';
+//         v2.classList = 'hide';
+//     }
+//     else if (selection === 'v1') {
+//         v1.classList = 'show';
+//         v2.classList = 'hide';
+//     }
+//     else if (selection === 'v2') {
+//         v1.classList = 'hide';
+//         v2.classList = 'show';
+//     }
+//     else {
+//         v1.classList = 'hide';
+//         v2.classList = 'hide';
+//     }
+//     return false;
+// }
 
 function toggleNCEIInput() {
     var block = document.getElementById('location_input_comid_ncdc_block');
