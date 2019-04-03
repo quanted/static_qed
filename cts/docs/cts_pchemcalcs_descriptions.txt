@@ -8,4 +8,4 @@ External links to each of the physicochemical calculators are given below to pro
 
 <a href="http://www2.epa.gov/chemical-research/toxicity-estimation-software-tool-test" target="_blank" class="fadeMenu">Toxicity Estimation Software Tool (TEST)</a> - TEST was developed by EPA to allow users to easily estimate the toxicity of chemicals using Quantitative Structure Activity Relationships (QSARs) methodologies. The software also contains QSAR models for a number of physicochemical properties.<br><br>
 
-<a href="https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=NCCT&dirEntryId=337488" target="_blank" class="fadeMenu">OPERA</a> - OPERA is a QSAR tool for physicochemical properties and environmental fate predictions.<br><br>
+<a href="https://doi.org/10.1186/s13321-018-0263-1" target="_blank" class="fadeMenu">OPERA</a> - OPERA is a QSAR tool for physicochemical properties and environmental fate predictions.<br><br>
