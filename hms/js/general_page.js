@@ -35,7 +35,6 @@ function pageLoad() {
 }
 
 function getData() {
-    toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -53,13 +52,13 @@ function getData() {
             // setDataGraph();
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
-            toggleLoader();
+            toggleLoader(false,"");
             dyGraph.resize();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader();
+            toggleLoader(false, "");
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -69,7 +68,6 @@ function getData() {
 }
 
 function getData2() {
-    toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -82,12 +80,15 @@ function getData2() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
+            toggleLoader(false, "Data request successfull. Task ID: " + taskID);
             setTimeout(getDataPolling, 12000);
+            $('#component_tabs').tabs("enable", 2);
+            $('#component_tabs').tabs("option", "active", 2);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader();
+            toggleLoader(true, "");
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -111,13 +112,14 @@ function getDataPolling() {
                     componentData = data.data;
                     console.log("Task successfully completed and data was retrieved.");
                     setOutputUI();
-                    $('#component_tabs').tabs("enable", 2);
-                    $('#component_tabs').tabs("option", "active", 2);
-                    toggleLoader();
+                    toggleLoader(true, "");
+                    setTitle();
+                    toggleDownloadButtons(false);
                     dyGraph.resize();
-                    counter = 25;
+                    counter = 1000;
                 }
                 else if (data.status === "FAILURE") {
+                    toggleLoader(false, "Task " + taskID + " encountered an error.");
                     console.log("Task failed to complete.");
                 }
                 else {
@@ -128,7 +130,7 @@ function getDataPolling() {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader();
+                toggleLoader(false, "Error retrieving data for task ID: " + taskID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -138,6 +140,19 @@ function getDataPolling() {
     else {
         console.log("Failed to get data, reached polling cap.")
     }
+    return false;
+}
+
+function getPreviousData() {
+    taskID = $('#previous_task_id').val();
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+    });
+    counter = 1000;
+    getDataPolling();
+    toggleDownloadButtons(true);
+    $('#component_tabs').tabs("enable", 2);
+    $('#component_tabs').tabs("option", "active", 2);
     return false;
 }
 
@@ -158,6 +173,15 @@ function setMetadata() {
     };
     metaTable.draw(resultMetaTable, tableOptions);
     return false;
+}
+
+function setTitle() {
+    if (taskID === null && testData) {
+        taskID = "TESTTASK1234567890";
+    }
+    var title = "Data for Task: " + taskID.toString();
+    var output_title = $("#output_title");
+    output_title.html("<h3>" + title + "</h3>");
 }
 
 function setDataGraph() {
@@ -266,9 +290,30 @@ function setDataGraph2() {
     dyGraph = new Dygraph(graphEle, dataCSV, graphOptions);
 }
 
-function toggleLoader() {
-    $('.submit_data_request_loader').toggleClass("loading_icon");
-    $('.submit_data_request').toggleClass("hidden");
+// function toggleLoader() {
+//     $('.submit_data_request_loader').toggleClass("loading_icon");
+//     $('.submit_data_request').toggleClass("hidden");
+// }
+
+function toggleLoader(hide, msg) {
+    if (hide) {
+        $("#output_loading").fadeOut(100);
+        $("#loading_msg").html();
+    }
+    else {
+        $("#output_loading").fadeIn(100);
+        $("#loading_msg").html("<span>" + msg + "</span>");
+    }
+    return false;
+}
+
+function toggleDownloadButtons(hide){
+    if(hide){
+        $("#output_data_save_block").hide();
+    }
+    else{
+        $("#output_data_save_block").show();
+    }
 }
 
 function exportDataToJSON() {
