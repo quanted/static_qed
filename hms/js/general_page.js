@@ -1,6 +1,6 @@
 // General js for hms model/submodel pages //
 var taskID;
-var counter = 25;
+var counter = 250;
 var componentData;
 var resultMetaTable;
 var resultDataTable;
@@ -80,7 +80,7 @@ function getData2() {
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
             console.log("Data request success. Task ID: " + taskID);
-            toggleLoader(false, "Data request successfull. Task ID: " + taskID);
+            toggleLoader(false, "Processing data request. Task ID: " + taskID);
             setTimeout(getDataPolling, 12000);
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
@@ -116,7 +116,7 @@ function getDataPolling() {
                     setTitle();
                     toggleDownloadButtons(false);
                     dyGraph.resize();
-                    counter = 1000;
+                    counter = 250;
                 }
                 else if (data.status === "FAILURE") {
                     toggleLoader(false, "Task " + taskID + " encountered an error.");
@@ -148,7 +148,7 @@ function getPreviousData() {
     setTimeout(function () {
         toggleLoader(false, "Retrieving data for task ID: " + taskID);
     });
-    counter = 1000;
+    counter = 250;
     getDataPolling();
     toggleDownloadButtons(true);
     $('#component_tabs').tabs("enable", 2);

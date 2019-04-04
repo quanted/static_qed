@@ -312,5 +312,12 @@
 }
 
 #overview_tab p {
-    text-align: left;
+    /*text-align: left;*/
+}
+
+.google-visualization-table * {
+    text-align: center;
+}
+.google-visualization-table-td.google-visualization-table-type-number {
+    text-align: center;
 }
