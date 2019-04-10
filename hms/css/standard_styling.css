@@ -111,7 +111,7 @@
 #component_tabs ul li {
     background: none;
     margin: 1px 2px 0 2px;
-    padding: 0.5em 1em;
+    padding: 0.5em 0.5em;
     list-style: none;
     float: none;
     display: inline-block;
@@ -211,6 +211,21 @@
     /*width: 100% !important;*/
 }
 
+#output_loading {
+    display: none;
+    width: 110%;
+    height: 100%;
+    margin: 0 -45px;
+    background: white;
+    opacity: 0.95;
+    z-index: 9999999;
+    position: absolute;
+}
+
+#stats_block {
+   padding-top: 15px;
+}
+
 .loading_icon {
     border: 7px solid #c5c5c5;
     border-top: 7px solid #007fff;
@@ -243,6 +258,7 @@
     padding: 0 25px;
     text-align: center;
     height: 50px;
+    display: none;
 }
 
 #output_data_save_json{
@@ -296,5 +312,12 @@
 }
 
 #overview_tab p {
-    text-align: left;
+    /*text-align: left;*/
+}
+
+.google-visualization-table * {
+    text-align: center;
+}
+.google-visualization-table-td.google-visualization-table-type-number {
+    text-align: center;
 }

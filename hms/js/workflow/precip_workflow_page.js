@@ -1,5 +1,5 @@
-var baseUrl = "/hms/rest/api/v3/workflow/compare/v1.0";
-var v2URL = "/hms/rest/api/v3/workflow/compare/v2.0";
+var baseUrl = "/hms/rest/api/v3/workflow/precip_data_extraction";
+var v2URL = "/hms/rest/api/v3/workflow/precip_compare";
 
 var sources = [];
 var statistics = [];
@@ -35,11 +35,11 @@ function getParameters() {
     var version = $('#version_select').val();
     var requestJson = {
         "dataset": "Precipitation",
-        "source": "compare",
         "timeLocalized": true
     };
     if (submodel === "precip_compare") {
         baseUrl = v2URL;
+        requestJson["source"] = "compare";
         requestJson["dateTimeSpan"] = {
             "startDate": $("#temporal_start").val() + "-01-01",
             "endDate": $('#temporal_end').val() + "-12-31",
@@ -79,10 +79,10 @@ function getParameters() {
             "endDate": $('#id_endDate').val(),
         };
         requestJson["geometry"] = {
-            "geometryMetadata": {
-                "stationID": $("#id_stationID").val()
-            }
+            "stationID": $("#id_stationID").val()
         };
+        requestJson["source"] = "extraction";
+        requestJson["sourceList"] = ["ncei","nldas", "gldas", "daymet", "prism"];
     }
     return requestJson;
 }

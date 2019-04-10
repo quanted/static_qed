@@ -362,7 +362,7 @@ function getData() {
         success: function (data, textStatus, jqXHR) {
             jobID = data.job_id;
             console.log("Data request success. Task ID: " + jobID);
-            toggleLoader(false, "Data request successfull. Task ID: " + jobID);
+            toggleLoader(false, "Processing data request. Task ID: " + jobID);
             setTimeout(getDataPolling, 30000);
             $('#workflow_tabs').tabs("enable", 2);
             $('#workflow_tabs').tabs("option", "active", 2);
