@@ -13,7 +13,7 @@ var attemptCount = 0;
 var maxAttempts = 45;
 
 $(document).ready(function () {
-    setTimeout(checkJobStatus, 1000)
+    setTimeout(checkJobStatus, 6000);
 });
 
 
