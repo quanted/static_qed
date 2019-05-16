@@ -218,9 +218,10 @@ function ajaxCall(data_obj, callback) {
     type: 'POST',
     data: data_obj,
     dataType: 'json',
-    timeout: 10000,
+    // timeout: 10000,
+    timeout: 20000,
     tryCount: 0,
-    retryLimit: 3,
+    retryLimit: 1,  // retry 1 time if failure
     beforeSend: function(xhr, settings) {
       xhr.setRequestHeader("X-CSRFToken", csrftoken);
     },
