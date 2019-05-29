@@ -227,15 +227,18 @@ function buildChemDictFromBatchList() {
 	Loops batch chems and creates a dict organized by
 	the chems' smiles as keys.
 	*/
+    let reg = new RegExp('\r');
 	var pchemDict = {};  // dict ordered by batch smiles
 	for (var chemInd in batch_chems) {
 		var chemObj = batch_chems[chemInd];  // a given batch chem
-		pchemDict[chemObj.smiles] = [];  // creates list for pchem data objects
+        chemObj['chemical'] = chemObj['chemical'].replace(reg, '');  // remove any '\r'
+		pchemDict[chemObj.chemical] = [];  // creates list for pchem data objects
 		for (ind in batch_data) {
 			var pchemDataObj = batch_data[ind];
+            pchemDataObj['chemical'] = pchemDataObj['chemical'].replace(reg, '');
 			if (!('chemical' in pchemDataObj)) { continue; }
-			if (pchemDataObj['chemical'] != chemObj.smiles) { continue; }
-			pchemDict[chemObj.smiles].push(pchemDataObj);
+			if (pchemDataObj['chemical'] != chemObj.chemical) { continue; }
+			pchemDict[chemObj.chemical].push(pchemDataObj);
 		}
 	}
 	return pchemDict;
