@@ -1,4 +1,3 @@
-// var baseUrl = "/hms/rest/api/hydrology/precipitation/";
 var baseUrl = "/hms/rest/api/v3/meteorology/precipitation/";
 
 $(function () {
@@ -30,9 +29,7 @@ function getParameters() {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
             },
-            "geometryMetadata": {
-                "stationID": $("#id_stationID").val()
-            }
+            "stationID": $("#id_stationID").val()
         },
         "dataValueFormat": $("#id_outputformat").val(),
         "temporalResolution": $("#id_temporalresolution").val(),
