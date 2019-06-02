@@ -334,6 +334,24 @@
 .google-visualization-table * {
     text-align: center;
 }
+
 .google-visualization-table-td.google-visualization-table-type-number {
     text-align: center;
+}
+
+#overview_block div {
+    border: none !important;
+}
+
+#overview_block p, h4, ol, li{
+    text-align: left;
+}
+
+.overview_subblock table{
+    font-size: 14px;
+    width: 100%;
+}
+
+.github_link {
+    text-align: center !important;
 }

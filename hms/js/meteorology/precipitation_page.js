@@ -1,7 +1,10 @@
-// var baseUrl = "/hms/rest/api/hydrology/precipitation/";
-var baseUrl = "/hms/rest/api/v3/hydrology/precipitation/";
+var baseUrl = "/hms/rest/api/v3/meteorology/precipitation/";
 
 $(function () {
+    $('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
     $('#id_stationID').parent().parent().hide();
     $('#id_source').on('change', updateSourceSelection);
 });
@@ -26,9 +29,7 @@ function getParameters() {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
             },
-            "geometryMetadata": {
-                "stationID": $("#id_stationID").val()
-            }
+            "stationID": $("#id_stationID").val()
         },
         "dataValueFormat": $("#id_outputformat").val(),
         "temporalResolution": $("#id_temporalresolution").val(),
