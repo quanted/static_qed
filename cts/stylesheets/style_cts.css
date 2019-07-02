@@ -38,8 +38,13 @@ input[type="checkbox"], input[type="radio"] {
   position: inherit;
   float: left;
   left: 1em;
-  height: 1.5em;
-  width: 1.5em;
+  /*height: 1.5em;*/
+  /*width: 1.5em;*/
+  /*height: 2.2em;*/
+  /*width: 2.2em;*/
+  min-height: 18px;
+  min-width: 18px;
+  /*transform: scale(1.2);*/
 }
 
 input.calc_checkbox {
@@ -411,6 +416,24 @@ body.wait *, body.wait
   width: 5%;
 /*  float: left;*/
 }
+
+
+
+
+
+/* p-chem table settings, cells as checkboxes */
+/*#pchemprop_table th.chemprop:hover,
+#pchemprop_table th.calc-header:hover,
+#pchemprop_table th#pchem-select-all:hover {
+  background-color: #4289AA;
+  cursor: pointer;
+}*/
+
+
+
+
+
+
 
 /*jqplot divs*/
 .plot {

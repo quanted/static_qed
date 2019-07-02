@@ -65,7 +65,7 @@ $( document ).ready(function() {
 		//tab classes: [Chemical, Speciation] and [tabSel, tabUnsel]
 		//divs have classes: tab_Chemical or tab_Speciation
 
-		$('input:visible, textarea:visible').each(function () {
+		$('input:visible, textarea:visible').not('#id_kow_ph').each(function () {
 			switch(this.type) {
 				case 'text':
 					$(this).val('');

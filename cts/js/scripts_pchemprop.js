@@ -45,7 +45,7 @@ $(document).ready(function() {
     var noOfInput_ChemCalcs = $(".tab_ChemCalcs input").length -1;
 
     var isChecked_ChemCalcs = [];
-    $("#id_all").change(function() {
+    $("#pchem-select-all").change(function() {
         switch(isAllChecked_ChemCalcs) {
             case 1:
                 isAllChecked_ChemCalcs = 0;
@@ -60,6 +60,7 @@ $(document).ready(function() {
             default:
                 console.log('JavaScript Error');
         }
+        submitButtonLogic();
     });
 
     //default button
@@ -74,15 +75,14 @@ $(document).ready(function() {
     });
 
     //submit button logic:
-    // $('.submit.input_button').prop('disabled', true); //initialize submit as disabled
+    // $('.submit.input_button').prop('readonly', true); //initialize submit as disabled
 
 
     // Triggered if any checkbox is clicked on pchem table:
-    $('input[type=checkbox]').change(function() {
-
+    $('input[type=checkbox]').not('#pchem-select-all').change(function() {
+        var checkbox = $(this);
         submitButtonLogic(); //tie submitLogic() to any checkbox changes
-        pchempropTableLogic();
-
+        pchempropTableLogic(checkbox);
         // Brings up warning that TEST is slow (no longer needed for TESTWS, 08/08/18)
         // NOTE: This is now being used for OPERA as TESTWS is much faster.
         var is_checked = this.checked;
@@ -92,7 +92,6 @@ $(document).ready(function() {
             // Warns user that opera takes awhile:
             alert("Note: The OPERA calculator can take several minutes to run");
         }
-
     });
 
     //Initialize all checkboxes to be unchecked:
@@ -108,6 +107,14 @@ $(document).ready(function() {
     $('#btn-pchem-cleardata').on('click', clearPchemData);
 
     tipPchemTable();  // adds popups when document loads
+
+    // // Makes p-chem table cell clickable instead of just checkbox:
+    // $('th.calc-header, th.chemprop, th#pchem-select-all').on("click", function() {
+    //     // Toggles checkbox values for p-chem table:
+    //     var checkedVal = $(this).children('input[type=checkbox]').prop("checked");
+    //     $(this).chi-ldren('input[type=checkbox]').prop("checked", !checkedVal);
+    //     pchempropTableLogic();
+    // });
 
 });
 
@@ -143,13 +150,21 @@ function submitButtonLogic() {
 }
 
 
-function pchempropTableLogic() {
+function pchempropTableLogic(checkbox) {
+
+    if (!$(checkbox).hasClass('calc_checkbox')) {
+        return;
+    }
+
+
     // Highlight column of selected calculator:
-    $('input.calc_checkbox').change(function() {
-        var colClass = $(this).attr('name');
-        if ($(this).is(':checked')) { $('td.' + colClass).fadeTo(0, 1); }
+    // $('input.calc_checkbox').change(function() {
+        // var colClass = $(this).attr('name');
+        var colClass = $(checkbox).attr('name');
+        // if ($(this).is(':checked')) { $('td.' + colClass).fadeTo(0, 1); }
+        if ($(checkbox).is(':checked')) { $('td.' + colClass).fadeTo(0, 1); }
         else { $('td.' + colClass).fadeTo(0, 0.75); }
-    });
+    // });
 }
 
 
