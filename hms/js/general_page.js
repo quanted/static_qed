@@ -25,6 +25,7 @@ $(function () {
 
     // $('.submit_data_request').on('click', getTestData);
     $('.submit_data_request').on('click', getData2);
+    setTimeout(setTabindex, 100);
     setTimeout(pageLoad, 400);
 });
 
@@ -365,4 +366,18 @@ function exportDataToCSV() {
     else {
         pom.click();
     }
+}
+
+function setTabindex(){
+    $('.ui-tabs-tab').each(function() {
+        $(this).attr('tabindex', '0');
+    });
+
+    $('#main-content').attr('tabindex', '0');
+    $('#overview_tab_link').attr('tabindex', '0');
+    $('#data_request_link').attr('tabindex', '0');
+    $('#output_link').attr('tabindex', '0');
+    $('#data_retrieve_link').attr('tabindex', '0');
+    $('#algorithms_link').attr('tabindex', '0');
+
 }
