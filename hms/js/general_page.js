@@ -27,6 +27,7 @@ $(function () {
     $('.submit_data_request').on('click', getData2);
     setTimeout(setTabindex, 100);
     setTimeout(pageLoad, 400);
+    setTimeout(loadCookies, 400);
 });
 
 function pageLoad() {
@@ -80,6 +81,7 @@ function getData2() {
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
+            setDataRequestCookie(taskID);
             console.log("Data request success. Task ID: " + taskID);
             toggleLoader(false, "Processing data request. Task ID: " + taskID);
             setTimeout(getDataPolling, 12000);
@@ -146,6 +148,19 @@ function getDataPolling() {
 
 function getPreviousData() {
     taskID = $('#previous_task_id').val();
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+    });
+    counter = 250;
+    getDataPolling();
+    toggleDownloadButtons(true);
+    $('#component_tabs').tabs("enable", 2);
+    $('#component_tabs').tabs("option", "active", 2);
+    return false;
+}
+
+function getPreviousDataFromID(id){
+    taskID = id;
     setTimeout(function () {
         toggleLoader(false, "Retrieving data for task ID: " + taskID);
     });
@@ -380,4 +395,51 @@ function setTabindex(){
     $('#data_retrieve_link').attr('tabindex', '0');
     $('#algorithms_link').attr('tabindex', '0');
 
+}
+
+function loadCookies(){
+    var url = window.location.href;
+    var cookie = getCookie(url);
+    var ids = cookie.split(",");
+    if( ids.length > 1){
+        $("#previous_tasks").show();
+        var list = $('#previous_tasks_list')[0];
+        ids.forEach(function(id){
+            if(id !== "") {
+                var ele = document.createElement("li");
+                ele.innerText = id;
+                ele.onclick = function () {
+                    getPreviousDataFromID(id);
+                };
+                list.appendChild(ele);
+            }
+        });
+    }
+}
+
+function setDataRequestCookie(taskID){
+    var daysToExpire = 1;
+    var date = new Date();
+    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+    var expires = "expires=" + date.toUTCString();
+    var url = window.location.href;
+    var current = getCookie(url);
+    var taskIDs = taskID + "," + current;
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
