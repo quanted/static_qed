@@ -27,15 +27,6 @@ function getCatchmentData() {
     var n = 1;
     var query = "FEATUREID+IN+(";
     var catchments = jobData.metadata.catchments;//.split(',');
-    // catchments.map(function (i) {
-    //     if (n === 1) {
-    //         query += i.toString();
-    //     }
-    //     else {
-    //         query += "," + i.toString();
-    //     }
-    //     n = n + 1;
-    // });
     query += catchments + ")";
     var query_url = catchment_base_url + query + catchment_url_options;
 
