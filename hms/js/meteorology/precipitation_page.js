@@ -7,6 +7,7 @@ $(function () {
     });
     $('#id_stationID').parent().parent().hide();
     $('#id_source').on('change', updateSourceSelection);
+    setTimeout(setOverviewTabindex, 100);
 });
 
 function setOutputUI(){
@@ -50,4 +51,11 @@ function updateSourceSelection() {
         ncdcSelect.hide();
     }
     return false;
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }

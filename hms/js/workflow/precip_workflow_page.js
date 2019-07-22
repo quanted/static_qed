@@ -11,6 +11,11 @@ var mm_stats = ["sum", "mean", "median", "max", "standard_deviation", "variance"
 
 
 $(function () {
+    $('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    setTimeout(setOverviewTabindex, 100);
 
 });
 
@@ -437,4 +442,11 @@ function createMatrix(options) {
         .attr("class", "y axis")
         .attr("transform", "translate(41," + margin.top + ")")
         .call(yAxis);
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }

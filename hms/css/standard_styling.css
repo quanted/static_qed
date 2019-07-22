@@ -355,3 +355,24 @@
 .github_link {
     text-align: center !important;
 }
+
+#data_tab_task_id * {
+    text-align: center !important;
+}
+
+#data_tab_task_id label {
+    display: inline-block !important;
+}
+
+#previous_tasks * {
+    text-align: center !important;
+}
+
+#previous_tasks_list {
+    display: block !important;
+}
+#previous_tasks_list * {
+    width: fit-content;
+    margin: 0 auto !important;
+    display: block !important;
+}
