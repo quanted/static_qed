@@ -26,3 +26,14 @@ The PCP module is currently accessing:
 
 <p>A reaction library for human metabolism for phase one transformations developed by ChemAxon is also available through the RPS.  Developing reaction libraries allows scientists to "encode" the known process science published &#8209; current and future &#8209; in the peer-reviewed literature. Encoding process science is accomplished by using Chemical Terms Language and cheminformatics applications. </p>
 <p>Executing these reaction libraries provides dominant transformation pathways and products for the chemical of interest as a function of environmental conditions.  Users also have the option to execute the PCP for the calculation of physicochemical properties for the parent chemical and transformation products.</p>
+
+
+<br>
+
+<ul style="margin-left:10px;">
+<li><a href="https://chemaxon.com/products/marvin">ChemAxon&apos;s Marvin</a></li>
+<li><a href="https://chemaxon.com/products/jchem-engines">ChemAxon&apos;s JChem</a></li>
+<li><a href="https://comptox.epa.gov/dashboard">CompTox Chemistry Dashboard</a></li>
+<li><a href="https://jcheminf.springeropen.com/articles/10.1186/s13321-017-0247-6#Sec2">DTXSID</a></li>
+<li><a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a></li>
+</ul>
