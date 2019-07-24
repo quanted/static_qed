@@ -55,7 +55,7 @@ $(function () {
     $('#aoi_download').click(function () {
         setTimeout(downloadAllCOMIDData, 300);
     });
-    $('#previous_tasks_list').click(function(e){
+    $('#previous_tasks_list').click(function (e) {
         console.log(e.currentTarget.innerText);
         $('#catchmentDetails').tabs("enable", 1);
         $('#catchmentDetails').tabs("option", "active", 1);
@@ -67,6 +67,15 @@ $(function () {
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
         }).addTo(catchmentMap);
+    }, 300);
+    setTimeout(function(){
+        var aoiStyle = {
+            "color": "#A0FF92",
+            "weight": 1,
+            "opacity": 0.50
+        };
+        var geo = L.geoJSON(aoiJSON, {style: aoiStyle});
+        geo.addTo(catchmentMap);
     }, 300);
 
     setTimeout(loadCookies, 400);
@@ -124,7 +133,7 @@ $(function () {
         var newVal = Math.round(
             ((fileCount / catchmentList.length) * 40) +
             ((Object.keys(comidData).length / catchmentList.length) * 30) +
-            (aquatoxFileCount/aquatoxTaskIDList.length) * 30);
+            (aquatoxFileCount / aquatoxTaskIDList.length) * 30);
 
         progressbar.progressbar("value", newVal);
 
@@ -526,7 +535,7 @@ function buildDataTable(comid, data) {
     writeCSV(comid, dt);
 }
 
-function writeJSON(comid, data){
+function writeJSON(comid, data) {
     var jsonData = JSON.stringify(data);
     console.log(jsonData);
     var filename = 'hms-wq-data-' + comid + '-aquatox.json';
@@ -568,15 +577,15 @@ function getCookie(cname) {
     return "";
 }
 
-function loadCookies(){
+function loadCookies() {
     var url = window.location.href;
     var cookie = getCookie(url);
     var ids = cookie.split(",");
-    if( ids.length > 1){
+    if (ids.length > 1) {
         $("#previous_tasks").show();
         var list = $('#previous_tasks_list')[0];
-        ids.forEach(function(id){
-            if(id !== "") {
+        ids.forEach(function (id) {
+            if (id !== "") {
                 var ele = document.createElement("li");
                 ele.innerText = id;
                 ele.onclick = function () {
