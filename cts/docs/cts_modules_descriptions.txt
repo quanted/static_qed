@@ -1,6 +1,14 @@
-<p><b>Chemical Editor (CE):</b> CTS&apos;s Chemical Editor (CE) appears at the beginning of all workflows and allows users to enter chemicals by their name, Chemical Abstracts Service Number (CAS#), simplified molecular-input line-entry system (SMILES) string, or by drawing the chemical&apos;s structure. ChemAxon&apos;s <a href="https://chemaxon.com/products/marvin">Marvin</a> and <a href="https://chemaxon.com/products/jchem-engines">JChem</a> applications and EPA&apos;s <a href="https://comptox.epa.gov/dashboard">CompTox Chemistry Dashboard</a> are used to generate a standardized SMILES string, preferred common name, IUPAC name, chemical formula, relevant CAS numbers, average and monoisotopic mass, and the <a href="https://jcheminf.springeropen.com/articles/10.1186/s13321-017-0247-6#Sec2">DTXSID</a> (unique substance identifier assigned by EPA&apos;s National Center for Computational Toxicology (NCCT)) for the selected chemical.</p>
+<p><b>Chemical Editor (CE):</b> CTS&apos;s Chemical Editor (CE) appears at the beginning of all workflows and allows users to enter chemicals by their name, Chemical Abstracts Service Number (CAS#), simplified molecular-input line-entry system (SMILES) string, or by drawing the chemical&apos;s structure. ChemAxon&apos;s Marvin and JChem applications and EPA&apos;s CompTox Chemistry Dashboard are used to generate a standardized SMILES string, preferred common name, IUPAC name, chemical formula, relevant CAS numbers, average and monoisotopic mass, and the DTXSID (unique substance identifier assigned by EPA&apos;s National Center for Computational Toxicology (NCCT)) for the selected chemical.</p>
 
-<p><b>Chemical Speciation (CS):</b> CTS&apos;s Chemical Speciation (CS) workflow uses <a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a> to generate:</p>
+<ul style="margin-left:10px;">
+<li><a href="https://chemaxon.com/products/marvin">ChemAxon&apos;s Marvin</a></li>
+<li><a href="https://chemaxon.com/products/jchem-engines">ChemAxon&apos;s JChem</a></li>
+<li><a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a></li>
+<li><a href="https://comptox.epa.gov/dashboard">CompTox Chemistry Dashboard</a></li>
+<li><a href="https://jcheminf.springeropen.com/articles/10.1186/s13321-017-0247-6#Sec2">DTXSID</a></li>
+</ul>
+
+<p><b>Chemical Speciation (CS):</b> CTS&apos;s Chemical Speciation (CS) workflow uses ChemAxon&apos;s Plugin Calculators to generate:</p>
 <ul class=bullet_indent>
 <li>The speciation of a chemical as a function of pH;</li>
 <li>The ionization constants;</li>
@@ -14,10 +22,10 @@ The PCP module is currently accessing:
 <br>
 <ol>
 	<!--<li>&nbsp;SPARC Performs Automated Reasoning in Chemistry (SPARC), which uses a mechanistic-based approach;</li>-->
-	<li>&nbsp;EPI Suite, which uses a fragment-based approach;</li>
-	<li>&nbsp;Toxicity Estimation Software Tool (TEST), which uses QSAR-based approaches; and </li>
-	<li>&nbsp;ChemAxon plug-in calculators, which use an atom-based fragment approach. </li>
-	<li>&nbsp;OPERA, which uses QSAR-based modeling.
+	<li>&nbsp;<a href="http://www2.epa.gov/tsca-screening-tools/epi-suitetm-estimation-program-interface" target="_blank" class="fadeMenu">EPI Suite</a>, which uses a fragment-based approach;</li>
+	<li>&nbsp;<a href="http://www2.epa.gov/chemical-research/toxicity-estimation-software-tool-test" target="_blank" class="fadeMenu">Toxicity Estimation Software Tool (TEST)</a>, which uses QSAR-based approaches; and </li>
+	<li>&nbsp;<a href="https://www.chemaxon.com/products/calculator-plugins/property-predictors/" target="_blank" class="fadeMenu">ChemAxon</a> plug-in calculators, which use an atom-based fragment approach. </li>
+	<li>&nbsp;<a href="https://doi.org/10.1186/s13321-018-0263-1" target="_blank" class="fadeMenu">OPERA</a>, which uses QSAR-based modeling.
 </ol>
 
 <p>Users also have the option to request measured data that is available in the EPI Suite physicochemical database.   </p>

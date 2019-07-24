@@ -357,11 +357,11 @@ div.wrapped_molecule {
 }
 
 /* metabolite images black and white! */
-img.metabolite {
+/*img.metabolite {
   -webkit-filter: grayscale(100%);
   z-index: -9999999999999999999999999px;
 }
-
+*/
 
 /* qtip2 stuff */
 .tooltiptext {
