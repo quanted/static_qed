@@ -376,7 +376,7 @@ function getDataByCOMID() {
 
 function getDataBySingleCOMID(comid, tID) {
     if (comid in comidData) {
-        return comidData[selectedCOMID];
+        buildDataTable(comid, comidData[selectedCOMID]);
     } else {
         var requestUrl = "hms/rest/api/v2/hms/data";
         $.ajax({
@@ -532,7 +532,7 @@ function buildDataTable(comid, data) {
         tsD.push(row);
     });
     dt.addRows(tsD);
-    writeCSV(comid, dt);
+    writeCSV(comid, dt, data);
 }
 
 function writeJSON(comid, data) {
@@ -543,10 +543,13 @@ function writeJSON(comid, data) {
     aquatoxFileCount += 1;
 }
 
-function writeCSV(comid, dt) {
+function writeCSV(comid, dt, data) {
     var csvFormattedDataTable = timeseriesColumns.join(",") + "\n" + google.visualization.dataTableToCsv(dt);
     var filename = 'hms-wq-data-' + comid + '.csv';
     zipFile.file(filename, csvFormattedDataTable);
+    var jsonData = JSON.stringify(data);
+    var jsonFilename = 'hms-wq-data-' + comid+ '.json';
+    zipFile.file(jsonFilename, jsonData);
     fileCount += 1;
 }
 
