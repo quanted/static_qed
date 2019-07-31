@@ -180,7 +180,11 @@ function setOutputUI() {
 
 function getParameters() {
     var requestJson = {
-        "dataSource": $('#source_select').val()
+        "dataSource": $('#source_select').val(),
+        "minAmmonia": $('#minAmmonia').val(),
+        "maxAmmonia": $('#maxAmmonia').val(),
+        "minNitrate": $('#minNitrate').val(),
+        "maxNitrate": $('#maxNitrate').val()
     };
     return requestJson;
 }
@@ -491,6 +495,9 @@ function downloadCurrentCOMIDData() {
 
 function downloadAllCOMIDData() {
     zipFile = new JSZip();
+    var jsonData = JSON.stringify(requestData);
+    var filename = 'hms-wq-data-request-data.json';
+    zipFile.file(filename, jsonData);
     Object.entries(catchmentList).forEach(([index, comid]) => {
         if (comid === selectedCOMID) {
             writeCSV(comid, timeseriesDataTable);
@@ -537,7 +544,6 @@ function buildDataTable(comid, data) {
 
 function writeJSON(comid, data) {
     var jsonData = JSON.stringify(data);
-    console.log(jsonData);
     var filename = 'hms-wq-data-' + comid + '-aquatox.json';
     zipFile.file(filename, jsonData);
     aquatoxFileCount += 1;
