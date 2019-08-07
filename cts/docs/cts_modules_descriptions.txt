@@ -10,7 +10,7 @@
 <li><a href="https://chemaxon.com/products/jchem-engines">ChemAxon&apos;s JChem</a><a class="exit-disclaimer" href="/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a></li>
 <li><a href="https://chemaxon.com/products/calculators-and-predictors">ChemAxon&apos;s Plugin Calculators</a><a class="exit-disclaimer" href="/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a></li>
 <li><a href="https://comptox.epa.gov/dashboard">CompTox Chemistry Dashboard</a></li>
-<li><a href="https://jcheminf.springeropen.com/articles/10.1186/s13321-017-0247-6#Sec2">DTXSID</a><a class="exit-disclaimer" href="/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a></li>
+<li><a href="https://jcheminf.biomedcentral.com/articles/10.1186/s13321-017-0247-6#Sec2">DTXSID</a><a class="exit-disclaimer" href="/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a></li>
 </ul>
 
 <p><b>Chemical Speciation (CS):</b> CTS&apos;s Chemical Speciation (CS) workflow uses ChemAxon&apos;s Plugin Calculators to generate:</p>
