@@ -6,7 +6,7 @@
 
 <div class="disclaimer">
 
-The following links exit the site:
+The following links exit the site (see <a href="/home/exit-epa" title="EPA's External Link Disclaimer">EPA'S External Link Disclaimer</a>):
 
 <br><br><br>
 
