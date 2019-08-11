@@ -1,12 +1,12 @@
 <br>
 
-<p>This page provides links to non-EPA web sites that provide additional information about this topic. You will leave the EPA.gov domain, and EPA cannot attest to the accuracy of information on that non-EPA page. Providing links to a non-EPA Web site is not an endorsement of the other site or the information it contains by EPA or any of its employees. Also, be aware that the privacy protection provided on the EPA.gov domain (see <a href="/home/privacy-and-security-notice">Privacy and Security Notice</a>) may not be available at the external link.</p>
+<p>This page provides links to non-EPA web sites that provide additional information about this topic. You will leave the EPA.gov domain, and EPA cannot attest to the accuracy of information on that non-EPA page. Providing links to a non-EPA Web site is not an endorsement of the other site or the information it contains by EPA or any of its employees. Also, be aware that the privacy protection provided on the EPA.gov domain (see <a href="https://www.epa.gov/home/privacy-and-security-notice">Privacy and Security Notice</a>) may not be available at the external link.</p>
 
-<!--<a class="exit-disclaimer" href="/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>-->
+<!--<a class="exit-disclaimer" href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>-->
 
 <div class="disclaimer">
 
-The following links exit the site (see <a href="/home/exit-epa" title="EPA's External Link Disclaimer">EPA'S External Link Disclaimer</a>):
+The following links exit the site (see <a href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">EPA'S External Link Disclaimer</a>):
 
 <br><br><br>
 
