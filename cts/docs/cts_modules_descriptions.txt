@@ -21,7 +21,7 @@
 <li>Structures for all possible isomers.</li>
 </ul>
 
-<p><b>Physicochemical Properties Module (PCP): </b>CTS&apos;s Physicochemical Properties (PCP) module calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical calculators.  The PCP module is based on an approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
+<p><b>Physicochemical Properties Module (PCP): </b>CTS&apos;s Physicochemical Properties (PCP) module calculates physicochemical properties for the parent chemical and predicted transformation products based on the findings of multiple physicochemical property calculators.  The PCP module is based on an approach that allows users to compare output from multiple calculators that use different approaches to calculate specific physicochemical properties.</p>
 
 The PCP module is currently accessing:
 <br>
@@ -33,7 +33,7 @@ The PCP module is currently accessing:
 	<li>&nbsp;<a href="https://doi.org/10.1186/s13321-018-0263-1" target="_blank" class="fadeMenu">OPERA</a><a class="exit-disclaimer" href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>, which uses QSAR-based modeling.
 </ol>
 
-<p>Users also have the option to request measured data that is available in the EPI Suite physicochemical database.   </p>
+<p>Users also have the option to request measured data that is available in the EPI Suite physicochemical property database.   </p>
 
 <p><b>Reaction Pathway Simulator (RPS)</b>: CTS&apos;s Reaction Pathway Simulator (RPS) generates potential transformation products based on user-specified reaction conditions.  The output of the RPS is based on the selection and execution of reaction libraries that represent reaction schemes for the transformation of reactive functional groups, like reduction and hydrolysis.  These reaction schemes denote viable transformation pathways based on the identification and transformation of the reactive functional groups. A rank is assigned to each one of the reaction schemes based on available experimental data. The rank is essentially a relative reaction rate, defined on a scale of one to six with six being assigned to the fastest reaction schemes. The rank of each scheme is used to calculate an approximate percentage production of each potential transformation product.</p>
 

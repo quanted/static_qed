@@ -12,7 +12,7 @@
 
 <b>Toxicity Estimation Software Tool (TEST)</b> - TEST was developed by EPA to allow users to easily estimate the toxicity of chemicals using Quantitative Structure Activity Relationships (QSARs) methodologies. The software also contains QSAR models for a number of physicochemical properties.<br><br>
 
-<b>OPERA</b> - OPERA is a QSAR tool for physicochemical properties and environmental fate predictions.<br><br>
+<b>OPERA</b> - OPEn structure-activity/property Relationship App (OPERA) is a QSAR tool for predicting physicochemical and environmental fate properties.<br><br>
 
 <br>
 
