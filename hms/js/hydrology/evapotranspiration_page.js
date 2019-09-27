@@ -147,6 +147,7 @@ function toggleParameters() {
 		case 'nldas':
 		case 'gldas':
 		case "hamon":
+		case "hargreaves":
 			break;
         case "priestlytaylor":
         case "grangergray":
