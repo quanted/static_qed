@@ -43,6 +43,11 @@ $(document).ready(function() {
     brightenBorder($('#cts_reaction_paths')); // brighten first table for user input
 
 
+    if ($('table#cts_biotrans_libs').length > 0) {
+        $('input.submit').addClass('brightBorders');
+    }
+
+
     $("input[name='reaction_paths']").change(function() {
 
         $(gentrans_tables).hide();
