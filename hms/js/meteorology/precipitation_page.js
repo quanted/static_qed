@@ -19,6 +19,7 @@ function setOutputUI(){
 function getParameters() {
     // Dataset specific request object
     var requestJson = {
+        "csrfmiddlewaretoken": getCookie("csrftoken"),
         "source": $('#id_source').val(),
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
