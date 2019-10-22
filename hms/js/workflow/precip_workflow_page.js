@@ -1,5 +1,5 @@
-var baseUrl = "/hms/rest/api/v3/workflow/precip_data_extraction";
-var v2URL = "/hms/rest/api/v3/workflow/precip_compare";
+var baseUrl = "hms/rest/api/v3/workflow/precip_data_extraction";
+var v2URL = "hms/rest/api/v3/workflow/precip_compare";
 
 var sources = [];
 var statistics = [];

@@ -1,4 +1,4 @@
-var baseUrl = "/hms/rest/api/v3/meteorology/precipitation/";
+var baseUrl = "hms/rest/api/v3/meteorology/precipitation/";
 
 $(function () {
     $('#overview_block').accordion({

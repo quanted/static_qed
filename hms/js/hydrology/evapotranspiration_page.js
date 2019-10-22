@@ -1,5 +1,5 @@
 // var baseUrl = "/hms/rest/api/hydrology/evapotranspiration/";
-var baseUrl = "/hms/rest/api/v3/hydrology/evapotranspiration/";
+var baseUrl = "hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
     // form initialization
