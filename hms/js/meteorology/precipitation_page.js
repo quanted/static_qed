@@ -45,7 +45,7 @@ function getParameters() {
 function updateSourceSelection() {
     var selectedSource = $('#id_source').val();
     var ncdcSelect = $('#id_stationID').parent().parent();
-    if (selectedSource === "ncdc") {
+    if (selectedSource === "ncei") {
         ncdcSelect.show();
     }
     else {
