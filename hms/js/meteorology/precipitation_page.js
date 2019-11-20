@@ -30,8 +30,7 @@ function getParameters() {
             "point": {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
-            },
-            "stationID": $("#id_stationID").val()
+            }
         },
         "dataValueFormat": $("#id_outputformat").val(),
         "temporalResolution": $("#id_temporalresolution").val(),
@@ -39,6 +38,9 @@ function getParameters() {
         "units": "default",
         "outputFormat": "json"
     };
+    if($('#id_source').val() === "ncei"){
+        requestJson["geometry"]["stationID"] = $("#id_stationID").val();
+    }
     return requestJson;
 }
 
