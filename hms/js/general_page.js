@@ -112,7 +112,11 @@ function getDataPolling() {
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    componentData = data.data;
+                    if (typeof data.data === "string") {
+                        componentData = JSON.parse(data.data);
+                    }else{
+                        componentData = data.data;
+                    }
                     console.log("Task successfully completed and data was retrieved.");
                     setOutputUI();
                     toggleLoader(true, "");
