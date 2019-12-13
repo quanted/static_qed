@@ -448,7 +448,7 @@ input.save_to_csv_button {
     position: sticky;
     top: 50%;
     z-index: 9999;
-    margin: 0 auto;
+    margin: -100px auto 0 auto;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;

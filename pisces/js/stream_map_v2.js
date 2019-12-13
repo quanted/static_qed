@@ -23,12 +23,13 @@ $(document).ready(function () {
 
     $('#update_fishtable').on("click", function(){
         updatingTable = true;
+        startLoad();
         setTimeout(getFishData, 10);
     });
 
     $('#threshold_selection').on("change", function(){
         startLoad();
-        setTimeout(updateFilterTable, 10);
+        setTimeout(changeThreshold, 10);
     });
 
     // Toggle calculator butotn
@@ -384,7 +385,7 @@ function getFishData() {
             assignFilterTables(data["species"]);
             populateFishTable(data["species"]);
 
-             $('#threshold_selection').value = "Crit_Ave";
+             $('#threshold_selection').val("Crit_Ave");
             updateFilterTable();
         },
         error: function (jqXHR, status, errorThrown) {
@@ -421,23 +422,42 @@ function updateFilterTable(){
     populateFilteredFishTableV2(completeFishData);
     populateCalcTable(completeFishData);
 
-    // populateFilteredFishTableV2({});
-    // populateCalcTable({});
-    //
-    // var fishTable = $('#fishTable').DataTable();
-    // $('#filteredFishTable').DataTable().clear().draw();
-    // $('#calc_table').DataTable().clear().draw();
-    // fishTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
-    //     var r = JSON.parse(JSON.stringify(this.data()));
-    //     // var cRow = JSON.parse(JSON.stringify(this.data()));
-    //     if (completeFishIDList.indexOf(r["species_id"]) >= 0) {
-    //         $('#filteredFishTable').DataTable().row.add(r).draw();
-    //         $('#calc_table').DataTable().row.add(r).draw();
-    //     }
-    // });
-    // $('#filteredFishTable').DataTable().draw();
-    // $('#calc_table').DataTable().draw();
+    highlightFish(completeFishIDList);
+    endLoad();
+}
 
+function changeThreshold(){
+    var selection = $('#threshold_selection').val();
+    var fishTableData = filteredFishTables[selection];
+
+    var fishIDs = [];
+    var f;
+    for (f in fishTableData) {
+        fishIDs.push(fishTableData[f]["species_id"]);
+    }
+    var completeFishIDList = [];
+    var completeFishData = [];
+    var f0;
+    for (f0 in fishData){
+        var f1 = fishData[f0];
+        if ((fishIDs.indexOf(f1["species_id"]) >= 0 ||
+            addedFishList.indexOf(f1["species_id"]) >=0) &&
+            removedFishList.indexOf(f1["species_id"]) === -1){
+            completeFishIDList.push(f1["species_id"]);
+            completeFishData.push(f1);
+        }
+    }
+
+    var fishTable = $('#fishTable').DataTable();
+    $('#filteredFishTable').DataTable().clear().draw();
+    $('#calc_table').DataTable().clear().draw();
+    fishTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
+        var r = JSON.parse(JSON.stringify(this.data()));
+        if (completeFishIDList.indexOf(r["species_id"]) >= 0) {
+            $('#filteredFishTable').DataTable().row.add(r).draw();
+            $('#calc_table').DataTable().row.add(r).draw();
+        }
+    });
     highlightFish(completeFishIDList);
     endLoad();
 }
