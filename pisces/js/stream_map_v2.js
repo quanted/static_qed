@@ -8,6 +8,8 @@ var removedFishList = {};
 var fishData;
 
 var thresholdList = ["Crit_Ave", "Crit_P1", "Crit_1SD", "Crit_P0", "Crit_2SD"];
+var currentThreshold = thresholdList[0];
+var calculatorOn = false;
 
 $(document).ready(function () {
 
@@ -272,6 +274,7 @@ function toggleCalculator() {
 
         $('#hucFish').closest('div').hide();
         $('#abundance_calc').closest('div').show();
+        calculatorOn = true;
     }
     else {
         button.removeClass("calculator");
@@ -281,6 +284,7 @@ function toggleCalculator() {
 
         $('#abundance_calc').closest('div').hide();
         $('#hucFish').closest('div').show();
+        calculatorOn = false;
     }
 }
 
@@ -370,6 +374,10 @@ function getFishData() {
         url: url,
         crossDomain: true,
         success: function (data, status, jqXHR) {
+            $('#error_msg').html("");
+            if(calculatorOn){
+                $('#in_huc_calc_toggle').trigger("click");
+            }
             fishData = data["species"];
             removedFishList = [];
             addedFishList = [];
@@ -385,7 +393,7 @@ function getFishData() {
             assignFilterTables(data["species"]);
             populateFishTable(data["species"]);
 
-             $('#threshold_selection').val("Crit_Ave");
+            changeThresholdColumn();
             updateFilterTable();
         },
         error: function (jqXHR, status, errorThrown) {
@@ -459,7 +467,23 @@ function changeThreshold(){
         }
     });
     highlightFish(completeFishIDList);
+    changeThresholdColumn();
     endLoad();
+}
+
+function changeThresholdColumn(){
+    var dt = $('#fishTable').DataTable();
+    var thresholdColumns = {
+        "Crit_Ave": 28,
+        "Crit_P1": 30,
+        "Crit_1SD": 26,
+        "Crit_P0": 29,
+        "Crit_2SD": 27
+    };
+
+    dt.column(thresholdColumns[currentThreshold]).visible(false);
+    currentThreshold = $('#threshold_selection').val();
+    dt.column(thresholdColumns[currentThreshold]).visible(true);
 }
 
 function addFishToFilteredList(data){
@@ -653,11 +677,36 @@ function populateFishTable(data) {
                 data: "Crit_P1",
                 title: "Crit_P1",
                 name: "Crit_P1"
+            },
+            {
+                data: "crit_1sd",
+                title: "1SD",
+                name: "crit_1sd"
+            },
+            {
+                data: "crit_2sd",
+                title: "2SD",
+                name: "crit_2sd"
+            },
+            {
+                data: "crit_ave",
+                title: "Ave",
+                name: "crit_ave"
+            },
+            {
+                data: "crit_p0",
+                title: "P0",
+                name: "crit_p0"
+            },
+            {
+                data: "crit_p1",
+                title: "P1",
+                name: "crit_p1"
             }
         ],
         "columnDefs": [
             {
-                "targets": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25],
+                "targets": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
                 "visible": false
             },
             {
@@ -824,11 +873,36 @@ function populateFilteredFishTableV2(data) {
                 data: "Crit_P1",
                 title: "Crit_P1",
                 name: "Crit_P1"
+            },
+            {
+                data: "crit_1sd",
+                title: "crit_1sd",
+                name: "crit_1sd"
+            },
+            {
+                data: "crit_2sd",
+                title: "crit_2sd",
+                name: "crit_2sd"
+            },
+            {
+                data: "crit_ave",
+                title: "crit_ave",
+                name: "crit_ave"
+            },
+            {
+                data: "crit_p0",
+                title: "crit_p0",
+                name: "crit_p0"
+            },
+            {
+                data: "crit_p1",
+                title: "crit_p1",
+                name: "crit_p1"
             }
         ],
         "columnDefs": [
             {
-                "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                "targets": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
                 "visible": false
             },
             {
@@ -860,6 +934,11 @@ function populateCalcTable(data) {
         data: d2,
         "columns": [
             {
+                data: "common_name",
+                title: "Common Name",
+                name: "common_name"
+            },
+            {
                 data: "thinning",
                 title: "Thin Coef.",
                 name: "beta"
@@ -889,14 +968,19 @@ function populateCalcTable(data) {
         ],
         "columnDefs": [
             {
+                "targets": [0],
+                "visible": false
+            },
+            {
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3, 4]
+                "aTargets": [0, 1, 2, 3, 4, 5]
             }
         ],
         sorting: false,
         searching: false,
         paging: false,
-        bInfo: false
+        bInfo: false,
+        "order": [[0, 'asc']]
     };
     $('#calc_table').DataTable(config);
 }
@@ -962,9 +1046,9 @@ function startCalculation() {
 
 function calculateAbundanceFromCount(c) {
     var fishList = $('#calc_table').DataTable();
-    var beta = fishList.column(0).data();
-    var delta = fishList.column(1).data();
-    var mW = fishList.column(2).data();
+    var beta = fishList.column(1).data();
+    var delta = fishList.column(2).data();
+    var mW = fishList.column(3).data();
 
     // Calculating abundance for each fish.
     var A = mW.map(function (W, i) {
@@ -1009,9 +1093,9 @@ function calculateAbundanceFromBiomass(c) {
     var B = Number($('#biomass_weight_field').val());
 
     var fishList = $('#calc_table').DataTable();
-    var beta = fishList.column(0).data();
-    var delta = fishList.column(1).data();
-    var mW = fishList.column(2).data();
+    var beta = fishList.column(1).data();
+    var delta = fishList.column(2).data();
+    var mW = fishList.column(3).data();
 
     // Calculating abundance for each fish.
     var A = mW.map(function (W, i) {
