@@ -1,0 +1,409 @@
+// -------------- MAP code -------------- //
+// initialize the map
+var map = L.map('map', {renderer: L.svg({padding: 100})}).setView([33.926250, -83.356552], 5);
+
+// load basemap
+var layer = null;
+setBasemap('Imagery');
+addStreams();
+// var layer = L.esri.basemapLayer('Imagery').addTo(map);
+var layerLabels;
+
+function setBasemap(basemap) {
+    if (layer) {
+        map.removeLayer(layer);
+    }
+    layer = L.esri.basemapLayer(basemap);
+
+    map.addLayer(layer);
+
+    if (layerLabels) {
+        map.removeLayer(layerLabels);
+    }
+
+    if (basemap === 'ShadedRelief' || basemap === 'Imagery' || basemap === 'Terrain'
+    ) {
+        layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+        map.addLayer(layerLabels);
+    }
+}
+
+function changeBasemap(basemaps) {
+    var basemap = basemaps.value;
+    setBasemap(basemap);
+    addStreams();
+}
+
+// ------------ STREAM NETWORK code ------------- //
+
+function addStreams() {
+    L.tileLayer.wms('https://watersgeo.epa.gov/arcgis/services/NHDPlus_NP21/NHDSnapshot_NP21/MapServer/WmsServer??', {
+        layers: 4,
+        format: 'image/png',
+        minZoom: 0,
+        maxZoom: 18,
+        transparent: true
+    }).addTo(map);
+}
+
+// ------------ STREAM NETWORK INFO code ------------- //
+
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'stream_info');
+    this.update();
+    return this._div;
+};
+info.update = function (props) {
+    this._div.innerHTML = '<h5>Stream Network Details</h5>' +
+        '<table id="stream_info_table" style="margin-bottom: 0px !important; background: none !important;"> ' +
+        '<tr><td class="startCOMID_color">Start COMID:</td> <td id="startCOMIDVal"></td></tr>' +
+        '<tr><td class="endCOMID_color">End COMID:</td><td id="endCOMIDVal"></td></tr>' +
+        '<tr><td>Network Length:</td><td id="lengthVal"></td></tr>' +
+        '<tr><td>Network Flowtime:</td><td id="flowtimeVal"></td></tr>' +
+        '<tr><td>Total Stream Segments:</td><td id="segmentCount"></td></tr></table>';
+};
+info.addTo(map);
+
+// ------------ Main JS ------------- //
+var baseUrl = 'hms/rest/api/v3/workflow/timeoftravel/';
+
+var startCOMID = null;
+var endCOMID = null;
+var startLayer = null;
+var endLayer = null;
+var networkLayer = null;
+
+var lat = null;
+var lng = null;
+
+initializeForms();
+
+$(function () {
+    $('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    $("#component_tabs").on("tabsactivate", function(event, ui){
+        map.invalidateSize(true);
+    });
+    map.on("click", function (e){
+        onStreamMapClick(e);
+    });
+
+    $('#id_startCOMID').on("blur", function(event, ui){
+        getStreamNetworkByCOMID($('#id_startCOMID').val());
+    });
+    $('#id_endCOMID').on("blur", function(event, ui){
+        getStreamNetworkByCOMID($('#id_endCOMID').val());
+    });
+
+    $('#start_del').on("click", function(event, ui){
+       deleteCOMID(true);
+    });
+    $('#end_del').on("click", function(event, ui){
+       deleteCOMID(false);
+    });
+});
+
+function initializeForms(){
+    var start = $('#id_startCOMID').parent();
+    var end = $('#id_endCOMID').parent();
+    var startDel = document.createElement("div");
+    startDel.id = "start_del";
+    startDel.innerHTML = "x";
+    startDel.className = "deleteCOMID";
+    var endDel = document.createElement("div");
+    endDel.id = "end_del";
+    endDel.innerHTML = "x";
+    endDel.className = "deleteCOMID";
+
+    $(start).append(startDel);
+    $(end).append(endDel);
+}
+
+function deleteCOMID(start){
+    if(start){
+        startCOMID = null;
+        endCOMID = null;
+        $('#startCOMIDVal').html("");
+        $('#endCOMIDVal').html("");
+        $('#lengthVal').html("");
+        $('#flowtimeVal').html("");
+        $('#segmentCount').html("");
+
+        $('#id_startCOMID').val("");
+        $('#id_endCOMID').val("");
+        if (map.hasLayer(startLayer)) {
+            map.removeLayer(startLayer);
+            startLayer = null;
+        }
+        if(map.hasLayer(networkLayer)){
+            map.removeLayer(networkLayer);
+            networkLayer = null;
+        }
+        if (map.hasLayer(endLayer)) {
+            map.removeLayer(endLayer);
+            endLayer = null;
+        }
+    }
+    else{
+        endCOMID = null;
+        $('#endCOMIDVal').html("");
+        $('#lengthVal').html("");
+        $('#flowtimeVal').html("");
+        $('#segmentCount').html("");
+
+        $('#id_endCOMID').val("");
+        if(map.hasLayer(networkLayer)){
+            map.removeLayer(networkLayer);
+            networkLayer = null;
+        }
+        if (map.hasLayer(endLayer)) {
+            map.removeLayer(endLayer);
+            endLayer = null;
+        }
+    }
+}
+
+function getParameters(){
+    var requestJson = {
+        "csrfmiddlewaretoken": getCookie("csrftoken"),
+        "source": "NWM",
+        "dateTimeSpan": {
+            "startDate": $("#id_startDate").val(),
+            "endDate": $('#id_endDate').val()
+        },
+        "geometryMetadata": {
+            "startCOMID": $("#id_startCOMID").val(),
+            "endCOMID": $('#id_endCOMID').val()
+        },
+        "units": "default",
+        "outputFormat": "json"
+    };
+    return requestJson;
+}
+
+
+function onStreamMapClick(e) {
+    lat = Number(e.latlng.lat).toFixed(6);
+    lng = Number(e.latlng.lng).toFixed(6);
+    setTimeout(onLoader, 10);
+    setTimeout(getStreamSegment, 20);
+}
+
+function getStreamSegment() {
+    var url = 'https://ofmpub.epa.gov/waters10/PointIndexing.Service';
+    var latitude = lat.toString();
+    var longitude = lng.toString();
+    var ptIndexParams = {
+        'pGeometry': 'POINT(' + longitude + ' ' + latitude + ')',
+        'pGeometryMod': 'WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84',
+        'pPointIndexingMethod': 'DISTANCE',
+        'pPointIndexingMaxDist': 25,
+        'pOutputPathFlag': 'TRUE',
+        'pReturnFlowlineGeomFlag': 'TRUE',
+        'optOutCS': 'SRSNAME=urn:ogc:def:crs:OGC::CRS84',
+        'optOutPrettyPrint': 0
+    };
+    $.ajax({
+        type: 'GET',
+        url: url,
+        jsonp: true,
+        data: ptIndexParams,
+        async: false,
+        success: function (data, status, jqXHR) {
+            $('#error_block').html("");
+            var streamData = data;
+            if(!typeof(data) === "object") {
+                streamData = JSON.parse(data);
+            }
+            createStreamSeg(streamData, false);
+
+            return data;
+        },
+        error: function (jqXHR, status) {
+            $('#error_block').html('Unable to get the stream segment closest to point: ' + latitude + ', ' + longitude);
+            setTimeout(offLoader, 10);
+            return null;
+        }
+    });
+}
+
+function getStreamNetwork(){
+    var rest_url = 'https://ofmpub.epa.gov/waters10/Navigation.Service';
+    var data = {
+        pNavigationType: "PP",
+        pStartComID: startCOMID,
+        pStopComid: endCOMID,
+        pReturnFlowlineAttr: "TRUE"
+    };
+    $.ajax({
+        type: 'GET',
+        url: rest_url,
+        jsonp: true,
+        data: data,
+        async: false,
+        success: function (data, status, jqXHR) {
+            $('#error_block').html("");
+            var streamData = data;
+            if(!typeof(data) === "object") {
+                streamData = JSON.parse(data);
+            }
+            if(streamData.output.ntNavResultsStandard.length <=1){
+                $('#error_block').html('Start and end COMIDs are not valid for connected stream network');
+                setTimeout(offLoader, 10);
+                endCOMID = null;
+                return null;
+            }
+            addStreamNetwork(streamData);
+            return data;
+        },
+        error: function (jqXHR, status) {
+            $('#error_block').html('Start and end COMIDs are not valid for connected stream network');
+            setTimeout(offLoader, 10);
+            endCOMID = null;
+            return null;
+        }
+    });
+}
+
+function getStreamNetworkByCOMID(comid){
+    var rest_url = 'https://ofmpub.epa.gov/waters10/Navigation.Service';
+    var data = {
+        pNavigationType: "PP",
+        pStartComID: comid,
+        pStopComid: comid,
+        pReturnFlowlineAttr: "TRUE"
+    };
+    $.ajax({
+        type: 'GET',
+        url: rest_url,
+        jsonp: true,
+        data: data,
+        async: false,
+        success: function (data, status, jqXHR) {
+            $('#error_block').html("");
+            var streamData = data;
+            if(!typeof(data) === "object") {
+                streamData = JSON.parse(data);
+            }
+            createStreamSeg(streamData, true);
+
+            return data;
+        },
+        error: function (jqXHR, status) {
+            $('#error_block').html('Start and end COMIDs are not valid for connected stream network');
+            setTimeout(offLoader, 10);
+            endCOMID = null;
+            return null;
+        }
+    });
+}
+
+function createStreamSeg(streamData, fromCOMID){
+    if (startCOMID === null || endCOMID !== null){
+        startCOMID = streamData.output.ary_flowlines[0].comid;
+        $('#startCOMIDVal').html(startCOMID);
+        $('#endCOMIDVal').html("");
+        $('#lengthVal').html("");
+        $('#flowtimeVal').html("");
+        $('#segmentCount').html("");
+
+        endCOMID = null;
+        $('#id_endCOMID').val("");
+        $('#id_startCOMID').val(startCOMID);
+        addStreamSeg(streamData, true, fromCOMID);
+    }
+    else{
+        endCOMID = streamData.output.ary_flowlines[0].comid;
+        $('#endCOMIDVal').html(endCOMID);
+        getStreamNetwork();
+        if(endCOMID !== null) {
+            $('#id_endCOMID').val(endCOMID);
+            addStreamSeg(streamData, false, fromCOMID);
+        }
+    }
+}
+
+function addStreamSeg(streamData, start, fromCOMID) {
+    if(fromCOMID){
+        var latlon = streamData.output.ntNavResultsStandard[0].shape.coordinates.map(function (c) {
+            return c.reverse();
+        });
+    }
+    else {
+        var latlon = streamData.output.ary_flowlines[0].shape.coordinates.map(function (c) {
+            return c.reverse();
+        });
+    }
+    if (map.hasLayer(startLayer) && start === true) {
+        map.removeLayer(startLayer);
+        if(map.hasLayer(networkLayer)){
+            map.removeLayer(networkLayer);
+        }
+    }
+    if (map.hasLayer(endLayer)) {
+        map.removeLayer(endLayer);
+    }
+
+    if(start === true){
+        startLayer = L.polyline(latlon, {
+            color: '#00D827',
+            weight: 7,
+            opacity: 0.9,
+            lineJoin: 'round'
+        }).addTo(map);
+    }
+    else {
+        endLayer = L.polyline(latlon, {
+            color: '#D80000',
+            weight: 7,
+            opacity: 0.9,
+            lineJoin: 'round'
+        }).addTo(map);
+        map.fitBounds(networkLayer.getBounds());
+    }
+    setTimeout(offLoader, 10);
+}
+
+function addStreamNetwork(streamData) {
+    var streamLayers = [];
+    streamData.output.ntNavResultsStandard.map(function(c){
+       var rpoints = c.shape.coordinates.map(function(p){
+           return p.reverse();
+       });
+       var path = L.polyline(rpoints, {
+            color: '#0048D8',
+            weight: 4,
+            opacity: 0.9,
+            lineJoin: 'round'
+        });
+        streamLayers.push(path);
+    });
+
+    $('#lengthVal').html(streamData.output.total_distance_km + " (km)");
+    $('#flowtimeVal').html(streamData.output.total_flowtime_day + " (days)");
+    $('#segmentCount').html(parseInt(streamLayers.length));
+
+    if (map.hasLayer(networkLayer)) {
+        map.removeLayer(networkLayer);
+        networkLayer = null;
+    }
+    networkLayer = L.featureGroup(streamLayers);
+    networkLayer.addTo(map);
+    startLayer.bringToFront();
+    map.fitBounds(networkLayer.getBounds());
+    setTimeout(offLoader, 10);
+
+}
+
+function onLoader(){
+    $('#map_loader').show();
+    setTimeout(offLoader, 3000);
+}
+
+function offLoader(){
+    $('#map_loader').hide();
+}
