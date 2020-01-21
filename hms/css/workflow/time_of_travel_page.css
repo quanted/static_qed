@@ -104,3 +104,60 @@
     color: red;
 }
 
+.input_table {
+    border: none;
+}
+.input_table div {
+    border: none;
+}
+#open_table_button {
+    margin: 5px;
+    text-align: center;
+    font-weight: 300;
+    font-size: 16px;
+    color: white;
+    background: #0071bc;
+    box-shadow: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 0;
+}
+
+#open_table_button:hover {
+    cursor: pointer;
+    opacity: .8;
+    background-color: #205493;
+}
+
+#backdrop {
+    background: white;
+    z-index: 100000;
+    display: none;
+    position: relative;
+    height: 55vh;
+    width: 100%;
+    margin-top: -40px;
+}
+#backdrop_exit {
+    width: 25px;
+    height: 25px;
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+}
+#backdrop_exit:hover {
+    color: red;
+    cursor: pointer;
+}
+#backdrop_table_div {
+    display: block;
+    width: 90%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    margin: 35px;
+}
+
+

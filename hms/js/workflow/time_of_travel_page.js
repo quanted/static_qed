@@ -78,7 +78,16 @@ var networkLayer = null;
 var lat = null;
 var lng = null;
 
+var table = null;
+var data = null;
+var tableData = null;
+
+var selectedRow = null;
+var selectedCol = null;
+
 initializeForms();
+createInputTable();
+setTableData(true);
 
 $(function () {
     $('#overview_block').accordion({
@@ -105,6 +114,48 @@ $(function () {
     $('#end_del').on("click", function(event, ui){
        deleteCOMID(false);
     });
+    $('#open_table_button').on("click", function(event, ui){
+       $('#backdrop').show();
+    });
+    $('#backdrop_exit').on("click", function(event, ui){
+        $('#backdrop').hide();
+    });
+    $('#id_startDate').on("change", function(event, ui){
+        setTableData(false);
+    });
+    $('#id_endDate').on("change", function(event, ui){
+        setTableData(false);
+    });
+    $('#id_startHour').on("change", function(event, ui){
+        setTableData(false);
+    });
+    $('#id_endHour').on("change", function(event, ui){
+        setTableData(false);
+    });
+
+    $('#backdrop_table_div').on('click', 'td', function (e) {
+        var selection = table.getSelection();
+        if(selection.length === 0){
+            return;
+        }
+        var cell = e.target;
+        selectedRow = selection[0].row;
+        selectedCol = cell.cellIndex;
+        var v = this.innerHTML;
+        if (!v.includes('<input') && $(this).index() === 2) {
+            this.innerHTML = "<input id='tblCell' class='tblCellEdit' onfocus='this.value = this.value;' type='text' value='" + v + "'/>";
+            document.getElementById('tblCell').focus();
+        }
+    });
+    //
+    $('#backdrop_table_div').on('blur', 'td', function (e) {
+        var v = Number(this.childNodes[0].value);
+        this.innerHTML = v;
+        tableData[selectedRow][selectedCol] = v;
+        drawTable();
+        selectedRow = null;
+        selectedCol = null;
+    });
 });
 
 function initializeForms(){
@@ -121,6 +172,38 @@ function initializeForms(){
 
     $(start).append(startDel);
     $(end).append(endDel);
+
+    var startDate = new Date();
+    var endDate = new Date();
+    endDate.setHours(endDate.getHours() + 18);
+    var startString = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+    $("#id_startDate").val(startString);
+    var endString = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+    $("#id_endDate").val(endString);
+    $("#id_startHour").val(startDate.getHours());
+    $("#id_endHour").val(endDate.getHours());
+}
+
+function setTableData(initial){
+    var startDate = new Date($('#id_startDate').val());
+    startDate.setHours(Number($('#id_startHour').val()));
+
+    var endDate = new Date($('#id_endDate').val());
+    endDate.setHours(Number($('#id_endHour').val()));
+
+    var timesteps = [];
+    var currentDate = startDate;
+    while (currentDate.getTime() < endDate.getTime()){
+        var date = currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate();
+        var hour = currentDate.getHours();
+        var timestep = [date, hour, 0];
+        timesteps.push(timestep);
+        currentDate.setHours(currentDate.getHours() + 1);
+    }
+    tableData = timesteps;
+    if(!initial){
+        drawTable();
+    }
 }
 
 function deleteCOMID(start){
@@ -168,12 +251,13 @@ function deleteCOMID(start){
 }
 
 function getParameters(){
+    var timeseries = dataToCSV();
     var requestJson = {
         "csrfmiddlewaretoken": getCookie("csrftoken"),
         "source": "NWM",
         "dateTimeSpan": {
-            "startDate": $("#id_startDate").val(),
-            "endDate": $('#id_endDate').val()
+            "startDate": $("#id_startDate").val() + " " + $('#id_startHour').val(),
+            "endDate": $('#id_endDate').val() + " " + $('#id_endHour').val(),
         },
         "geometryMetadata": {
             "startCOMID": $("#id_startCOMID").val(),
@@ -184,7 +268,6 @@ function getParameters(){
     };
     return requestJson;
 }
-
 
 function onStreamMapClick(e) {
     lat = Number(e.latlng.lat).toFixed(6);
@@ -406,4 +489,48 @@ function onLoader(){
 
 function offLoader(){
     $('#map_loader').hide();
+}
+
+function createInputTable(){
+    var input_table = $('.input_table');
+    var timeSeriesTableRow = document.createElement('dev');
+    timeSeriesTableRow.classList.add('input_table_row');
+    var openTableButton = document.createElement('input');
+    openTableButton.classList.add("open_table");
+    openTableButton.id = 'open_table_button';
+    openTableButton.value = 'Open Input Table';
+    $(timeSeriesTableRow).append(openTableButton);
+    $(input_table).append(timeSeriesTableRow);
+
+    var backdrop = document.createElement('div');
+    backdrop.id = "backdrop";
+    var backdropExit = document.createElement('div');
+    backdropExit.id = "backdrop_exit";
+    backdropExit.innerHTML = "x";
+    var backdropTableDiv = document.createElement('div');
+    backdropTableDiv.id = "backdrop_table_div";
+    $(backdrop).append(backdropExit);
+    $(backdrop).append(backdropTableDiv);
+    $('#main-column').append(backdrop);
+}
+
+// Load the Visualization API and the piechart package.
+google.charts.load('current', {'packages':['table']});
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawTable);
+
+function drawTable(){
+    data = new google.visualization.DataTable();
+    data.addColumn('string', 'Date');
+    data.addColumn('number', 'Hour');
+    data.addColumn('number', 'Contaminant Inflow');
+    data.addRows(tableData);
+
+    table = new google.visualization.Table(document.getElementById('backdrop_table_div'));
+    table.draw(data, {showRowNumber: false, width: '100%', height: '100%', sort: 'disable', page: 'enable', pageSize: 18});
+}
+
+function dataToCSV(){
+    return google.visualization.dataTableToCsv(tableData);
 }
