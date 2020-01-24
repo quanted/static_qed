@@ -675,7 +675,10 @@ function addCatchmentToMap(data) {
     if (currentSelectedGeometry !== null) {
         hucMap.removeLayer(currentSelectedGeometry);
     }
-    var hucData = JSON.parse(data);
+    var hucData = data;
+    if (typeof data === "string") {
+        hucData = JSON.parse(data);
+    }
     currentSelectedGeometry = L.geoJSON(hucData);
     currentSelectedGeometry.addTo(hucMap);
     hucMap.fitBounds(currentSelectedGeometry.getBounds());
