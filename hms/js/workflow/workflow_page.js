@@ -705,7 +705,7 @@ function addHucToMap(data, hucType) {
     var hucData = data;
     if (typeof data === "string") {
         hucData = JSON.parse(data);
-    }                    }
+    }
     var hucNum = hucType.slice(4, hucType.length);
     var hucID = hucData.features[0].properties[hucType];
     currentSelectedGeometry = L.geoJSON(hucData);
