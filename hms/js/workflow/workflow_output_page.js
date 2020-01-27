@@ -34,7 +34,11 @@ function getCatchmentData() {
         type: "GET",
         url: query_url,
         success: function (data, textStatus, jqXHR) {
-            catchmentData = JSON.parse(data);
+            if (typeof data === "string") {
+                catchmentData = JSON.parse(data);
+            }else{
+                catchmentData = data;
+            }
             console.log("Catchment data loaded.");
             setOutputTitle();
             setOutputMap();
@@ -185,7 +189,7 @@ function setInfoDiv(comid) {
     let title = "Stream: " + comid.toString() + " Details";
     $('#output_info h4').html(title);
     let data = {};
-    $.each(jobData.table[comid], function (k, v) {
+    $.each(jobData.table.comid[comid], function (k, v) {
         let val = parseFloat(v);
         if (isNaN(val)) {
             val = v;
@@ -224,8 +228,8 @@ function setOutputGraph(comid) {
         rollPeriod: 1,
         showRoller: true
     };
-    var cData = jobData.data[comid];
-    $.each(cData.Precipitation.data, function (index, row) {
+    var cData = jobData.data[comid][0];
+    $.each(cData.Precipitation.Data, function (index, row) {
         var rowD = [];
         var date;
         if (index.includes("/")) {
@@ -251,9 +255,9 @@ function setOutputGraph(comid) {
         rowD.push(date);
 
         var p = Number.parseFloat(row);
-        var sr = Number.parseFloat(cData.SurfaceRunoff.data[index]);
-        var sbf = Number.parseFloat(cData.SubsurfaceRunoff.data[index]);
-        var sf = Number.parseFloat(cData.StreamHydrology.data[index]);
+        var sr = Number.parseFloat(cData.SurfaceRunoff.Data[index]);
+        var sbf = Number.parseFloat(cData.SubsurfaceRunoff.Data[index]);
+        var sf = Number.parseFloat(cData.StreamHydrology.Data[index]);
 
         rowD.push(p);
         rowD.push(sr);
@@ -308,10 +312,37 @@ function setOutputTable(data) {
 }
 
 function setOutputPage() {
+    parseData();
+
     setTimeout(function () {
         toggleLoader(false, "Loading task data...");
     }, 60);
     getCatchmentData();
+}
+
+function parseData(){
+    var table = {};
+    $.each(jobData.table, function (comid, v) {
+        if (typeof v === "string") {
+            table.comid = JSON.parse(v);
+        }else{
+            table.comid = v;
+        }
+    });
+    jobData.table = table;
+    var comidData = {};
+    $.each(jobData.data, function(comid, array_v){
+        var comidArray = [];
+        $.each(array_v, function(k, v){
+            if (typeof v === "string") {
+                comidArray.push(JSON.parse(v));
+            }else{
+                comidArray.push(v);
+            }
+        });
+        comidData[comid] = comidArray;
+    });
+    jobData.data = comidData;
 }
 
 function selectComid(comid) {

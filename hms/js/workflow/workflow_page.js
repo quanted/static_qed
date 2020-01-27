@@ -390,7 +390,11 @@ function getDataPolling() {
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    jobData = data.data;
+                    if (typeof data.data === "string") {
+                        jobData = JSON.parse(data.data);
+                    }else{
+                        jobData = data.data;
+                    }
                     setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
                     dyGraph.resize();
