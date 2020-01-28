@@ -156,6 +156,10 @@ $(function () {
         selectedRow = null;
         selectedCol = null;
     });
+    $('.ui-tabs-tab').on("click", function(e){
+        $('#backdrop').hide();
+    });
+
 });
 
 function initializeForms(){

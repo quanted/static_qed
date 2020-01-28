@@ -351,11 +351,12 @@ function getParameters() {
 
 function getData() {
     var params = getParameters();
+    var jsonParams = JSON.stringify(params);
     $.ajax({
         type: "POST",
         url: baseUrl,
         accepts: "application/json",
-        data: JSON.stringify(params),
+        data: jsonParams,
         processData: false,
         timeout: 0,
         contentType: "application/json",
