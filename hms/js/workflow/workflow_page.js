@@ -398,7 +398,7 @@ function getDataPolling() {
                     }
                     setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
-                    dyGraph.resize();
+                    // dyGraph.resize();
                     // counter = 25;
                 }
                 else if (data.status === "FAILURE") {
