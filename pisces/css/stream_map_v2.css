@@ -109,6 +109,9 @@ table.dataTable.display tbody tr.odd > .sorting_1 {
     text-align: center !important;
     font-size: 12px;
     line-height: 0px !important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #calc_table th * {
@@ -687,7 +690,7 @@ input.fishSearchButton {
 
 #biomass_count_field {
     font-size: 12px;
-    margin-left: 16px;
+    margin-left: 3px;
 }
 
 #fish_assemblage_estimator {
