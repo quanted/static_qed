@@ -189,7 +189,7 @@ function setInfoDiv(comid) {
     let title = "Stream: " + comid.toString() + " Details";
     $('#output_info h4').html(title);
     let data = {};
-    $.each(jobData.table.comid[comid], function (k, v) {
+    $.each(jobData.table[comid], function (k, v) {
         let val = parseFloat(v);
         if (isNaN(val)) {
             val = v;
@@ -223,9 +223,9 @@ function setOutputGraph(comid) {
     var labels = ["Date", "Precipitation (mm)", "Surface Runoff (mm)", "Subsurface Flow (mm)", "Stream Flow (cfs)"];
     var dataCSV = [];
     var dataDict = [];
-    var cData = jobData.data[comid][0];
+    var cData = jobData.data[comid];
     var maxValue = 0.0;
-    $.each(cData.Precipitation.Data, function (index, row) {
+    $.each(cData.Precipitation.data, function (index, row) {
         var rowD = [];
         var date;
         if (index.includes("/")) {
@@ -251,9 +251,9 @@ function setOutputGraph(comid) {
         rowD.push(date);
 
         var p = Number.parseFloat(row);
-        var sr = Number.parseFloat(cData.SurfaceRunoff.Data[index]);
-        var sbf = Number.parseFloat(cData.SubsurfaceRunoff.Data[index]);
-        var sf = Number.parseFloat(cData.StreamHydrology.Data[index]);
+        var sr = Number.parseFloat(cData.SurfaceRunoff.data[index]);
+        var sbf = Number.parseFloat(cData.SubsurfaceRunoff.data[index]);
+        var sf = Number.parseFloat(cData.StreamHydrology.data[index]);
 
         if(p > maxValue){
             maxValue = p;
@@ -310,7 +310,7 @@ function setOutputTable(data) {
         }
 
         return value;
-    }
+    };
     catchmentDataTable = true;
     $('#output_table').tabulator({
         layout: "fitColumns",
@@ -327,7 +327,7 @@ function setOutputTable(data) {
 }
 
 function setOutputPage() {
-    parseData();
+    //parseData();
 
     setTimeout(function () {
         toggleLoader(false, "Loading task data...");
@@ -445,38 +445,42 @@ function exportAllDataToCSV() {
     var first = true;
     var firstCOMID = true;
     var i = 0;
+    var i_max = 0;
+    var i0 = 0;
     // each catchment
     $.each(jobData.data, function (j, u) {
         var comid = j;
         // each dataset
-        $.each(u[0], function (k, v) {
+        $.each(u, function (k, v) {
             if(firstCOMID) {
-                if (v.Metadata["column_2"]) {
-                    columns += "," + k + " (" + v.Metadata["column_2"] + ")";
+                if (v.metadata["column_2"]) {
+                    columns += "," + k + " (" + v.metadata["column_2"] + ")";
                 } else {
                     columns += "," + k;
                 }
             }
-            $.each(v.Metadata, function (l, w) {
+            $.each(v.metadata, function (l, w) {
                 metadata += k + "_" + l + "," + w + "\n";
             });
             if (first) {
-                $.each(v.Data, function (m, x) {
-                    dataRows[i] = m + "," + comid + "," + x;
+                $.each(v.data, function (m, x) {
+                    dataRows[i + i0] = m + "," + comid + "," + x;
                     i += 1;
                 });
             }
             else {
-                $.each(v.Data, function (m, x) {
-                    dataRows[i] += "," + x;
+                $.each(v.data, function (m, x) {
+                    dataRows[i + i0] += "," + x;
                     i += 1;
                 });
             }
+            i_max = i;
             i = 0;
             first = false;
         });
         first = true;
         firstCOMID = false;
+        i0 += i_max;
     });
     var data = dataRows.join("\n");
     var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
@@ -504,29 +508,27 @@ function exportCatchmentDataToCSV() {
     var first = true;
     var i = 0;
     $.each(jobData.data[selectedCatchment], function (k, v) {
-        $.each(v, function(n, d){
-            if (d.Metadata["column_2"]) {
-                columns += "," + n + " (" + d.Metadata["column_2"] + ")";
-            } else {
-                columns += "," + n;
-            }
-            $.each(d.Metadata, function (l, w) {
-                metadata += n + "_" + l + "," + w + "\n";
-            });
-            if (first) {
-                $.each(d.Data, function (m, x) {
-                    dataRows[i] = m + "," + selectedCatchment + "," + x;
-                    i += 1;
-                });
-            } else {
-                $.each(d.Data, function (m, x) {
-                    dataRows[i] += "," + x;
-                    i += 1;
-                });
-            }
-            i = 0;
-            first = false;
+        if (v.metadata["column_2"]) {
+            columns += "," + k + " (" + v.metadata["column_2"] + ")";
+        } else {
+            columns += "," + k;
+        }
+        $.each(v.metadata, function (l, w) {
+            metadata += k + "_" + l + "," + w + "\n";
         });
+        if (first) {
+            $.each(v.data, function (m, x) {
+                dataRows[i] = m + "," + selectedCatchment + "," + x;
+                i += 1;
+            });
+        } else {
+            $.each(v.data, function (m, x) {
+                dataRows[i] += "," + x;
+                i += 1;
+            });
+        }
+        i = 0;
+        first = false;
     });
     var data = dataRows.join("\n");
     var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
@@ -563,8 +565,9 @@ function exportAllDataToJSON() {
 
 function exportCatchmentDataToJSON() {
     var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".json";
+    var d = jobData.data[selectedCatchment];
     var pom = document.createElement('a');
-    var data = encodeURIComponent(JSON.stringify(jobData.data[selectedCatchment]));
+    var data = encodeURIComponent(JSON.stringify(d));
     pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + data);
     pom.setAttribute('download', fileName);
     if (document.createEvent) {
