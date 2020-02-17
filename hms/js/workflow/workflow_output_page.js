@@ -326,13 +326,24 @@ function setOutputTable(data) {
     });
 }
 
+function errorCheck(){
+    if(jobData.metadata.hasOwnProperty("ERROR")){
+        toggleLoader(false, jobData.metadata["ERROR"]);
+        return false;
+    }
+    return true;
+}
+
 function setOutputPage() {
     //parseData();
 
-    setTimeout(function () {
-        toggleLoader(false, "Loading task data...");
-    }, 60);
-    getCatchmentData();
+    var validData = errorCheck();
+    if(validData) {
+        setTimeout(function () {
+            toggleLoader(false, "Loading task data...");
+        }, 60);
+        getCatchmentData();
+    }
 }
 
 function parseData(){
