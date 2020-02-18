@@ -27,9 +27,9 @@ $(function () {
     $("#stream_algorithm_input_button").click(toggleStreamInputs);
 
     // Input Validation actions
-    $("#huc_id").keyup(spatialInputValidation);
-    $('#comid').keyup(spatialInputValidation);
-
+    $("#huc_id").change(spatialInputValidation);
+    $('#comid').change(spatialInputValidation);
+    $("#spatial_type").change(spatialInputValidation);
 });
 
 function pageLoadStart() {
@@ -91,7 +91,7 @@ function spatialInputValidation() {
     }
     else if (selectedType === "comid") {
         var comid = $('#comid').val();
-        if (Number.isInteger(Number(comid)) && comid.length === 10) {
+        if (Number.isInteger(Number(comid)) && comid.length >= 6) {
             $('#add_spatial_input').removeClass("blocked");
         }
         else {
@@ -515,6 +515,36 @@ function openHucMap() {
         };
         mapSelectionInfo.addTo(hucMap);
     }
+    else{
+        mapSelectionInfo.update = function () {
+            var selectionInfo;
+            if ($('#spatial_type').val() === "hucid") {
+                selectionInfo = '<h4>HUC Selection Options</h4>' +
+                    '<div id="selection_huc_options">' +
+                    '<label class="selection_huc_button">HUC 8<input type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 12<input type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                    '</div>' +
+                    '<h4>HUC Selection Info</h4>' +
+                    '<div id="selection_info_div">' +
+                    '<div id="selection_id_div">ID: <span id="selection_id"></span></div>' +
+                    '<div id="selection_name_div">Name: <span id="selection_name"></span></div>' +
+                    '<div id="selection_area_div">Area: <span id="selection_area"></span>km<sup>2</sup></div>' +
+                    '<div id="selection_state_div">State(s): <span id="selection_state"></span></div>' +
+                    '</div>'
+            }
+            else {
+                selectionInfo = '<h4>Catchment Selection Info</h4>' +
+                    '<div id="selection_info_div">' +
+                    '<div id="selection_id_div">ID: <span id="selection_id"></span></div>' +
+                    '<div id="selection_huc12_div">HUC 12: <span id="selection_huc12"></span></div>' +
+                    '<div id="selection_area_div">Area: <span id="selection_area"></span>km<sup>2</sup></div>' +
+                    '<div id="selection_region_div">Region: <span id="selection_region"></span></div>' +
+                    '</div>'
+            }
+            this._div.innerHTML = selectionInfo;
+        };
+        mapSelectionInfo.addTo(hucMap);
+    }
     let currentHucInput = $('#huc_id').val();
     let currentComIDInput = $('#comid').val();
     if (currentHucInput !== undefined) {
@@ -529,6 +559,7 @@ function openHucMap() {
 
 function toggleHucMap() {
     $('#huc_map_block').fadeOut("faster");
+    hucMap.closePopup();
     return false;
 }
 
