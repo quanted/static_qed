@@ -385,11 +385,11 @@ function getFishData() {
             $('#envelope_toggle').closest('div').show();
             $('#huc_calc_toggle').closest('div').show();
 
-            $('#wa_value').val(Number(data["stream"]["attributes"]["wa"]).toFixed(5));
-            $('#slope_value').val(Number(data["stream"]["attributes"]["slope"]).toFixed(5));
-            $('#elev_value').val(Number(data["stream"]["attributes"]["elevation"]).toFixed(3));
-            $('#iwi_value').val(Number(data["stream"]["attributes"]["iwi"]).toFixed(5));
-            $('#bmmi_value').val(Number(data["stream"]["attributes"]["bmmi"]).toFixed(5));
+            $('#wa_value').val(Number(data["stream"]["attributes"]["wa"]).toFixed(1));
+            $('#slope_value').val(Number(data["stream"]["attributes"]["slope"]).toFixed(3));
+            $('#elev_value').val(Number(data["stream"]["attributes"]["elevation"]).toFixed(1));
+            $('#iwi_value').val(Number(data["stream"]["attributes"]["iwi"]).toFixed(2));
+            $('#bmmi_value').val(Number(data["stream"]["attributes"]["bmmi"]).toFixed(2));
             assignFilterTables(data["species"]);
             populateFishTable(data["species"]);
 
