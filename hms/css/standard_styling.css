@@ -156,14 +156,18 @@
 
 .input_table {
     display: table;
-    border-left: solid #c5c5c5 1px;
-    border-right: solid #c5c5c5 1px;
-    border-bottom: solid #c5c5c5 1px;
+    /*border-left: solid #c5c5c5 1px;*/
+    /*border-right: solid #c5c5c5 1px;*/
+    /*border-bottom: solid #c5c5c5 1px;*/
 }
 
 .table_header {
     font-weight: bold;
     background: #f1f1f1;
+}
+
+.table_header div{
+    font-size: small;
 }
 
 .input_table_row {
@@ -173,22 +177,28 @@
 
 .input_table_key {
     display: table-cell;
-    width: 30%;
+    width: 25%;
     float: left;
     padding: 4px 2px 4px 10px;
     font-size: small;
-    border-top: solid #c5c5c5 1px;
     text-align: left;
 }
 
 .input_table_value {
     display: table-cell;
-    width: 70%;
+    width: 35%;
     float: left;
     padding: 4px 2px 4px 10px;
     font-size: small;
-    border-left: solid #c5c5c5 1px;
-    border-top: solid #c5c5c5 1px;
+    text-align: left;
+}
+
+.input_table_comment {
+    display: table-cell;
+    width: 40%;
+    float: left;
+    padding: 4px 2px 4px 10px;
+    font-size: x-small;
     text-align: left;
 }
 
