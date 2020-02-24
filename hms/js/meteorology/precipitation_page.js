@@ -7,7 +7,11 @@ $(function () {
     });
     $('#id_stationID').parent().parent().hide();
     $('#id_source').on('change', updateSourceSelection);
+    $('#id_area_of_interest').on('change', updateAoISelection);
+
     setTimeout(setOverviewTabindex, 100);
+    setTimeout(updateAoISelection, 100);
+    setTimeout(updateSourceSelection, 100);
 });
 
 function setOutputUI(){
@@ -24,13 +28,14 @@ function getParameters() {
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
             "endDate": $('#id_endDate').val(),
-            "dateTimeFormat": $("#id_datetimeformat").val()
+            // "dateTimeFormat": $("#id_datetimeformat").val()
         },
         "geometry": {
             "point": {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
-            }
+            },
+            "comid": $("#id_catchment_comid").val()
         },
         "dataValueFormat": $("#id_outputformat").val(),
         "temporalResolution": $("#id_temporalresolution").val(),
@@ -40,6 +45,9 @@ function getParameters() {
     };
     if($('#id_source').val() === "ncei"){
         requestJson["geometry"]["stationID"] = $("#id_stationID").val();
+    }
+    if($('#id_area_of_interest').val() === "Catchment Centroid"){
+        delete requestJson["geometry"]["point"];
     }
     return requestJson;
 }
@@ -53,7 +61,31 @@ function updateSourceSelection() {
     else {
         ncdcSelect.hide();
     }
+    setTimeout(updateAoISelection, 100);
     return false;
+}
+
+function updateAoISelection(){
+    var source = $("#id_source").val();
+    if(source === "ncei"){
+        $("#id_area_of_interest").parent().parent().hide();
+        $("#id_latitude").parent().parent().hide();
+        $("#id_longitude").parent().parent().hide();
+        $("#id_catchment_comid").parent().parent().hide();
+    }
+    else {
+        $("#id_area_of_interest").parent().parent().show();
+        var aoi = $('#id_area_of_interest').val();
+        if (aoi === "Latitude/Longitude") {
+            $("#id_latitude").parent().parent().show();
+            $("#id_longitude").parent().parent().show();
+            $("#id_catchment_comid").parent().parent().hide();
+        } else {
+            $("#id_latitude").parent().parent().hide();
+            $("#id_longitude").parent().parent().hide();
+            $("#id_catchment_comid").parent().parent().show();
+        }
+    }
 }
 
 function setOverviewTabindex(){

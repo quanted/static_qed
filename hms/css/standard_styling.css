@@ -386,3 +386,11 @@
     margin: 0 auto !important;
     display: block !important;
 }
+
+.input_disclaimer {
+    font-size: small;
+    text-align: center;
+    margin: 10px 0;
+    color: #0071bc;
+    font-weight: 600;
+}

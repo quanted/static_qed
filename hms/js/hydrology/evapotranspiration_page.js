@@ -23,7 +23,7 @@ function getParameters() {
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
             "endDate": $('#id_endDate').val(),
-            "dateTimeFormat": $("#id_datetimeformat").val()
+            // "dateTimeFormat": $("#id_datetimeformat").val()
         },
         "geometry": {
             "point": {

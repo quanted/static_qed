@@ -23,17 +23,51 @@ $(function () {
     $("#id_startDate").datepicker(datepicker_options);
     $("#id_endDate").datepicker(datepicker_options);
 
+    $("#id_source").on("change", setSourceConfig);
+
     // $('.submit_data_request').on('click', getTestData);
     $('.submit_data_request').on('click', getData2);
     setTimeout(setTabindex, 100);
     setTimeout(pageLoad, 400);
     setTimeout(loadCookies, 400);
+    setTimeout(setSourceConfig, 100);
 });
 
 function pageLoad() {
     $('#load_page').fadeToggle(600);
     browserCheck();
     return false;
+}
+
+function setSourceConfig(){
+    var src = $('#id_source').val();
+
+    var local = sourceConfigs[src]['localtime'];
+    if(local){
+        $("#id_timelocalized option[value='false']").removeAttr('disabled');
+    }
+    else{
+        $("#id_timelocalized option[value='true']").attr('disabled', 'disabled');
+        $("#id_timelocalized option[value='false']").attr('selected', 'selected');
+    }
+
+    var resolution = sourceConfigs[src]['temporalResolution'];
+    var validRes = false;
+    var resolutionOptions = document.getElementById("id_temporalresolution").getElementsByTagName("option");
+    for(var i=0;i<resolutionOptions.length-1;i++){
+        if(!validRes) {
+            if (resolutionOptions[i].value === resolution) {
+                validRes = true;
+                resolutionOptions[i].disabled = false;
+                resolutionOptions[i].selected = true;
+            } else {
+                resolutionOptions[i].disabled = true;
+            }
+        }
+        else{
+            resolutionOptions[i].disabled = false;
+        }
+    }
 }
 
 function getData() {
