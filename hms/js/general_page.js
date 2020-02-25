@@ -44,9 +44,12 @@ function setSourceConfig(){
 
     var local = sourceConfigs[src]['localtime'];
     if(local){
-        $("#id_timelocalized option[value='false']").removeAttr('disabled');
+        $("#id_timelocalized option[value='true']").removeAttr('disabled');
+        $("#id_timelocalized option[value='true']").removeAttr('selected');
+        $("#id_timelocalized option[value='true']").attr('selected', 'selected');
     }
     else{
+        $("#id_timelocalized option[value='true']").removeAttr('selected');
         $("#id_timelocalized option[value='true']").attr('disabled', 'disabled');
         $("#id_timelocalized option[value='false']").attr('selected', 'selected');
     }
