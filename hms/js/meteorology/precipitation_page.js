@@ -34,8 +34,7 @@ function getParameters() {
             "point": {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
-            },
-            "comid": $("#id_catchment_comid").val()
+            }
         },
         "dataValueFormat": $("#id_outputformat").val(),
         "temporalResolution": $("#id_temporalresolution").val(),
@@ -48,6 +47,7 @@ function getParameters() {
     }
     if($('#id_area_of_interest').val() === "Catchment Centroid"){
         delete requestJson["geometry"]["point"];
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
     }
     return requestJson;
 }
