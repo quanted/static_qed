@@ -726,6 +726,12 @@ function populateFishTable(data) {
                 'render': function (data, type, full, meta) {
                     return '<input type="checkbox" checked>';
                 }
+            },
+            {
+                "render": function(data, type, row){
+                    return Number(data).toFixed(2);
+                },
+                "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
             }
         ],
         select: {
@@ -914,6 +920,12 @@ function populateFilteredFishTableV2(data) {
             {
                 "bSortable": false,
                 "aTargets": [0, 1]
+            },
+            {
+                "render": function(data, type, row){
+                    return Number(data).toFixed(2);
+                },
+                "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
             }
         ],
         sorting: false,

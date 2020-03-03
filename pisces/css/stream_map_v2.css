@@ -209,6 +209,15 @@ div.mapNoTransition * {
     display: inline-block;
     font-size: 14px;
 }
+.s_parameter input {
+    max-width: 50%;
+    text-align: center;
+}
+
+#update_fishtable {
+    width: 100% !important;
+    max-width: 100% !important;
+}
 
 .fish_filter_apply {
     width: 8%;
