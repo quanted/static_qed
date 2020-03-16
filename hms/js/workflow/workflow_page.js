@@ -77,7 +77,7 @@ function spatialInputValidation() {
     var selectedType = $("#spatial_type").val();
     if (selectedType === "hucid") {
         var hucid = $("#huc_id").val();
-        if (Number.isInteger(Number(hucid)) && (hucid.length === 12 || hucid.length === 8)) {
+        if (Number.isInteger(Number(hucid)) && hucid.length === 12) {
             $('#add_spatial_input').removeClass("blocked");
         }
         else {
@@ -491,8 +491,8 @@ function openHucMap() {
             if ($('#spatial_type').val() === "hucid") {
                 selectionInfo = '<h4>HUC Selection Options</h4>' +
                     '<div id="selection_huc_options">' +
-                    '<label class="selection_huc_button">HUC 8<input type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
-                    '<label class="selection_huc_button">HUC 12<input type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 8<input disabled type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 12<input checked type="radio" value="HUC_12" name="selected_huc_type"></label>' +
                     '</div>' +
                     '<h4>HUC Selection Info</h4>' +
                     '<div id="selection_info_div">' +
@@ -521,8 +521,8 @@ function openHucMap() {
             if ($('#spatial_type').val() === "hucid") {
                 selectionInfo = '<h4>HUC Selection Options</h4>' +
                     '<div id="selection_huc_options">' +
-                    '<label class="selection_huc_button">HUC 8<input type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
-                    '<label class="selection_huc_button">HUC 12<input type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 8<input disabled type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 12<input checked type="radio" value="HUC_12" name="selected_huc_type"></label>' +
                     '</div>' +
                     '<h4>HUC Selection Info</h4>' +
                     '<div id="selection_info_div">' +
