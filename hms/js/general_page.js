@@ -121,7 +121,7 @@ function getData2() {
             setDataRequestCookie(taskID);
             console.log("Data request success. Task ID: " + taskID);
             toggleLoader(false, "Processing data request. Task ID: " + taskID);
-            setTimeout(getDataPolling, 12000);
+            setTimeout(getDataPolling, 5000);
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
         },
@@ -167,7 +167,7 @@ function getDataPolling() {
                     console.log("Task failed to complete.");
                 }
                 else {
-                    setTimeout(getDataPolling, 12000);
+                    setTimeout(getDataPolling, 5000);
                 }
 
             },
