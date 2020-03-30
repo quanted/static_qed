@@ -9,6 +9,13 @@ addStreams();
 // var layer = L.esri.basemapLayer('Imagery').addTo(map);
 var layerLabels;
 
+function setOutputUI(){
+    //setOutputPage();
+    setMetadata();
+    setDataGraph2();
+    return false;
+}
+
 function setBasemap(basemap) {
     if (layer) {
         map.removeLayer(layer);
@@ -68,6 +75,8 @@ info.addTo(map);
 
 // ------------ Main JS ------------- //
 var baseUrl = 'hms/rest/api/v3/workflow/timeoftravel/';
+var counter = 100;
+var jobID = null;
 
 var startCOMID = null;
 var endCOMID = null;
@@ -180,12 +189,12 @@ function initializeForms(){
     var startDate = new Date();
     var endDate = new Date();
     endDate.setHours(endDate.getHours() + 18);
-    var startString = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+    var startString = startDate.getFullYear() + "-" + (((startDate.getMonth() + 1) < 10 ? '0' : '') + (startDate.getMonth() + 1)) + "-" + (((startDate.getDate() + 1) < 10 ? '0' : '') + (startDate.getDate() + 1));
     $("#id_startDate").val(startString);
-    var endString = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+    var endString = endDate.getFullYear() + "-" + (((endDate.getMonth() + 1) < 10 ? '0' : '') + (endDate.getMonth() + 1)) + "-" + (((endDate.getDate() + 1) < 10 ? '0' : '') + (endDate.getDate() + 1));
     $("#id_endDate").val(endString);
-    $("#id_startHour").val(startDate.getHours());
-    $("#id_endHour").val(endDate.getHours());
+    $("#id_startHour").val((startDate.getHours() < 10 ? '0' : '') + startDate.getHours());
+    $("#id_endHour").val((endDate.getHours() < 10 ? '0' : '') + endDate.getHours());
 }
 
 function setTableData(initial){
@@ -261,16 +270,96 @@ function getParameters(){
         "source": "NWM",
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val() + " " + $('#id_startHour').val(),
-            "endDate": $('#id_endDate').val() + " " + $('#id_endHour').val(),
+            "endDate": $('#id_endDate').val() + " " + $('#id_endHour').val()
         },
-        "geometryMetadata": {
-            "startCOMID": $("#id_startCOMID").val(),
-            "endCOMID": $('#id_endCOMID').val()
+        "geometry": {
+            "geometryMetadata": {
+                "startCOMID": $("#id_startCOMID").val(),
+                "endCOMID": $('#id_endCOMID').val()
+            }
         },
+        "contaminantInflow": tableData,
         "units": "default",
         "outputFormat": "json"
     };
     return requestJson;
+}
+
+function getData() {
+    var params = getParameters();
+    var jsonParams = JSON.stringify(params);
+    $.ajax({
+        type: "POST",
+        url: baseUrl,
+        accepts: "application/json",
+        data: jsonParams,
+        processData: false,
+        timeout: 0,
+        contentType: "application/json",
+        success: function (data, textStatus, jqXHR) {
+            jobID = taskID;//data.job_id;
+            console.log("Data request success. Task ID: " + jobID);
+            toggleLoader(false, "Processing data request. Task ID: " + jobID);
+            setTimeout(getDataPolling, 30000);
+            $('#workflow_tabs').tabs("enable", 2);
+            $('#workflow_tabs').tabs("option", "active", 2);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("Data request error...");
+            console.log(errorThrown);
+        },
+        complete: function (jqXHR, textStatus) {
+            console.log("Data request complete");
+        }
+    });
+    return false;
+}
+
+function getDataPolling() {
+    //counter = counter - 1;
+    var requestUrl = "hms/rest/api/v2/hms/data";
+    jobID = taskID;
+    if (counter > 0) {
+        $.ajax({
+            type: "GET",
+            url: requestUrl + "?job_id=" + jobID,
+            accepts: "application/json",
+            timeout: 0,
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status === "SUCCESS") {
+                    if (typeof data.data === "string") {
+                        jobData = JSON.parse(data.data);
+                    }else{
+                        jobData = data.data;
+                    }
+                    setOutputPage();
+                    console.log("Task successfully completed and data was retrieved.");
+                    // dyGraph.resize();
+                    // counter = 25;
+                }
+                else if (data.status === "FAILURE") {
+                    toggleLoader(false, "Task " + jobID + " encountered an error.");
+                    console.log("Task failed to complete.");
+                }
+                else {
+                    setTimeout(getDataPolling, 10000);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Data request error...");
+                console.log(errorThrown);
+                toggleLoader(false, "Error retrieving data for task ID: " + jobID);
+            },
+            complete: function (jqXHR, textStatus) {
+                console.log("Data request complete");
+            }
+        });
+    }
+    else {
+        console.log("Failed to get data, reached polling cap.")
+    }
+    return false;
 }
 
 function onStreamMapClick(e) {
@@ -536,5 +625,5 @@ function drawTable(){
 }
 
 function dataToCSV(){
-    return google.visualization.dataTableToCsv(tableData);
+    return google.visualization.dataTableToCsv(data);
 }
