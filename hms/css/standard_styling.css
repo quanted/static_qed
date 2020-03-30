@@ -186,7 +186,7 @@
 
 .input_table_value {
     display: table-cell;
-    width: 35%;
+    width: 65%;
     float: left;
     padding: 4px 2px 4px 10px;
     font-size: small;
@@ -204,6 +204,7 @@
 
 .input_table_value input {
     padding-left: 4px;
+    width: 75%;
 }
 
 .input_button {
