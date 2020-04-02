@@ -87,7 +87,7 @@ function getParameters() {
             "stationID": $("#id_stationID").val()
         };
         requestJson["source"] = "extraction";
-        requestJson["sourceList"] = ["ncei","nldas", "gldas", "daymet", "prism"];
+        requestJson["sourceList"] = ["ncei","nldas", "gldas", "trmm"];
     }
     return requestJson;
 }
