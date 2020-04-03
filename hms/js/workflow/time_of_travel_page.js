@@ -188,13 +188,21 @@ function initializeForms(){
 
     var startDate = new Date();
     var endDate = new Date();
-    endDate.setHours(endDate.getHours() + 18);
+    startDate.setHours(startDate.getHours() + 1);
+    endDate.setHours(endDate.getHours() + 19);
     var startString = startDate.getFullYear() + "-" + (((startDate.getMonth() + 1) < 10 ? '0' : '') + (startDate.getMonth() + 1)) + "-" + (((startDate.getDate() + 1) < 10 ? '0' : '') + (startDate.getDate() + 1));
     $("#id_startDate").val(startString);
     var endString = endDate.getFullYear() + "-" + (((endDate.getMonth() + 1) < 10 ? '0' : '') + (endDate.getMonth() + 1)) + "-" + (((endDate.getDate() + 1) < 10 ? '0' : '') + (endDate.getDate() + 1));
     $("#id_endDate").val(endString);
     $("#id_startHour").val((startDate.getHours() < 10 ? '0' : '') + startDate.getHours());
     $("#id_endHour").val((endDate.getHours() < 10 ? '0' : '') + endDate.getHours());
+}
+
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 }
 
 function setTableData(initial){
@@ -279,6 +287,7 @@ function getParameters(){
             }
         },
         "contaminantInflow": tableData,
+        "inflowSource": $("#id_inflowTable").val(),
         "units": "default",
         "outputFormat": "json"
     };
