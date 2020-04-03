@@ -1,5 +1,10 @@
 // jQuery
 $(document).ready(function() {
+
+  // Focus on main <section> on document load (test fix for tabindex -1 for 508 compliance)
+  document.getElementById('main-content').setAttribute('tabindex', "0");
+
+
   // Home
   $('#home').hover(
     function() {

@@ -1,4 +1,12 @@
-<br><br>
+<br>
+
+<p>This page provides links to non-EPA web sites that provide additional information about this topic. You will leave the EPA.gov domain, and EPA cannot attest to the accuracy of information on that non-EPA page. Providing links to a non-EPA Web site is not an endorsement of the other site or the information it contains by EPA or any of its employees. Also, be aware that the privacy protection provided on the EPA.gov domain (see <a href="https://www.epa.gov/home/privacy-and-security-notice">Privacy and Security Notice</a>) may not be available at the external link.</p>
+
+<div class="disclaimer">
+
+The following links exit the site <a class="exit-disclaimer" href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>
+
+<br><br><br>
 
 <div class="manuscript-entry">
 <a href="https://doi.org/10.1016/j.chemosphere.2017.11.137"><h4>Demonstration of a consensus approach for the calculation of physicochemical properties required for environmental fate assessments</h4></a>
@@ -23,6 +31,8 @@
 <p>K. Wolfe, N. Pope, R. Parmar, M. Galvin, C. Stevens, E. Weber, J. Flaishans, T. Purucker
 <br>
 Proceedings of the 8<sup>th</sup> International Congress of Environmental Modelling and Software, <b>2016</b>.
+</div>
+
 </div>
 
 <br>

@@ -11,13 +11,13 @@ var config = {};
 // nodejs server config
 config.server = {
 	'host': process.env.STRESS_SERVER_HOST || 'localhost',
-	'port': process.env.STRESS_SERVER_PORT || 8000
+	'port': process.env.STRESS_SERVER_PORT || 8081
 };
 
 // cts-django config
 config.cts = {
 	'host': process.env.DJANGO_HOST || 'localhost',
-	'port': process.env.DJANGO_PORT || 8081,
+	'port': process.env.DJANGO_PORT || 8000,
 	'endpoints': {
 		'cheminfo': '/cts/rest/molecule',
 		'transproducts': '/cts/rest/metabolizer/run'
@@ -40203,6 +40203,28 @@ Stress Test Module
 ****************************/
 var StressTest = {
 
+	endpoints: {
+		'cheminfo': '/cts/rest/molecule',
+		'chemaxon': '/cts/rest/chemaxon/run',
+		'epi': '/cts/rest/epi/run',
+		'test': '/cts/rest/testws/run',
+		'opera': '/cts/rest/opera/run',
+		'measured': '/cts/rest/measured/run',
+		'metabolizer': '/cts/rest/metabolizer/run'
+	},
+
+	api_pchem_request: {
+		'chemical': 'CCC',
+		'calc': "",
+		'prop': ""
+	},
+
+	api_metabolizer_request: {
+		'structure': "CCCC",
+		'generationLimit': 1,
+		'transformationLibraries': []
+	},
+
 	default_request: {
 		'chemical': 'CCC',
 		'pchem_request': {'chemaxon': ['water_sol']},
@@ -40231,8 +40253,31 @@ var StressTest = {
 		'chemaxon': ['water_sol', 'ion_con', 'kow_no_ph', 'kow_wph', 'water_sol_ph'],
 		'epi': ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'henrys_law_con', 'kow_no_ph', 'koc', 'log_bcf', 'log_baf'],
 		'test': ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'log_bcf'],
-		'sparc': ['boiling_point', 'water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'ion_con', 'henrys_law_con', 'kow_no_ph', 'kow_wph'],
+		// 'sparc': ['boiling_point', 'water_sol', 'vapor_press', 'mol_diss', 'mol_diss_air', 'ion_con', 'henrys_law_con', 'kow_no_ph', 'kow_wph'],
+		'opera': ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'ion_con', 'henrys_law_con', 'kow_no_ph', 'koc', 'log_bcf', 'kow_wph'],
 		'measured': ['melting_point', 'boiling_point', 'water_sol', 'vapor_press', 'henrys_law_con', 'kow_no_ph']
+	},
+
+	available_methods: {
+		'chemaxon': {
+			'kow_no_ph': ['KLOP', 'VG', 'PHYS'],
+			'kow_wph': ['KLOP', 'VG', 'PHYS']
+		},
+		'epi': {
+			'water_sol': ['WSKOW', 'WATERNT'],
+			'koc': ['MCI', 'KOW'],
+			'log_bcf': ['REG', 'A-G'],
+			'log_baf': ['A-G']
+		},
+		'test': {
+			'melting_point': ['HC', 'NN', 'GC'],
+			'boiling_point': ['HC', 'NN', 'GC'],
+			'water_sol': ['HC', 'NN', 'GC'],
+			'vapor_press': ['HC', 'NN', 'GC'],
+			'log_bcf': ['HC', 'NN', 'GC', 'SM']
+		},
+		'opera': null,
+		'measured': null
 	},
 
 	selected_calcs: [],
@@ -40302,12 +40347,13 @@ var StressTest = {
 			var num_users = $('#num-users').val();
 			var user_rate = $('#user-rate').val();
 			var delay = Math.round(1000 / user_rate);  // delay in ms
-			var user_scenario = $('.selectpicker').children(':selected').text();
+			var user_scenario = $('#scenario-dropdown').children(':selected').text();
+			var protocol = $('#protocol-dropdown').children(':selected').text();
 
 			// populate selected_calcs array from calc buttons:
 			$('.calc-options .active').each(function() {StressTest.selected_calcs.push($(this).html())});
 
-			StressTest.runScenario(num_users, delay, user_scenario);
+			StressTest.runScenario(num_users, delay, user_scenario, protocol);
 
 		});
 
@@ -40315,23 +40361,36 @@ var StressTest = {
 			stop_test = true;
 		});
 
-		$('.selectpicker').change(function () {
+		$('#scenario-dropdown').change(function () {
 			var selected_scenario = $(this).children(':selected').text();
-			if (selected_scenario == 'P-chem Requests') {
+			if (selected_scenario == 'Chemical Info') {
+				$('.calc-options').hide();
+				$('#batch-upload-div').hide();
+				$('#protocol-row').show();
+			}
+			else if (selected_scenario == 'P-chem Requests') {
 				$('.calc-options').show();
 				$('#batch-upload-div').hide();
+				$('#protocol-row').show();
 			}
 			else if (selected_scenario == 'P-chem Requests (batch)') {
 				$('#batch-upload-div').show();
-				$('.calc-options').show();	
+				$('.calc-options').show();
+				$('#protocol-row').hide();
+			}
+			else if (selected_scenario == 'Transformation Requests') {
+				$('#batch-upload-div').hide();
+				$('.calc-options').hide();
+				$('#protocol-row').show();
 			}
 			else {
 				$('#batch-upload-div').hide();
 				$('.calc-options').hide();
+				$('#protocol-row').hide();
 			}
 		});
 
-		// Do this stuff once file is uploaded:
+		// Do this stuff once file is uploaded (for batch mode testing):
 		$('#upfile1').change(function () {
 
 			var file = this.files[0];
@@ -40350,68 +40409,46 @@ var StressTest = {
 
 		});
 
+		// Upload button for viewing stress results:
+		$('#upload-results-button').change(function () {
+
+			var file = this.files[0];
+			// var textType = /text.*/;
+			var textType = "application/json";
+
+			if (file.type.match(textType)) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					// StressTest.batch_data = StressTest.readBatchInputFile(reader.result);
+
+					// Loads data into cts_stress_test_result.js module for plotting:
+					var stressData = JSON.parse(reader.result);
+					ctsStressResults.init(stressData);
+
+				}
+				reader.readAsText(file);
+			}
+			else {
+				$('#fileDisplayArea').html("File not supported!");
+			}
+
+		});
+
 	},
 
 
 
-	runScenario: function(num_users, delay, scenario) {
+	runScenario: function(num_users, delay, scenario, protocol) {
 
 		function start() {
 
 			setTimeout(function () {    
 
-				var request = {};
-
-				switch(scenario) {
-
-					case 'Chemical Info':
-						request = StressTest.chemical_info_request;
-						request['start_time'] = Date.now();
-						request['scenario'] = scenario
-						StressTest.ajaxHandler(request);
-						break;
-
-					case 'P-chem Requests':
-						// each user requesting multiple calcs:
-						request = StressTest.pchem_request;
-						for (var i = 0; i < StressTest.selected_calcs.length; i++) {
-							var calc = StressTest.selected_calcs[i];
-							request['pchem_request'][calc] = StressTest.available_props[calc];
-						}
-						request['start_time'] = Date.now();
-						StressTest.socketHandler(request);
-						break;
-
-					case 'P-chem Requests (batch)':
-						// each user requesting multiple calcs:
-						if (StressTest.batch_data.length < 1) {
-							alert("Upload a list of batch chemicals before running the P-chem Requests batch scenario.");
-							return;
-						}
-						request = StressTest.pchem_request;
-						for (var i = 0; i < StressTest.selected_calcs.length; i++) {
-							var calc = StressTest.selected_calcs[i];
-							request['pchem_request'][calc] = StressTest.available_props[calc];
-						}
-						request['nodes'] = StressTest.batch_data;
-						request['start_time'] = Date.now();
-						StressTest.socketHandler(request);
-						break;
-
-					case 'Transformation Requests':
-						// each user requesting trans products
-						request = StressTest.transformation_request;
-						request['start_time'] = Date.now();
-						request['scenario'] = scenario
-						StressTest.socketHandler(request);
-						break;
-					case 'Test':
-					default:
-						request = StressTest.default_request;
-						request['start_time'] = Date.now();
-						StressTest.socketHandler(request);
-						break;
-
+				if (protocol == 'HTTP') {
+					StressTest.parseApiRequests(scenario);  // for testing api endpoints
+				}
+				else {
+					StressTest.parseSocketRequests(scenario);  // websocket protocol as default
 				}
 
 				StressTest.scenario.calls_sent++;
@@ -40488,9 +40525,10 @@ var StressTest = {
 
 
 
-	ajaxHandler: function(request) {
+	ajaxHandler: function(url, request) {
 		$.ajax({
-			url: StressTest.config.ajax_path,
+			// url: StressTest.config.ajax_path,
+			url: url,
 			type: 'POST',
 			data: request,
 			// timeout: 5000,
@@ -40500,7 +40538,14 @@ var StressTest = {
 
 				console.log("Returned data: " + data);  // actual data, or error?
 
-				var data_obj = JSON.parse(data);
+				// var data_obj = JSON.parse(data);
+				var data_obj = JSON.parse(JSON.stringify(data));
+
+				if ('metaInfo' in data_obj) {
+					// Picks out response object from API:
+					data_obj = data_obj['data']; 
+				}
+
 				StressTest.trackProgress(data_obj);
 
 			},
@@ -40521,6 +40566,11 @@ var StressTest = {
 
 	trackProgress: function (data_obj) {
 		var start_time = data_obj['request_post']['start_time'];
+
+		if (!(start_time)) {
+			start_time = data_obj['start_time'];			
+		}
+
 		var stop_time = Date.now();
 
 		// var latency = stop_time - start_time;  // diff in ms
@@ -40595,8 +40645,11 @@ var StressTest = {
 			if (calc == "chemaxon") {
 				StressTest.scenario.total_calls += 9;
 			}
-			else if (calc == "sparc") {
-				StressTest.scenario.total_calls += 9;	
+			// else if (calc == "sparc") {
+			// 	StressTest.scenario.total_calls += 9;	
+			// }
+			else if (calc == "opera") {
+				StressTest.scenario.total_calls += 10;
 			}
 			else if (calc == "epi" ) {
 				StressTest.scenario.total_calls += 12;
@@ -40672,6 +40725,162 @@ var StressTest = {
 
 		return batchData;
 
+	},
+
+
+
+	parseApiRequests: function(scenario) {
+		/*
+		Handles scenarios using HTTP protocol for API endpoints.
+		*/
+
+		// var request = {};
+		
+		switch(scenario) {
+			case 'Chemical Info':
+				let request = {};
+				request = StressTest.chemical_info_request;
+				request['start_time'] = Date.now();
+				request['scenario'] = scenario
+				StressTest.ajaxHandler(StressTest.endpoints.cheminfo, request);
+				break;
+
+			case 'P-chem Requests':
+				// each user requesting multiple calcs:
+				for (var i = 0; i < StressTest.selected_calcs.length; i++) {
+					let calc = StressTest.selected_calcs[i];
+					// request['pchem_request'][calc] = StressTest.available_props[calc];
+					for (var propInd in StressTest.available_props[calc]) {
+
+						let prop = StressTest.available_props[calc][propInd];
+
+						// Makes request for calc-prop with no methods (i.e., single request)
+						if (!(StressTest.available_methods[calc])) {
+							let request = {};
+							request = StressTest.api_pchem_request;  // keys: chemical ("CCC"), calc, prop
+							request['calc'] = calc;
+							request['prop'] = prop;
+							request['start_time'] = Date.now();
+							StressTest.ajaxHandler(StressTest.endpoints[calc], JSON.stringify(request));
+							continue;
+						}
+
+						let methods = StressTest.available_methods[calc][prop];
+
+						// Makes requests for each calc-prop-method:
+						for (var methodInd in methods) {
+							let request = {};
+							let method = methods[methodInd];
+							request = StressTest.api_pchem_request;  // keys: chemical ("CCC"), calc, prop
+							request['calc'] = calc;
+							request['prop'] = prop;
+							request['method'] = method;
+							request['start_time'] = Date.now();
+							StressTest.ajaxHandler(StressTest.endpoints[calc], JSON.stringify(request));
+						}
+
+					}
+				}
+				// request['start_time'] = Date.now();
+				// StressTest.socketHandler(request);  // defaults to websocket protocol
+				break;
+
+			// case 'P-chem Requests (batch)':
+			// 	// each user requesting multiple calcs:
+			// 	if (StressTest.batch_data.length < 1) {
+			// 		alert("Upload a list of batch chemicals before running the P-chem Requests batch scenario.");
+			// 		return;
+			// 	}
+			// 	request = StressTest.pchem_request;
+			// 	for (var i = 0; i < StressTest.selected_calcs.length; i++) {
+			// 		var calc = StressTest.selected_calcs[i];
+			// 		request['pchem_request'][calc] = StressTest.available_props[calc];
+			// 	}
+			// 	request['nodes'] = StressTest.batch_data;
+			// 	request['start_time'] = Date.now();
+			// 	// StressTest.socketHandler(request);
+			// 	break;
+
+			case 'Transformation Requests':
+				// each user requesting trans products
+				request = StressTest.transformation_request;
+				request['start_time'] = Date.now();
+				request['scenario'] = scenario
+				// StressTest.socketHandler(request);
+				break;
+			case 'Test':
+			default:
+				request = StressTest.default_request;
+				request['start_time'] = Date.now();
+				// StressTest.socketHandler(request);
+				StressTest.ajaxHandler(StressTest.endpoints.chemaxon, request);  // test/default request is water_sol from chemaxon
+				break;
+
+		}
+
+	},
+
+
+
+	parseSocketRequests: function(scenario) {
+		/*
+		Handles scenarios using websocket protocol.
+		*/
+		
+		var request = {};
+		
+		switch(scenario) {
+			case 'Chemical Info':
+				request = StressTest.chemical_info_request;
+				request['start_time'] = Date.now();
+				request['scenario'] = scenario
+				// StressTest.ajaxHandler(StressTest.endpoints.cheminfo, request);
+				StressTest.socketHandler(request);
+				break;
+
+			case 'P-chem Requests':
+				// each user requesting multiple calcs:
+				request = StressTest.pchem_request;
+				for (var i = 0; i < StressTest.selected_calcs.length; i++) {
+					var calc = StressTest.selected_calcs[i];
+					request['pchem_request'][calc] = StressTest.available_props[calc];
+				}
+				request['start_time'] = Date.now();
+				StressTest.socketHandler(request);  // defaults to websocket protocol
+				break;
+
+			case 'P-chem Requests (batch)':
+				// each user requesting multiple calcs:
+				if (StressTest.batch_data.length < 1) {
+					alert("Upload a list of batch chemicals before running the P-chem Requests batch scenario.");
+					return;
+				}
+				request = StressTest.pchem_request;
+				for (var i = 0; i < StressTest.selected_calcs.length; i++) {
+					var calc = StressTest.selected_calcs[i];
+					request['pchem_request'][calc] = StressTest.available_props[calc];
+				}
+				request['nodes'] = StressTest.batch_data;
+				request['start_time'] = Date.now();
+				StressTest.socketHandler(request);
+				break;
+
+			case 'Transformation Requests':
+				// each user requesting trans products
+				request = StressTest.transformation_request;
+				request['start_time'] = Date.now();
+				request['scenario'] = scenario
+				StressTest.socketHandler(request);
+				break;
+			case 'Test':
+			default:
+				request = StressTest.default_request;
+				request['start_time'] = Date.now();
+				StressTest.socketHandler(request);
+				break;
+
+		}
+
 	}
 
 };
@@ -40694,7 +40903,8 @@ var StressResults = {
 		'chemaxon': [],
 		'epi': [],
 		'test': [],
-		'sparc': [],
+		// 'sparc': [],
+		'opera': [],
 		'measured': []
 	},
 
@@ -40702,7 +40912,8 @@ var StressResults = {
 		'chemaxon': '#c82300;',
 		'epi': '#ffaf00;',
 		'test': '#73b432;',
-		'sparc': '#005be0;',
+		// 'sparc': '#005be0;',
+		'opera': '#005be0;',
 		'measured': '#8e44ad;'
 	},
 
@@ -40710,7 +40921,8 @@ var StressResults = {
 		'chemaxon': "ChemAxon",
 		'epi': "EPI Suite",
 		'test': "TESTWS",
-		'sparc': "SPARC",
+		// 'sparc': "SPARC",
+		'opera': "OPERA",
 		'measured': "Measured"
 	},
 
@@ -40973,7 +41185,8 @@ require('./jsPDF_plugin');
 // DOM Elements:
 var DomElements = {
 	downloadPdfButton: $('#download-pdf-button'),
-	downloadHtmlButton: $('#download-html-button')
+	downloadHtmlButton: $('#download-html-button'),
+	downloadJsonButton: $('#download-json-button')
 };
 
 
@@ -41025,6 +41238,29 @@ var CtsStressMain = {
   			$(fileDownloadForm).attr({'action': '/cts/stress/html'}).submit();
 
 			console.log("HTML file generated.");
+
+		});
+
+		DomElements.downloadJsonButton.on('click', function () {
+
+			// NOTE: Using table.gethtml as DOM element to pass
+			// JSON data to the backup (was originally created for HTML downloads)
+
+			console.log("Generating JSON...");
+
+			var fileDownloadForm = $('form.post_form');
+			$('table.gethtml').html("");
+
+			var stressData = ctsStressTester.scenario.data;
+
+			$('<tr style="display:none"><td><input type="hidden" name="stress_json"></td></tr>')
+				.appendTo('.gethtml')
+				.find('input')
+				.val(JSON.stringify(stressData));
+
+  			$(fileDownloadForm).attr({'action': '/cts/stress/json'}).submit();
+
+			console.log("JSON generated.");
 
 		});
 
@@ -41133,7 +41369,10 @@ SimpleGraph = function(elemid, options, data) {
         else if (d.calc == "test") {
           return "#73b432";
         }
-        else if (d.calc == "sparc") {
+        // else if (d.calc == "sparc") {
+        //   return "#005be0";
+        // }
+        else if (d.calc == "opera") {
           return "#005be0";
         }
         else if (d.calc == "measured") {

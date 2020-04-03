@@ -46,7 +46,7 @@ function getParameters(){
         "localTime": $('#id_local_time').val(),
         "dateTimeSpan": {
             "startDate": $('#id_date').val(),
-            "dateTimeFormat": $("#id_datetimeformat").val()
+            // "dateTimeFormat": $("#id_datetimeformat").val()
         },
         "geometry": {
             "point": {

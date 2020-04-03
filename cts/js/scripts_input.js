@@ -15,7 +15,7 @@ $( document ).ready(function() {
 
 	$('#clearbutton').click(
 		function(){
-		$(this.form).find(':input').each(function() {
+		$(this.form).find(':input').not('#id_kow_ph').each(function() {
 			switch(this.type) {
 				case 'text':
 				case 'textarea':
@@ -27,4 +27,5 @@ $( document ).ready(function() {
 		});
 	});
 
-});
+});
+

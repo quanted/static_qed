@@ -27,9 +27,9 @@ $(function () {
     $("#stream_algorithm_input_button").click(toggleStreamInputs);
 
     // Input Validation actions
-    $("#huc_id").keyup(spatialInputValidation);
-    $('#comid').keyup(spatialInputValidation);
-
+    $("#huc_id").change(spatialInputValidation);
+    $('#comid').change(spatialInputValidation);
+    $("#spatial_type").change(spatialInputValidation);
 });
 
 function pageLoadStart() {
@@ -77,7 +77,7 @@ function spatialInputValidation() {
     var selectedType = $("#spatial_type").val();
     if (selectedType === "hucid") {
         var hucid = $("#huc_id").val();
-        if (Number.isInteger(Number(hucid)) && (hucid.length === 12 || hucid.length === 8)) {
+        if (Number.isInteger(Number(hucid)) && hucid.length === 12) {
             $('#add_spatial_input').removeClass("blocked");
         }
         else {
@@ -91,7 +91,7 @@ function spatialInputValidation() {
     }
     else if (selectedType === "comid") {
         var comid = $('#comid').val();
-        if (Number.isInteger(Number(comid)) && comid.length === 10) {
+        if (Number.isInteger(Number(comid)) && comid.length >= 6) {
             $('#add_spatial_input').removeClass("blocked");
         }
         else {
@@ -139,7 +139,7 @@ function spatialTypeSelect() {
 
 function validateInput() {
     var valid = true;
-    requireInputs.map(function (input) {
+    requiredInputs.map(function (input) {
         if (!inputJSON.hasOwnProperty(input)) {
             valid = false;
         }
@@ -351,18 +351,19 @@ function getParameters() {
 
 function getData() {
     var params = getParameters();
+    var jsonParams = JSON.stringify(params);
     $.ajax({
         type: "POST",
         url: baseUrl,
         accepts: "application/json",
-        data: JSON.stringify(params),
+        data: jsonParams,
         processData: false,
         timeout: 0,
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             jobID = data.job_id;
             console.log("Data request success. Task ID: " + jobID);
-            toggleLoader(false, "Data request successfull. Task ID: " + jobID);
+            toggleLoader(false, "Processing data request. Task ID: " + jobID);
             setTimeout(getDataPolling, 30000);
             $('#workflow_tabs').tabs("enable", 2);
             $('#workflow_tabs').tabs("option", "active", 2);
@@ -379,7 +380,7 @@ function getData() {
 }
 
 function getDataPolling() {
-    counter = counter - 1;
+    // counter = counter - 1;
     var requestUrl = "hms/rest/api/v2/hms/data";
     if (counter > 0) {
         $.ajax({
@@ -390,11 +391,15 @@ function getDataPolling() {
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    jobData = data.data;
+                    if (typeof data.data === "string") {
+                        jobData = JSON.parse(data.data);
+                    }else{
+                        jobData = data.data;
+                    }
                     setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
-                    dyGraph.resize();
-                    counter = 25;
+                    // dyGraph.resize();
+                    // counter = 25;
                 }
                 else if (data.status === "FAILURE") {
                     toggleLoader(false, "Task " + jobID + " encountered an error.");
@@ -486,8 +491,38 @@ function openHucMap() {
             if ($('#spatial_type').val() === "hucid") {
                 selectionInfo = '<h4>HUC Selection Options</h4>' +
                     '<div id="selection_huc_options">' +
-                    '<label class="selection_huc_button">HUC 8<input type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
-                    '<label class="selection_huc_button">HUC 12<input type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 8<input disabled type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 12<input checked type="radio" value="HUC_12" name="selected_huc_type"></label>' +
+                    '</div>' +
+                    '<h4>HUC Selection Info</h4>' +
+                    '<div id="selection_info_div">' +
+                    '<div id="selection_id_div">ID: <span id="selection_id"></span></div>' +
+                    '<div id="selection_name_div">Name: <span id="selection_name"></span></div>' +
+                    '<div id="selection_area_div">Area: <span id="selection_area"></span>km<sup>2</sup></div>' +
+                    '<div id="selection_state_div">State(s): <span id="selection_state"></span></div>' +
+                    '</div>'
+            }
+            else {
+                selectionInfo = '<h4>Catchment Selection Info</h4>' +
+                    '<div id="selection_info_div">' +
+                    '<div id="selection_id_div">ID: <span id="selection_id"></span></div>' +
+                    '<div id="selection_huc12_div">HUC 12: <span id="selection_huc12"></span></div>' +
+                    '<div id="selection_area_div">Area: <span id="selection_area"></span>km<sup>2</sup></div>' +
+                    '<div id="selection_region_div">Region: <span id="selection_region"></span></div>' +
+                    '</div>'
+            }
+            this._div.innerHTML = selectionInfo;
+        };
+        mapSelectionInfo.addTo(hucMap);
+    }
+    else{
+        mapSelectionInfo.update = function () {
+            var selectionInfo;
+            if ($('#spatial_type').val() === "hucid") {
+                selectionInfo = '<h4>HUC Selection Options</h4>' +
+                    '<div id="selection_huc_options">' +
+                    '<label class="selection_huc_button">HUC 8<input disabled type="radio" checked value="HUC_8" name="selected_huc_type"></label>' +
+                    '<label class="selection_huc_button">HUC 12<input checked type="radio" value="HUC_12" name="selected_huc_type"></label>' +
                     '</div>' +
                     '<h4>HUC Selection Info</h4>' +
                     '<div id="selection_info_div">' +
@@ -524,6 +559,7 @@ function openHucMap() {
 
 function toggleHucMap() {
     $('#huc_map_block').fadeOut("faster");
+    hucMap.closePopup();
     return false;
 }
 
@@ -563,6 +599,7 @@ function clickGetStreamComid(e) {
 
 function getStreamData(lat, lng) {
     // COMID Request
+
     var url = "https://watersgeo.epa.gov/arcgis/rest/services/NHDPlus_NP21/Catchments_NP21_Simplified/MapServer/0/query?where=&text=&objectIds=&time=&geometry=%7B%22x%22+%3A+"
         + lng + "%2C+%22y%22+%3A+" + lat + "%2C+%22spatialReference%22+%3A+%7B%22wkid%22+%3A+4326%7D%7D&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=%7B%22wkt%22+%3A+%22GEOGCS%5B%5C%22GCS_WGS_1984%5C%22%2CDATUM%5B%5C%22D_WGS_1984%5C%22%2C+SPHEROID%5B%5C%22WGS_1984%5C%22%2C6378137%2C298.257223563%5D%5D%2CPRIMEM%5B%5C%22Greenwich%5C%22%2C0%5D%2C+UNIT%5B%5C%22Degree%5C%22%2C0.017453292519943295%5D%5D%22%7D&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentsOnly=false&datumTransformation=&parameterValues=&rangeValues=&f=geojson";
     $.ajax({
@@ -674,7 +711,10 @@ function addCatchmentToMap(data) {
     if (currentSelectedGeometry !== null) {
         hucMap.removeLayer(currentSelectedGeometry);
     }
-    var hucData = JSON.parse(data);
+    var hucData = data;
+    if (typeof data === "string") {
+        hucData = JSON.parse(data);
+    }
     currentSelectedGeometry = L.geoJSON(hucData);
     currentSelectedGeometry.addTo(hucMap);
     hucMap.fitBounds(currentSelectedGeometry.getBounds());
@@ -701,7 +741,10 @@ function addHucToMap(data, hucType) {
     if (currentSelectedGeometry !== null) {
         hucMap.removeLayer(currentSelectedGeometry);
     }
-    var hucData = JSON.parse(data);
+    var hucData = data;
+    if (typeof data === "string") {
+        hucData = JSON.parse(data);
+    }
     var hucNum = hucType.slice(4, hucType.length);
     var hucID = hucData.features[0].properties[hucType];
     currentSelectedGeometry = L.geoJSON(hucData);

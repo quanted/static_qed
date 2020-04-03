@@ -1,6 +1,6 @@
 // General js for hms model/submodel pages //
 var taskID;
-var counter = 25;
+var counter = 250;
 var componentData;
 var resultMetaTable;
 var resultDataTable;
@@ -23,9 +23,14 @@ $(function () {
     $("#id_startDate").datepicker(datepicker_options);
     $("#id_endDate").datepicker(datepicker_options);
 
+    $("#id_source").on("change", setSourceConfig);
+
     // $('.submit_data_request').on('click', getTestData);
     $('.submit_data_request').on('click', getData2);
+    setTimeout(setTabindex, 100);
     setTimeout(pageLoad, 400);
+    setTimeout(loadCookies, 400);
+    setTimeout(setSourceConfig, 100);
 });
 
 function pageLoad() {
@@ -34,8 +39,41 @@ function pageLoad() {
     return false;
 }
 
+function setSourceConfig(){
+    var src = $('#id_source').val();
+
+    var local = sourceConfigs[src]['localtime'];
+    if(local){
+        $("#id_timelocalized option[value='true']").removeAttr('disabled');
+        $("#id_timelocalized option[value='true']").removeAttr('selected');
+        $("#id_timelocalized option[value='true']").attr('selected', 'selected');
+    }
+    else{
+        $("#id_timelocalized option[value='true']").removeAttr('selected');
+        $("#id_timelocalized option[value='true']").attr('disabled', 'disabled');
+        $("#id_timelocalized option[value='false']").attr('selected', 'selected');
+    }
+
+    var resolution = sourceConfigs[src]['temporalResolution'];
+    var validRes = false;
+    var resolutionOptions = document.getElementById("id_temporalresolution").getElementsByTagName("option");
+    for(var i=0;i<resolutionOptions.length-1;i++){
+        if(!validRes) {
+            if (resolutionOptions[i].value === resolution) {
+                validRes = true;
+                resolutionOptions[i].disabled = false;
+                resolutionOptions[i].selected = true;
+            } else {
+                resolutionOptions[i].disabled = true;
+            }
+        }
+        else{
+            resolutionOptions[i].disabled = false;
+        }
+    }
+}
+
 function getData() {
-    toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -53,13 +91,13 @@ function getData() {
             // setDataGraph();
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
-            toggleLoader();
+            toggleLoader(false,"");
             dyGraph.resize();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader();
+            toggleLoader(false, "");
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -69,7 +107,6 @@ function getData() {
 }
 
 function getData2() {
-    toggleLoader();
     var params = getParameters();
     $.ajax({
         type: "POST",
@@ -81,13 +118,17 @@ function getData2() {
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
+            setDataRequestCookie(taskID);
             console.log("Data request success. Task ID: " + taskID);
-            setTimeout(getDataPolling, 12000);
+            toggleLoader(false, "Processing data request. Task ID: " + taskID);
+            setTimeout(getDataPolling, 5000);
+            $('#component_tabs').tabs("enable", 2);
+            $('#component_tabs').tabs("option", "active", 2);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader();
+            toggleLoader(true, "");
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -108,27 +149,32 @@ function getDataPolling() {
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 if (data.status === "SUCCESS") {
-                    componentData = data.data;
+                    if (typeof data.data === "string") {
+                        componentData = JSON.parse(data.data);
+                    }else{
+                        componentData = data.data;
+                    }
                     console.log("Task successfully completed and data was retrieved.");
                     setOutputUI();
-                    $('#component_tabs').tabs("enable", 2);
-                    $('#component_tabs').tabs("option", "active", 2);
-                    toggleLoader();
+                    toggleLoader(true, "");
+                    setTitle();
+                    toggleDownloadButtons(false);
                     dyGraph.resize();
-                    counter = 25;
+                    counter = 250;
                 }
                 else if (data.status === "FAILURE") {
+                    toggleLoader(false, "Task " + taskID + " encountered an error.");
                     console.log("Task failed to complete.");
                 }
                 else {
-                    setTimeout(getDataPolling, 12000);
+                    setTimeout(getDataPolling, 5000);
                 }
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader();
+                toggleLoader(false, "Error retrieving data for task ID: " + taskID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -138,6 +184,32 @@ function getDataPolling() {
     else {
         console.log("Failed to get data, reached polling cap.")
     }
+    return false;
+}
+
+function getPreviousData() {
+    taskID = $('#previous_task_id').val();
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+    });
+    counter = 250;
+    getDataPolling();
+    toggleDownloadButtons(true);
+    $('#component_tabs').tabs("enable", 2);
+    $('#component_tabs').tabs("option", "active", 2);
+    return false;
+}
+
+function getPreviousDataFromID(id){
+    taskID = id;
+    setTimeout(function () {
+        toggleLoader(false, "Retrieving data for task ID: " + taskID);
+    });
+    counter = 250;
+    getDataPolling();
+    toggleDownloadButtons(true);
+    $('#component_tabs').tabs("enable", 2);
+    $('#component_tabs').tabs("option", "active", 2);
     return false;
 }
 
@@ -158,6 +230,15 @@ function setMetadata() {
     };
     metaTable.draw(resultMetaTable, tableOptions);
     return false;
+}
+
+function setTitle() {
+    if (taskID === null && testData) {
+        taskID = "TESTTASK1234567890";
+    }
+    var title = "Data for Task: " + taskID.toString();
+    var output_title = $("#output_title");
+    output_title.html("<h3>" + title + "</h3>");
 }
 
 function setDataGraph() {
@@ -266,9 +347,30 @@ function setDataGraph2() {
     dyGraph = new Dygraph(graphEle, dataCSV, graphOptions);
 }
 
-function toggleLoader() {
-    $('.submit_data_request_loader').toggleClass("loading_icon");
-    $('.submit_data_request').toggleClass("hidden");
+// function toggleLoader() {
+//     $('.submit_data_request_loader').toggleClass("loading_icon");
+//     $('.submit_data_request').toggleClass("hidden");
+// }
+
+function toggleLoader(hide, msg) {
+    if (hide) {
+        $("#output_loading").fadeOut(100);
+        $("#loading_msg").html();
+    }
+    else {
+        $("#output_loading").fadeIn(100);
+        $("#loading_msg").html("<span>" + msg + "</span>");
+    }
+    return false;
+}
+
+function toggleDownloadButtons(hide){
+    if(hide){
+        $("#output_data_save_block").hide();
+    }
+    else{
+        $("#output_data_save_block").show();
+    }
 }
 
 function exportDataToJSON() {
@@ -320,4 +422,65 @@ function exportDataToCSV() {
     else {
         pom.click();
     }
+}
+
+function setTabindex(){
+    $('.ui-tabs-tab').each(function() {
+        $(this).attr('tabindex', '0');
+    });
+
+    $('#main-content').attr('tabindex', '0');
+    $('#overview_tab_link').attr('tabindex', '0');
+    $('#data_request_link').attr('tabindex', '0');
+    $('#output_link').attr('tabindex', '0');
+    $('#data_retrieve_link').attr('tabindex', '0');
+    $('#algorithms_link').attr('tabindex', '0');
+
+}
+
+function loadCookies(){
+    var url = window.location.href;
+    var cookie = getCookie(url);
+    var ids = cookie.split(",");
+    if( ids.length > 1){
+        $("#previous_tasks").show();
+        var list = $('#previous_tasks_list')[0];
+        ids.forEach(function(id){
+            if(id !== "") {
+                var ele = document.createElement("li");
+                ele.innerText = id;
+                ele.onclick = function () {
+                    getPreviousDataFromID(id);
+                };
+                list.appendChild(ele);
+            }
+        });
+    }
+}
+
+function setDataRequestCookie(taskID){
+    var daysToExpire = 1;
+    var date = new Date();
+    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+    var expires = "expires=" + date.toUTCString();
+    var url = window.location.href;
+    var current = getCookie(url);
+    var taskIDs = taskID + "," + current;
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
