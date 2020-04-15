@@ -12,8 +12,10 @@ $(function () {
     // form events
 	$('#id_algorithm').change(toggleParameters);
 	$('#id_source').change(toggleSource);
+    $('#id_area_of_interest').on('change', updateAoISelection);
 
 	setTimeout(setOverviewTabindex, 100);
+    setTimeout(updateAoISelection, 100);
 
 });
 
@@ -97,6 +99,10 @@ function getParameters() {
             12:$("#id_airtemps_11").val()
         };
     }
+    if($('#id_area_of_interest').val() === "Catchment Centroid"){
+        delete requestJson["geometry"]["point"];
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
+    }
     return requestJson;
 }
 
@@ -121,6 +127,20 @@ function initializeInputForm() {
 	$('#id_stationID').parent().parent().hide();
 	$('#id_userdata').parent().parent().hide();
 }
+
+function updateAoISelection(){
+	var aoi = $('#id_area_of_interest').val();
+	if (aoi === "Latitude/Longitude") {
+		$("#id_latitude").parent().parent().show();
+		$("#id_longitude").parent().parent().show();
+		$("#id_catchment_comid").parent().parent().hide();
+	} else {
+		$("#id_latitude").parent().parent().hide();
+		$("#id_longitude").parent().parent().hide();
+		$("#id_catchment_comid").parent().parent().show();
+	}
+}
+
 
 function toggleSource(){
 	var state = $('#id_source').val();
