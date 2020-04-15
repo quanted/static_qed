@@ -2,12 +2,19 @@
 var baseUrl = "hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
+	$('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
     // form initialization
     initializeInputForm();
 
     // form events
 	$('#id_algorithm').change(toggleParameters);
 	$('#id_source').change(toggleSource);
+
+	setTimeout(setOverviewTabindex, 100);
+
 });
 
 function setOutputUI(){
@@ -246,4 +253,11 @@ function resetParameters() {
 	$('#id_airtemps_0').parent().parent().addClass("hidden");
 	$('#id_leafarea_0').parent().parent().hide();
 	$('#id_airtemps_0').parent().parent().hide();
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }
