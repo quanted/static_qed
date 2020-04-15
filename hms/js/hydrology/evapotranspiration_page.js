@@ -2,6 +2,10 @@
 var baseUrl = "hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
+	$('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
     // form initialization
     initializeInputForm();
 
@@ -9,6 +13,11 @@ $(function () {
 	$('#id_locationSource').change(toggleLocation);
 	$('#id_algorithm').change(toggleParameters);
 	$('#id_source').change(toggleSource);
+    $('#id_area_of_interest').on('change', updateAoISelection);
+
+	setTimeout(setOverviewTabindex, 100);
+    setTimeout(updateAoISelection, 100);
+
 });
 
 function setOutputUI(){
@@ -88,6 +97,10 @@ function getParameters() {
             12:$("#id_airtemps_11").val()
         };
     }
+    if($('#id_area_of_interest').val() === "Catchment Centroid"){
+        delete requestJson["geometry"]["point"];
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
+    }
     return requestJson;
 }
 
@@ -133,6 +146,20 @@ function toggleLocation(){
 			break;
 	}
 }
+
+function updateAoISelection(){
+	var aoi = $('#id_area_of_interest').val();
+	if (aoi === "Latitude/Longitude") {
+		$("#id_latitude").parent().parent().show();
+		$("#id_longitude").parent().parent().show();
+		$("#id_catchment_comid").parent().parent().hide();
+	} else {
+		$("#id_latitude").parent().parent().hide();
+		$("#id_longitude").parent().parent().hide();
+		$("#id_catchment_comid").parent().parent().show();
+	}
+}
+
 
 function toggleSource(){
 	var state = $('#id_source').val();
@@ -265,4 +292,11 @@ function resetParameters() {
 	$('#id_airtemps_0').parent().parent().addClass("hidden");
 	$('#id_leafarea_0').parent().parent().hide();
 	$('#id_airtemps_0').parent().parent().hide();
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }
