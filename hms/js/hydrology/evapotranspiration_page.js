@@ -186,6 +186,7 @@ function toggleSource(){
 		default:
 			break;
 	}
+	updateAoISelection();
 }
 
 function toggleParameters() {
@@ -296,6 +297,7 @@ function toggleParameters() {
 			break;
 		default:
 	}
+	updateAoISelection();
 }
 
 function resetParameters() {
