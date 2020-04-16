@@ -287,7 +287,7 @@ function getParameters(){
             }
         },
         "contaminantInflow": tableData,
-        "inflowSource": $("#id_inflowTable").val(),
+        "inflowSource": $("#id_inflowSource").val(),
         "units": "default",
         "outputFormat": "json"
     };
