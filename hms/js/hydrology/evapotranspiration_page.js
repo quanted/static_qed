@@ -10,6 +10,7 @@ $(function () {
     initializeInputForm();
 
     // form events
+	$('#id_locationSource').change(toggleLocation);
 	$('#id_algorithm').change(toggleParameters);
 	$("#id_source").unbind();
 	$('#id_source').change(toggleSource);
@@ -41,6 +42,7 @@ function getParameters() {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
             },
+            "comid": $("#id_comid").val(),
             "geometryMetadata": {
                 "stationID": $("#id_stationID").val()
             }
@@ -65,11 +67,7 @@ function getParameters() {
     requestJson["leafwidth"] = $("#id_leafwidth").val();
     requestJson["roughnesslength"] = $("#id_roughlength").val();
     requestJson["vegetationheight"] = $("#id_vegheight").val();
-    if ($('#id_source').val() === "custom"){
-        console.log("custom input currently in development");
-        // uses id_userData?
-    }
-    else if ($('#id_algorithm').val() === "shuttleworthwallace"){
+    if ($('#id_algorithm').val() === "shuttleworthwallace"){
         requestJson["leafareaindices"] = {
                     1: $("#id_leafarea_0").val(),
                     2: $("#id_leafarea_1").val(),
@@ -128,6 +126,27 @@ function initializeInputForm() {
 	$('#id_airtemps_0').parent().parent().hide();
 	$('#id_stationID').parent().parent().hide();
 	$('#id_userdata').parent().parent().hide();
+	$('#id_geometrymetadata').parent().parent().hide();
+	document.getElementById("id_comid").value = -1;
+	$('#id_comid').parent().parent().hide();
+}
+
+function toggleLocation(){
+	var loc = $('#id_locationSource').val();
+	switch(loc){
+		case 'latlong':
+			$('#id_latitude').parent().parent().show();
+			$('#id_longitude').parent().parent().show();
+			$('#id_comid').parent().parent().hide();
+			break;
+		case 'comid':
+			$('#id_latitude').parent().parent().hide();
+			$('#id_longitude').parent().parent().hide();
+			$('#id_comid').parent().parent().show();
+			break;
+		default:
+			break;
+	}
 }
 
 function updateAoISelection(){
