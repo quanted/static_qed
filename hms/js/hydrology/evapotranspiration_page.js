@@ -11,11 +11,13 @@ $(function () {
 
     // form events
 	$('#id_algorithm').change(toggleParameters);
+	$("#id_source").unbind();
 	$('#id_source').change(toggleSource);
     $('#id_area_of_interest').on('change', updateAoISelection);
 
 	setTimeout(setOverviewTabindex, 100);
     setTimeout(updateAoISelection, 100);
+    setTimeout(toggleParameters, 100);
 
 });
 
@@ -169,12 +171,31 @@ function toggleSource(){
 
 function toggleParameters() {
 	var state = $('#id_algorithm').val();
+	$("#id_source").prop("disabled", false);
+	$("#id_temporalresolution option[value='hourly']").prop('disabled', false);
+	$("#id_temporalresolution option[value='3hourly']").prop('disabled', false);
 	resetParameters();
 	switch(state){
 		case 'nldas':
+			$("#id_temporalresolution").val('hourly');
+			$("#id_source").prop("disabled", 'disabled');
+			$("#id_source").val("nldas");
+			break;
 		case 'gldas':
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('3hourly');
+			$("#id_source").prop("disabled", 'disabled');
+			$("#id_source").val("gldas");
+			break;
 		case "hamon":
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
+			break;
 		case "hargreaves":
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
 			break;
         case "priestlytaylor":
         case "grangergray":
@@ -182,6 +203,9 @@ function toggleParameters() {
 		case "penmanopenwater":
         case "penmandaily":
 			$('#id_albedo').parent().parent().show();
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
 			break;
         case "mcjannett":
 			$('#id_albedo').parent().parent().show();
