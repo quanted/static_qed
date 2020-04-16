@@ -127,7 +127,7 @@ function initializeInputForm() {
 	$('#id_stationID').parent().parent().hide();
 	$('#id_userdata').parent().parent().hide();
 	$('#id_geometrymetadata').parent().parent().hide();
-	document.getElementById("id_comid").value = -1;
+	$("#id_comid").val(-1);
 	$('#id_comid').parent().parent().hide();
 }
 
