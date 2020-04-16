@@ -12,7 +12,7 @@ $(function () {
     // form events
 	$('#id_locationSource').change(toggleLocation);
 	$('#id_algorithm').change(toggleParameters);
-	$("#id_source").unbind();
+	$('#id_source').unbind();
 	$('#id_source').change(toggleSource);
     $('#id_area_of_interest').on('change', updateAoISelection);
 
@@ -165,16 +165,17 @@ function updateAoISelection(){
 
 function toggleSource(){
 	var state = $('#id_source').val();
+	$("#id_timelocalized option[value='true']").prop('disabled', false);
 	switch(state){
 		case 'ncei':
 			$('#id_latitude').parent().parent().hide();
             $('#id_longitude').parent().parent().hide();
             $('#id_stationID').parent().parent().show();
 			break;
-		case 'nldas':
-		case 'gldas':
-		case 'wgen':
 		case 'daymet':
+			$("#id_timelocalized option[value='true']").prop('disabled', 'disabled');
+			$("#id_timelocalized").val('false');
+			break;
 		case 'prism':
 			$('#id_latitude').parent().parent().show();
             $('#id_longitude').parent().parent().show();
@@ -183,6 +184,9 @@ function toggleSource(){
 		case 'custom':
 			$('#id_userdata').parent().parent().show();
 			break;
+		case 'nldas':
+		case 'gldas':
+		case 'wgen':
 		default:
 			break;
 	}
