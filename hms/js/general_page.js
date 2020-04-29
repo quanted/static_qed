@@ -41,8 +41,12 @@ function pageLoad() {
 
 function setSourceConfig(){
     var src = $('#id_source').val();
-
-    var local = sourceConfigs[src]['localtime'];
+    var local = null;
+    var resolution = null;
+    if (sourceConfigs.hasOwnProperty(src)) {
+        local = sourceConfigs[src]['localtime'];
+        resolution = sourceConfigs[src]['temporalResolution'];
+    }
     if(local){
         $("#id_timelocalized option[value='true']").removeAttr('disabled');
         $("#id_timelocalized option[value='true']").removeAttr('selected');
@@ -54,21 +58,21 @@ function setSourceConfig(){
         $("#id_timelocalized option[value='false']").attr('selected', 'selected');
     }
 
-    var resolution = sourceConfigs[src]['temporalResolution'];
-    var validRes = false;
-    var resolutionOptions = document.getElementById("id_temporalresolution").getElementsByTagName("option");
-    for(var i=0;i<resolutionOptions.length-1;i++){
-        if(!validRes) {
-            if (resolutionOptions[i].value === resolution) {
-                validRes = true;
-                resolutionOptions[i].disabled = false;
-                resolutionOptions[i].selected = true;
+    if(resolution) {
+        var validRes = false;
+        var resolutionOptions = document.getElementById("id_temporalresolution").getElementsByTagName("option");
+        for (var i = 0; i < resolutionOptions.length - 1; i++) {
+            if (!validRes) {
+                if (resolutionOptions[i].value === resolution) {
+                    validRes = true;
+                    resolutionOptions[i].disabled = false;
+                    resolutionOptions[i].selected = true;
+                } else {
+                    resolutionOptions[i].disabled = true;
+                }
             } else {
-                resolutionOptions[i].disabled = true;
+                resolutionOptions[i].disabled = false;
             }
-        }
-        else{
-            resolutionOptions[i].disabled = false;
         }
     }
 }

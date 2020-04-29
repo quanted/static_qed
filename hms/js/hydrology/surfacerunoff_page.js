@@ -2,6 +2,14 @@
 var baseUrl = "/hms/rest/api/v3/hydrology/surfacerunoff/";
 
 $(function () {
+    $('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+    $('#id_area_of_interest').on('change', updateAoISelection);
+
+    setTimeout(setOverviewTabindex, 100);
+    setTimeout(updateAoISelection, 100);
 });
 
 function setOutputUI(){
@@ -34,5 +42,39 @@ function getParameters() {
         "units": "default",
         "outputFormat": "json"
     };
+    if($('#id_area_of_interest').val() === "Catchment Centroid"){
+        delete requestJson["geometry"]["point"];
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
+    }
     return requestJson;
+}
+
+function updateAoISelection(){
+    var source = $("#id_source").val();
+    if(source === "ncei"){
+        $("#id_area_of_interest").parent().parent().hide();
+        $("#id_latitude").parent().parent().hide();
+        $("#id_longitude").parent().parent().hide();
+        $("#id_catchment_comid").parent().parent().hide();
+    }
+    else {
+        $("#id_area_of_interest").parent().parent().show();
+        var aoi = $('#id_area_of_interest').val();
+        if (aoi === "Latitude/Longitude") {
+            $("#id_latitude").parent().parent().show();
+            $("#id_longitude").parent().parent().show();
+            $("#id_catchment_comid").parent().parent().hide();
+        } else {
+            $("#id_latitude").parent().parent().hide();
+            $("#id_longitude").parent().parent().hide();
+            $("#id_catchment_comid").parent().parent().show();
+        }
+    }
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }
