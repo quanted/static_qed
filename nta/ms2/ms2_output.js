@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 
 function checkJobExists(){
-    var statusUrl = "/nta/status/" + jobid;
+    var statusUrl = "/ms2/status/" + jobid;
     //console.log("Process check # :" + attemptCount);
     $.ajax({
         url: statusUrl,
@@ -22,6 +22,9 @@ function checkJobExists(){
                     var error_info = data['error_info'];
                     $('#download_area').html(message);
                     $('#except_info').html("Error info: "+ error_info);
+                }
+                else if(data['status'] != 'Completed'){
+                    errorDisplay()
                 }
             }
             else{
@@ -41,5 +44,5 @@ function checkJobExists(){
 
 
 function errorDisplay(){
-    $('#download_area').html("<h3> Error: NTA task not found! </h3>");
+    $('#download_area').html("<h3> Error: NTA ms2 task not found! </h3>");
 }
