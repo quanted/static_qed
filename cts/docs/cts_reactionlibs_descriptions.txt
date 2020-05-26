@@ -18,3 +18,12 @@
 
 <h3>Human Phase 1 Metabolism Reaction Library</h3>
 <p>The Human Phase 1 Metabolism Reaction Library contains 156 reaction schemes based on cytochrome P450 (CYP450) phase one biotransformations.  This reaction library was developed by Chemaxon.  The reaction library is proprietary, so details of the reactions schemes cannot be viewed.</p>
+
+<br><br>
+
+<h3>Direct Photolysis Reaction Library</h3>
+<p>The current version of the Direct Photolysis Reaction Library contains 155 reaction schemes. This library is currently unranked and should not be run with other libraries. Left click a reaction scheme to view the generalized reaction scheme, supporting reaction rules for reactivity, selectivity and exclusion, as well as example transformation pathways based on the execution of the reaction scheme. References to process science on which the reaction scheme was developed are also provided.</p>
+
+<h4><a href="/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0_051920.htm" target="_blank">Direct Photolysis Reaction Library</a> (last updated May 19, 2020)</h4>
+
+<br><br>
