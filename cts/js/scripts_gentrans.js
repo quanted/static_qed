@@ -201,23 +201,19 @@ $(document).ready(function() {
         var areduct_checked = $('#id_abiotic_reduction:checked').length > 0;
         var ahydro_checked = $('#id_abiotic_hydrolysis:checked').length > 0;
         var photolysis_checked = $('#id_photolysis:checked').length > 0;
-        if (mamm_meta_checked && (areduct_checked || ahydro_checked)) {
-            clearReactionLib();
+        if (mamm_meta_checked && (areduct_checked || ahydro_checked || photolysis_checked)) {
+            $('#id_mamm_metabolism').prop({'checked': false});
             alert("Mammalian metabolism reaction library should not run with additional reaction libraries");
-            return;
         }
         else if (photolysis_checked && (areduct_checked || ahydro_checked || mamm_meta_checked)) {
-            clearReactionLib();
+            $('#id_photolysis').prop({'checked': false});
             alert("Photolysis reaction library should not run with additional reaction libraries");   
-            return;
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
-            // $('input.submit').prop('disabled', false).addClass('brightBorders');
             $('input.submit').addClass('brightBorders');
         }
         else {
-            // $('input.submit').prop('disabled', true).removeClass('brightBorders');
             $('input.submit').removeClass('brightBorders');
         }
     });
@@ -233,10 +229,10 @@ function brightenBorder(element) {
 
 
 function clearReactionLib() {
-    $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':true}).trigger('change');
-    $('#id_abiotic_reduction').prop({'checked': false, 'disabled':true}).trigger('change');
-    $('#id_mamm_metabolism').prop({'checked': false, 'disabled':true}).trigger('change');
-    $('#id_photolysis').prop({'checked': false, 'disabled':true}).trigger('change');
+    $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_abiotic_reduction').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_mamm_metabolism').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_photolysis').prop({'checked': false, 'disabled':true});  //.trigger('change');
 }
 
 
