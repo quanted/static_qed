@@ -20,13 +20,11 @@ function setOutputUI(){
 
 function getParameters() {
     // Dataset specific request object
-
     var requestJson = {
         "source": $('#id_source').val(),
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
-            "endDate": $('#id_endDate').val(),
-            // "dateTimeFormat": $("#id_datetimeformat").val()
+            "endDate": $('#id_endDate').val()
         },
         "geometry": {
             "point": {
