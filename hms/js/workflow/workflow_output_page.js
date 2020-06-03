@@ -211,8 +211,8 @@ function setInfoDiv(comid) {
             {title: "Length (km)", field: "LengthKM", align: "left", headerSort: false},
             {title: "Stream Level", field: "StreamLeve", align: "left", headerSort: false},
             {title: "Stream Order", field: "StreamOrde", align: "left", headerSort: false},
-            {title: "Mean Annual Flow (cfs)", field: "MeanAnnFlowM3PS", align: "left", headerSort: false},
-            {title: "Mean Annual Velocity (fps)", field: "MeanAnnVelMPS", align: "left", headerSort: false},
+            {title: "Mean Annual Flow (m&#178/s)", field: "MeanAnnFlowM3PS", align: "left", headerSort: false},
+            {title: "Mean Annual Velocity (m/s)", field: "MeanAnnVelMPS", align: "left", headerSort: false},
         ],
         data: [data]
     });
@@ -220,7 +220,7 @@ function setInfoDiv(comid) {
 
 function setOutputGraph(comid) {
     var dataTitle = "Catchment: " + comid + " Data";
-    var labels = ["Date", "Precipitation (mm)", "Surface Runoff (mm)", "Subsurface Flow (mm)", "Stream Flow (cfs)"];
+    var labels = ["Date", "Precipitation (mm)", "Surface Runoff (mm)", "Subsurface Flow (mm)", "Stream Flow (m^3/s)"];
     var dataCSV = [];
     var dataDict = [];
     var cData = jobData.data[comid];

@@ -27,8 +27,7 @@ function getParameters() {
         "source": $('#id_source').val(),
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
-            "endDate": $('#id_endDate').val(),
-            // "dateTimeFormat": $("#id_datetimeformat").val()
+            "endDate": $('#id_endDate').val()
         },
         "geometry": {
             "point": {
@@ -48,7 +47,7 @@ function getParameters() {
     };
     if($('#id_area_of_interest').val() === "Catchment Centroid"){
         delete requestJson["geometry"]["point"];
-        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val();
     }
     return requestJson;
 }
