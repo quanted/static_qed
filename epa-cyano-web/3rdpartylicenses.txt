@@ -110,6 +110,8 @@ THE SOFTWARE.
 
 @angular/material/progress-bar
 
+@angular/material/progress-spinner
+
 @angular/material/select
 
 @angular/material/slider
@@ -120,9 +122,6 @@ THE SOFTWARE.
 MIT
 
 @angular/router
-MIT
-
-@angular/service-worker
 MIT
 
 @asymmetrik/ngx-leaflet

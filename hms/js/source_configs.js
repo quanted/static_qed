@@ -21,7 +21,7 @@ var sourceConfigs = {
 	},
 	'ncei': {
 		'localtime': true,
-		'temporalResolution': 'daily'
+		'temporalResolution': 'hourly'
 	},
 	'trmm': {
 		'localtime': true,

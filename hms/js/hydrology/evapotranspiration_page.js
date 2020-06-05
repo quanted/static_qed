@@ -2,12 +2,24 @@
 var baseUrl = "hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
+	$('#overview_block').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
     // form initialization
     initializeInputForm();
 
     // form events
+	$('#id_locationSource').change(toggleLocation);
 	$('#id_algorithm').change(toggleParameters);
+	$('#id_source').unbind();
 	$('#id_source').change(toggleSource);
+    $('#id_area_of_interest').on('change', updateAoISelection);
+
+	setTimeout(setOverviewTabindex, 100);
+    setTimeout(updateAoISelection, 100);
+    setTimeout(toggleParameters, 100);
+
 });
 
 function setOutputUI(){
@@ -22,14 +34,14 @@ function getParameters() {
         "source": $('#id_source').val(),
         "dateTimeSpan": {
             "startDate": $("#id_startDate").val(),
-            "endDate": $('#id_endDate').val(),
-            // "dateTimeFormat": $("#id_datetimeformat").val()
+            "endDate": $('#id_endDate').val()
         },
         "geometry": {
             "point": {
                 "latitude": $("#id_latitude").val(),
                 "longitude": $("#id_longitude").val()
             },
+            "comid": $("#id_comid").val(),
             "geometryMetadata": {
                 "stationID": $("#id_stationID").val()
             }
@@ -54,11 +66,7 @@ function getParameters() {
     requestJson["leafwidth"] = $("#id_leafwidth").val();
     requestJson["roughnesslength"] = $("#id_roughlength").val();
     requestJson["vegetationheight"] = $("#id_vegheight").val();
-    if ($('#id_source').val() === "custom"){
-        console.log("custom input currently in development");
-        // uses id_userData?
-    }
-    else if ($('#id_algorithm').val() === "shuttleworthwallace"){
+    if ($('#id_algorithm').val() === "shuttleworthwallace"){
         requestJson["leafareaindices"] = {
                     1: $("#id_leafarea_0").val(),
                     2: $("#id_leafarea_1").val(),
@@ -90,6 +98,10 @@ function getParameters() {
             12:$("#id_airtemps_11").val()
         };
     }
+    if($('#id_area_of_interest').val() === "Catchment Centroid"){
+        delete requestJson["geometry"]["point"];
+        requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
+    }
     return requestJson;
 }
 
@@ -113,20 +125,56 @@ function initializeInputForm() {
 	$('#id_airtemps_0').parent().parent().hide();
 	$('#id_stationID').parent().parent().hide();
 	$('#id_userdata').parent().parent().hide();
+	$('#id_geometrymetadata').parent().parent().hide();
+	$("#id_comid").val(-1);
+	$('#id_comid').parent().parent().hide();
 }
+
+function toggleLocation(){
+	var loc = $('#id_locationSource').val();
+	switch(loc){
+		case 'latlong':
+			$('#id_latitude').parent().parent().show();
+			$('#id_longitude').parent().parent().show();
+			$('#id_comid').parent().parent().hide();
+			break;
+		case 'comid':
+			$('#id_latitude').parent().parent().hide();
+			$('#id_longitude').parent().parent().hide();
+			$('#id_comid').parent().parent().show();
+			break;
+		default:
+			break;
+	}
+}
+
+function updateAoISelection(){
+	var aoi = $('#id_area_of_interest').val();
+	if (aoi === "Latitude/Longitude") {
+		$("#id_latitude").parent().parent().show();
+		$("#id_longitude").parent().parent().show();
+		$("#id_catchment_comid").parent().parent().hide();
+	} else {
+		$("#id_latitude").parent().parent().hide();
+		$("#id_longitude").parent().parent().hide();
+		$("#id_catchment_comid").parent().parent().show();
+	}
+}
+
 
 function toggleSource(){
 	var state = $('#id_source').val();
+	$("#id_timelocalized option[value='true']").prop('disabled', false);
 	switch(state){
 		case 'ncei':
 			$('#id_latitude').parent().parent().hide();
             $('#id_longitude').parent().parent().hide();
             $('#id_stationID').parent().parent().show();
 			break;
-		case 'nldas':
-		case 'gldas':
-		case 'wgen':
 		case 'daymet':
+			$("#id_timelocalized option[value='true']").prop('disabled', 'disabled');
+			$("#id_timelocalized").val('false');
+			break;
 		case 'prism':
 			$('#id_latitude').parent().parent().show();
             $('#id_longitude').parent().parent().show();
@@ -135,19 +183,42 @@ function toggleSource(){
 		case 'custom':
 			$('#id_userdata').parent().parent().show();
 			break;
+		case 'nldas':
+		case 'gldas':
+		case 'wgen':
 		default:
 			break;
 	}
+	updateAoISelection();
 }
 
 function toggleParameters() {
 	var state = $('#id_algorithm').val();
+	$("#id_source").prop("disabled", false);
+	$("#id_temporalresolution option[value='hourly']").prop('disabled', false);
+	$("#id_temporalresolution option[value='3hourly']").prop('disabled', false);
 	resetParameters();
 	switch(state){
 		case 'nldas':
+			$("#id_temporalresolution").val('hourly');
+			$("#id_source").prop("disabled", 'disabled');
+			$("#id_source").val("nldas");
+			break;
 		case 'gldas':
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('3hourly');
+			$("#id_source").prop("disabled", 'disabled');
+			$("#id_source").val("gldas");
+			break;
 		case "hamon":
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
+			break;
 		case "hargreaves":
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
 			break;
         case "priestlytaylor":
         case "grangergray":
@@ -155,6 +226,9 @@ function toggleParameters() {
 		case "penmanopenwater":
         case "penmandaily":
 			$('#id_albedo').parent().parent().show();
+			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_temporalresolution").val('daily');
 			break;
         case "mcjannett":
 			$('#id_albedo').parent().parent().show();
@@ -226,6 +300,7 @@ function toggleParameters() {
 			break;
 		default:
 	}
+	updateAoISelection();
 }
 
 function resetParameters() {
@@ -246,4 +321,11 @@ function resetParameters() {
 	$('#id_airtemps_0').parent().parent().addClass("hidden");
 	$('#id_leafarea_0').parent().parent().hide();
 	$('#id_airtemps_0').parent().parent().hide();
+}
+
+function setOverviewTabindex(){
+    $('#ui-id-3').attr('tabindex', '0');
+    $('#ui-id-5').attr('tabindex', '0');
+    $('#ui-id-7').attr('tabindex', '0');
+    $('#ui-id-9').attr('tabindex', '0');
 }
