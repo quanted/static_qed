@@ -7,6 +7,15 @@
 
 $(document).ready(function() {
 
+    $('input').on("change", function() {
+        /*
+        Enables/disables photolysis option based on environment.
+        */
+        if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
+            $('id_photolysis').prop({'checked': false, 'disabled': true});
+        }
+    });
+
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
 
@@ -207,7 +216,7 @@ $(document).ready(function() {
         }
         else if (photolysis_checked && (areduct_checked || ahydro_checked || mamm_meta_checked)) {
             $('#id_photolysis').prop({'checked': false});
-            alert("Photolysis reaction library should not run with additional reaction libraries");   
+            alert("Direct photolysis reaction library should not run with additional reaction libraries");   
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
@@ -216,6 +225,15 @@ $(document).ready(function() {
         else {
             $('input.submit').removeClass('brightBorders');
         }
+
+        if (photolysis_checked) {
+            // limits generation to 2 for photolysis library:
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', true);
+        }
+        else {
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', false);
+        }
+
     });
 
 });
