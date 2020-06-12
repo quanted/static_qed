@@ -216,7 +216,7 @@ $(document).ready(function() {
         }
         else if (photolysis_checked && (areduct_checked || ahydro_checked || mamm_meta_checked)) {
             $('#id_photolysis').prop({'checked': false});
-            alert("Direct photolysis reaction library should not run with additional reaction libraries");   
+            alert("Unranked direct photolysis reaction library should not be run with additional reaction libraries");
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
