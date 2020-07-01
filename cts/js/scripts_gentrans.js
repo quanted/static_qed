@@ -21,7 +21,9 @@ $(document).ready(function() {
 
     var unaviable_options = 'select[name=ftt_selection] option[value=2], ' + 
         'select[name=ftt_selection] option[value=3], select[name=pop_limit], ' +
-        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad';
+        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad' +
+        'select[name=pfas_environment] option' +
+        'select[name=pfas_metabolism] option';
 
     if (typeof uberNavTabs == 'function') {
         uberNavTabs(
