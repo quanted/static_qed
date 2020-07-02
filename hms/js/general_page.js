@@ -75,6 +75,13 @@ function setSourceConfig(){
             }
         }
     }
+    if(src === "gldas" || src === "trmm") {
+        $("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+        $("#id_temporalresolution option[value='3hourly']").removeAttr('disabled');
+    }
+    else {
+        $("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+    }
 }
 
 function getData() {

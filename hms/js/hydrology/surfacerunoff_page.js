@@ -12,7 +12,7 @@ $(function () {
 
     setTimeout(setOverviewTabindex, 100);
     setTimeout(updateAoISelection, 100);
-    setTimeout(precipSourceUpdate, 100);
+    setTimeout(precipSourceUpdate, 200);
 });
 
 function setOutputUI(){
@@ -75,11 +75,26 @@ function precipSourceUpdate(){
         } else {
             $("#id_stationID").parent().parent().hide();
         }
-        setTimeout(setPrecipSourceConfig, 200);
+        setPrecipSourceConfig();
+        $("#id_temporalresolution option").attr('disabled', 'disabled');
+        $("#id_temporalresolution option").removeAttr('selected');
+        $("#id_temporalresolution option[value='daily']").removeAttr('disabled');
+        $("#id_temporalresolution option[value='daily']").attr('selected', 'selected');
+        $("#id_temporalresolution option[value='monthly']").removeAttr('disabled');
     }
     else{
         $("#id_stationID").parent().parent().hide();
         $('#id_precip_source').parent().parent().hide();
+        $("#id_temporalresolution option").removeAttr('disabled');
+        $("#id_temporalresolution option").removeAttr('selected');
+        if(algorithm === "nldas"){
+            $("#id_temporalresolution option[value='hourly']").attr('selected', 'selected');
+            $("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+        }
+        else{
+            $("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
+            $("#id_temporalresolution option[value='3hourly']").attr('selected', 'selected');
+        }
     }
 }
 

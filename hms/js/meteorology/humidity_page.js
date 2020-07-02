@@ -1,4 +1,4 @@
-var baseUrl = "/hms/rest/api/v3/meteorology/humidity/";
+//var baseUrl = "/hms/rest/api/v3/meteorology/humidity/";
 
 
 $(function () {
@@ -42,6 +42,7 @@ function getParameters() {
         baseUrl = "/hms/rest/api/v3/meteorology/dewpoint/";
     }
     else{
+        baseUrl = "/hms/rest/api/v3/meteorology/humidity/";
         requestJson["relative"] = true;
     }
     if($('#id_area_of_interest').val() === "Catchment Centroid"){

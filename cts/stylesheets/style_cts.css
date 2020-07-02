@@ -302,7 +302,7 @@ input.tab_ChemCalcs, span.tab_ChemCalcs {
 }
 
 #alignLibAndOptions table {
-  display: inline-block;
+  /*display: inline-block;*/
   margin-left: 8px;
 }
 

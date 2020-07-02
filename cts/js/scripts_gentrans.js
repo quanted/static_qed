@@ -7,12 +7,23 @@
 
 $(document).ready(function() {
 
+    $('input').on("change", function() {
+        /*
+        Enables/disables photolysis option based on environment.
+        */
+        if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
+            $('id_photolysis').prop({'checked': false, 'disabled': true});
+        }
+    });
+
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
 
     var unaviable_options = 'select[name=ftt_selection] option[value=2], ' + 
         'select[name=ftt_selection] option[value=3], select[name=pop_limit], ' +
-        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad';
+        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad' +
+        'select[name=pfas_environment] option' +
+        'select[name=pfas_metabolism] option';
 
     if (typeof uberNavTabs == 'function') {
         uberNavTabs(
@@ -207,7 +218,7 @@ $(document).ready(function() {
         }
         else if (photolysis_checked && (areduct_checked || ahydro_checked || mamm_meta_checked)) {
             $('#id_photolysis').prop({'checked': false});
-            alert("Photolysis reaction library should not run with additional reaction libraries");   
+            alert("Unranked direct photolysis reaction library should not be run with additional reaction libraries");
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
@@ -216,6 +227,15 @@ $(document).ready(function() {
         else {
             $('input.submit').removeClass('brightBorders');
         }
+
+        if (photolysis_checked) {
+            // limits generation to 2 for photolysis library:
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', true);
+        }
+        else {
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', false);
+        }
+
     });
 
 });
