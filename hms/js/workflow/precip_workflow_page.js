@@ -88,6 +88,7 @@ function getParameters() {
         };
         requestJson["source"] = "extraction";
         requestJson["sourceList"] = ["ncei","nldas", "gldas", "trmm"];
+        requestJson["temporalResolution"] = $("#id_temporalresolution").val()
     }
     return requestJson;
 }
