@@ -7,9 +7,19 @@
     padding: 10px;
 }
 
-.headerbar {
+#links-left .headerbar {
+    padding: 0.3em 0 0.3em 0.5em !important;
+    margin: 0.8em 0 0.3em 0 !important;
     background: transparent none !important;
     color: black !important;
+}
+
+#links-left .menu-link {
+    padding: .25em .5882em .25em .8235em !important;
+}
+
+#links-left .home-link {
+    padding: .25em .5882em .25em 0 !important;
 }
 
 .menu-item {
