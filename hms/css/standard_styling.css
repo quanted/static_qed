@@ -15,11 +15,11 @@
 }
 
 #links-left .menu-link {
-    padding: .25em .5882em .25em .8235em !important;
+    padding: .35em .5882em .35em .8235em !important;
 }
 
 #links-left .home-link {
-    padding: .25em .5882em .25em 0 !important;
+    padding: .25em .5882em .25em .25em !important;
 }
 
 .menu-item {
