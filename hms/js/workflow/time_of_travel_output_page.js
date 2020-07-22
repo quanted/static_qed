@@ -426,40 +426,23 @@ function exportAllDataToCSV() {
     var fileName = "hms_catchment_data_" + jobID + ".csv";
     var metadata = "";
     var dataRows = [];
-    var columns = "Date,ComID";
+    var columns = "Date,ComID,Length(km),Velocity(m/s),Flow(m^2/s),Contaminated";
     var first = true;
     var i = 0;
-    // each catchment
     $.each(jobData.data, function (j, u) {
         var comid = j;
-        // each dataset
-        $.each(u, function (k, v) {
-            if (v.metadata["column_2"]) {
-                columns += "," + k + " (" + v.metadata["column_2"] + ")";
-            }
-            else {
-                columns += "," + k;
-            }
-            $.each(v.metadata, function (l, w) {
-                metadata += k + "_" + l + "," + w + "\n";
-            });
-            if (first) {
-                $.each(v.data, function (m, x) {
-                    dataRows[i] = m + "," + comid + "," + x;
-                    i += 1;
-                });
-            }
-            else {
-                $.each(v.data, function (m, x) {
-                    dataRows[i] += "," + x;
-                    i += 1;
-                });
-            }
-            i = 0;
-            first = false;
+            $.each(jobData.metadata, function (l, w) {
+            metadata += l + "," + w + "\n";
         });
-        first = true;
+        $.each(jobData.data[comid], function (k, v) {
+            dataRows[i] = k + "," + v[0] + "," + v[1] + "," + v[2] + "," + v[3] + "," + v[4];
+            i += 1;
+        });
     });
+	
+	
+	
+	
     var data = dataRows.join("\n");
     var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
     // TODO: Add table to csv output.
@@ -482,33 +465,15 @@ function exportCatchmentDataToCSV() {
     var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".csv";
     var metadata = "";
     var dataRows = [];
-    var columns = "Date,ComID";
+    var columns = "Date,ComID,Length(km),Velocity(m/s),Flow(m^2/s),Contaminated";
     var first = true;
     var i = 0;
+    $.each(jobData.metadata, function (l, w) {
+        metadata += l + "," + w + "\n";
+    });
     $.each(jobData.data[selectedCatchment], function (k, v) {
-        if (v.metadata["column_2"]) {
-            columns += "," + k + " (" + v.metadata["column_2"] + ")";
-        }
-        else {
-            columns += "," + k;
-        }
-        $.each(v.metadata, function (l, w) {
-            metadata += k + "_" + l + "," + w + "\n";
-        });
-        if (first) {
-            $.each(v.data, function (m, x) {
-                dataRows[i] = m + "," + selectedCatchment + "," + x;
-                i += 1;
-            });
-        }
-        else {
-            $.each(v.data, function (m, x) {
-                dataRows[i] += "," + x;
-                i += 1;
-            });
-        }
-        i = 0;
-        first = false;
+        dataRows[i] = k + "," + v[0] + "," + v[1] + "," + v[2] + "," + v[3] + "," + v[4];
+        i += 1;
     });
     var data = dataRows.join("\n");
     var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
