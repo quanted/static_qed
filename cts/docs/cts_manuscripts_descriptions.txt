@@ -9,6 +9,15 @@ The following links exit the site <a class="exit-disclaimer" href="https://www.e
 <br><br><br>
 
 <div class="manuscript-entry">
+<a href="https://pubs.acs.org/doi/10.1021/acs.est.0c00484"><h4>Reaction Library to Predict Direct Photochemical Transformation Products of Environmental Organic Contaminants in Sunlit Aquatic Systems</h4></a>
+<p>C. Yuan, C. Tebes-Stevens, E.J. Weber
+<br>
+<i>Environmental Science and Technology</i>, <b>2020</b>, 54(12), pp. 7271-7279</p>
+</div>
+
+<br>
+
+<div class="manuscript-entry">
 <a href="https://doi.org/10.1016/j.chemosphere.2017.11.137"><h4>Demonstration of a consensus approach for the calculation of physicochemical properties required for environmental fate assessments</h4></a>
 <p>C. Tebes-Stevens, J.M. Patel, M. Koopmans, J. Olmstead, S.H. Hilal, N. Pope, E.J. Weber, K. Wolfe
 <br>
