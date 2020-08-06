@@ -1,3 +1,7 @@
+.service-status h4 {
+    background-color: #0071bc !important;
+}
+
 .service-status {
     width: 20%;
     float:right;
@@ -5,10 +9,11 @@
 }
 
 .status_list_block {
-    border: 1px solid #5b616b;
-    border-bottom: 3px solid #5b616b;
+    border: 1px solid #0071bc;
+    border-bottom: 4px solid #0071bc;
     margin-top: 0;
     padding-top: 5px;
+    padding-bottom: 1px;
 }
 
 .source_title {
@@ -28,6 +33,7 @@
     display: inline-block;
     width: 50%;
     margin-left: 25px;
+    font-size:small;
 }
 
 .pending {
@@ -47,7 +53,7 @@
     height: 15px;
     border-radius: 50%;
     position: absolute;
-    top: 5px;
+    top: 3px;
     left: 5px;
 }
 
@@ -59,7 +65,8 @@
     position: absolute;
     -webkit-animation: pulsate 1s ease-out;
     -webkit-animation-iteration-count: infinite;
-    opacity: 0.0
+    opacity: 0.0;
+    top: -2px;
 }
 @-webkit-keyframes pulsate {
     0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
