@@ -32,7 +32,7 @@ function setStatus(){
         var s = $("#" + k + "_status");
         s.removeClass("pending");
         var new_status = "down";
-        var status_title = k.toUpperCase() + " data source is curretnly offline.";
+        var status_title = k.toUpperCase() + " data source is currently offline.";
         if(v){
             new_status = "up";
             status_title = k.toUpperCase() + " data source is currently available.";
