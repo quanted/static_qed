@@ -9,9 +9,9 @@ $(document).ready(function() {
 
     var disablePhotolysis = false;
 
-    if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
-        disablePhotolysis = true;
-    }
+    // if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
+    //     disablePhotolysis = true;
+    // }
 
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
