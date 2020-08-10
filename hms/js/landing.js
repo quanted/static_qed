@@ -41,4 +41,7 @@ function setStatus(){
         s.attr("title", status_title);
         $("#" + k + "_pulse").removeClass("pending_pulse");
     });
+    var timestamp = new Date(Date.now()).toLocaleString();
+    $("#status_timestamp_label").html("Last updated: ");
+    $("#status_timestamp").html(timestamp);
 }
