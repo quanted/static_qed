@@ -78,3 +78,19 @@
     font-size: small;
     text-align: center;
 }
+
+.tick {
+    display: block;
+    color: white;
+    font-weight: bold;
+    margin: -1px auto 0 auto;
+    text-align: center;
+}
+
+.notick {
+    display: block;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+    margin: -3px auto 0 auto;
+}
