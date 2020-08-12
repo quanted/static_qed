@@ -406,10 +406,10 @@
     font-weight: 600;
 }
 
-.ui-accordion-header {
-    background: #0071f1 !important;
-    color: #ffffff !important;
-}
+/*.ui-accordion-header {*/
+/*    background: #0071f1 !important;*/
+/*    color: #ffffff !important;*/
+/*}*/
 
 .ui-state-active {
     font-weight: bold !important;
