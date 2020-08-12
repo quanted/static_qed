@@ -8,17 +8,17 @@ $(document).ready(function(){
 
 
 var jobid = window.location.pathname.split("/").pop();
-var timeout = 10000; // Timeout length in milliseconds (1000 = 1 second)
+var timeout = 5000; // Timeout length in milliseconds (1000 = 1 second)
 var attemptCount = 0;
 var maxAttempts = 45;
 
 $(document).ready(function () {
-    setTimeout(checkJobStatus, 6000);
+    setTimeout(checkJobStatus, 5000);
 });
 
 
 function checkJobStatus(){
-    var statusUrl = "/nta/status/" + jobid;
+    var statusUrl = "/nta/ms2/status/" + jobid;
     attemptCount += 1;
     //console.log("Process check # :" + attemptCount);
     $.ajax({
@@ -29,7 +29,7 @@ function checkJobStatus(){
             if('status' in data) {
                 if (data['status'] === "Completed") {
                     console.log("Task was completed! Redirecting...");
-                    var outputUrl = "/nta/output/" + jobid;
+                    var outputUrl = "/nta/ms2/output/" + jobid;
                     //window.location.href = outputUrl;
                     $(location).attr('href', outputUrl);
                 }
@@ -47,6 +47,15 @@ function checkJobStatus(){
                 }
                 else {
                     console.log("Status: " + data['status']);
+                    var progress = parseInt(data['progress']);
+                    var max_progress = parseInt(data['n_masses']);
+                    console.log(progress);
+                    console.log('out of'+ max_progress);
+                    var percent_done = Math.round((progress/max_progress)*100);
+                    if(percent_done > 99){
+                        percent_done = 99
+                    }
+                    $('#status').html('Processing... '+ percent_done+'% completed');
                     if(attemptCount<maxAttempts){
                         setTimeout(checkJobStatus, timeout);
                     }

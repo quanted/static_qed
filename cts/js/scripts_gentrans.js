@@ -7,14 +7,11 @@
 
 $(document).ready(function() {
 
-    $('input').on("change", function() {
-        /*
-        Enables/disables photolysis option based on environment.
-        */
-        if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
-            $('id_photolysis').prop({'checked': false, 'disabled': true});
-        }
-    });
+    var disablePhotolysis = false;
+
+    // if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
+    //     disablePhotolysis = true;
+    // }
 
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
@@ -82,7 +79,9 @@ $(document).ready(function() {
             $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':false}).trigger('change');
             $('#id_abiotic_reduction').prop({'checked': false, 'disabled':false}).trigger('change');
             $('#id_mamm_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
-            $('#id_photolysis').prop({'checked': false, 'disabled':false}).trigger('change');
+            if (!disablePhotolysis) {
+                $('#id_photolysis').prop({'checked': false, 'disabled':false}).trigger('change');
+            }
             brightenBorder($('#cts_reaction_libs'));
         }
 
