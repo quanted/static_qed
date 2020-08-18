@@ -523,3 +523,9 @@
 .source_input_label {
     margin: 0 auto;
 }
+#previous_tasks {
+    display: inline-block;
+}
+.previous_task {
+    float: none !important;
+}

@@ -194,6 +194,9 @@ function setInfoDiv(comid) {
         if (isNaN(val)) {
             val = v;
         }
+        else{
+            val = val.toFixed(4);
+        }
         data[k] = val;
     });
     if (catchmentInfoTable) {

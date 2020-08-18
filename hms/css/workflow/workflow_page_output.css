@@ -119,3 +119,11 @@
 #output_export button {
     font-size: 12px;
 }
+
+.tabulator-col {
+    height: auto !important;
+}
+
+.tabulator-col-title {
+    white-space: normal !important;
+}
