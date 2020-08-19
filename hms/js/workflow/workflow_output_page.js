@@ -453,9 +453,9 @@ function toggleSaveButtons(hide) {
 
 function exportAllDataToCSV() {
     var fileName = "hms_catchment_data_" + jobID + ".csv";
-    var metadata = "";
+    // var metadata = "";
     var dataRows = [];
-    var columns = "Date,ComID";
+    var columns = "Date(GMT),ComID";
     var first = true;
     var firstCOMID = true;
     var i = 0;
@@ -467,15 +467,15 @@ function exportAllDataToCSV() {
         // each dataset
         $.each(u, function (k, v) {
             if(firstCOMID) {
-                if (v.metadata["column_2"]) {
-                    columns += "," + k + " (" + v.metadata["column_2"] + ")";
+                if (v.metadata["units"]) {
+                    columns += "," + k + " (" + v.metadata["units"] + ")";
                 } else {
                     columns += "," + k;
                 }
             }
-            $.each(v.metadata, function (l, w) {
-                metadata += k + "_" + l + "," + w + "\n";
-            });
+            // $.each(v.metadata, function (l, w) {
+            //     metadata += j + "," + k + "," + l + "," + w + "\n";
+            // });
             if (first) {
                 $.each(v.data, function (m, x) {
                     dataRows[i + i0] = m + "," + comid + "," + x;
@@ -496,9 +496,18 @@ function exportAllDataToCSV() {
         firstCOMID = false;
         i0 += i_max;
     });
+
+    var metadata = jobData;
+    $.each(jobData.data, function (j, u) {
+        $.each(u, function (k, v) {
+            metadata.data[j][k].data = undefined;
+        });
+    });
+    var metadata_name = "hms_catchment_metadata_" + jobID + ".json";
+    exportDataAsJSON(metadata_name, metadata);
+
     var data = dataRows.join("\n");
-    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
-    // TODO: Add table to csv output.
+    var csvFinal = columns + "\n" + data;// + "\n\nMetadata\n" + metadata;
     var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
     var pom = document.createElement('a');
     pom.setAttribute('href', dataStr);
@@ -516,20 +525,19 @@ function exportAllDataToCSV() {
 
 function exportCatchmentDataToCSV() {
     var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".csv";
-    var metadata = "";
     var dataRows = [];
-    var columns = "Date,ComID";
+    var columns = "Date(GMT),ComID";
     var first = true;
     var i = 0;
     $.each(jobData.data[selectedCatchment], function (k, v) {
-        if (v.metadata["column_2"]) {
-            columns += "," + k + " (" + v.metadata["column_2"] + ")";
+        if (v.metadata["units"]) {
+            columns += "," + k + " (" + v.metadata["units"] + ")";
         } else {
             columns += "," + k;
         }
-        $.each(v.metadata, function (l, w) {
-            metadata += k + "_" + l + "," + w + "\n";
-        });
+        // $.each(v.metadata, function (l, w) {
+        //     metadata += k + "_" + l + "," + w + "\n";
+        // });
         if (first) {
             $.each(v.data, function (m, x) {
                 dataRows[i] = m + "," + selectedCatchment + "," + x;
@@ -544,8 +552,17 @@ function exportCatchmentDataToCSV() {
         i = 0;
         first = false;
     });
+
+    var metadata = jobData.data[selectedCatchment];
+    $.each(metadata, function (j, u) {
+        metadata[j].data = undefined;
+    });
+    metadata.data = undefined;
+    var metadata_name = "hms_catchment_metadata_" + selectedCatchment + "_" + jobID + ".json";
+    exportDataAsJSON(metadata_name, metadata);
+
     var data = dataRows.join("\n");
-    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+    var csvFinal = columns + "\n" + data; // + "\n\nMetadata\n" + metadata;
     var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
     var pom = document.createElement('a');
     pom.setAttribute('href', dataStr);
@@ -594,3 +611,17 @@ function exportCatchmentDataToJSON() {
     }
 }
 
+function exportDataAsJSON(name, output){
+    var pom = document.createElement('a');
+    var data = encodeURIComponent(JSON.stringify(output));
+    pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + data);
+    pom.setAttribute('download', name);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+}
