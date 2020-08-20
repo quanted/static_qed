@@ -906,6 +906,6 @@ function deleteTaskFromCookie(id){
     var date = new Date();
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
-    var taskIDs = validIDs.join() + "," + current;
+    var taskIDs = validIDs.join();
     document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
 }
