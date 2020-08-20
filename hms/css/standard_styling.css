@@ -391,6 +391,8 @@
 
 #previous_tasks_list {
     display: block !important;
+    margin: 0 auto !important;
+    position: absolute;
 }
 #previous_tasks_list * {
     width: fit-content;
