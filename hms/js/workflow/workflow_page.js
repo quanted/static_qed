@@ -840,7 +840,7 @@ function setDataRequestCookie(taskID){
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
     var timestamp = new Date();
-    taskID = taskID + ":" + timestamp;
+    taskID = taskID + ":" + timestamp.getTime();
     var url = window.location.href;
     var current = getCookie(url);
     current = pruneCookieTasks(current);
