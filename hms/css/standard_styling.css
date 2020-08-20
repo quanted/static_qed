@@ -395,7 +395,7 @@
 #previous_tasks_list * {
     width: fit-content;
     margin: 0 auto !important;
-    display: block !important;
+    /*display: block !important;*/
 }
 
 .input_disclaimer {

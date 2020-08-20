@@ -801,18 +801,33 @@ function getEPAWatersData(url, params, hucType) {
 function loadCookies(){
     var url = window.location.href;
     var cookie = getCookie(url);
+    cookie = pruneCookieTasks(cookie);
     var ids = cookie.split(",");
     if( ids.length > 1){
         $("#previous_tasks").show();
         var list = $('#previous_tasks_list')[0];
         ids.forEach(function(id){
             if(id !== "") {
-                var ele = document.createElement("li");
-                ele.innerText = id;
-                ele.className = "previous_task";
-                ele.onclick = function () {
-                    getPreviousDataFromID(id);
+                var id_time = id.split(':');
+
+                var eleID = document.createElement("span");
+                eleID.innerText = id_time[0];
+                eleID.className = "previous_task_id";
+                eleID.setAttribute("title", "Task ID");
+                eleID.onclick = function () {
+                    getPreviousDataFromID(id_time[0]);
                 };
+
+                var eleT = document.createElement("span");
+                var d = new Date(parseInt(id_time[1]));
+                eleT.innerText = d.toLocaleString();
+                eleT.className = "previous_task_time";
+                eleT.setAttribute("title", "Task Timestamp");
+
+                var ele = document.createElement("li");
+                ele.className = "previous_task";
+                ele.appendChild(eleID);
+                ele.appendChild(eleT);
                 list.appendChild(ele);
             }
         });
@@ -824,8 +839,11 @@ function setDataRequestCookie(taskID){
     var date = new Date();
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
+    var timestamp = new Date();
+    taskID = taskID + ":" + timestamp;
     var url = window.location.href;
     var current = getCookie(url);
+    current = pruneCookieTasks(current);
     var taskIDs = taskID + "," + current;
     document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
 }
@@ -844,4 +862,27 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function pruneCookieTasks(currentTasks){
+    var IDs = currentTasks.split(',');
+    var taskIDs = "";
+    var now = new Date();
+    now.setDate(now.getDate() - 1);
+    now = now.getTime();
+    $.each(IDs, function(k, v){
+        if(v !== "") {
+            var timestamp = new Date();
+            if (v.includes(":")) {
+                var id_t = v.split(':');
+                timestamp.setTime(parseInt(id_t[1]));
+                if (timestamp.getTime() > now) {
+                    taskIDs = taskIDs + "," + v;
+                }
+            } else {
+                taskIDs = taskIDs + "," + v + ":" + timestamp.getTime();
+            }
+        }
+    });
+    return taskIDs;
 }

@@ -526,6 +526,10 @@
 #previous_tasks {
     display: inline-block;
 }
-.previous_task {
-    float: none !important;
+.previous_task_id {
+    text-decoration: underline;
+    padding-left: 25px;
+}
+.previous_task_time {
+    float: left;
 }
