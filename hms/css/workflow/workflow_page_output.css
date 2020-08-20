@@ -122,8 +122,15 @@
 
 .tabulator-col {
     height: auto !important;
+    text-align: center !important;
+    border-right: none !important;
 }
 
 .tabulator-col-title {
     white-space: normal !important;
+}
+
+.tabulator-cell {
+    text-align: center !important;
+    border-right: none !important;
 }
