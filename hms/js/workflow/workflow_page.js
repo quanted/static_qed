@@ -416,6 +416,7 @@ function getDataPolling() {
                 console.log("Data request error...");
                 console.log(errorThrown);
                 toggleLoader(false, "Error retrieving data for task ID: " + jobID);
+                deleteTaskFromCookie(jobID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -885,4 +886,26 @@ function pruneCookieTasks(currentTasks){
         }
     });
     return taskIDs;
+}
+
+function deleteTaskFromCookie(id){
+    var url = window.location.href;
+    var current = getCookie(url);
+    current = pruneCookieTasks(current);
+    var IDs = current.split(',');
+    var validIDs = [];
+    $.each(IDs, function(k, v){
+        if(v.includes(":")){
+            var i = v.split(':');
+            if(i[0] !== id){
+                validIDs.push(v);
+            }
+        }
+    });
+    var daysToExpire = 1;
+    var date = new Date();
+    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+    var expires = "expires=" + date.toUTCString();
+    var taskIDs = validIDs.join() + "," + current;
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
 }
