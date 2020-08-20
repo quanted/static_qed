@@ -497,7 +497,7 @@ function exportAllDataToCSV() {
         i0 += i_max;
     });
 
-    var metadata = jobData;
+    var metadata = JSON.parse(JSON.stringify(jobData));
     $.each(jobData.data, function (j, u) {
         $.each(u, function (k, v) {
             metadata.data[j][k].data = undefined;
@@ -553,7 +553,7 @@ function exportCatchmentDataToCSV() {
         first = false;
     });
 
-    var metadata = jobData.data[selectedCatchment];
+    var metadata = JSON.parse(JSON.stringify(jobData.data[selectedCatchment]));
     $.each(metadata, function (j, u) {
         metadata[j].data = undefined;
     });
