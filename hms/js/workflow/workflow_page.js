@@ -324,18 +324,14 @@ function getParameters() {
         precip = inputJSON.precipSource;
     }
     var requestJson = {
-        "source": "nldas",
+        "source": "streamflow",
         "aggregation": false,
         "runoffsource": inputJSON.runoffSource,
         "streamhydrology": inputJSON.streamAlgorithm,
         "datetimespan": {
             "startdate": inputJSON.startDate,
             "enddate": inputJSON.endDate,
-        },
-        "geometry": {
-            "geometryMetadata": {
-                "precipSource": precip,
-            }
+        }
         },
         "temporalresolution": inputJSON.timestep,
         "outputformat": "json"
@@ -346,8 +342,11 @@ function getParameters() {
     else {
         requestJson.geometry["comID"] = inputJSON.spatialInput;
     }
-
-
+    if (requestJson.runoffsource === "curvenumber"){
+        requestJson.geometry["geometryMetadata"] = {
+            "precipSource": precip
+        }
+    }
     return requestJson;
 }
 
@@ -407,6 +406,7 @@ function getDataPolling() {
                 else if (data.status === "FAILURE") {
                     toggleLoader(false, "Task " + jobID + " encountered an error.");
                     console.log("Task failed to complete.");
+                    deleteTaskFromCookie(jobID);
                 }
                 else {
                     setTimeout(getDataPolling, 10000);
@@ -416,7 +416,6 @@ function getDataPolling() {
                 console.log("Data request error...");
                 console.log(errorThrown);
                 toggleLoader(false, "Error retrieving data for task ID: " + jobID);
-                deleteTaskFromCookie(jobID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
