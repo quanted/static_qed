@@ -331,7 +331,8 @@ function getParameters() {
         "datetimespan": {
             "startdate": inputJSON.startDate,
             "enddate": inputJSON.endDate,
-        }
+        },
+        "geometry": {
         },
         "temporalresolution": inputJSON.timestep,
         "outputformat": "json"
