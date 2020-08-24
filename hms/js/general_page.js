@@ -176,11 +176,11 @@ function getDataPolling() {
                 else if (data.status === "FAILURE") {
                     toggleLoader(false, "Task " + taskID + " encountered an error.");
                     console.log("Task failed to complete.");
+                    deleteTaskFromCookie(jobID);
                 }
                 else {
                     setTimeout(getDataPolling, 5000);
                 }
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
@@ -452,17 +452,33 @@ function setTabindex(){
 function loadCookies(){
     var url = window.location.href;
     var cookie = getCookie(url);
+    cookie = pruneCookieTasks(cookie);
     var ids = cookie.split(",");
     if( ids.length > 1){
         $("#previous_tasks").show();
         var list = $('#previous_tasks_list')[0];
         ids.forEach(function(id){
             if(id !== "") {
-                var ele = document.createElement("li");
-                ele.innerText = id;
-                ele.onclick = function () {
-                    getPreviousDataFromID(id);
+                var id_time = id.split(':');
+
+                var eleID = document.createElement("span");
+                eleID.innerText = id_time[0];
+                eleID.className = "previous_task_id";
+                eleID.setAttribute("title", "Task ID");
+                eleID.onclick = function () {
+                    getPreviousDataFromID(id_time[0]);
                 };
+
+                var eleT = document.createElement("span");
+                var d = new Date(parseInt(id_time[1]));
+                eleT.innerText = d.toLocaleString();
+                eleT.className = "previous_task_time";
+                eleT.setAttribute("title", "Task Timestamp");
+
+                var ele = document.createElement("li");
+                ele.className = "previous_task";
+                ele.appendChild(eleID);
+                ele.appendChild(eleT);
                 list.appendChild(ele);
             }
         });
@@ -474,24 +490,72 @@ function setDataRequestCookie(taskID){
     var date = new Date();
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
+    var timestamp = new Date();
+    taskID = taskID + ":" + timestamp.getTime();
     var url = window.location.href;
     var current = getCookie(url);
+    current = pruneCookieTasks(current);
     var taskIDs = taskID + "," + current;
     document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
 }
 
 function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+    return "";
+}
+
+function pruneCookieTasks(currentTasks){
+    var IDs = currentTasks.split(',');
+    var taskIDs = "";
+    var now = new Date();
+    now.setDate(now.getDate() - 1);
+    now = now.getTime();
+    $.each(IDs, function(k, v){
+        if(v !== "") {
+            var timestamp = new Date();
+            if (v.includes(":")) {
+                var id_t = v.split(':');
+                timestamp.setTime(parseInt(id_t[1]));
+                if (timestamp.getTime() > now) {
+                    taskIDs = taskIDs + "," + v;
+                }
+            } else {
+                taskIDs = taskIDs + "," + v + ":" + timestamp.getTime();
+            }
+        }
+    });
+    return taskIDs;
+}
+
+function deleteTaskFromCookie(id){
+    var url = window.location.href;
+    var current = getCookie(url);
+    current = pruneCookieTasks(current);
+    var IDs = current.split(',');
+    var validIDs = [];
+    $.each(IDs, function(k, v){
+        if(v.includes(":")){
+            var i = v.split(':');
+            if(i[0] !== id){
+                validIDs.push(v);
+            }
+        }
+    });
+    var daysToExpire = 1;
+    var date = new Date();
+    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+    var expires = "expires=" + date.toUTCString();
+    var taskIDs = validIDs.join();
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
 }

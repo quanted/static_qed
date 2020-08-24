@@ -389,13 +389,15 @@
     text-align: center !important;
 }
 
-#previous_tasks_list {
-    display: block !important;
+#previous_tasks {
+    display: inline-block;
 }
-#previous_tasks_list * {
-    width: fit-content;
-    margin: 0 auto !important;
-    display: block !important;
+.previous_task_id {
+    text-decoration: underline;
+    padding-left: 25px;
+}
+.previous_task_time {
+    float: left;
 }
 
 .input_disclaimer {
