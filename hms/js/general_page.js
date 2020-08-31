@@ -408,8 +408,8 @@ function exportDataToCSV() {
     var columns = "Date";
     var c_index = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
     $.each(c_index, function (v) {
-        if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v].toLowerCase() !== "Date") {
-            if(componentData.metadata["column" + v + "_units"]){
+        if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v].toLowerCase() !== "date") {
+            if(componentData.metadata["column_" + v + "_units"]){
                 columns += "," + componentData.metadata["column_" + v] + "(" + componentData.metadata["column" + v + "_units"] + ")";
             }
             else {
