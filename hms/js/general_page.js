@@ -410,7 +410,7 @@ function exportDataToCSV() {
     $.each(c_index, function (v) {
         if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v].toLowerCase() !== "date") {
             if(componentData.metadata["column_" + v + "_units"]){
-                columns += "," + componentData.metadata["column_" + v] + "(" + componentData.metadata["column" + v + "_units"] + ")";
+                columns += "," + componentData.metadata["column_" + v] + "(" + componentData.metadata["column_" + v + "_units"] + ")";
             }
             else {
                 columns += "," + componentData.metadata["column_" + v];
