@@ -408,8 +408,13 @@ function exportDataToCSV() {
     var columns = "Date";
     var c_index = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
     $.each(c_index, function (v) {
-        if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v] !== "Date") {
-            columns += "," + componentData.metadata["column_" + v];
+        if (componentData.metadata["column_" + v] && componentData.metadata["column_" + v].toLowerCase() !== "Date") {
+            if(componentData.metadata["column" + v + "_units"]){
+                columns += "," + componentData.metadata["column_" + v] + "(" + componentData.metadata["column" + v + "_units"] + ")";
+            }
+            else {
+                columns += "," + componentData.metadata["column_" + v];
+            }
         }
     });
     var data = "";
@@ -420,11 +425,30 @@ function exportDataToCSV() {
         });
         data += "\n";
     });
-    var csvFinal = columns + "\n" + data + "\n\nMetadata\n" + metadata;
+
+    var metadata_name = fileName + "_metadata.json";
+    exportDataAsJSON(metadata_name, componentData.metadata);
+
+    var csvFinal = columns + "\n" + data;
     var dataStr = 'data:data:text/csv;charset=utf-8,' + encodeURIComponent(csvFinal);
     var pom = document.createElement('a');
     pom.setAttribute('href', dataStr);
     pom.setAttribute('download', fileName + '.csv');
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    }
+    else {
+        pom.click();
+    }
+}
+
+function exportDataAsJSON(name, output){
+    var pom = document.createElement('a');
+    var data = encodeURIComponent(JSON.stringify(output));
+    pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + data);
+    pom.setAttribute('download', name);
     if (document.createEvent) {
         var event = document.createEvent('MouseEvents');
         event.initEvent('click', true, true);
