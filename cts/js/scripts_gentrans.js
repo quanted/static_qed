@@ -8,10 +8,12 @@
 $(document).ready(function() {
 
     var disablePhotolysis = false;
+    var disableBiotrans = false;
 
-    // if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
-    //     disablePhotolysis = true;
-    // }
+    if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod") {
+        // disablePhotolysis = true;
+        disableBiotrans = true;
+    }
 
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
@@ -46,7 +48,7 @@ $(document).ready(function() {
 
     // disable checkboxes and submit button
     // $('#cts_reaction_libs input[type="checkbox"], input.submit').prop('disabled', true);
-    $('#cts_reaction_libs input[type="checkbox"]').prop('disabled', true);
+    $('#cts_reaction_libs input[type="checkbox"], #id_biotrans_libs').prop('disabled', true);
 
     brightenBorder($('#cts_reaction_paths')); // brighten first table for user input
 
@@ -81,6 +83,10 @@ $(document).ready(function() {
             $('#id_mamm_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
             if (!disablePhotolysis) {
                 $('#id_photolysis').prop({'checked': false, 'disabled':false}).trigger('change');
+            }
+            if (!disableBiotrans) {
+                $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
+                $('#id_biotrans_libs').prop({'disabled':false}).trigger('change');   
             }
             brightenBorder($('#cts_reaction_libs'));
         }
@@ -204,21 +210,25 @@ $(document).ready(function() {
 
     // Enable submit only if a reaction library is selected
     $('#cts_reaction_libs input:checkbox').on("change", function() {
-
-        // Mammalian metabolism should not run with any other reaction library..
-        // if (this.
         var mamm_meta_checked = $('#id_mamm_metabolism:checked').length > 0;
         var areduct_checked = $('#id_abiotic_reduction:checked').length > 0;
         var ahydro_checked = $('#id_abiotic_hydrolysis:checked').length > 0;
         var photolysis_checked = $('#id_photolysis:checked').length > 0;
+        var biotrans_checked = $('#id_biotrans_metabolism:checked').length > 0;
         if (mamm_meta_checked && (areduct_checked || ahydro_checked || photolysis_checked)) {
-            $('#id_mamm_metabolism').prop({'checked': false});
             alert("Mammalian metabolism reaction library should not run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
         }
         else if (photolysis_checked && (areduct_checked || ahydro_checked || mamm_meta_checked)) {
-            $('#id_photolysis').prop({'checked': false});
-            alert("Unranked direct photolysis reaction library should not be run with additional reaction libraries");
+            alert("Unranked direct photolysis reaction library should not run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
         }
+
+        if (biotrans_checked && (mamm_meta_checked || areduct_checked || ahydro_checked || photolysis_checked)) {
+            alert("Biotransformer reaction library should not run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);   
+        }
+        
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
             $('input.submit').addClass('brightBorders');
@@ -227,7 +237,7 @@ $(document).ready(function() {
             $('input.submit').removeClass('brightBorders');
         }
 
-        if (photolysis_checked) {
+        if (photolysis_checked || biotrans_checked) {
             // limits generation to 2 for photolysis library:
             $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', true);
         }
@@ -252,6 +262,8 @@ function clearReactionLib() {
     $('#id_abiotic_reduction').prop({'checked': false, 'disabled':true});  //.trigger('change');
     $('#id_mamm_metabolism').prop({'checked': false, 'disabled':true});  //.trigger('change');
     $('#id_photolysis').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':true});
+    $('#id_biotrans_libs').prop({'disabled':true});
 }
 
 
