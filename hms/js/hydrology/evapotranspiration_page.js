@@ -98,6 +98,9 @@ function getParameters() {
             12:$("#id_airtemps_11").val()
         };
     }
+    else if ($("#id_algorithm").val() === "gldas"){
+        requestJson["source"] = "gldas";
+    }
     if($('#id_area_of_interest').val() === "Catchment Centroid"){
         delete requestJson["geometry"]["point"];
         requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
