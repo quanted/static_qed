@@ -98,6 +98,9 @@ function getParameters() {
             12:$("#id_airtemps_11").val()
         };
     }
+    else if ($("#id_algorithm").val() === "gldas"){
+        requestJson["source"] = "gldas";
+    }
     if($('#id_area_of_interest').val() === "Catchment Centroid"){
         delete requestJson["geometry"]["point"];
         requestJson["geometry"]["comid"] = $("#id_catchment_comid").val()
@@ -214,11 +217,13 @@ function toggleParameters() {
 			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
 			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
 			$("#id_temporalresolution").val('daily');
+			$("#id_source").val("nldas");
 			break;
 		case "hargreaves":
 			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
 			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
 			$("#id_temporalresolution").val('daily');
+			$("#id_source").val("nldas");
 			break;
         case "priestlytaylor":
         case "grangergray":
@@ -228,6 +233,7 @@ function toggleParameters() {
 			$('#id_albedo').parent().parent().show();
 			$("#id_temporalresolution option[value='hourly']").attr('disabled', 'disabled');
 			$("#id_temporalresolution option[value='3hourly']").attr('disabled', 'disabled');
+			$("#id_source").val("nldas");
 			$("#id_temporalresolution").val('daily');
 			break;
         case "mcjannett":
