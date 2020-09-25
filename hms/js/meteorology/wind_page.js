@@ -2,10 +2,10 @@ var baseUrl = "/hms/rest/api/v3/meteorology/wind/";
 
 
 $(function () {
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     $('#id_stationID').parent().parent().hide();
     $('#id_source').on('change', updateSourceSelection);
     $('#id_area_of_interest').on('change', updateAoISelection);

@@ -2,10 +2,10 @@
 var baseUrl = "hms/rest/api/v3/hydrology/evapotranspiration/";
 
 $(function () {
-	$('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+	// $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     // form initialization
     initializeInputForm();
 

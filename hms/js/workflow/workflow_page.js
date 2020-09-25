@@ -36,10 +36,10 @@ $(function () {
 
 function pageLoadStart() {
     $('#load_page').fadeOut(600);
-    $("#workflow_tabs").tabs({
-        active: 0,
-        disabled: [2]
-    });
+    // $("#workflow_tabs").tabs({
+    //     active: 0,
+    //     disabled: [2]
+    // });
     browserCheck();
     return false;
 }
@@ -460,6 +460,29 @@ var currentSelectedGeometry = null;
 var mapSelectionInfo = L.control();
 var addPopup = null;
 
+
+function get_nhd_layer_queries(bbox){
+    let base_url = nhd_plus_layers["url"];
+    let huc_layers = nhd_plus_layers["layers"];
+    let layer_queries = {};
+    for(let [key, value] of Object.entries(huc_layers)){
+        let q = "dynamicLayers=" + encodeURIComponent(JSON.stringify(value["dynamicLayers"])) +
+            "&dpi=" + value["dpi"] +
+            "&transparent=" + value["transparent"] +
+            "&format=" + value["format"] +
+            "&layers=" + value["layers"] +
+            "&bbox=" + bbox["_southWest"]["lng"] + + "," + bbox["_southWest"]["lat"] + "," + bbox["_northEast"]["lng"] + "," + bbox["_northEast"]["lat"]  +
+            "&bboxSR=900913" +
+            "&imageSR=" + value["imageSR"] +          //900913
+            "&size=" + value["size"] +
+            "&_ts=" + value["_ts"] +
+            "&f=" + value["f"];
+        layer_queries[key] = base_url + q;
+    }
+    return layer_queries;
+}
+
+
 // Leaflet map functions //
 function openHucMap() {
     $('#huc_map_block').fadeIn("faster");
@@ -473,6 +496,11 @@ function openHucMap() {
                 hucMap.addLayer(huc_basemaps[huc]);
             }
         }
+        // let bbox = hucMap.getBounds();
+        // let images_urls = get_nhd_layer_queries(bbox);
+        // for(let [key, value] of Object.entries(images_urls)){
+        //     L.imageOverlay(value, bbox).addTo(hucMap);
+        // }
         hucMap.on("click", function (e) {
             // Check if click originated from mapSelectionInfo window
             if (window.navigator.userAgent.indexOf("Chrome") > -1) {
@@ -798,9 +826,11 @@ function getEPAWatersData(url, params, hucType) {
         }
     });
 }
-
 function loadCookies(){
-    var url = window.location.href;
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var cookie = getCookie(url);
     cookie = pruneCookieTasks(cookie);
     var ids = cookie.split(",");
@@ -841,12 +871,26 @@ function setDataRequestCookie(taskID){
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
     var timestamp = new Date();
-    taskID = taskID + ":" + timestamp.getTime();
-    var url = window.location.href;
+    var taskIDs = taskID + ":" + timestamp.getTime();
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var current = getCookie(url);
     current = pruneCookieTasks(current);
-    var taskIDs = taskID + "," + current;
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+    var ids = "";
+    $.each(current.split(','), function(index, value){
+        var id = value.split(':')[0];
+        if(id !== taskID && id !== ""){
+            ids += "," + value;
+        }
+        else if(id === taskID){
+            taskIDs = value;
+        }
+    });
+
+    taskIDs = taskIDs + ids;
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
 }
 
 function getCookie(cname) {
@@ -889,7 +933,10 @@ function pruneCookieTasks(currentTasks){
 }
 
 function deleteTaskFromCookie(id){
-    var url = window.location.href;
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var current = getCookie(url);
     current = pruneCookieTasks(current);
     var IDs = current.split(',');
@@ -907,5 +954,5 @@ function deleteTaskFromCookie(id){
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
     var taskIDs = validIDs.join();
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
 }
