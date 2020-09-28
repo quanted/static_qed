@@ -2,9 +2,9 @@
 
 #output_center_top {
     display: flex;
-    margin: 0 -45px;
     padding: 5px;
     height: 300px;
+    width: 100%;
 }
 
 #output_map {
@@ -57,6 +57,8 @@
 #output_graph_div {
     width: 100%;
     float: left;
+    margin-top: 15px;
+    margin-bottom: 25px;
     /*margin-left: -45px;*/
 }
 
