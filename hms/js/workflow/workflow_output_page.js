@@ -1,5 +1,6 @@
 var jobData = null;
 var jobID = null;
+var taskID = null;
 var catchmentData = null;
 var catchmentInfo = null;
 var catchmentMap = null;
@@ -12,11 +13,17 @@ var catchmentDataTable = null;
 var selectedRow = null;
 var selectedCatchment = null;
 
+
+function setOutputUI()
+{
+    setOutputPage();
+}
+
 function setOutputTitle() {
-    if (jobID === null && testData) {
-        jobID = "TESTTASK1234567890";
+    if (taskID === null && testData) {
+        taskID = "TESTTASK1234567890";
     }
-    var title = "Data for Workflow job: " + jobID.toString();
+    var title = "Data for Workflow job: " + taskID.toString();
     var output_title = $("#output_title");
     output_title.html("<h3>" + title + "</h3>");
 }
@@ -452,7 +459,7 @@ function toggleSaveButtons(hide) {
 }
 
 function exportAllDataToCSV() {
-    var fileName = "hms_catchment_data_" + jobID + ".csv";
+    var fileName = "hms_catchment_data_" + taskID + ".csv";
     // var metadata = "";
     var dataRows = [];
     var columns = "Date(GMT),ComID";
@@ -503,7 +510,7 @@ function exportAllDataToCSV() {
             metadata.data[j][k].data = undefined;
         });
     });
-    var metadata_name = "hms_catchment_metadata_" + jobID + ".json";
+    var metadata_name = "hms_catchment_metadata_" + taskID + ".json";
     exportDataAsJSON(metadata_name, metadata);
 
     var data = dataRows.join("\n");
@@ -524,7 +531,7 @@ function exportAllDataToCSV() {
 }
 
 function exportCatchmentDataToCSV() {
-    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".csv";
+    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + taskID + ".csv";
     var dataRows = [];
     var columns = "Date(GMT),ComID";
     var first = true;
@@ -558,7 +565,7 @@ function exportCatchmentDataToCSV() {
         metadata[j].data = undefined;
     });
     metadata.data = undefined;
-    var metadata_name = "hms_catchment_metadata_" + selectedCatchment + "_" + jobID + ".json";
+    var metadata_name = "hms_catchment_metadata_" + selectedCatchment + "_" + taskID + ".json";
     exportDataAsJSON(metadata_name, metadata);
 
     var data = dataRows.join("\n");
@@ -579,7 +586,7 @@ function exportCatchmentDataToCSV() {
 }
 
 function exportAllDataToJSON() {
-    var fileName = "hms_data_" + jobID + ".json";
+    var fileName = "hms_data_" + taskID + ".json";
     var pom = document.createElement('a');
     var data = encodeURIComponent(JSON.stringify(jobData));
     pom.setAttribute('href', 'data:data:text/plain;charset=utf-8,' + data);
@@ -595,7 +602,7 @@ function exportAllDataToJSON() {
 }
 
 function exportCatchmentDataToJSON() {
-    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + jobID + ".json";
+    var fileName = "hms_catchment_data_" + selectedCatchment + "_" + taskID + ".json";
     var d = jobData.data[selectedCatchment];
     var pom = document.createElement('a');
     var data = encodeURIComponent(JSON.stringify(d));
