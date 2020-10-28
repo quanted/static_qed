@@ -9,9 +9,9 @@ var dyGraph;
 google.charts.load('current', {'packages': ['table', 'corechart']});
 
 $(function () {
-    $("#component_tabs").tabs({
-        disabled: [2]
-    });
+    // $("#component_tabs").tabs({
+    //     disabled: [2]
+    // });
 
     var datepicker_options = {
         changeMonth: true,
@@ -27,16 +27,33 @@ $(function () {
 
     // $('.submit_data_request').on('click', getTestData);
     $('.submit_data_request').on('click', getData2);
-    setTimeout(setTabindex, 100);
     setTimeout(pageLoad, 400);
+    setTimeout(pageSpecificLoad, 500);
     setTimeout(loadCookies, 400);
     setTimeout(setSourceConfig, 100);
+    setTimeout(pageSpecificLoad, 100);
 });
 
 function pageLoad() {
     $('#load_page').fadeToggle(600);
     browserCheck();
     return false;
+}
+
+function pageSpecificLoad(){
+    var current = window.location.href;
+    if(current.includes("output_data")){
+        taskID = $("#task_id").html();
+        if(taskID === "None"){
+            toggleLoader(false, "Unable to find your data request task ID. Please select a valid task ID or submit a new request.");
+            $("#loader_box").hide();
+        }
+        else {
+            console.log("Data request success. Task ID: " + taskID);
+            toggleLoader(false, "Processing data request. Task ID: " + taskID);
+            setTimeout(getDataPolling, 500);
+        }
+    }
 }
 
 function setSourceConfig(){
@@ -98,8 +115,6 @@ function getData() {
             console.log("Data request success");
             componentData = data;
             setOutputUI();
-            // setMetadata();
-            // setDataGraph();
             $('#component_tabs').tabs("enable", 2);
             $('#component_tabs').tabs("option", "active", 2);
             toggleLoader(false,"");
@@ -129,17 +144,20 @@ function getData2() {
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
             taskID = data.job_id;
-            setDataRequestCookie(taskID);
-            console.log("Data request success. Task ID: " + taskID);
-            toggleLoader(false, "Processing data request. Task ID: " + taskID);
-            setTimeout(getDataPolling, 5000);
-            $('#component_tabs').tabs("enable", 2);
-            $('#component_tabs').tabs("option", "active", 2);
+            var model = $("#model_name").html();
+            var submodule = $("#submodule_name").html();
+            window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
+            // setDataRequestCookie(taskID);
+            // console.log("Data request success. Task ID: " + taskID);
+            // toggleLoader(false, "Processing data request. Task ID: " + taskID);
+            // setTimeout(getDataPolling, 5000);
+            // $('#component_tabs').tabs("enable", 2);
+            // $('#component_tabs').tabs("option", "active", 2);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
             console.log(errorThrown);
-            toggleLoader(true, "");
+            // toggleLoader(true, "");
         },
         complete: function (jqXHR, textStatus) {
             console.log("Data request complete");
@@ -166,6 +184,7 @@ function getDataPolling() {
                         componentData = data.data;
                     }
                     console.log("Task successfully completed and data was retrieved.");
+                    setDataRequestCookie(taskID);
                     setOutputUI();
                     toggleLoader(true, "");
                     setTitle();
@@ -200,27 +219,17 @@ function getDataPolling() {
 
 function getPreviousData() {
     taskID = $('#previous_task_id').val();
-    setTimeout(function () {
-        toggleLoader(false, "Retrieving data for task ID: " + taskID);
-    });
-    counter = 250;
-    getDataPolling();
-    toggleDownloadButtons(true);
-    $('#component_tabs').tabs("enable", 2);
-    $('#component_tabs').tabs("option", "active", 2);
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
     return false;
 }
 
 function getPreviousDataFromID(id){
     taskID = id;
-    setTimeout(function () {
-        toggleLoader(false, "Retrieving data for task ID: " + taskID);
-    });
-    counter = 250;
-    getDataPolling();
-    toggleDownloadButtons(true);
-    $('#component_tabs').tabs("enable", 2);
-    $('#component_tabs').tabs("option", "active", 2);
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
     return false;
 }
 
@@ -358,10 +367,6 @@ function setDataGraph2() {
     dyGraph = new Dygraph(graphEle, dataCSV, graphOptions);
 }
 
-// function toggleLoader() {
-//     $('.submit_data_request_loader').toggleClass("loading_icon");
-//     $('.submit_data_request').toggleClass("hidden");
-// }
 
 function toggleLoader(hide, msg) {
     if (hide) {
@@ -462,22 +467,11 @@ function exportDataAsJSON(name, output){
     }
 }
 
-function setTabindex(){
-    $('.ui-tabs-tab').each(function() {
-        $(this).attr('tabindex', '0');
-    });
-
-    $('#main-content').attr('tabindex', '0');
-    $('#overview_tab_link').attr('tabindex', '0');
-    $('#data_request_link').attr('tabindex', '0');
-    $('#output_link').attr('tabindex', '0');
-    $('#data_retrieve_link').attr('tabindex', '0');
-    $('#algorithms_link').attr('tabindex', '0');
-
-}
-
 function loadCookies(){
-    var url = window.location.href;
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var cookie = getCookie(url);
     cookie = pruneCookieTasks(cookie);
     var ids = cookie.split(",");
@@ -518,12 +512,26 @@ function setDataRequestCookie(taskID){
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
     var timestamp = new Date();
-    taskID = taskID + ":" + timestamp.getTime();
-    var url = window.location.href;
+    var taskIDs = taskID + ":" + timestamp.getTime();
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var current = getCookie(url);
     current = pruneCookieTasks(current);
-    var taskIDs = taskID + "," + current;
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+    var ids = "";
+    $.each(current.split(','), function(index, value){
+        var id = value.split(':')[0];
+        if(id !== taskID && id !== ""){
+            ids += "," + value;
+        }
+        else if(id === taskID){
+            taskIDs = value;
+        }
+    });
+
+    taskIDs = taskIDs + ids;
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
 }
 
 function getCookie(cname) {
@@ -566,7 +574,10 @@ function pruneCookieTasks(currentTasks){
 }
 
 function deleteTaskFromCookie(id){
-    var url = window.location.href;
+    var url = window.location.href.split('/');
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    url = url[2] + "/hms/" + model + "/" + submodule;
     var current = getCookie(url);
     current = pruneCookieTasks(current);
     var IDs = current.split(',');
@@ -584,5 +595,5 @@ function deleteTaskFromCookie(id){
     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
     var expires = "expires=" + date.toUTCString();
     var taskIDs = validIDs.join();
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
+    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
 }

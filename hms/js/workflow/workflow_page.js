@@ -19,7 +19,7 @@ $(function () {
     $("#start_datepicker").datepicker(datepicker_options);
     $("#end_datepicker").datepicker(datepicker_options);
 
-    setTimeout(loadCookies, 400);
+    // setTimeout(loadCookies, 400);
 
     // Input window actions
     $("#spatial_input_button").click(toggleSpatialInputs);
@@ -35,11 +35,11 @@ $(function () {
 });
 
 function pageLoadStart() {
-    $('#load_page').fadeOut(600);
-    $("#workflow_tabs").tabs({
-        active: 0,
-        disabled: [2]
-    });
+    // $('#load_page').fadeOut(600);
+    // $("#workflow_tabs").tabs({
+    //     active: 0,
+    //     disabled: [2]
+    // });
     browserCheck();
     return false;
 }
@@ -363,13 +363,12 @@ function getData() {
         timeout: 0,
         contentType: "application/json",
         success: function (data, textStatus, jqXHR) {
+            taskID = data.job_id;
             jobID = data.job_id;
-            setDataRequestCookie(jobID);
-            console.log("Data request success. Task ID: " + jobID);
-            toggleLoader(false, "Processing data request. Task ID: " + jobID);
-            setTimeout(getDataPolling, 30000);
-            $('#workflow_tabs').tabs("enable", 2);
-            $('#workflow_tabs').tabs("option", "active", 2);
+            var model = $("#model_name").html();
+            var submodule = $("#submodule_name").html();
+            setDataRequestCookie(taskID);
+            window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log("Data request error...");
@@ -384,11 +383,12 @@ function getData() {
 
 function getDataPolling() {
     // counter = counter - 1;
-    var requestUrl = "hms/rest/api/v2/hms/data";
+    var url = $("#page_url").html();
+    var requestUrl = url + "/hms/rest/api/v2/hms/data";
     if (counter > 0) {
         $.ajax({
             type: "GET",
-            url: requestUrl + "?job_id=" + jobID,
+            url: requestUrl + "?job_id=" + taskID,
             accepts: "application/json",
             timeout: 0,
             contentType: "application/json",
@@ -401,13 +401,14 @@ function getDataPolling() {
                     }
                     setOutputPage();
                     console.log("Task successfully completed and data was retrieved.");
-                    // dyGraph.resize();
-                    // counter = 25;
+                    setOutputUI();
+                    toggleLoader(true, "");
+                    setTitle();
                 }
                 else if (data.status === "FAILURE") {
-                    toggleLoader(false, "Task " + jobID + " encountered an error.");
+                    toggleLoader(false, "Task " + taskID + " encountered an error.");
                     console.log("Task failed to complete.");
-                    deleteTaskFromCookie(jobID);
+                    deleteTaskFromCookie(taskID);
                 }
                 else {
                     setTimeout(getDataPolling, 10000);
@@ -416,7 +417,7 @@ function getDataPolling() {
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Data request error...");
                 console.log(errorThrown);
-                toggleLoader(false, "Error retrieving data for task ID: " + jobID);
+                toggleLoader(false, "Error retrieving data for task ID: " + taskID);
             },
             complete: function (jqXHR, textStatus) {
                 console.log("Data request complete");
@@ -430,26 +431,18 @@ function getDataPolling() {
 }
 
 function getPreviousData() {
-    jobID = $('#previous_task_id').val();
-    setTimeout(function () {
-        toggleLoader(false, "Retrieving data for task ID: " + jobID);
-    });
-    counter = 100;
-    getDataPolling();
-    $('#workflow_tabs').tabs("enable", 2);
-    $('#workflow_tabs').tabs("option", "active", 2);
+    taskID = $('#previous_task_id').val();
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
     return false;
 }
 
 function getPreviousDataFromID(id){
-    jobID = id;
-    setTimeout(function () {
-        toggleLoader(false, "Retrieving data for task ID: " + jobID);
-    });
-    counter = 250;
-    getDataPolling();
-    $('#workflow_tabs').tabs("enable", 2);
-    $('#workflow_tabs').tabs("option", "active", 2);
+    taskID = id;
+    var model = $("#model_name").html();
+    var submodule = $("#submodule_name").html();
+    window.location.href = "/hms/" + model + "/" + submodule + "/output_data/" + taskID + "/";
     return false;
 }
 
@@ -459,6 +452,29 @@ var layerLabels;
 var currentSelectedGeometry = null;
 var mapSelectionInfo = L.control();
 var addPopup = null;
+
+
+function get_nhd_layer_queries(bbox){
+    let base_url = nhd_plus_layers["url"];
+    let huc_layers = nhd_plus_layers["layers"];
+    let layer_queries = {};
+    for(let [key, value] of Object.entries(huc_layers)){
+        let q = "dynamicLayers=" + encodeURIComponent(JSON.stringify(value["dynamicLayers"])) +
+            "&dpi=" + value["dpi"] +
+            "&transparent=" + value["transparent"] +
+            "&format=" + value["format"] +
+            "&layers=" + value["layers"] +
+            "&bbox=" + bbox["_southWest"]["lng"] + + "," + bbox["_southWest"]["lat"] + "," + bbox["_northEast"]["lng"] + "," + bbox["_northEast"]["lat"]  +
+            "&bboxSR=900913" +
+            "&imageSR=" + value["imageSR"] +          //900913
+            "&size=" + value["size"] +
+            "&_ts=" + value["_ts"] +
+            "&f=" + value["f"];
+        layer_queries[key] = base_url + q;
+    }
+    return layer_queries;
+}
+
 
 // Leaflet map functions //
 function openHucMap() {
@@ -473,6 +489,11 @@ function openHucMap() {
                 hucMap.addLayer(huc_basemaps[huc]);
             }
         }
+        // let bbox = hucMap.getBounds();
+        // let images_urls = get_nhd_layer_queries(bbox);
+        // for(let [key, value] of Object.entries(images_urls)){
+        //     L.imageOverlay(value, bbox).addTo(hucMap);
+        // }
         hucMap.on("click", function (e) {
             // Check if click originated from mapSelectionInfo window
             if (window.navigator.userAgent.indexOf("Chrome") > -1) {
@@ -798,114 +819,134 @@ function getEPAWatersData(url, params, hucType) {
         }
     });
 }
-
-function loadCookies(){
-    var url = window.location.href;
-    var cookie = getCookie(url);
-    cookie = pruneCookieTasks(cookie);
-    var ids = cookie.split(",");
-    if( ids.length > 1){
-        $("#previous_tasks").show();
-        var list = $('#previous_tasks_list')[0];
-        ids.forEach(function(id){
-            if(id !== "") {
-                var id_time = id.split(':');
-
-                var eleID = document.createElement("span");
-                eleID.innerText = id_time[0];
-                eleID.className = "previous_task_id";
-                eleID.setAttribute("title", "Task ID");
-                eleID.onclick = function () {
-                    getPreviousDataFromID(id_time[0]);
-                };
-
-                var eleT = document.createElement("span");
-                var d = new Date(parseInt(id_time[1]));
-                eleT.innerText = d.toLocaleString();
-                eleT.className = "previous_task_time";
-                eleT.setAttribute("title", "Task Timestamp");
-
-                var ele = document.createElement("li");
-                ele.className = "previous_task";
-                ele.appendChild(eleID);
-                ele.appendChild(eleT);
-                list.appendChild(ele);
-            }
-        });
-    }
-}
-
-function setDataRequestCookie(taskID){
-    var daysToExpire = 1;
-    var date = new Date();
-    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
-    var expires = "expires=" + date.toUTCString();
-    var timestamp = new Date();
-    taskID = taskID + ":" + timestamp.getTime();
-    var url = window.location.href;
-    var current = getCookie(url);
-    current = pruneCookieTasks(current);
-    var taskIDs = taskID + "," + current;
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function pruneCookieTasks(currentTasks){
-    var IDs = currentTasks.split(',');
-    var taskIDs = "";
-    var now = new Date();
-    now.setDate(now.getDate() - 1);
-    now = now.getTime();
-    $.each(IDs, function(k, v){
-        if(v !== "") {
-            var timestamp = new Date();
-            if (v.includes(":")) {
-                var id_t = v.split(':');
-                timestamp.setTime(parseInt(id_t[1]));
-                if (timestamp.getTime() > now) {
-                    taskIDs = taskIDs + "," + v;
-                }
-            } else {
-                taskIDs = taskIDs + "," + v + ":" + timestamp.getTime();
-            }
-        }
-    });
-    return taskIDs;
-}
-
-function deleteTaskFromCookie(id){
-    var url = window.location.href;
-    var current = getCookie(url);
-    current = pruneCookieTasks(current);
-    var IDs = current.split(',');
-    var validIDs = [];
-    $.each(IDs, function(k, v){
-        if(v.includes(":")){
-            var i = v.split(':');
-            if(i[0] !== id){
-                validIDs.push(v);
-            }
-        }
-    });
-    var daysToExpire = 1;
-    var date = new Date();
-    date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
-    var expires = "expires=" + date.toUTCString();
-    var taskIDs = validIDs.join();
-    document.cookie = url+  "=" + taskIDs + ";" + expires + ";path/";
-}
+//
+// function loadCookies(){
+//     var url = window.location.href.split('/');
+//     var model = $("#model_name").html();
+//     var submodule = $("#submodule_name").html();
+//     url = url[2] + "/hms/" + model + "/" + submodule;
+//     var cookie = getCookie(url);
+//     cookie = pruneCookieTasks(cookie);
+//     var ids = cookie.split(",");
+//     if( ids.length > 1){
+//         $("#previous_tasks").show();
+//         var list = $('#previous_tasks_list')[0];
+//         ids.forEach(function(id){
+//             if(id !== "") {
+//                 var id_time = id.split(':');
+//
+//                 var eleID = document.createElement("span");
+//                 eleID.innerText = id_time[0];
+//                 eleID.className = "previous_task_id";
+//                 eleID.setAttribute("title", "Task ID");
+//                 eleID.onclick = function () {
+//                     getPreviousDataFromID(id_time[0]);
+//                 };
+//
+//                 var eleT = document.createElement("span");
+//                 var d = new Date(parseInt(id_time[1]));
+//                 eleT.innerText = d.toLocaleString();
+//                 eleT.className = "previous_task_time";
+//                 eleT.setAttribute("title", "Task Timestamp");
+//
+//                 var ele = document.createElement("li");
+//                 ele.className = "previous_task";
+//                 ele.appendChild(eleID);
+//                 ele.appendChild(eleT);
+//                 list.appendChild(ele);
+//             }
+//         });
+//     }
+// }
+//
+// function setDataRequestCookie(taskID){
+//     var daysToExpire = 1;
+//     var date = new Date();
+//     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+//     var expires = "expires=" + date.toUTCString();
+//     var timestamp = new Date();
+//     var taskIDs = taskID + ":" + timestamp.getTime();
+//     var url = window.location.href.split('/');
+//     var model = $("#model_name").html();
+//     var submodule = $("#submodule_name").html();
+//     url = url[2] + "/hms/" + model + "/" + submodule;
+//     var current = getCookie(url);
+//     current = pruneCookieTasks(current);
+//     var ids = "";
+//     $.each(current.split(','), function(index, value){
+//         var id = value.split(':')[0];
+//         if(id !== taskID && id !== ""){
+//             ids += "," + value;
+//         }
+//         else if(id === taskID){
+//             taskIDs = value;
+//         }
+//     });
+//
+//     taskIDs = taskIDs + ids;
+//     document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
+// }
+//
+// function getCookie(cname) {
+//     var name = cname + "=";
+//     var decodedCookie = decodeURIComponent(document.cookie);
+//     var ca = decodedCookie.split(';');
+//     for(var i = 0; i <ca.length; i++) {
+//         var c = ca[i];
+//         while (c.charAt(0) == ' ') {
+//             c = c.substring(1);
+//         }
+//         if (c.indexOf(name) == 0) {
+//             return c.substring(name.length, c.length);
+//         }
+//     }
+//     return "";
+// }
+//
+// function pruneCookieTasks(currentTasks){
+//     var IDs = currentTasks.split(',');
+//     var taskIDs = "";
+//     var now = new Date();
+//     now.setDate(now.getDate() - 1);
+//     now = now.getTime();
+//     $.each(IDs, function(k, v){
+//         if(v !== "") {
+//             var timestamp = new Date();
+//             if (v.includes(":")) {
+//                 var id_t = v.split(':');
+//                 timestamp.setTime(parseInt(id_t[1]));
+//                 if (timestamp.getTime() > now) {
+//                     taskIDs = taskIDs + "," + v;
+//                 }
+//             } else {
+//                 taskIDs = taskIDs + "," + v + ":" + timestamp.getTime();
+//             }
+//         }
+//     });
+//     return taskIDs;
+// }
+//
+// function deleteTaskFromCookie(id){
+//     var url = window.location.href.split('/');
+//     var model = $("#model_name").html();
+//     var submodule = $("#submodule_name").html();
+//     url = url[2] + "/hms/" + model + "/" + submodule;
+//     var current = getCookie(url);
+//     current = pruneCookieTasks(current);
+//     var IDs = current.split(',');
+//     var validIDs = [];
+//     $.each(IDs, function(k, v){
+//         if(v.includes(":")){
+//             var i = v.split(':');
+//             if(i[0] !== id){
+//                 validIDs.push(v);
+//             }
+//         }
+//     });
+//     var daysToExpire = 1;
+//     var date = new Date();
+//     date.setTime(date.getTime() + daysToExpire * 24*60*60*1000);
+//     var expires = "expires=" + date.toUTCString();
+//     var taskIDs = validIDs.join();
+//     document.cookie = url+  "=" + taskIDs + ";" + expires + ";path=" + "/hms/" + model + "/" + submodule + "/";
+// }

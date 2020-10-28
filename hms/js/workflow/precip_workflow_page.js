@@ -11,11 +11,11 @@ var mm_stats = ["sum", "mean", "median", "max", "standard_deviation", "variance"
 
 
 $(function () {
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
-    setTimeout(setOverviewTabindex, 100);
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
+    // setTimeout(setOverviewTabindex, 100);
 
 });
 
