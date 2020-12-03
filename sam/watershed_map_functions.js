@@ -121,6 +121,11 @@ function getStreamData(lat, lng) {
             else{
                 var streamData = JSON.parse(data);
             }
+            DEBUG && "ABCDEFG"
+            DEBUG && console.log(streamData.output.ary_flowlines[0].comid);
+            DEBUG && "HIJKLMN"
+            DEBUG && console.log(i.properties.COMID);
+            DEBUG && "OPQRST"
             var selectedComid = streamData.output.ary_flowlines[0].comid;
             var wantedData = outputData.features.filter(function (i) {
                 return (i.properties.COMID == selectedComid);
