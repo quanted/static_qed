@@ -768,7 +768,7 @@ function addHUC12s() {
                 map.removeLayer(selectedHuc);
             }
             if (typeof result_huc12s === 'object' && result_huc12s !== null){
-                huc12_json = results_huc12s;
+                huc12_json = result_huc12s;
             }
             else{
                 huc12_json = JSON.parse(result_huc12s);
