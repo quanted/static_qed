@@ -23,7 +23,7 @@ var huc12_json;
 var field = "chronic_em_inv";
 
 //print to console for debuggin?
-var DEBUG = false;
+var DEBUG = true;
 
 
 $(document).ready(function () {
