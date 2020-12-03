@@ -121,14 +121,10 @@ function getStreamData(lat, lng) {
             else{
                 var streamData = JSON.parse(data);
             }
-            DEBUG && "ABCDEFG"
-            DEBUG && console.log(streamData.output.ary_flowlines[0].comid);
-            DEBUG && "HIJKLMN"
-            DEBUG && console.log(i.properties.COMID);
-            DEBUG && "OPQRST"
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.features.filter(function (i) {
-                return (i.properties.COMID == selectedComid);
+            // jch - changed this from outputData to streamData. is that right?
+            var wantedData = streamData.features.filter(function (i) {
+                return (i.COMID == selectedComid);
             });
             $('#boxid').html(selectedComid);
             addStreamSeg(streamData, selectedComid);
@@ -288,11 +284,14 @@ function readOutputJSON() {
             DEBUG && console.log(data.toString());
             samOutput = data;
             outputData = data;
+            console.log("pass");
             return false;
         },
         error: function (jqXHR, status) {
+            console.log("fail");
             DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get river data.");
+
             return false;
         }
     });
