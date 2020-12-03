@@ -115,7 +115,11 @@ function getStreamData(lat, lng) {
         jsonp: true,
         data: ptIndexParams,
         success: function (data, status, jqXHR) {
-            var streamData = JSON.parse(data);
+            if (typeof result_huc12s === 'object' && result_huc12s !== null){
+                var streamData = data;
+            else{
+                var streamData = JSON.parse(data);
+            }
             var selectedComid = streamData.output.ary_flowlines[0].comid;
             var wantedData = outputData.features.filter(function (i) {
                 return (i.properties.COMID == selectedComid);
