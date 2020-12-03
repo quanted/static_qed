@@ -126,7 +126,7 @@ function getStreamData(lat, lng) {
             console.log("here's the outputData:")
             console.log(outputData)
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.features.filter(function (i) {
+            var wantedData = outputData.filter(function (i) {
                 return (i.COMID == selectedComid);
             });
             $('#boxid').html(selectedComid);
@@ -372,7 +372,6 @@ function readSummaryHUC12JSON() {
     });
     return samOutput
 }
-
 
 
 // sets the HUC color based on a summary stat
@@ -776,10 +775,15 @@ function addHUC12s() {
                 map.removeLayer(selectedHuc);
             }
             if (typeof result_huc12s === 'object' && result_huc12s !== null){
+                console.log("trip 1: huc12s are objects")
                 huc12_json = result_huc12s;
+                console.log(huc12_json)
             }
             else{
+                console.log("trip 2: huc12s aren't objects")
+                console.log(result_huc12s)
                 huc12_json = JSON.parse(result_huc12s);
+                console.log(huc12_json)
             }
             delete huc12_json["crs"];
             huc12s = L.geoJSON(huc12_json, {
