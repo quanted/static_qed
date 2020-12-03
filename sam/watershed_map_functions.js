@@ -115,7 +115,7 @@ function getStreamData(lat, lng) {
         jsonp: true,
         data: ptIndexParams,
         success: function (data, status, jqXHR) {
-            if (typeof result_huc12s === 'object' && result_huc12s !== null){
+            if (typeof data === 'object' && data !== null){
                 var streamData = data;
             }
             else{
