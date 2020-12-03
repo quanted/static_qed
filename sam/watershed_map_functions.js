@@ -117,6 +117,7 @@ function getStreamData(lat, lng) {
         success: function (data, status, jqXHR) {
             if (typeof result_huc12s === 'object' && result_huc12s !== null){
                 var streamData = data;
+            }
             else{
                 var streamData = JSON.parse(data);
             }
@@ -768,6 +769,7 @@ function addHUC12s() {
             }
             if (typeof result_huc12s === 'object' && result_huc12s !== null){
                 huc12_json = results_huc12s;
+            }
             else{
                 huc12_json = JSON.parse(result_huc12s);
             }
