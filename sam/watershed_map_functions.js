@@ -123,10 +123,10 @@ function getStreamData(lat, lng) {
                 console.log("trip: 2")
                 var streamData = JSON.parse(data);
             }
-            console.log(streamData)
+            console.log("here's the outputData:")
+            console.log(outputData)
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            // jch - changed this from outputData to streamData. is that right?
-            var wantedData = streamData.features.filter(function (i) {
+            var wantedData = outputData.features.filter(function (i) {
                 return (i.COMID == selectedComid);
             });
             $('#boxid').html(selectedComid);
@@ -287,7 +287,8 @@ function readOutputJSON() {
             DEBUG && console.log(data.toString());
             samOutput = data;
             outputData = data;
-            console.log("pass");
+            console.log("trip: pass");
+            console.log(data)
             return false;
         },
         error: function (jqXHR, status) {
