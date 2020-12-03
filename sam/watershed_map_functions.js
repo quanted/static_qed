@@ -762,7 +762,11 @@ function addHUC12s() {
             if (selectedHuc !== null) {
                 map.removeLayer(selectedHuc);
             }
-            huc12_json = JSON.parse(result_huc12s);
+            if (typeof result_huc12s === 'object' && result_huc12s !== null){
+                huc12_json = results_huc12s;
+            else{
+                huc12_json = JSON.parse(result_huc12s);
+            }
             delete huc12_json["crs"];
             huc12s = L.geoJSON(huc12_json, {
                 style: hucStyle,
