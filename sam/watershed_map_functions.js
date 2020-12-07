@@ -116,17 +116,17 @@ function getStreamData(lat, lng) {
         data: ptIndexParams,
         success: function (data, status, jqXHR) {
             if (typeof data === 'object' && data !== null){
-                console.log("trip: 1")
+                console.log("streamData is an object")
                 var streamData = data;
             }
             else{
-                console.log("trip: 2")
+                console.log("streamData getting parsed as JSON")
                 var streamData = JSON.parse(data);
             }
             console.log("here's the outputData:")
             console.log(outputData)
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.filter(function (i) {
+            var wantedData = outputData.features.filter(function (i) {
                 return (i.COMID == selectedComid);
             });
             $('#boxid').html(selectedComid);
