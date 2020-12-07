@@ -126,9 +126,7 @@ function getStreamData(lat, lng) {
             console.log("here's the outputData:")
             console.log(outputData)
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.features.filter(function (i) {
-                return (i.COMID == selectedComid);
-            });
+            var wantedData = outputData.COMID[selectedComid];
             $('#boxid').html(selectedComid);
             addStreamSeg(streamData, selectedComid);
             if(wantedData.length == 0){
@@ -137,7 +135,7 @@ function getStreamData(lat, lng) {
                 DEBUG && console.log("Selected stream was not included in SAM run");
                 return false;
             }
-            setTimeout(populateFilteredTable(wantedData[0].properties), 300);
+            setTimeout(populateFilteredTable(wantedData), 300);
             return false;
         },
         error: function (jqXHR, status) {
