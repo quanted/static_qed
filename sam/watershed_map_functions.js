@@ -299,8 +299,8 @@ function readOutputJSON() {
 
 
 function readSummaryData() {
-    intake_vars = outputData['intakes'];
-    reach_vars = outputData['reaches'];
+    intake_vars = samOutput['intakes'];
+    reach_vars = samOutput['reaches'];
     reach_data = reach_vars['comid'];
     huc8_summary = reach_vars['huc_8'];
     huc12_summary = reach_vars['huc_12']
@@ -332,7 +332,7 @@ function readSummaryData() {
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc8/" + key.toString();
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -343,9 +343,9 @@ function readSummaryHUC8JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            var firstlevel = data['reaches'];
-            console.log(firstlevel)
-            summaryHUC8Data = firstlevel['huc_8'];
+            var reaches = data['reaches'];
+            console.log(reaches)
+            summaryHUC8Data = reaches['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
@@ -376,7 +376,7 @@ function readSummaryHUC8JSON() {
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc12/" + key.toString();
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -387,9 +387,9 @@ function readSummaryHUC12JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            var firstlevel = data['reaches'];
-            console.log(firstlevel)
-            summaryHUC12Data = firstlevel['huc_12'];
+            var reaches = data['reaches'];
+            console.log(reaches)
+            summaryHUC12Data = reaches['huc_12'];
             addHUC12s(); //ajax async call
             return false;
         },

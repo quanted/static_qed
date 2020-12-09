@@ -13,7 +13,7 @@ map.setView(start_point, start_zoom);
 console.log("Starting here...")
 readOutputJSON(); //async ajax call
 console.log("Next...")
-readSummaryData(); // trip test
+readSummaryHUC8JSON(); // trip test
 
 // add out data
 var info_box_title = null;
