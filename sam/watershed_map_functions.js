@@ -26,6 +26,8 @@ var DEBUG = true;
 
 // trip's for debugging
 var firstlevel;
+var reaches;
+var intakes;
 
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
@@ -311,6 +313,7 @@ function readSummaryHUC8JSON() {
             samOutput = data;
 
             console.log(firstlevel);
+            reaches = firstlevel['reaches']
             summaryHUC8Data = firstlevel['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -354,7 +357,7 @@ function readSummaryHUC12JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            var firstlevel = data['reaches'];
+            firstlevel = data['reaches'];
             console.log(firstlevel)
             summaryHUC12Data = firstlevel['huc_12'];
             addHUC12s(); //ajax async call
