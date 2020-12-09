@@ -10,7 +10,9 @@ var start_zoom = 8;
 map.setView(start_point, start_zoom);
 
 // read model output
+console.log("Starting here...")
 readOutputJSON(); //async ajax call
+console.log("Next...")
 readSummaryData(); // trip test
 
 // add out data

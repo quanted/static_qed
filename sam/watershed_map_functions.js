@@ -273,6 +273,7 @@ function readOutputJSON() {
     // TODO: change to correct base url
     var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
+    console.log("Reading output json")
     $.ajax({
         type: "GET",
         url: url,
@@ -298,8 +299,8 @@ function readOutputJSON() {
 
 
 function readSummaryData() {
-    intake_vars = samOutput['intakes'];
-    reach_vars = samOutput['reaches'];
+    intake_vars = outputData['intakes'];
+    reach_vars = outputData['reaches'];
     reach_data = reach_vars['comid'];
     huc8_summary = reach_vars['huc_8'];
     huc12_summary = reach_vars['huc_12']
