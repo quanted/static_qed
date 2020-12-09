@@ -376,6 +376,7 @@ function readSummaryHUC12JSON() {
 
 // sets the HUC color based on a summary stat
 function contributionColor(d) {
+    d = d/100
     if (d == null) {
         return '#93D4BC'
     } else if (d > 0.8) {
@@ -441,7 +442,7 @@ var hucStyleSelected = {
 function colorHUC8s() {
     huc8ColorLayer.setStyle(function (feature) {
         console.log(feature.properties);
-        stat = feature.properties.summary[fieldVal + "_" + summary_stat];
+        stat = feature.properties.summary;
         return {
             fillColor: contributionColor(stat),
             weight: .3,
@@ -460,7 +461,7 @@ function colorHUC8s() {
 function colorHUC12s() {
     huc12s.setStyle(function (feature) {
         console.log(feature.properties)
-        stat = feature.properties.summary[fieldVal + "_" + summary_stat];
+        stat = feature.properties.summary;
         return {
             fillColor: contributionColor(stat),
             weight: .3,
