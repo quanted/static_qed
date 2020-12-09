@@ -25,6 +25,9 @@ var field = "chronic_em_inv";
 var DEBUG = true;
 
 
+// trip's for debugging
+var firstlevel;
+
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
@@ -294,7 +297,8 @@ function readOutputJSON() {
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc8/" + key.toString();
+    // TODO: do we need these functions now?
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -305,8 +309,8 @@ function readSummaryHUC8JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            var firstlevel = data['reaches'];
-            console.log(firstlevel)
+
+            console.log(firstlevel);
             summaryHUC8Data = firstlevel['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -338,7 +342,8 @@ function readSummaryHUC8JSON() {
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc12/" + key.toString();
+    // TODO: do we need these functions now?
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
