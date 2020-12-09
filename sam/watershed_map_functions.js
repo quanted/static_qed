@@ -25,6 +25,11 @@ var field = "chronic_em_inv";
 var DEBUG = true;
 
 // trip's test variables
+var intake_vars;
+var reach_vars;
+var reach_data;
+var huc8_summary;
+var huc12_summary;
 
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
@@ -37,12 +42,17 @@ function readSummaryData() {
     huc8_summary = reach_vars['huc_8'];
     huc12_summary = reach_vars['huc_12']
 
+    console.log(intake_vars);
+    console.log(reach_vars);
+    console.log(reach_data);
+    console.log(huc8_summary);
+    console.log(huc12_summary);
     for (var key in huc8_summary) {
         if (data.hasOwnProperty(key)) {
             hucsRun.push(key);  //track which hucs were actually run!
         }
     }
-
+    console.log("success");
     hucColorLayer(); //create a layer for the shaded hucs
     addHUC8Statistics(); //add the huc8 stats to the huc8 layer
     colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
