@@ -440,7 +440,7 @@ var hucStyleSelected = {
 //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
 function colorHUC8s() {
     huc8ColorLayer.setStyle(function (feature) {
-        console.log(features.properties.summary);
+        console.log(feature.properties);
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
         return {
             fillColor: contributionColor(stat),
@@ -459,6 +459,7 @@ function colorHUC8s() {
 //style HUC12's based on summary statistics of a given toxicity threshold exceedance probability
 function colorHUC12s(fieldVal, summary_stat) {
     huc12s.setStyle(function (feature) {
+        console.log(feature.properties)
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
         return {
             fillColor: contributionColor(stat),
@@ -802,7 +803,7 @@ function addHUC12s() {
             });
             setZoomHandler();
             addHUC12Statistics(); //add the huc8 stats to the huc12 layer
-            colorHUC12s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            colorHUC12s(); //color the hucs
             huc12s.eachLayer(function (layer) {
                 layer.bindPopup(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
                     layer.feature.properties.AREA_SQKM));
