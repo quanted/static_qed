@@ -24,14 +24,36 @@ var field = "chronic_em_inv";
 //print to console for debuggin?
 var DEBUG = true;
 
-// trip's for debugging
-var firstlevel;
-var reaches;
-var intakes;
+// trip's test variables
 
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
+
+function readSummaryData() {
+    intake_vars = samOutput['intakes'];
+    reach_vars = samOutput['reaches'];
+    reach_data = reach_vars['comid'];
+    huc8_summary = reach_vars['huc_8'];
+    huc12_summary = reach_vars['huc_12']
+
+    for (var key in huc8_summary) {
+        if (data.hasOwnProperty(key)) {
+            hucsRun.push(key);  //track which hucs were actually run!
+        }
+    }
+
+    hucColorLayer(); //create a layer for the shaded hucs
+    addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+    colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+    addStreams(); //add the stream layer
+    addIntakes(); //add the drinking water intake marker layergroup
+    addHucLegend();
+    map.invalidateSize();
+    //addColoredStreams(region);
+    //setZoomHandler();
+    return false;
+}
 
 //helper function that works across all browsers
 function contains(a, obj) {
@@ -293,54 +315,12 @@ function readOutputJSON() {
     return samOutput
 }
 
+
 //function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    // TODO: do we need these functions now?
-    $.ajax({
-        type: "GET",
-        url: url,
-        async: true,
-        success: function (data) {
-            DEBUG && console.log("Read summary JSON from file: " + url.toString());
-            //DEBUG && console.log("Output JSON data contents...");
-            //DEBUG && console.log(data.toString());
-            console.log(samOutput);
-            reaches = samOutput['reaches'];
-            summaryHUC8Data = firstlevel['huc_8'];
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    hucsRun.push(key);  //track which hucs were actually run!
-                }
-            }
-            readSummaryHUC12JSON(); //async ajax call
-            hucColorLayer(); //create a layer for the shaded hucs
-            addHUC8Statistics(); //add the huc8 stats to the huc8 layer
-            colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
-            addStreams(); //add the stream layer
-            addIntakes(); //add the drinking water intake marker layergroup
-            addHucLegend();
-            map.invalidateSize();
-            //addColoredStreams(region);
-            //setZoomHandler();
-            return false;
-        },
-        error: function (jqXHR, status) {
-            DEBUG && console.log("Failed to retrieve output json data.");
-            $('#boxid').html("Error attempting to get watershed data.");
-            return false;
-        }
-    });
-    return samOutput
-}
-
-//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
-function readSummaryHUC8JSON_old() {
-    var key = getCookie('task_id');
-    // TODO: change to correct base url
-    // TODO: do we need these functions now?
-    var url = "/pram/rest/pram/sam/data/" + key.toString();
+    var url = "/pram/rest/pram/sam/summary/huc8/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -351,9 +331,8 @@ function readSummaryHUC8JSON_old() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-
-            console.log(firstlevel);
-            reaches = firstlevel['reaches'];
+            var firstlevel = data['reaches'];
+            console.log(firstlevel)
             summaryHUC8Data = firstlevel['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -385,8 +364,7 @@ function readSummaryHUC8JSON_old() {
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    // TODO: do we need these functions now?
-    var url = "/pram/rest/pram/sam/data/" + key.toString();
+    var url = "/pram/rest/pram/sam/summary/huc12/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -397,7 +375,7 @@ function readSummaryHUC12JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            firstlevel = data['reaches'];
+            var firstlevel = data['reaches'];
             console.log(firstlevel)
             summaryHUC12Data = firstlevel['huc_12'];
             addHUC12s(); //ajax async call
