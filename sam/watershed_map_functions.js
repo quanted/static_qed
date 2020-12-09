@@ -318,7 +318,7 @@ function readSummaryData() {
     console.log("success");
     hucColorLayer(); //create a layer for the shaded hucs
     addHUC8Statistics(); //add the huc8 stats to the huc8 layer
-    colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+    colorHUC8s(); //color the hucs
     addStreams(); //add the stream layer
     addIntakes(); //add the drinking water intake marker layergroup
     addHucLegend();
@@ -467,8 +467,9 @@ var hucStyleSelected = {
 
 
 //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
-function colorHUC8s(fieldVal, summary_stat) {
+function colorHUC8s() {
     huc8ColorLayer.setStyle(function (feature) {
+        console.log(features.properties.summary);
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
         return {
             fillColor: contributionColor(stat),
