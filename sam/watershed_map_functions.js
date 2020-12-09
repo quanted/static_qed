@@ -279,7 +279,6 @@ function readOutputJSON() {
             DEBUG && console.log("Output JSON data contents...");
             DEBUG && console.log(data.toString());
             samOutput = data;
-            console.log(samOutput);
             outputData = data;
             return false;
         },
@@ -294,9 +293,50 @@ function readOutputJSON() {
     return samOutput
 }
 
-
 //function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
+    var key = getCookie('task_id');
+    // TODO: change to correct base url
+    // TODO: do we need these functions now?
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        success: function (data) {
+            DEBUG && console.log("Read summary JSON from file: " + url.toString());
+            //DEBUG && console.log("Output JSON data contents...");
+            //DEBUG && console.log(data.toString());
+            console.log(samOutput);
+            reaches = samOutput['reaches'];
+            summaryHUC8Data = firstlevel['huc_8'];
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    hucsRun.push(key);  //track which hucs were actually run!
+                }
+            }
+            readSummaryHUC12JSON(); //async ajax call
+            hucColorLayer(); //create a layer for the shaded hucs
+            addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+            colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            addStreams(); //add the stream layer
+            addIntakes(); //add the drinking water intake marker layergroup
+            addHucLegend();
+            map.invalidateSize();
+            //addColoredStreams(region);
+            //setZoomHandler();
+            return false;
+        },
+        error: function (jqXHR, status) {
+            DEBUG && console.log("Failed to retrieve output json data.");
+            $('#boxid').html("Error attempting to get watershed data.");
+            return false;
+        }
+    });
+    return samOutput
+}
+
+//function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
+function readSummaryHUC8JSON_old() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
     // TODO: do we need these functions now?
@@ -313,7 +353,7 @@ function readSummaryHUC8JSON() {
             samOutput = data;
 
             console.log(firstlevel);
-            reaches = firstlevel['reaches']
+            reaches = firstlevel['reaches'];
             summaryHUC8Data = firstlevel['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
