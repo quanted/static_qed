@@ -24,7 +24,6 @@ var field = "chronic_em_inv";
 //print to console for debuggin?
 var DEBUG = true;
 
-
 // trip's for debugging
 var firstlevel;
 
