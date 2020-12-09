@@ -277,6 +277,7 @@ function readOutputJSON() {
             DEBUG && console.log("Output JSON data contents...");
             DEBUG && console.log(data.toString());
             samOutput = data;
+            console.log(samOutput);
             outputData = data;
             return false;
         },
