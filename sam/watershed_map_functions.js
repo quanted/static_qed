@@ -35,35 +35,6 @@ $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
 
-function readSummaryData() {
-    intake_vars = samOutput['intakes'];
-    reach_vars = samOutput['reaches'];
-    reach_data = reach_vars['comid'];
-    huc8_summary = reach_vars['huc_8'];
-    huc12_summary = reach_vars['huc_12']
-
-    console.log(intake_vars);
-    console.log(reach_vars);
-    console.log(reach_data);
-    console.log(huc8_summary);
-    console.log(huc12_summary);
-    for (var key in huc8_summary) {
-        if (data.hasOwnProperty(key)) {
-            hucsRun.push(key);  //track which hucs were actually run!
-        }
-    }
-    console.log("success");
-    hucColorLayer(); //create a layer for the shaded hucs
-    addHUC8Statistics(); //add the huc8 stats to the huc8 layer
-    colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
-    addStreams(); //add the stream layer
-    addIntakes(); //add the drinking water intake marker layergroup
-    addHucLegend();
-    map.invalidateSize();
-    //addColoredStreams(region);
-    //setZoomHandler();
-    return false;
-}
 
 //helper function that works across all browsers
 function contains(a, obj) {
@@ -325,6 +296,36 @@ function readOutputJSON() {
     return samOutput
 }
 
+
+function readSummaryData() {
+    intake_vars = samOutput['intakes'];
+    reach_vars = samOutput['reaches'];
+    reach_data = reach_vars['comid'];
+    huc8_summary = reach_vars['huc_8'];
+    huc12_summary = reach_vars['huc_12']
+
+    console.log(intake_vars);
+    console.log(reach_vars);
+    console.log(reach_data);
+    console.log(huc8_summary);
+    console.log(huc12_summary);
+    for (var key in huc8_summary) {
+        if (data.hasOwnProperty(key)) {
+            hucsRun.push(key);  //track which hucs were actually run!
+        }
+    }
+    console.log("success");
+    hucColorLayer(); //create a layer for the shaded hucs
+    addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+    colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+    addStreams(); //add the stream layer
+    addIntakes(); //add the drinking water intake marker layergroup
+    addHucLegend();
+    map.invalidateSize();
+    //addColoredStreams(region);
+    //setZoomHandler();rea
+    return false;
+}
 
 //function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
