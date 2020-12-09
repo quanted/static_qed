@@ -457,7 +457,7 @@ function colorHUC8s() {
 
 
 //style HUC12's based on summary statistics of a given toxicity threshold exceedance probability
-function colorHUC12s(fieldVal, summary_stat) {
+function colorHUC12s() {
     huc12s.setStyle(function (feature) {
         console.log(feature.properties)
         stat = feature.properties.summary[fieldVal + "_" + summary_stat];
