@@ -316,15 +316,18 @@ function readSummaryHUC8JSON() {
             samOutput = data;
             var reaches = data['reaches'];
             console.log(reaches)
+            console.log("Reading huc8 data")
             summaryHUC8Data = reaches['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
                 }
             }
+            console.log("Reading huc12 data")
             readSummaryHUC12JSON(); //async ajax call
             hucColorLayer(); //create a layer for the shaded hucs
             addHUC8Statistics(); //add the huc8 stats to the huc8 layer
+            console.log("Coloring huc8s")
             colorHUC8s(); //color the hucs
             addStreams(); //add the stream layer
             addIntakes(); //add the drinking water intake marker layergroup
