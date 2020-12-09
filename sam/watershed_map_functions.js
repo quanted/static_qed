@@ -305,7 +305,9 @@ function readSummaryHUC8JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            summaryHUC8Data = data['reaches']['huc_8'];
+            var firstlevel = data['reaches'];
+            console.log(firstlevel)
+            summaryHUC8Data = firstlevel['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
@@ -347,7 +349,9 @@ function readSummaryHUC12JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            summaryHUC12Data = data['reaches']['huc_12'];
+            var firstlevel = data['reaches'];
+            console.log(firstlevel)
+            summaryHUC12Data = firstlevel['huc_12'];
             addHUC12s(); //ajax async call
             return false;
         },
