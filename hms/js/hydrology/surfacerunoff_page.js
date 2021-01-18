@@ -2,10 +2,10 @@
 var baseUrl = "/hms/rest/api/v3/hydrology/surfacerunoff/";
 
 $(function () {
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     $('#id_area_of_interest').on('change', updateAoISelection);
     $("#id_source").on('change', precipSourceUpdate);
     $("#id_precip_source").on("change", precipSourceUpdate);

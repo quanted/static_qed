@@ -2,10 +2,10 @@
 
 
 $(function () {
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     $('#id_area_of_interest').on('change', updateAoISelection);
 
     setTimeout(setOverviewTabindex, 100);

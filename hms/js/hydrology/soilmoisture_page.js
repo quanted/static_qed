@@ -7,10 +7,10 @@ $(function () {
     $('#id_source').change(updateForm);
     document.getElementById("id_layers").options[0].selected = "selected";
 
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     $('#id_area_of_interest').on('change', updateAoISelection);
 
     setTimeout(setOverviewTabindex, 100);

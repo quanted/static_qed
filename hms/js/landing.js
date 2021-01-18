@@ -3,7 +3,7 @@ var statusURL = "rest/api/utilities/status/";
 var statusData;
 
 $(function(){
-    setTimeout(getStatus, 100);
+    // setTimeout(getStatus, 100);
 });
 
 function getStatus() {

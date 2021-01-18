@@ -1,4 +1,3 @@
-
 //  create placeholder global variables
 var comid = null;
 var selectedHuc = null;
@@ -23,12 +22,19 @@ var huc12_json;
 var field = "chronic_em_inv";
 
 //print to console for debuggin?
-var DEBUG = false;
+var DEBUG = true;
 
+// trip's test variables
+var intake_vars;
+var reach_vars;
+var reach_data;
+var huc8_summary;
+var huc12_summary;
 
 $(document).ready(function () {
     $('#csvSave').on("click", saveTableAsCSV);
 });
+
 
 //helper function that works across all browsers
 function contains(a, obj) {
@@ -42,43 +48,42 @@ function contains(a, obj) {
 
 // handler for a stream click
 function onStreamMapClick(e) {
-    if(selectedHuc != null){
+    if (selectedHuc != null) {
         map.removeLayer(selectedHuc);
     }
     getStreamData(e.latlng.lat, e.latlng.lng);
     map.closePopup();
 }
 
-
 // set to hide huc coloring when zoomed to stream level
-function setZoomHandler(){
-    map.on('zoomend', function() {
-        if (map.getZoom() >=11){
+function setZoomHandler() {
+    map.on('zoomend', function () {
+        if (map.getZoom() >= 11) {
             if (map.hasLayer(huc8ColorLayer)) {
                 map.removeLayer(huc8ColorLayer);
                 //map.removeControl(legend);
             }
-            if(! map.hasLayer(huc12s)){
+            if (!map.hasLayer(huc12s)) {
                 map.addLayer(huc12s);
             }
-            huc12s.setStyle({interactive:false});
+            huc12s.setStyle({interactive: false});
         }
-        if (map.getZoom() < 11){ //huc12 geojson layer is currently overrulling this click level
-            if(! map.hasLayer(huc12s)){
+        if (map.getZoom() < 11) { //huc12 geojson layer is currently overrulling this click level
+            if (!map.hasLayer(huc12s)) {
                 map.addLayer(huc12s);
             }
             if (map.hasLayer(huc8ColorLayer)) {
                 map.removeLayer(huc8ColorLayer);
             }
-            huc12s.setStyle({interactive:true});
+            huc12s.setStyle({interactive: true});
 
         }
-        if (map.getZoom() < 9){
-            if(map.hasLayer(huc12s)){
+        if (map.getZoom() < 9) {
+            if (map.hasLayer(huc12s)) {
                 map.removeLayer(huc12s);
-                huc12s.setStyle({interactive:true});
+                huc12s.setStyle({interactive: true});
             }
-            if (! map.hasLayer(huc8ColorLayer)){
+            if (!map.hasLayer(huc8ColorLayer)) {
                 map.addLayer(huc8ColorLayer);
                 //map.addControl(legend);
             }
@@ -115,20 +120,24 @@ function getStreamData(lat, lng) {
         jsonp: true,
         data: ptIndexParams,
         success: function (data, status, jqXHR) {
-            var streamData = JSON.parse(data);
+            if (typeof data === 'object' && data !== null) {
+                console.log("streamData is an object")
+                var streamData = data;
+            } else {
+                console.log("streamData getting parsed as JSON")
+                var streamData = JSON.parse(data);
+            }
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.features.filter(function (i) {
-                return (i.properties.COMID == selectedComid);
-            });
+            var wantedData = outputData.COMID[selectedComid];
             $('#boxid').html(selectedComid);
             addStreamSeg(streamData, selectedComid);
-            if(wantedData.length == 0){
+            if (wantedData.length == 0) {
                 $('#pestTable').hide();
                 $('#saveTable').hide();
                 DEBUG && console.log("Selected stream was not included in SAM run");
                 return false;
             }
-            setTimeout(populateFilteredTable(wantedData[0].properties), 300);
+            setTimeout(populateFilteredTable(wantedData), 300);
             return false;
         },
         error: function (jqXHR, status) {
@@ -217,8 +226,7 @@ function saveTableAsCSV() {
         var event = document.createEvent('MouseEvents');
         event.initEvent('click', true, true);
         pom.dispatchEvent(event);
-    }
-    else {
+    } else {
         pom.click();
     }
 }
@@ -240,26 +248,23 @@ function getCookie(name) {
 }
 
 
-
 // creates a huc8 layer on top of the other huc8 layer that contains only the huc8s that were run.
 // we can interact with this layer without doing anything to the huc8s that weren't run, saving us
 // computation time on the client-side
-function hucColorLayer(){
+function hucColorLayer() {
     huc8ColorLayer = L.geoJson(huc8s, {
-    style: hucStyle,
-    filter: function(feature) {
-        huc_8 = feature.properties.HUC_CODE;
-        if (contains(hucsRun, huc_8)) {
-            return true;
+        style: hucStyle,
+        filter: function (feature) {
+            huc_8 = feature.properties.HUC_CODE;
+            if (contains(hucsRun, huc_8)) {
+                return true;
+            } else {
+                return false;
+            }
         }
-        else {
-            return false;
-        }
-    }
     }).addTo(map);
 
 }
-
 
 
 // function to read SAM stream level output
@@ -268,6 +273,7 @@ function readOutputJSON() {
     // TODO: change to correct base url
     var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
+    console.log("Reading output json")
     $.ajax({
         type: "GET",
         url: url,
@@ -281,8 +287,10 @@ function readOutputJSON() {
             return false;
         },
         error: function (jqXHR, status) {
+            console.log("fail");
             DEBUG && console.log("Failed to retrieve output json data.");
             $('#boxid').html("Error attempting to get river data.");
+
             return false;
         }
     });
@@ -290,11 +298,12 @@ function readOutputJSON() {
 }
 
 
+
 //function to read the SAM postprocessing summary stats through the django-to-flask proxy (HUC8s)
 function readSummaryHUC8JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc8/" + key.toString();
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -305,16 +314,21 @@ function readSummaryHUC8JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            summaryHUC8Data = data;
+            var reaches = data['reaches'];
+            console.log(reaches)
+            console.log("Reading huc8 data")
+            summaryHUC8Data = reaches['huc_8'];
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
                 }
             }
+            console.log("Reading huc12 data")
             readSummaryHUC12JSON(); //async ajax call
             hucColorLayer(); //create a layer for the shaded hucs
             addHUC8Statistics(); //add the huc8 stats to the huc8 layer
-            colorHUC8s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
+            console.log("Coloring huc8s")
+            colorHUC8s(); //color the hucs
             addStreams(); //add the stream layer
             addIntakes(); //add the drinking water intake marker layergroup
             addHucLegend();
@@ -336,7 +350,7 @@ function readSummaryHUC8JSON() {
 function readSummaryHUC12JSON() {
     var key = getCookie('task_id');
     // TODO: change to correct base url
-    var url = "/pram/rest/pram/sam/summary/huc12/" + key.toString();
+    var url = "/pram/rest/pram/sam/data/" + key.toString();
     var samOutput = null;
     $.ajax({
         type: "GET",
@@ -347,7 +361,9 @@ function readSummaryHUC12JSON() {
             //DEBUG && console.log("Output JSON data contents...");
             //DEBUG && console.log(data.toString());
             samOutput = data;
-            summaryHUC12Data = data;
+            var reaches = data['reaches'];
+            console.log(reaches)
+            summaryHUC12Data = reaches['huc_12'];
             addHUC12s(); //ajax async call
             return false;
         },
@@ -361,20 +377,18 @@ function readSummaryHUC12JSON() {
 }
 
 
-
 // sets the HUC color based on a summary stat
-function exceedanceColor(d) {
+function contributionColor(d) {
+    d = d/100
     if (d == null) {
         return '#93D4BC'
-    } else if (d > 0.5) {
+    } else if (d > 0.8) {
         return "#d73027"
-    } else if (d > 0.4) {
+    } else if (d > 0.6) {
         return "#fc8d59"
-    } else if (d > 0.3) {
+    } else if (d > 0.4) {
         return "#fee090"
     } else if (d > 0.2) {
-        return "#F8D0C7"
-    } else if (d > 0.1) {
         return "#d0b3db"
     } else {
         return "#4575b4"
@@ -390,16 +404,14 @@ function getHUCFillOpacity(d) {
     }
 }
 
-
 //stream style
 function streamStyle(feature, field) {
     return {
         weight: 1,
         opacity: 1,
-        color: exceedanceColor(feature.properties[field])
+        color: contributionColor(feature.properties[field])
     };
 }
-
 
 //huc8 initial style
 function hucStyle(feature) {
@@ -430,11 +442,12 @@ var hucStyleSelected = {
 
 
 //style HUC8's based on summary statistics of a given toxicity threshold exceedance probability
-function colorHUC8s(fieldVal, summary_stat) {
-    huc8ColorLayer.setStyle(function(feature) {
-        stat = feature.properties.summary[fieldVal + "_" + summary_stat];
+function colorHUC8s() {
+    huc8ColorLayer.setStyle(function (feature) {
+        console.log(feature.properties);
+        stat = feature.properties.summary;
         return {
-            fillColor: exceedanceColor(stat),
+            fillColor: contributionColor(stat),
             weight: .3,
             opacity: 0.9,
             color: 'black',
@@ -448,11 +461,12 @@ function colorHUC8s(fieldVal, summary_stat) {
 
 
 //style HUC12's based on summary statistics of a given toxicity threshold exceedance probability
-function colorHUC12s(fieldVal, summary_stat) {
-    huc12s.setStyle(function(feature) {
-        stat = feature.properties.summary[fieldVal + "_" + summary_stat];
+function colorHUC12s() {
+    huc12s.setStyle(function (feature) {
+        console.log(feature.properties)
+        stat = feature.properties.summary;
         return {
-            fillColor: exceedanceColor(stat),
+            fillColor: contributionColor(stat),
             weight: .3,
             opacity: 0.9,
             color: 'black',
@@ -467,8 +481,8 @@ function colorHUC12s(fieldVal, summary_stat) {
 // for the selected HUC8 (clicked), set border to be thicker
 function setSelectedHUC8(hucID) {
     huc8Layer.setStyle({weight: 0.3});
-    huc8Layer.setStyle(function(feature) {
-        if(feature.properties.HUC_CODE == hucID){
+    huc8Layer.setStyle(function (feature) {
+        if (feature.properties.HUC_CODE == hucID) {
             return {
                 weight: 2.0
             }
@@ -478,37 +492,40 @@ function setSelectedHUC8(hucID) {
 
 
 // called when huc12 layer is clicked, sets the clicked feature to be outlined
-function setSelectedHUC12(layer){
+function setSelectedHUC12(layer) {
     huc12s.setStyle({weight: 0.3});
-    layer.setStyle({weight:2.0});
+    layer.setStyle({weight: 2.0});
     selectedHuc12 = layer;
 }
 
 
-
 // returns the huc8 feature for a given huc8 ID
-function fetchHUC8Shape(hucID){
+function fetchHUC8Shape(hucID) {
     DEBUG && console.log(hucID);
-    var out = huc8s.features.filter(function(x) { return x.properties.HUC_CODE == hucID})[0];
+    var out = huc8s.features.filter(function (x) {
+        return x.properties.HUC_CODE == hucID
+    })[0];
     return out;
 }
 
 //returns a given summary stat for a hucID, from the huc8 geojson
-function fetchHUC8LayerData(hucID, summary_stat){
+function fetchHUC8LayerData(hucID, summary_stat) {
     feat = fetchHUC8Shape(hucID);
     return feat.properties.summary[summary_stat]
 }
 
 
 // returns the huc12 feature for a given huc12 ID
-function fetchHUC12Shape(hucID){
+function fetchHUC12Shape(hucID) {
     DEBUG && console.log(hucID);
-    var out = huc12_json.features.filter(function(x) { return x.properties.HUC_12 == hucID})[0];
+    var out = huc12_json.features.filter(function (x) {
+        return x.properties.HUC_12 == hucID
+    })[0];
     return out;
 }
 
 //returns a given summary stat for a huc12, from the huc12 geojson
-function fetchHUC12LayerData(hucID, summary_stat){
+function fetchHUC12LayerData(hucID, summary_stat) {
     feat = fetchHUC12Shape(hucID);
     return feat.properties.summary[summary_stat]
 }
@@ -523,10 +540,9 @@ function clearMap() {
 
 //grab huc8 summary stats for a certain huc, from the object created in watershed_map_scripts.js
 function fetchHUC8Statistics(huc_code) {
-    if(summaryHUC8Data[huc_code] != null) {
+    if (summaryHUC8Data[huc_code] != null) {
         return summaryHUC8Data[huc_code]
-    }
-    else {
+    } else {
         return 'not_run'
     }
 }
@@ -534,10 +550,9 @@ function fetchHUC8Statistics(huc_code) {
 
 //grab huc12 summary stats for a certain huc
 function fetchHUC12Statistics(huc_code) {
-    if(summaryHUC12Data[huc_code] != null) {
+    if (summaryHUC12Data[huc_code] != null) {
         return summaryHUC12Data[huc_code]
-    }
-    else {
+    } else {
         return 'not_run'
     }
 }
@@ -560,22 +575,24 @@ function addHUC12Statistics() {
 
 
 // Content for the popup bubble, based on the selected huc's id number and name and area
-function popupContent(hucNumber, hucName, hucArea){
+function popupContent(hucNumber, hucName, hucArea) {
     var e1 = document.createElement('div');
     e1.classList.add("huc_popup");
     e1.innerHTML = '<h3> <strong> Watershed Summary </strong></h3>';
     e1.innerHTML += '<strong>HUC#: </strong>' + hucNumber + '<br><strong>' + 'Name: </strong>' + hucName;
-    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(hucArea).toFixed(2) + ' km'+'2'.sup();
+    e1.innerHTML += '<br><strong> Catchment area: </strong>' + Number(hucArea).toFixed(2) + ' km' + '2'.sup();
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
-    e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^'+summary_select[0]+''), summary_select[0].toUpperCase()) +
+    e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^' + summary_select[0] + ''), summary_select[0].toUpperCase()) +
         ' probability of exceedance: </strong><br>';
-    if(hucNumber.length == 8){
-            prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
-    } else{
+    if (hucNumber.length == 8) {
+        prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
+    } else {
         prob = Number(fetchHUC12LayerData(hucNumber, summary_stat)).toFixed(2);
     }
-    if(isNaN(prob)){prob = "Not calculated";}
+    if (isNaN(prob)) {
+        prob = "Not calculated";
+    }
     e1.innerHTML += prob;
     return e1;
 }
@@ -610,9 +627,9 @@ function GetHuc(latitude, longitude) {
             selectedHuc = L.geoJSON(huc_data, {
                 style: hucStyleSelected,
                 onEachFeature: function onEachFeature(feature, layer) {
-                    layer.on('click', function(e) {
+                    layer.on('click', function (e) {
                         var zoomLvl = map.getZoom();
-                        if(zoomLvl >= 11) {
+                        if (zoomLvl >= 11) {
                             onMapClick(e);
                         }
                     });
@@ -624,10 +641,10 @@ function GetHuc(latitude, longitude) {
             setSelectedHUC8(selectedHucNumber);
             //map.fitBounds(selectedHuc.getBounds());
             selectedHuc.bindPopup(popupContent(selectedHucNumber, selectedHucName, selectedHucArea)).openPopup();
-            if(map.getZoom() > 8){
-                map.setZoom(8,{animate:false});
+            if (map.getZoom() > 8) {
+                map.setZoom(8, {animate: false});
             }
-            map.panTo(selectedHuc.getBounds().getCenter(),{animate:false});
+            map.panTo(selectedHuc.getBounds().getCenter(), {animate: false});
             //map.setContent('Selected');
         },
         error: function () {
@@ -638,7 +655,7 @@ function GetHuc(latitude, longitude) {
 
 
 // HUC8 on click action
-function hucOnClick(e){
+function hucOnClick(e) {
     GetHuc(e.latlng.lat, e.latlng.lng);
 }
 
@@ -647,13 +664,13 @@ function hucOnClick(e){
 //                         if zoomed to huc8 level, routes to huc8 click handler
 //                         if zoomed to huc12 level, the code here should not run run as it will be intercepted by the
 //                          huc12 layer's own onclick handler
-function onMapClick(e){
+function onMapClick(e) {
     var zoomLvl = map.getZoom();
-    if(zoomLvl >= 11) {
+    if (zoomLvl >= 11) {
         map.closePopup();
         onStreamMapClick(e);
         return;
-    } else if(zoomLvl >=9){
+    } else if (zoomLvl >= 9) {
         if (map.hasLayer(selectedStream)) {
             map.removeLayer(selectedStream);
         }
@@ -662,7 +679,7 @@ function onMapClick(e){
         $('#latVal').html("");
         $('#lngVal').html("");
         $('#boxid').html("");
-    } else{
+    } else {
         if (map.hasLayer(selectedStream)) {
             map.removeLayer(selectedStream);
         }
@@ -676,25 +693,23 @@ function onMapClick(e){
 }
 
 
-
 // refresh the map, popup content, and info box to reflect new settings
 function refreshOutput(newfield, summaryfield) {
     colorHUC8s(newfield.value, summaryfield.value);//$('#summaryselect').val());
     colorHUC12s(newfield.value, summaryfield.value);//$('#summaryselect').val());
     map.invalidateSize();
-    if(selectedHuc != null){
+    if (selectedHuc != null) {
         setSelectedHUC8(selectedHucNumber);
         selectedHuc.setPopupContent(popupContent(selectedHucNumber, selectedHucName));
     }
-    huc12s.eachLayer(function(layer){
-                layer._popup.setContent(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
-                        layer.feature.properties.AREA_SQKM));});
-    if(selectedHuc12 != null){
+    huc12s.eachLayer(function (layer) {
+        layer._popup.setContent(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
+            layer.feature.properties.AREA_SQKM));
+    });
+    if (selectedHuc12 != null) {
         setSelectedHUC12(selectedHuc12); //redraw the bold lines if a huc12 was selected b/c colorHUC12 reset the lines
     }
 }
-
-
 
 
 var layerLabels;
@@ -762,16 +777,21 @@ function addHUC12s() {
             if (selectedHuc !== null) {
                 map.removeLayer(selectedHuc);
             }
-            huc12_json = JSON.parse(result_huc12s);
+            if (typeof result_huc12s === 'object' && result_huc12s !== null) {
+                huc12_json = result_huc12s;
+            } else {
+                console.log(result_huc12s)
+                huc12_json = JSON.parse(result_huc12s);
+            }
             delete huc12_json["crs"];
             huc12s = L.geoJSON(huc12_json, {
                 style: hucStyle,
                 onEachFeature: function onEachFeature(feature, layer) {
-                    layer.on('click', function(e) {
+                    layer.on('click', function (e) {
                         var zoomLvl = map.getZoom();
-                        if(zoomLvl >= 11) {   //currently redundant as this layer is set to non-interactive at zoom>=11
+                        if (zoomLvl >= 11) {   //currently redundant as this layer is set to non-interactive at zoom>=11
                             onMapClick(e);
-                        } else{
+                        } else {
                             setSelectedHUC12(layer);
                             if (map.hasLayer(selectedStream)) {
                                 map.removeLayer(selectedStream);
@@ -787,10 +807,10 @@ function addHUC12s() {
             });
             setZoomHandler();
             addHUC12Statistics(); //add the huc8 stats to the huc12 layer
-            colorHUC12s($('#fieldselect').val(), $('#summaryselect').val()); //color the hucs
-            huc12s.eachLayer(function(layer){
+            colorHUC12s(); //color the hucs
+            huc12s.eachLayer(function (layer) {
                 layer.bindPopup(popupContent(layer.feature.properties.HUC_12, layer.feature.properties.HU_12_NAME,
-                        layer.feature.properties.AREA_SQKM));
+                    layer.feature.properties.AREA_SQKM));
             });
             map.invalidateSize();
         },
@@ -801,15 +821,13 @@ function addHUC12s() {
 }
 
 
-
-
 //------------ DRINKING WATER INTAKES ------------//
 
 var intakes;
 var intakeMarkers = new L.LayerGroup();
 
 //function to set the popup content for an intake click
-function intakeContent(feature){
+function intakeContent(feature) {
     var in_comid = feature.properties.COMID;
     var in_sourceName = feature.properties.SourceName;
     var in_systemName = feature.properties.SystemName;
@@ -825,48 +843,46 @@ function intakeContent(feature){
 //add the intakes to the map (only those in huc8s that were run)
 function addIntakes() {
     intakes = L.geoJSON(intake_data, {
-                style: {
-                    weight: 0.0,
-                    fill_weight : 0.0
-                },
-                filter: function(feature) {
-                    huc_12 = feature.properties.HUC12;
-                    huc_8 = huc_12.substring(0,8);
-                    if(contains(hucsRun,huc_8)){
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                },
-                onEachFeature: function onEachFeature(feature, layer) {
-                    points = layer.getLatLngs();
-                    //var center = points[Math.floor(points.length/2)];
-                    var center = points[0];
-                    if(typeof(center) != undefined ) {
-                        var marker = L.marker(center);
-                        marker.bindPopup(intakeContent(feature));
-                        intakeMarkers.addLayer(marker);
-                    }
-                }
-            }).addTo(map);
+        style: {
+            weight: 0.0,
+            fill_weight: 0.0
+        },
+        filter: function (feature) {
+            huc_12 = feature.properties.HUC12;
+            huc_8 = huc_12.substring(0, 8);
+            if (contains(hucsRun, huc_8)) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        onEachFeature: function onEachFeature(feature, layer) {
+            points = layer.getLatLngs();
+            //var center = points[Math.floor(points.length/2)];
+            var center = points[0];
+            if (typeof (center) != undefined) {
+                var marker = L.marker(center);
+                marker.bindPopup(intakeContent(feature));
+                intakeMarkers.addLayer(marker);
+            }
+        }
+    }).addTo(map);
     intakeMarkers.addTo(map);
 }
 
-
 //add a legend for the huc coloring
-function addHucLegend(){
+function addHucLegend() {
     legend = L.control({position: 'bottomright'});
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, .1, .2, .3, .4, .5],
+            grades = [0, .2, .4, .6, .8, 1.0],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + exceedanceColor(grades[i] + .01) + '"></i> ' +
+                '<i style="background:' + contributionColor(grades[i] + .01) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 

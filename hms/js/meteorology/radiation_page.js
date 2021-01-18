@@ -1,10 +1,10 @@
 var baseUrl = "/hms/rest/api/v3/meteorology/radiation/";
 
 $(function () {
-    $('#overview_block').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+    // $('#overview_block').accordion({
+    //     collapsible: true,
+    //     heightStyle: "content"
+    // });
     $('#id_area_of_interest').on('change', updateAoISelection);
 
     setTimeout(setOverviewTabindex, 100);

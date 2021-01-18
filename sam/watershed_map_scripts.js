@@ -10,15 +10,15 @@ var start_zoom = 8;
 map.setView(start_point, start_zoom);
 
 // read model output
+console.log("Starting here...")
 readOutputJSON(); //async ajax call
-readSummaryHUC8JSON(); //async ajax call - also triggers HUC12s
+console.log("Next...")
+readSummaryHUC8JSON(); // trip test
 
 // add out data
 var info_box_title = null;
 var info_box_id = null;
 var outLayer = null;
-
-
 
 // load a tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
