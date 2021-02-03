@@ -79,10 +79,6 @@ $(document).ready(function() {
         }
 
         else if ($(this).val() == "2") {
-
-            console.log("Advanced selected.")
-            console.log(disableEnvipath);
-
             // User selected (advanced)
             $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':false}).trigger('change');
             $('#id_abiotic_reduction').prop({'checked': false, 'disabled':false}).trigger('change');
