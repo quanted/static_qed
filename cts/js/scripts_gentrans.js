@@ -11,7 +11,13 @@ $(document).ready(function() {
     var disableBiotrans = false;
     var disableEnvipath = false;
 
-    if (envName == "gdit_aws_stg" || envName == "cgi_azure_docker_dev" || envName == "saic_aws_docker_prod" || envName == "epa_aws_prd") {
+    if (
+        envName == "gdit_aws_stg" || 
+        envName == "cgi_azure_docker_dev" || 
+        envName == "saic_aws_docker_prod" || 
+        envName == "epa_aws_prd" ||
+        envName == "epa_aws_stg"
+    ) {
         // disablePhotolysis = true;
         disableBiotrans = true;
         disableEnvipath = true;
