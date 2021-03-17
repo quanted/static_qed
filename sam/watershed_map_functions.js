@@ -128,7 +128,7 @@ function getStreamData(lat, lng) {
                 var streamData = JSON.parse(data);
             }
             var selectedComid = streamData.output.ary_flowlines[0].comid;
-            var wantedData = outputData.COMID[selectedComid];
+            var wantedData = outputData.intakes.COMID[selectedComid]
             $('#boxid').html(selectedComid);
             addStreamSeg(streamData, selectedComid);
             if (wantedData.length == 0) {
