@@ -318,8 +318,8 @@ function readSummaryHUC8JSON() {
             console.log(reaches)
             console.log("Reading huc8 data")
             summaryHUC8Data = reaches['huc_8'];
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (var key in summaryHUC8Data) {
+                if (summaryHUC8Data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
                 }
             }
