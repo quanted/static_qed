@@ -876,13 +876,13 @@ function addHucLegend() {
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, .2, .4, .6, .8, 1.0],
+            grades = [0, 20, 40, 60, 80, 100],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + contributionColor(grades[i] + .01) + '"></i> ' +
+                '<i style="background:' + contributionColor(grades[i] + 1) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 
