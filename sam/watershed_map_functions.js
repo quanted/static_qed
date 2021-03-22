@@ -511,7 +511,7 @@ function fetchHUC8Shape(hucID) {
 //returns a given summary stat for a hucID, from the huc8 geojson
 function fetchHUC8LayerData(hucID, summary_stat) {
     feat = fetchHUC8Shape(hucID);
-    return feat.properties.summary[summary_stat]
+    return feat.properties.summary
 }
 
 
@@ -527,7 +527,7 @@ function fetchHUC12Shape(hucID) {
 //returns a given summary stat for a huc12, from the huc12 geojson
 function fetchHUC12LayerData(hucID, summary_stat) {
     feat = fetchHUC12Shape(hucID);
-    return feat.properties.summary[summary_stat]
+    return feat.properties.summary
 }
 
 
@@ -584,7 +584,7 @@ function popupContent(hucNumber, hucName, hucArea) {
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
     e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^' + summary_select[0] + ''), summary_select[0].toUpperCase()) +
-        ' probability of exceedance: </strong><br>';
+        ' of chemical mass contribution: </strong><br>';
     if (hucNumber.length == 8) {
         prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
     } else {
