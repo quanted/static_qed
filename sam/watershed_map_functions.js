@@ -318,8 +318,8 @@ function readSummaryHUC8JSON() {
             console.log(reaches)
             console.log("Reading huc8 data")
             summaryHUC8Data = reaches['huc_8'];
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
+            for (var key in summaryHUC8Data) {
+                if (summaryHUC8Data.hasOwnProperty(key)) {
                     hucsRun.push(key);  //track which hucs were actually run!
                 }
             }
@@ -511,7 +511,7 @@ function fetchHUC8Shape(hucID) {
 //returns a given summary stat for a hucID, from the huc8 geojson
 function fetchHUC8LayerData(hucID, summary_stat) {
     feat = fetchHUC8Shape(hucID);
-    return feat.properties.summary[summary_stat]
+    return feat.properties.summary
 }
 
 
@@ -527,7 +527,7 @@ function fetchHUC12Shape(hucID) {
 //returns a given summary stat for a huc12, from the huc12 geojson
 function fetchHUC12LayerData(hucID, summary_stat) {
     feat = fetchHUC12Shape(hucID);
-    return feat.properties.summary[summary_stat]
+    return feat.properties.summary
 }
 
 
@@ -584,7 +584,7 @@ function popupContent(hucNumber, hucName, hucArea) {
     summary_select = $('#summaryselect').val();
     summary_stat = $('#fieldselect').val() + '_' + summary_select;
     e1.innerHTML += '<br><strong>' + summary_select.replace(new RegExp('^' + summary_select[0] + ''), summary_select[0].toUpperCase()) +
-        ' probability of exceedance: </strong><br>';
+        ' of chemical mass contribution: </strong><br>';
     if (hucNumber.length == 8) {
         prob = Number(fetchHUC8LayerData(hucNumber, summary_stat)).toFixed(2);
     } else {
@@ -876,13 +876,13 @@ function addHucLegend() {
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, .2, .4, .6, .8, 1.0],
+            grades = [0, 20, 40, 60, 80, 100],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + contributionColor(grades[i] + .01) + '"></i> ' +
+                '<i style="background:' + contributionColor(grades[i] + 1) + '"></i> ' +
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
 

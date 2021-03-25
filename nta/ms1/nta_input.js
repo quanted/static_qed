@@ -11,6 +11,22 @@ function define_functions(){
             $(this).html(value);
         });
     }).trigger('input change');
+    
+    $("#id_test_files").change(function() {
+        if($(this).val() == 'yes') {                
+            $("#id_pos_input").attr("disabled", "disabled");
+            $("#id_neg_input").attr("disabled", "disabled");
+            $("#id_pos_input").prop('required',false);
+            $("#id_neg_input").prop('required',false);
+
+        }
+        else {
+            $("#id_pos_input").removeAttr("disabled");
+            $("#id_neg_input").removeAttr("disabled");
+            $("#id_pos_input").prop('required',true);
+            $("#id_neg_input").prop('required',true);
+        }
+    });
 
 }
 
