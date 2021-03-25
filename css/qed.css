@@ -15,14 +15,14 @@ a.home-link:hover {
   padding: 0 0 1.5em;
 }
 .headerbar {
-  padding: .5em 0 .5em .5em;
-  background-color: #356;
-  background-image: -moz-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);
-  background-image: -ms-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);
-  background-image: -o-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);
-  background-image: -webkit-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);
-  background-image: linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);
-  color: #fff;
+  /*padding: .0em 0 .5em .5em;*/
+  /*background-color: #356;*/
+  /*background-image: -moz-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);*/
+  /*background-image: -ms-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);*/
+  /*background-image: -o-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);*/
+  /*background-image: -webkit-linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);*/
+  /*background-image: linear-gradient(top, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,.25) 100%);*/
+  color: black;
   /*font-size: 81.25%;*/
   font-weight: bold;
   line-height: 1;
