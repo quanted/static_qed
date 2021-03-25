@@ -13,7 +13,7 @@ function define_functions(){
     }).trigger('input change');
     
     $("#id_test_files").change(function() {
-        if($(this).is(":checked")) {                
+        if($(this).val() == 'yes') {                
             $("#id_pos_input").attr("disabled", "disabled");
             $("#id_neg_input").attr("disabled", "disabled");
 
