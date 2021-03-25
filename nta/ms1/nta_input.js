@@ -16,11 +16,15 @@ function define_functions(){
         if($(this).val() == 'yes') {                
             $("#id_pos_input").attr("disabled", "disabled");
             $("#id_neg_input").attr("disabled", "disabled");
+            $("#id_pos_input").prop('required',false);
+            $("#id_neg_input").prop('required',false);
 
         }
         else {
             $("#id_pos_input").removeAttr("disabled");
             $("#id_neg_input").removeAttr("disabled");
+            $("#id_pos_input").prop('required',true);
+            $("#id_neg_input").prop('required',true);
         }
     });
 
