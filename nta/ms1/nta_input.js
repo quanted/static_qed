@@ -16,8 +16,8 @@ function define_functions(){
         if($(this).val() == 'yes') {                
             $("#id_pos_input").attr("disabled", "disabled");
             $("#id_neg_input").attr("disabled", "disabled");
-            $("#id_pos_input").attr('required',false);
-            $("#id_neg_input").attr('required',false);
+            $("#id_pos_input").removeAttr('required');
+            $("#id_neg_input").removeAttr('required');
 
         }
         else {
