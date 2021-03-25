@@ -11,6 +11,18 @@ function define_functions(){
             $(this).html(value);
         });
     }).trigger('input change');
+    
+    $("#id_test_files").change(function() {
+        if($(this).is(":checked")) {                
+            $("#id_pos_input").attr("disabled", "disabled");
+            $("#id_neg_input").attr("disabled", "disabled");
+
+        }
+        else {
+            $("#id_pos_input").removeAttr("disabled");
+            $("#id_neg_input").removeAttr("disabled");
+        }
+    });
 
 }
 
