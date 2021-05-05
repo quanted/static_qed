@@ -15,5 +15,6 @@
 <li>Updated hydrolysis library to version 1.8</li>
 <li>Updated abiotic reduction library to version 1.5</li>
 <li>Added OPERA p-chem calculator</li>
-
+<li>Added unranked photolysis reaction library</li>
+<li>Reaction pathways in RPS link to corresponding documentation</li>
 </ul>
