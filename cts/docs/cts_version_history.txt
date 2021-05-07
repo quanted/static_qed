@@ -8,3 +8,13 @@
 <li>CSV, PDF, and HTML file downloads for chemical data for all workflows in the single mode, and CSV file downloads for batch mode.</li>
 <li>A set of API endpoints and documentation for other apps/developers to be able to access CTS features programmatically.</li>
 </ul>
+
+<h3>CTS 1.1</h3>
+<p>CTS version 1.1 contains the following features:</p>
+<ul>
+<li>Updated hydrolysis library to version 1.8</li>
+<li>Updated abiotic reduction library to version 1.5</li>
+<li>Added OPERA p-chem calculator</li>
+<li>Added unranked photolysis reaction library</li>
+<li>Reaction pathways in RPS link to corresponding documentation</li>
+</ul>
