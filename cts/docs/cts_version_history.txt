@@ -18,5 +18,4 @@
 <li>Added unranked photolysis reaction library version 1.3</li>
 <li>Added ranked photolysis reaction library version 1.0</li>
 <li>Reaction pathways in Reaction Pathway Simulator (RPS) link to corresponding documentation</li>
-<li>Added spontaneous reaction library version 1.0</li>
 </ul>
