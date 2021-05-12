@@ -245,7 +245,7 @@ $(document).ready(function() {
             alert("Envipath reaction library cannot run with additional reaction libraries");
             $('#cts_reaction_libs input:checkbox').prop('checked', false); 
         }
-        else if (photolysis_unranked_checked && photolysis_ranked_checked) {
+        else if (photolysis_unranked_checked && checkedItems.length != 1) {
             alert("Unranked direct photolysis reaction library cannot run with additional reaction libraries");
             $('#cts_reaction_libs input:checkbox').prop('checked', false);
         }
