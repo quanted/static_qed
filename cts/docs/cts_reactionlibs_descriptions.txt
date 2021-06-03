@@ -39,7 +39,7 @@ Scroll to the bottom of the library documentation page to view a table showing t
 rank assignments for each scheme in the library.
 </p>
 
-<h4><a href="/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-5.htm" target="_blank">Abiotic Reduction Reaction Library</a> (last updated August 6, 2020)</h4>
+<h4><a href="/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-5rev_052721.htm" target="_blank">Abiotic Reduction Reaction Library</a> (last updated August 6, 2020)</h4>
 
 <br><br>
 
