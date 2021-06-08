@@ -19,7 +19,7 @@ $(document).ready(function() {
         envName == "epa_aws_stg"
     ) {
         // disablePhotolysis = true;
-        disableBiotrans = true;
+        // disableBiotrans = true;
         disableEnvipath = true;
     }
 
