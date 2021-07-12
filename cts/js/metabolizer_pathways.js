@@ -5,6 +5,7 @@ Maps for CTS metabolizer reaction pathways.
 // Hydrolysis Library Pathways:
 var hydrolysisReactionMap = {
     'Halogenated Aliphatics: Nucleophilic Substitution': 'Scheme_1',
+    'Halogenated Aliphatics: Nucleophilic Substitution (no adjacent X)': 'Scheme_1',
     'Halogenated Aliphatics: Elimination': 'Scheme_2',
     'Epoxide Hydrolysis': 'Scheme_3',
     'Organophosphorus Ester Hydrolysis 1': 'Scheme_4',
