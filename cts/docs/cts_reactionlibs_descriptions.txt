@@ -39,7 +39,7 @@ Scroll to the bottom of the library documentation page to view a table showing t
 rank assignments for each scheme in the library.
 </p>
 
-<h4><a href="/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-5.htm" target="_blank">Abiotic Reduction Reaction Library</a> (last updated August 6, 2020)</h4>
+<h4><a href="/static_qed/cts/docs/Reduction HTML/AbioticReductionRxnLib_vers1-5rev_052721.htm" target="_blank">Abiotic Reduction Reaction Library</a> (last updated August 6, 2020)</h4>
 
 <br><br>
 
@@ -55,9 +55,9 @@ associated references. Scroll to the bottom of the ranked library documentation 
 to view a table showing the rank assignments for each scheme in the library.
 </p>
 
-<h4><a href="/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0_032721.htm" target="_blank">Direct Photolysis Reaction Library (unranked)</a> (last updated April 21, 2020)</h4>
+<h4><a href="/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-0a_051721.htm" target="_blank">Direct Photolysis Reaction Library (unranked)</a> (last updated April 21, 2020)</h4>
 
-<h4><a href="/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-3_042121.htm" target="_blank">Direct Photolysis Reaction Library (ranked)</a> (last updated April 30, 2021)</h4>
+<h4><a href="/static_qed/cts/docs/Direct Photolysis HTML/DirectPhotolysisRxnLib_ver1-3a_051721.htm" target="_blank">Direct Photolysis Reaction Library (ranked)</a> (last updated April 30, 2021)</h4>
 
 <br><br>
 
