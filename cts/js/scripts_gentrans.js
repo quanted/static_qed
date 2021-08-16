@@ -15,8 +15,7 @@ $(document).ready(function() {
         envName == "gdit_aws_stg" || 
         envName == "cgi_azure_docker_dev" || 
         envName == "saic_aws_docker_prod" || 
-        envName == "epa_aws_prd" ||
-        envName == "epa_aws_stg"
+        envName == "epa_aws_prd"
     ) {
         // disablePhotolysis = true;
         // disableBiotrans = true;
