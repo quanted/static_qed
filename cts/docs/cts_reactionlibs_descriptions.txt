@@ -85,3 +85,21 @@ the reaction schemes cannot be viewed.
 <h4><a href="/static_qed/cts/docs/Metabolizer HTML/MetabolizerDefaultLibrary_SchemeList.htm" target="_blank">List of Schemes Included in ChemAxon&#39;s Human Phase 1 Metabolism Reaction Library</a> (last updated July 2016)</h4>
 
 <br><br>
+
+<h3>Biotransformer Metabolism API</h3>
+<p>
+BioTransformer is a software tool that predicts small molecule metabolism in mammals, their gut microbiota, as well as the soil/aquatic microbiota. Moreover, it can also assist scientists in the identification of metabolites, which is based on the metabolism prediction. BioTransformer uses both a knowledge-based approach and a machine learning based approach to predict small molecules metabolism. In particular, BioTransformer consists of five independent modules: EC-based, CYP450, Phase II, Human Gut Microbial and Environmental Microbial.
+</p>
+
+<h4><a href="http://biotransformer.ca/">Visit biotransformer homepage</a><a class="exit-disclaimer" href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>
+
+<br><br><br><br>
+
+<h3>enviPath Pathway Prediction API</h3>
+<p>
+enviPath is a database and prediction system for the microbial biotransformation of organic environmental contaminants. The database provides the possibility to store and view experimentally observed biotransformation pathways. The pathway prediction system provides different relative reasoning models to predict likely biotransformation pathways and products.
+</p>
+
+<h4><a href="https://envipath.org/">Visit enviPath homepage</a><a class="exit-disclaimer" href="https://www.epa.gov/home/exit-epa" title="EPA's External Link Disclaimer">Exit</a>
+
+<br><br>
