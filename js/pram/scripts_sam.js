@@ -2,9 +2,7 @@ $(document).ready(function() {
 	// Call function to setup tabbed nav
 	uberNavTabs(
 		["Chemical", "Application", "Simulation", "Output"],
-		{   "isSubTabs":false   }
-	$('id_sim_type').attr("disabled", true);  # disable sim type eco until developed
-	);
+		{   "isSubTabs":false   });
 
     // BETA disclaimer
     //setTimeout(function() {alert("Disclaimer: " +
@@ -389,7 +387,7 @@ $(document).ready(function() {
         alert("Only 'Uniform Step Application over Window' is currently allowed.  Upon model submission," +
         "the 'Refinement' will automatically switch to that option.");
     }
-
 	$(".Chemical").trigger("click");
+	//$('#id_sim_type').attr("disabled", "true"); //disable sim type eco until developed
 
 });
