@@ -388,6 +388,6 @@ $(document).ready(function() {
         "the 'Refinement' will automatically switch to that option.");
     }
 	$(".Chemical").trigger("click");
-	$('#id_sim_type').attr("disabled", "true"); //disable sim type eco until developed
+	//$('#id_sim_type').attr("disabled", "true"); //disable sim type eco until developed
 
 });
