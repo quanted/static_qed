@@ -2,9 +2,8 @@ $(document).ready(function() {
 	// Call function to setup tabbed nav
 	uberNavTabs(
 		["Chemical", "Application", "Simulation", "Output"],
-		{   "isSubTabs":false   }
+		{   "isSubTabs":false   });
 	$('id_sim_type').attr("disabled", true);  # disable sim type eco until developed
-	);
 
     // BETA disclaimer
     //setTimeout(function() {alert("Disclaimer: " +
