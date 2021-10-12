@@ -3,7 +3,7 @@ $(document).ready(function() {
 	uberNavTabs(
 		["Chemical", "Application", "Simulation", "Output"],
 		{   "isSubTabs":false   });
-	$('id_sim_type').attr("disabled", true);  # disable sim type eco until developed
+	$('id_sim_type').attr("disabled", true); //disable sim type eco until developed
 
     // BETA disclaimer
     //setTimeout(function() {alert("Disclaimer: " +
