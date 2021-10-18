@@ -296,6 +296,7 @@ function clearReactionLib() {
     $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':true});
     $('#id_biotrans_libs').prop({'disabled':true});
     $('#id_envipath_metabolism').prop({'checked': false, 'disabled':true});
+    $('input#id_include_rates').attr({'checked': false, 'disabled': true});
 }
 
 
