@@ -1,24 +1,38 @@
 var marvinSketcherInstance;
+var ketcherInstance;
 
 $(document).ready(function handleDocumentReady (e) {});
 
 function initiateMarvinInstance(jchem_server) {
-  try {
 
-    MarvinJSUtil.getEditor("#sketch").then(function (sketcherInstance) {
-      marvinSketcherInstance = sketcherInstance;
-      var services = localGetDefaultServices(jchem_server);  // sets jchem server settings
-      marvinSketcherInstance.setServices(services);
-      loadCachedChemical();
-      // initControl(); //binds action to initControl() function
-    }, function (error) {
-      alert("Cannot retrieve sketcher instance from iframe:"+error);
-    });
+  try {
+    // ketcher = ketcherWindow.ketcher;
+    var ketcherFrame = document.getElementById('ifKetcher');
+    console.log("Ketcher frame: ", ketcherFrame)
+    ketcherInstance = ketcherFrame.contentWindow.ketcher;
+    console.log("Ketcher instance: ", ketcherInstance);
   }
   catch (e) {
-    console.log("no marvin sketch instance here");
+    console.log("Error getting ketcher instance: ", e)
     return;
   }
+
+  // try {
+
+  //   MarvinJSUtil.getEditor("#sketch").then(function (sketcherInstance) {
+  //     marvinSketcherInstance = sketcherInstance;
+  //     var services = localGetDefaultServices(jchem_server);  // sets jchem server settings
+  //     marvinSketcherInstance.setServices(services);
+  //     loadCachedChemical();
+  //     // initControl(); //binds action to initControl() function
+  //   }, function (error) {
+  //     alert("Cannot retrieve sketcher instance from iframe:"+error);
+  //   });
+  // }
+  // catch (e) {
+  //   console.log("no marvin sketch instance here");
+  //   return;
+  // }
   $('#setSmilesButton').on('click', importMol); // map button click to function
   $('#getSmilesButton').on('click', importMolFromCanvas);
   var browserWidth = $(window).width();
@@ -108,14 +122,18 @@ function importMol(chemical) {
 }
 
 function importMolFromCanvas() {
-  //Gets smiles, iupac, formula, mass for chemical 
-  //drawn in MarvinJS
-  marvinSketcherInstance.exportStructure("mrv").then(function(mrv_chemical) {
-    if (mrv_chemical == '<cml><MDocument></MDocument></cml>') {
+  /*
+  Gets smiles, iupac, formula, mass for chemical 
+  drawn in MarvinJS.
+  */
+  ketcherInstance.getSmilesAsync().then((smilesFromStructre) => {
+
+    if (smilesFromStructre.length < 1) {
       displayErrorInTextbox("Draw a chemical first..");
       return;
     }
-    var chemical_obj = {'chemical': mrv_chemical, 'get_structure_data': true};
+
+    var chemical_obj = {'chemical': smilesFromStructre, 'get_structure_data': true};
     getChemDetails(chemical_obj, function (molecule_info) {
       // put orig smiles in "lookup chemical" box for drawn chemical:
       molecule_info['data']['chemical'] = molecule_info['data']['orig_smiles'];
@@ -130,7 +148,9 @@ function importMolFromCanvas() {
         scrollTop: $('#chemEditDraw').offset().top + headerHeight
       }, 'slow');
     });
+    
   });
+
 }
 
 function getChemDetails(chemical_obj, callback) {
@@ -154,7 +174,11 @@ function populateChemEditDOM(data) {
   $('#mass').val(data["mass"]); //Mass txtbox - results table
   $('#exactmass').val(data['exactMass']);
   try {
-    marvinSketcherInstance.importStructure("mrv", data.structureData.structure);
+    // marvinSketcherInstance.importStructure("mrv", data.structureData.structure);
+
+    console.log("Loading the following structure to Ketcher: ", data.structureData.structure)
+
+    ketcherInstance.setMolecule(data.structureData.structure);
   }
   catch (e) {
     console.log(e);
@@ -184,7 +208,8 @@ function clearChemicalEditorContent() {
   $('#mass').val("");
   $('#exactmass').val("");
   try {
-    marvinSketcherInstance.clear(); //clear marvin sketch
+    // marvinSketcherInstance.clear(); //clear marvin sketch
+    ketcherInstance.clean();
   }
   catch (e) {
     return;
