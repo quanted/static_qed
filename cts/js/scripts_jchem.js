@@ -12,7 +12,7 @@ function initiateMarvinInstance(jchem_server) {
     setTimeout(() => {
       ketcherInstance = ketcherFrame.contentWindow.ketcher;
       console.log("Ketcher instance: ", ketcherInstance);
-    }, 500);
+    }, 2000);
   }
   catch (e) {
     console.log("Error getting ketcher instance: ", e)
