@@ -9,8 +9,10 @@ function initiateMarvinInstance(jchem_server) {
     // ketcher = ketcherWindow.ketcher;
     var ketcherFrame = document.getElementById('ifKetcher');
     console.log("Ketcher frame: ", ketcherFrame)
-    ketcherInstance = ketcherFrame.contentWindow.ketcher;
-    console.log("Ketcher instance: ", ketcherInstance);
+    setTimeout(() => {
+      ketcherInstance = ketcherFrame.contentWindow.ketcher;
+      console.log("Ketcher instance: ", ketcherInstance);
+    }, 500);
   }
   catch (e) {
     console.log("Error getting ketcher instance: ", e)
@@ -148,7 +150,7 @@ function importMolFromCanvas() {
         scrollTop: $('#chemEditDraw').offset().top + headerHeight
       }, 'slow');
     });
-    
+
   });
 
 }
@@ -209,9 +211,12 @@ function clearChemicalEditorContent() {
   $('#exactmass').val("");
   try {
     // marvinSketcherInstance.clear(); //clear marvin sketch
-    ketcherInstance.clean();
+    // ketcherInstance.clean();
+    // ketcherInstance.clear();
+    ketcherInstance.formatterFactory.structService.clean();
   }
   catch (e) {
+    console.log("Error clearing chemical editor content: ", e)
     return;
   }
 }
