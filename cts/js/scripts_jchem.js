@@ -1,19 +1,17 @@
-var marvinSketcherInstance;
-var ketcherInstance = null;
 var ketcherFrame = null;
 
 $(document).ready(function handleDocumentReady (e) {});
 
-function initiateMarvinInstance(jchem_server) {
+function initiateKetcherInstance(jchem_server) {
 
   try {
     ketcherFrame = document.getElementById('ifKetcher');
+    loadCachedChemical();
   }
   catch (e) {
     console.log("Error getting ketcher instance: ", e)
     return;
   }
-
   $('#setSmilesButton').on('click', importMol); // map button click to function
   $('#getSmilesButton').on('click', importMolFromCanvas);
   var browserWidth = $(window).width();
@@ -61,13 +59,13 @@ function loadCachedChemical() {
   var cachedMolecule = JSON.parse(sessionStorage.getItem('molecule'));
   if (cachedMolecule !== null) {
     populateChemEditDOM(cachedMolecule);
+    // Checking for missing MarvinSketch, if there isn't
+    // <cml> data for it, then it requests it:
+    checkForKetcherData(cachedMolecule);
   }
-  // Checking for missing MarvinSketch, if there isn't
-  // <cml> data for it, then it requests it:
-  checkForMarvinSketchData(cachedMolecule);
 }
 
-function checkForMarvinSketchData(cachedMolecule) {
+function checkForKetcherData(cachedMolecule) {
   // Checks for missing MarvinSketch, if there isn't
   // <cml> data for it, then it requests it:
   if (!('structureData' in cachedMolecule)) {
@@ -189,7 +187,6 @@ function clearChemicalEditorContent() {
   $('#mass').val("");
   $('#exactmass').val("");
   try {
-    // TODO: Clear Ketcher drawer
     // ketcherInstance.clean();
     // ketcherInstance.clear();
     // ketcherInstance.formatterFactory.structService.clean();
