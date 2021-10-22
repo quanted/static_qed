@@ -267,6 +267,14 @@ $(document).ready(function() {
             $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', false);
         }
 
+        if (ahydro_checked === true) {
+            // Enables half-life checkbox for abiotiotic hydrolysis
+            $('input#id_include_rates').attr('disabled', false);
+        }
+        else {
+            $('input#id_include_rates').attr('disabled', true);
+        }
+
     });
 
 });
@@ -288,6 +296,7 @@ function clearReactionLib() {
     $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':true});
     $('#id_biotrans_libs').prop({'disabled':true});
     $('#id_envipath_metabolism').prop({'checked': false, 'disabled':true});
+    $('input#id_include_rates').attr({'checked': false, 'disabled': true});
 }
 
 
