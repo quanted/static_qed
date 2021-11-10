@@ -25,6 +25,15 @@ $( document ).ready(function() {
 
 		e.preventDefault();
 
+		// If submit button doesn't have brightBorders (model ready for submission),
+		// then display alert that inputs must be selected before submitting model.
+		var submitReady = $('input.brightBorders');
+		if (submitReady.length < 1) {
+			// Display alert to select inputs before submitting model:
+			alert("User must select model inputs before submitting..");
+			return;
+		}
+
 		// implement field validation for checked tables:
 		var tables_to_validate = $('table input:checkbox:checked').closest('table');
 		var input_fields = $(tables_to_validate).find('input').not('input:checkbox');
@@ -56,7 +65,7 @@ $( document ).ready(function() {
 		//tab classes: [Chemical, Speciation] and [tabSel, tabUnsel]
 		//divs have classes: tab_Chemical or tab_Speciation
 
-		$('input:visible, textarea:visible').each(function () {
+		$('input:visible, textarea:visible').not('#id_kow_ph').each(function () {
 			switch(this.type) {
 				case 'text':
 					$(this).val('');
@@ -147,6 +156,14 @@ function uberNavTabs( modelTabs, subTabs ) {
 		// validate fields before tabbing
 		if (!form.parsley().isValid()) { return; } // return if form not valid
 
+		// Checking that chemical info has been obtained before moving on:
+		var isInputsPage = window.location.href.indexOf('input') > 0;  // only perform Results table check if on inputs endpoint
+		if (isInputsPage && !inputChemIsValid()) {
+			alert("Enter or draw a chemical, then click to get chemical information before going to next page.");
+			return;
+		}
+
+
 		// Check if "li" element has class (ignores the input buttons)
 		if ($(this).attr('class')) {
 			var testClass = $(this).attr("class").split(' ')[0];
@@ -170,6 +187,8 @@ function uberNavTabs( modelTabs, subTabs ) {
 				if ( subTabs.isSubTabs && subTabs.hasOwnProperty(testClass) ) {
 					$(subTabs[testClass].toString()).show();
 				}
+
+
 			}
 
 			if ( curr_ind > 0 && curr_ind < (modelTabs.length-1) ) {
@@ -182,6 +201,7 @@ function uberNavTabs( modelTabs, subTabs ) {
 				if ( subTabs.isSubTabs && subTabs.hasOwnProperty(testClass) ) {
 					$(subTabs[testClass].toString()).show();
 				}
+
 			}
 
 			if ( curr_ind == (modelTabs.length-1) ) {
@@ -201,6 +221,14 @@ function uberNavTabs( modelTabs, subTabs ) {
 	$('.next').click(function () {
 
         if (!validFields()) { return; }
+
+        // Checking that chemical info has been obtained before moving on:
+       	var isInputsPage = window.location.href.indexOf('input') > 0;  // only perform Results table check if on inputs endpoint
+		if (isInputsPage && !inputChemIsValid()) {
+			// Returns before going to next tab.
+			// Note: li tab nav click is triggered, so Results check is performed.
+			return;
+		}
 
 		window.scroll(0,0); //scroll to top
 
@@ -277,4 +305,17 @@ function validFields() {
     var form = $('#form');
     form.parsley().validate(); // validate form
     return form.parsley().isValid(); // check if form is valid
+}
+
+
+
+function inputChemIsValid() {
+	// Makes sure Results table has values before going to next inputs section
+	var textAreaText = $('textarea#chemical').val();
+	if (textAreaText.length < 1) {
+		// Displays error message about submitting a chemical before
+		// going to the next set of model inputs:
+		return false;
+	}
+	return true;
 }

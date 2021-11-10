@@ -7,12 +7,30 @@
 
 $(document).ready(function() {
 
+    var disablePhotolysis = false;
+    var disableBiotrans = false;
+    var disableEnvipath = false;
+
+    if (
+        envName == "gdit_aws_stg" || 
+        envName == "cgi_azure_docker_dev" || 
+        envName == "saic_aws_docker_prod" || 
+        envName == "epa_aws_prd" ||
+        envName == "epa_aws_stg"
+    ) {
+        // disablePhotolysis = true;
+        // disableBiotrans = true;
+        disableEnvipath = true;
+    }
+
     var gentrans_tables = '#oecd_selection, #ftt_selection, #health_selection, ' +
                             '#cts_reaction_sys, #respiration_tbl'; // tables to hide/show
 
     var unaviable_options = 'select[name=ftt_selection] option[value=2], ' + 
         'select[name=ftt_selection] option[value=3], select[name=pop_limit], ' +
-        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad';
+        '#id_aerobic_biodegrad, #id_anaerobic_biodegrad' +
+        'select[name=pfas_environment] option' +
+        'select[name=pfas_metabolism] option';
 
     if (typeof uberNavTabs == 'function') {
         uberNavTabs(
@@ -37,9 +55,15 @@ $(document).ready(function() {
     $(unaviable_options).prop('disabled', true); // these options are currently not available
 
     // disable checkboxes and submit button
-    $('#cts_reaction_libs input[type="checkbox"], input.submit').prop('disabled', true);
+    // $('#cts_reaction_libs input[type="checkbox"], input.submit').prop('disabled', true);
+    $('#cts_reaction_libs input[type="checkbox"], #id_biotrans_libs').prop('disabled', true);
 
     brightenBorder($('#cts_reaction_paths')); // brighten first table for user input
+
+
+    if ($('table#cts_biotrans_libs').length > 0) {
+        $('input.submit').addClass('brightBorders');
+    }
 
 
     $("input[name='reaction_paths']").change(function() {
@@ -47,23 +71,35 @@ $(document).ready(function() {
         $(gentrans_tables).hide();
 
         if ($(this).val() == "0") {
-            //If "Reaction System" is selected
+            // Reaction System Guidelines
             $('#cts_reaction_sys').show();
             clearReactionLib();
             brightenBorder($('#cts_reaction_sys'));
         }
 
         else if ($(this).val() == "1") {
+            // OCSPP Guidelines
             $('#oecd_selection').show();
             clearReactionLib();
             brightenBorder($('#oecd_selection'));
         }
 
         else if ($(this).val() == "2") {
-            // only show Reaction Library if user selected checked
+            // User selected (advanced)
             $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':false}).trigger('change');
             $('#id_abiotic_reduction').prop({'checked': false, 'disabled':false}).trigger('change');
             $('#id_mamm_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
+            if (!disablePhotolysis) {
+                $('#id_photolysis_unranked').prop({'checked': false, 'disabled':false}).trigger('change');
+                $('#id_photolysis_ranked').prop({'checked': false, 'disabled':false}).trigger('change');
+            }
+            if (!disableBiotrans) {
+                $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
+                $('#id_biotrans_libs').prop({'disabled':false}).trigger('change');   
+            }
+            if (!disableEnvipath) {
+                $('#id_envipath_metabolism').prop({'checked': false, 'disabled':false}).trigger('change');
+            }
             brightenBorder($('#cts_reaction_libs'));
         }
 
@@ -187,24 +223,52 @@ $(document).ready(function() {
     // Enable submit only if a reaction library is selected
     $('#cts_reaction_libs input:checkbox').on("change", function() {
 
-        // Mammalian metabolism should not run with any other reaction library..
-        // if (this.
+        var checkedItems = $('#cts_reaction_libs input:checkbox:checked');
+
         var mamm_meta_checked = $('#id_mamm_metabolism:checked').length > 0;
         var areduct_checked = $('#id_abiotic_reduction:checked').length > 0;
         var ahydro_checked = $('#id_abiotic_hydrolysis:checked').length > 0;
-        if (mamm_meta_checked && (areduct_checked || ahydro_checked)) {
-            $('#id_mamm_metabolism').prop({'checked': false});  // uncheck, disable if mamm meta checked
-            // if (areduct_checked || areduct_checked) {
-                alert("Mammalian metabolism should not run with additional reaction libraries");
-            // }
+        var photolysis_unranked_checked = $('#id_photolysis_unranked:checked').length > 0;
+        var photolysis_ranked_checked = $('#id_photolysis_ranked:checked').length > 0;
+        var biotrans_checked = $('#id_biotrans_metabolism:checked').length > 0;
+        var envipath_checked = $('#id_envipath_metabolism:checked').length > 0;
+
+        if (mamm_meta_checked && checkedItems.length != 1) {
+            alert("Mammalian metabolism reaction library cannot run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
+        }
+        else if (biotrans_checked && checkedItems.length != 1) {
+            alert("Biotransformer reaction library cannot run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
+        }
+        else if (envipath_checked && checkedItems.length != 1) {
+            alert("Envipath reaction library cannot run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false); 
+        }
+        else if (photolysis_unranked_checked && checkedItems.length != 1) {
+            alert("Unranked direct photolysis reaction library cannot run with additional reaction libraries");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
+        }
+        else if (photolysis_ranked_checked && (photolysis_unranked_checked || areduct_checked)) {
+            alert("Ranked direct photolysis reaction library can only be combined with abiotic hydrolysis library");
+            $('#cts_reaction_libs input:checkbox').prop('checked', false);
         }
 
         if ($('#cts_reaction_libs input:checkbox:checked').length > 0) {
-            $('input.submit').prop('disabled', false).addClass('brightBorders');
+            $('input.submit').addClass('brightBorders');
         }
         else {
-            $('input.submit').prop('disabled', true).removeClass('brightBorders');
+            $('input.submit').removeClass('brightBorders');
         }
+
+        if (photolysis_unranked_checked || photolysis_ranked_checked || biotrans_checked || envipath_checked) {
+            // limits generation to 2 for photolysis library:
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', true);
+        }
+        else {
+            $('select#id_gen_limit').children('option[value="3"], option[value="4"]').attr('disabled', false);
+        }
+
     });
 
 });
@@ -218,9 +282,14 @@ function brightenBorder(element) {
 
 
 function clearReactionLib() {
-    $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':true}).trigger('change');
-    $('#id_abiotic_reduction').prop({'checked': false, 'disabled':true}).trigger('change');
-    $('#id_mamm_metabolism').prop({'checked': false, 'disabled':true}).trigger('change');
+    $('#id_abiotic_hydrolysis').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_abiotic_reduction').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_mamm_metabolism').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_photolysis_unranked').prop({'checked': false, 'disabled':true});  //.trigger('change');
+    $('#id_photolysis_ranked').prop({'checked': false, 'disabled':true});
+    $('#id_biotrans_metabolism').prop({'checked': false, 'disabled':true});
+    $('#id_biotrans_libs').prop({'disabled':true});
+    $('#id_envipath_metabolism').prop({'checked': false, 'disabled':true});
 }
 
 

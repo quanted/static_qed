@@ -1,13 +1,13 @@
 /*
- * qTip2 - Pretty powerful tooltips - v2.2.1
+ * qTip2 - Pretty powerful tooltips - v3.0.3
  * http://qtip2.com
  *
- * Copyright (c) 2014 
+ * Copyright (c) 2016 
  * Released under the MIT licenses
  * http://jquery.org/license
  *
- * Date: Mon Sep 8 2014 11:27 EDT-0400
- * Plugins: ie6
+ * Date: Wed May 11 2016 10:31 GMT+0100+0100
+ * Plugins: tips modal viewport svg imagemap ie6
  * Styles: core basic css3
  */
 .qtip{
@@ -16,8 +16,7 @@
 	top: -28000px;
 	display: none;
 
-	/*max-width: 280px;*/
-	/*max-width: 400px;*/
+	max-width: 280px;
 	min-width: 50px;
 
 	font-size: 10.5px;
@@ -556,6 +555,61 @@
 	filter: none;
 	-ms-filter: none;
 }
+
+
+.qtip .qtip-tip{
+	margin: 0 auto;
+	overflow: hidden;
+	z-index: 10;
+
+}
+
+	/* Opera bug #357 - Incorrect tip position
+	https://github.com/Craga89/qTip2/issues/367 */
+	x:-o-prefocus, .qtip .qtip-tip{
+		visibility: hidden;
+	}
+
+	.qtip .qtip-tip,
+	.qtip .qtip-tip .qtip-vml,
+	.qtip .qtip-tip canvas{
+		position: absolute;
+
+		color: #123456;
+		background: transparent;
+		border: 0 dashed transparent;
+	}
+
+	.qtip .qtip-tip canvas{ top: 0; left: 0; }
+
+	.qtip .qtip-tip .qtip-vml{
+		behavior: url(#default#VML);
+		display: inline-block;
+		visibility: visible;
+	}
+
+
+#qtip-overlay{
+	position: fixed;
+	left: 0; top: 0;
+	width: 100%; height: 100%;
+}
+
+	/* Applied to modals with show.modal.blur set to true */
+	#qtip-overlay.blurs{ cursor: pointer; }
+
+	/* Change opacity of overlay here */
+	#qtip-overlay div{
+		position: absolute;
+		left: 0; top: 0;
+		width: 100%; height: 100%;
+
+		background-color: black;
+
+		opacity: 0.7;
+		filter:alpha(opacity=70);
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	}
 
 
 .qtipmodal-ie6fix{
