@@ -734,7 +734,12 @@ function populateFishTable(data) {
                 "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
             },
             {
-                "type": "num", "target": 20
+                "target": 20,
+                "render": function(data, type, row){
+                    if(data === -9999){
+                        return "No Model"
+                    }
+                }
             }
         ],
         select: {
@@ -929,9 +934,6 @@ function populateFilteredFishTableV2(data) {
                     return Number(data).toFixed(2);
                 },
                 "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-            },
-            {
-                "type": "num", "target": 19
             }
         ],
         sorting: false,
