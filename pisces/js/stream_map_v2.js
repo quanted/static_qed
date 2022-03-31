@@ -735,12 +735,17 @@ function populateFishTable(data) {
             },
             {
                 "targets": 20,
-                "render": function(data, type, row){
-                    if(data === -9999){
-                        return "No Model";
-                    }
-                }
+                "type": "num"
             },
+            // {
+            //     "targets": 20,
+            //     "render": function(data, type, row){
+            //         if(data < 0){
+            //             return "No Model";
+            //         }
+            //         return data;
+            //     }
+            // },
             {
                 "targets": 20,
                 "render": function(data, type, row){
@@ -749,7 +754,10 @@ function populateFishTable(data) {
                         if(value === "No Model"){
                             value = -9999;
                         }
-                        return value;
+                        return Number(value);
+                    }
+                    if(data < 0){
+                        return "No Model";
                     }
                     return data;
                 }
