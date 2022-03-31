@@ -732,6 +732,9 @@ function populateFishTable(data) {
                     return Number(data).toFixed(2);
                 },
                 "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+            },
+            {
+                "type": "numeric", "target": 20
             }
         ],
         select: {
@@ -741,7 +744,7 @@ function populateFishTable(data) {
         searching: false,
         paging: false,
         bInfo: false,
-        "order": [[1, 'asc']]
+        "order": [[20, 'asc']]
 
     };
     $('#fishTable').closest('div').show();
@@ -932,7 +935,7 @@ function populateFilteredFishTableV2(data) {
         searching: false,
         paging: false,
         bInfo: false,
-        "order": [[0, 'asc']]
+        "order": [[19, 'asc']]
     };
     $('#filteredFishTable').closest('div').show();
     $('#filteredFishTable').DataTable(config);
