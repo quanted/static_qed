@@ -737,7 +737,7 @@ function populateFishTable(data) {
                 "target": 20,
                 "render": function(data, type, row){
                     if(data === -9999){
-                        return "No Model"
+                        return "No Model";
                     }
                 }
             }
