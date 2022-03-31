@@ -734,11 +734,24 @@ function populateFishTable(data) {
                 "targets": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
             },
             {
-                "target": 20,
+                "targets": 20,
                 "render": function(data, type, row){
                     if(data === -9999){
                         return "No Model";
                     }
+                }
+            },
+            {
+                "targets": 20,
+                "render": function(data, type, row){
+                    if (type === "sort"){
+                        var value = data;
+                        if(value === "No Model"){
+                            value = -9999;
+                        }
+                        return value;
+                    }
+                    return data;
                 }
             }
         ],
