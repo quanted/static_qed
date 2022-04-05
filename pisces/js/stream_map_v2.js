@@ -750,6 +750,9 @@ function populateFishTable(data) {
                         if(value === "No Model"){
                             value = -9999;
                         }
+                        else if(value === "Very Unlikely"){
+                            value = -9998;
+                        }
                         return Number(value);
                     }
                     if(data === -9999){
