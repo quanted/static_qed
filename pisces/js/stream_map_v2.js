@@ -680,27 +680,27 @@ function populateFishTable(data) {
             },
             {
                 data: "crit_1sd",
-                title: "1SD",
+                title: "Threshold",
                 name: "crit_1sd"
             },
             {
                 data: "crit_2sd",
-                title: "2SD",
+                title: "Threshold",
                 name: "crit_2sd"
             },
             {
                 data: "crit_ave",
-                title: "Ave",
+                title: "Threshold",
                 name: "crit_ave"
             },
             {
                 data: "crit_p0",
-                title: "P0",
+                title: "Threshold",
                 name: "crit_p0"
             },
             {
                 data: "crit_p1",
-                title: "P1",
+                title: "Threshold",
                 name: "crit_p1"
             }
         ],
